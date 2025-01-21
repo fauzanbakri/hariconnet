@@ -32,7 +32,7 @@
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
-                                                        <p class="fw-medium text-muted mb-0">Total Tiket</p>
+                                                        <p class="fw-medium text-muted mb-0">Total Incident</p>
                                                         <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?php foreach($total as $row){echo $row->total;}?>"></span></h2>
                                                         <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> <i class="ri-arrow-up-line align-middle"></i> Closed </span> <?php foreach($close as $row){echo $row->close;}?> Tickets</p>
                                                     </div>
@@ -52,7 +52,7 @@
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
-                                                        <p class="fw-medium text-muted mb-0">Total Tim</p>
+                                                        <p class="fw-medium text-muted mb-0">Total Team</p>
                                                         <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="15">15</span></h2>
                                                         <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> <i class="ri-arrow-up-line align-middle"></i> Closed </span> 100 Tickets</p>
                                                     </div>
