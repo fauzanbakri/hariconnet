@@ -173,7 +173,7 @@
                                                 <th>Tipe Penyebab</th>
                                                 <th>ID</th>
                                                 <th>Keterangan</th>
-                                                <th>Create By</th>
+                                                <th>Last Update By</th>
                                                 <th>Timestamp</th>
                                                 <th>Action</th>
                                             </tr>
@@ -195,20 +195,43 @@
                                                 }else{
                                                     $v = "FAT TO FDT";
                                                 }
+
+                                                if($row->tipe=="FTTH BACKBONE"){
+                                                    $a = '<span class="badge border border-danger text-danger">FTTH BACKBONE</span>';
+                                                }elseif($row->tipe=="FTTH FEEDER"){
+                                                    $a = '<span class="badge border border-warning text-warning">FTTH FEEDER</span>';
+                                                }else{
+                                                    $a = '<span class="badge border border-info text-info">FTTH DISTRIBUSI</span>';
+                                                }
+
+
+                                                if($row->status=="CLOSED"){
+                                                    $b = '<span class="badge bg-success">CLOSED</span>';
+                                                }elseif($row->status=="ON PROGRESS"){
+                                                    $b = '<span class="badge border border-info text-info">ON PROGRESS</span>';
+                                                }elseif($row->status=="SOLVED (ICRM OPEN)"){
+                                                    $b = '<span class="badge border border-success text-success">SOLVED (ICRM OPEN)</span>';
+                                                }elseif($row->status=="STOPCLOCK"){
+                                                    $b = '<span class="badge border border-primary text-primary">STOPCLOCK</span>';
+                                                }elseif($row->status=="ANTRIAN"){
+                                                    $b = '<span class="badge border border-warning text-warning">ANTRIAN</span>';
+                                                }else{
+                                                    $b = '<span class="badge border border-dark text-body">OPEN</span>';
+                                                }
                                                 echo "
                                                 <tr>
                                                     <td>".$count."</td>
                                                     <td>".$row->idInsiden."</td>
                                                     <td>".$row->downtime."</td>
                                                     <td>".$durasi."</td>
-                                                    <td>".$row->tipe."</td>
+                                                    <td>".$a."</td>
                                                     <td>".$row->kp."</td>
                                                     <td>".$row->kode."</td>
                                                     <td>".$row->idOlt."</td>
                                                     <td>".$row->gangguan."</td>
                                                     <td>".$row->tim."</td>
                                                     <td>"."INSIDEN NO. ".$row->idInsiden." ".$row->tipe."_".$row->kode." [PROAKTIF NOC SBU]_".$v." ".$row->idOlt." ".$row->gangguan."</td>
-                                                    <td>".$row->status."</td>
+                                                    <td>".$b."</td>
                                                     <td>".$row->jumlahTiket."</td>
                                                     <td>".$row->tipePenyebab."</td>
                                                     <td>".$row->id."</td>

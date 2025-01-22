@@ -123,7 +123,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Tim</label>
-                                                                <input type="text" class="form-control" id="tim" disabled name="tim" autocomplete="off" placeholder="Tim Serpo">
+                                                                <input type="text" class="form-control" id="tim" name="tim" autocomplete="off" placeholder="Tim Serpo">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -152,47 +152,170 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- modal edit -->
+                                <div class="modal fade" id="exampleModalgrid1" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalgridLabel">Edit Ticket</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-3">
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label class="form-label">Incident</label>
+                                                            <input type="text" class="form-control" name="editincident" id="editincident" autocomplete="off" placeholder="Incident">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Tiket</label>
+                                                            <input type="text" class="form-control" name="edittiket" disabled id="edittiket" autocomplete="off" placeholder="Tiket">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Tanggal</label>
+                                                            <input type="text" class="form-control" name="edittanggal" id="edittanggal" autocomplete="off" placeholder="Tanggal">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">SID</label>
+                                                            <input type="text" class="form-control" name="editsid" id="editsid" autocomplete="off" placeholder="SID">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Telepon</label>
+                                                            <input type="text" class="form-control" name="edittelepon" id="edittelepon" autocomplete="off" placeholder="Telepon">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Nama</label>
+                                                            <input type="text" class="form-control" name="editnama" id="editnama" autocomplete="off" placeholder="Nama Pelanggan">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <label for="lastName" class="form-label">Keluhan</label>
+                                                        <select class="form-select mb-3" name="editkeluhan" id="editkeluhan" aria-label="Default select example">
+                                                            <option value="LINK LOSS">LINK LOSS</option>
+                                                            <option value="ONT PROBLEM">ONT PROBLEM</option>
+                                                            <option value="BAD RX">BAD RX</option>
+                                                            <option value="SET VLAN">SET VLAN</option>
+                                                            <option value="CABLE PROBLEM">CABLE PROBLEM</option>
+                                                            <option value="SETTING PASSWORD">SETTING PASSWORD</option>
+                                                            <option value="INTERNET DOWN/NO INTERNET">INTERNET DOWN/NO INTERNET</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Alamat</label>
+                                                            <input type="text" class="form-control" name="editalamat" id="editalamat" autocomplete="off" placeholder="Alamat">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="olt" class="form-label">OLT</label>
+                                                            <input type="text" class="form-control" name="editolt" id="editolt" autocomplete="off" placeholder="OLT">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Serial Number</label>
+                                                            <input type="text" class="form-control" id="editsn" name="editsn" autocomplete="off" placeholder="Serial Number">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Tim</label>
+                                                            <input type="text" class="form-control" id="edittim" name="edittim" autocomplete="off" placeholder="Tim Serpo">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <div>
+                                                            <label for="lastName" class="form-label">Keterangan</label>
+                                                            <input type="text" class="form-control" id="editketerangan" name="editketerangan" autocomplete="off" placeholder="Keterangan">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                        <label for="lastName" class="form-label">Prioritas</label>
+                                                        <select class="form-select mb-3" aria-label="Default select example" name="editprioritas" id="editprioritas">
+                                                            <option value="Normal">Normal</option>
+                                                            <option value="High">High</option>
+                                                            <option value="Low">Low</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Status</label>
+                                                            <select class="form-select mb-3" aria-label="Default select example" id="editstatus" name="editstatus" >
+                                                                <option value="NEW">NEW</option>
+                                                                <option value="OPEN">OPEN</option>
+                                                                <option value="ON PROGRESS">ON PROGRESS</option>
+                                                                <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
+                                                                <option value="CLOSED">CLOSED</option>
+                                                                <option value="EARLY">EARLY</option>
+                                                            </select>
+                                                        </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="hstack gap-2 justify-content-end">
+                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
+                                                        </div>
+                                                    </div><!--end col-->
+                                                </div><!--end row-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 </div>
                                 <div class="card-body">
                                     <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Priority</th>
-                                                <th>Action</th>
                                                 <th>Insiden</th>
                                                 <th>Tiket</th>
                                                 <th>Tanggal</th>
                                                 <th>Durasi</th>
                                                 <th>SID</th>
                                                 <th>Nama</th>
-                                                <th>Alamat</th>
-                                                <th>OLT</th>
                                                 <th>Status</th>
+                                                <th>OLT</th>
+                                                <th>Alamat</th>
                                                 <th>Kendala</th>
-                                                <th>Keluhan</th>
                                                 <th>Kabupaten</th>
                                                 <th>Provinsi</th>
                                                 <th>Tim</th>
                                                 <th>Posisi Antrian</th>
-                                                <th>Create By</th>
+                                                <th>Last Update By</th>
                                                 <th>timestamp</th>
                                                 <th>Serial Number</th>
                                                 <th>Telepon</th>
+                                                <th>Keterangan</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             foreach ($data as $row){
-                                                if($row->status=="CLOSE"){
-                                                    $a = '<span class="badge border border-success text-success">Close</span>';
+                                                if($row->status=="CLOSED"){
+                                                    $a = '<span class="badge bg-success">CLOSED</span>';
                                                 }elseif($row->status=="ON PROGRESS"){
-                                                    $a = '<span class="badge border border-info text-info">On Progress</span>';
+                                                    $a = '<span class="badge border border-info text-info">ON PROGRESS</span>';
                                                 }elseif($row->status=="NEW"){
-                                                    $a = '<span class="badge border border-warning text-warning">New</span>';
-                                                }elseif($row->status=="SOLVED"){
-                                                    $a = '<span class="badge border border-primary text-primary">Solved</span>';
+                                                    $a = '<span class="badge border border-primary text-primary">NEW</span>';
+                                                }elseif($row->status=="SOLVED (ICRM OPEN)"){
+                                                    $a = '<span class="badge border border-success text-success">SOLVED (ICRM OPEN)</span>';
+                                                }elseif($row->status=="EARLY"){
+                                                    $a = '<span class="badge bg-danger">EARLY</span>';
                                                 }else{
-                                                    $a = '<span class="badge border border-danger text-danger">Open</span>';
+                                                    $a = '<span class="badge border border-dark text-body">OPEN</span>';
                                                 }
                                                 $tanggalSekarang = new DateTime();
                                                 $durasi1 = new DateTime($row->tanggal);;
@@ -208,6 +331,25 @@
                                                 echo "
                                                 <tr> 
                                                     <td>".$p."</td>
+                                                    <td>".$row->idInsiden."</td>
+                                                    <td>".$row->idTiket."</td>
+                                                    <td>".$row->tanggal."</td>
+                                                    <td>".$durasi."</td>
+                                                    <td>".$row->sid."</td>
+                                                    <td>".$row->nama."</td>
+                                                    <td>".$a."</td>
+                                                    <td>".$row->idOlt."</td>
+                                                    <td>".$row->alamat."</td>
+                                                    <td>".$row->keluhan."</td>
+                                                    <td>".$row->kabupaten."</td>
+                                                    <td>".$row->provinsi."</td>
+                                                    <td>".$row->tim."</td>
+                                                    <td>".$row->urutan."</td>  
+                                                    <td>".$row->createby."</td>  
+                                                    <td>".$row->timestamp."</td>  
+                                                    <td>".$row->sn."</td>  
+                                                    <td>".$row->telepon."</td> 
+                                                    <td>".$row->keterangan."</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -216,7 +358,7 @@
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li><a href='#' class='dropdown-item copy-btn' data-row='".htmlspecialchars(json_encode($row))."'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-insiden='".$row->idInsiden."' data-tiket='".$row->idTiket."' data-tanggal='".$row->tanggal."' data-sid='".$row->sid."' data-telepon='".$row->telepon."' data-nama='".$row->nama."' data-keluhan='".$row->keluhan."' data-alamat='".$row->alamat."' data-editOlt='".$row->idOlt."' data-sn='".$row->sn."' data-keterangan='".$row->keterangan."' data-prioritas='".$row->prioritas."' data-tim='".$row->tim."' data-createby='".$row->createby."' data-kabupaten='".$row->kabupaten."' data-provinsi='".$row->provinsi."' data-urutan='".$row->urutan."' data-timestamp='".$row->timestamp."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-editincident='".$row->idInsiden."' data-edittiket='".$row->idTiket."' data-edittanggal='".$row->tanggal."' data-editsid='".$row->sid."' data-edittelepon='".$row->telepon."' data-editnama='".$row->nama."' data-editkeluhan='".$row->keluhan."' data-editalamat='".$row->alamat."' data-editOlt='".$row->idOlt."' data-editsn='".$row->sn."' data-editketerangan='".$row->keterangan."' data-editprioritas='".$row->prioritas."' data-edittim='".$row->tim."' data-editcreateby='".$row->createby."' data-editkabupaten='".$row->kabupaten."' data-editprovinsi='".$row->provinsi."' data-urutan='".$row->urutan."' data-timestamp='".$row->timestamp."' data-editstatus='".$row->status."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
@@ -227,25 +369,6 @@
                                                             </ul>
                                                         </div>
                                                     </td> 
-                                                    <td>".$row->idInsiden."</td>
-                                                    <td>".$row->idTiket."</td>
-                                                    <td>".$row->tanggal."</td>
-                                                    <td>".$durasi."</td>
-                                                    <td>".$row->sid."</td>
-                                                    <td>".$row->nama."</td>
-                                                    <td>".$row->alamat."</td>
-                                                    <td>".$row->idOlt."</td>
-                                                    <td>".$a."</td>
-                                                    <td>".$row->keluhan."</td>
-                                                    <td>".$row->keterangan."</td>
-                                                    <td>".$row->kabupaten."</td>
-                                                    <td>".$row->provinsi."</td>
-                                                    <td>".$row->tim."</td>
-                                                    <td>".$row->urutan."</td>  
-                                                    <td>".$row->createby."</td>  
-                                                    <td>".$row->timestamp."</td>  
-                                                    <td>".$row->sn."</td>  
-                                                    <td>".$row->telepon."</td>  
                                                 </tr>                                              
                                                 ";
                                             }
@@ -282,112 +405,6 @@
     <!-- END layout-wrapper -->
 
     <!-- Modal Edit Ticket -->
-    <div class="modal fade" id="exampleModalgrid1" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalgridLabel">Edit Ticket</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-xxl-6">
-                            <div>
-                                <label class="form-label">Incident</label>
-                                <input type="text" class="form-control" name="incident" id="insiden" autocomplete="off" placeholder="Incident">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Tiket</label>
-                                <input type="text" class="form-control" name="tiket" id="tiket" autocomplete="off" placeholder="Tiket">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Tanggal</label>
-                                <input type="text" class="form-control" name="tanggal" id="tanggal" autocomplete="off" placeholder="Tanggal">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">SID</label>
-                                <input type="text" class="form-control" name="sid" id="sid" autocomplete="off" placeholder="SID">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Telepon</label>
-                                <input type="text" class="form-control" name="telepon" id="telepon" autocomplete="off" placeholder="Telepon">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Nama</label>
-                                <input type="text" class="form-control" name="nama" id="nama" autocomplete="off" placeholder="Nama Pelanggan">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <label for="lastName" class="form-label">Keluhan</label>
-                            <select class="form-select mb-3" name="keluhan" id="keluhan" aria-label="Default select example">
-                                <option value="LINK LOSS">LINK LOSS</option>
-                                <option value="ONT PROBLEM">ONT PROBLEM</option>
-                                <option value="BAD RX">BAD RX</option>
-                                <option value="SET VLAN">SET VLAN</option>
-                                <option value="CABLE PROBLEM">CABLE PROBLEM</option>
-                                <option value="SETTING PASSWORD">SETTING PASSWORD</option>
-                                <option value="INTERNET DOWN/NO INTERNET">INTERNET DOWN/NO INTERNET</option>
-                            </select>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" name="alamat" id="alamat" autocomplete="off" placeholder="Alamat">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="olt" class="form-label">OLT</label>
-                                <input type="text" class="form-control" name="editolt" id="editolt" autocomplete="off" placeholder="OLT">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Serial Number</label>
-                                <input type="text" class="form-control" id="sn" name="sn" autocomplete="off" placeholder="Serial Number">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Tim</label>
-                                <input type="text" class="form-control" id="tim" disabled name="tim" autocomplete="off" placeholder="Tim Serpo">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <div>
-                                <label for="lastName" class="form-label">Keterangan</label>
-                                <input type="text" class="form-control" id="keterangan" name="keterangan" autocomplete="off" placeholder="Keterangan">
-                            </div>
-                        </div>
-                        <div class="col-xxl-6">
-                            <label for="lastName" class="form-label">Prioritas</label>
-                            <select class="form-select mb-3" aria-label="Default select example" name="prioritas" id="prioritas">
-                                <option value="Normal">Normal</option>
-                                <option value="High">High</option>
-                                <option value="Low">Low</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="hstack gap-2 justify-content-end">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" id="submitEditBtn">Submit</button>
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -536,7 +553,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#olt').on('keyup', function () {
+            $('#olt').on('click change keyup keydown', function () {
                 let oltValue = $(this).val();
                 console.log(oltValue);
                 $.ajax({
@@ -589,6 +606,7 @@
                             button.setAttribute('data-toast-text', 'Data Saved!');
                             button.setAttribute('data-toast-className', 'success');
                             button.click();
+                            location.reload();
                         }else{
                             button.setAttribute('data-toast-text', response);
                             button.setAttribute('data-toast-className', 'danger');
@@ -603,6 +621,60 @@
                 });
                 console.log('asdasdsadasd');
             });
+
+            $('#editsubmitBtn').on('click', function (e) {
+                console.log('asdasdsadasd');
+
+                e.preventDefault();
+                const formData = {
+                    incident: $('[name="editincident"]').val(),
+                    tiket: $('[name="edittiket"]').val(),
+                    tanggal: $('[name="edittanggal"]').val(),
+                    sid: $('[name="editsid"]').val(),
+                    telepon: $('[name="edittelepon"]').val(),
+                    nama: $('[name="editnama"]').val(),
+                    keluhan: $('[name="editkeluhan"]').val(),
+                    alamat: $('[name="editalamat"]').val(),
+                    olt: $('[name="editolt"]').val(),
+                    sn: $('[name="editsn"]').val(),
+                    tim: $('[name="edittim"]').val(),
+                    status: $('[name="editstatus"]').val(),
+                    keterangan: $('[name="editketerangan"]').val(),
+                    prioritas: $('[name="editprioritas"]').val(),
+                };
+                if (!formData.incident || !formData.tiket || !formData.tanggal || !formData.sid || !formData.nama) {
+                    button.setAttribute('data-toast-text', 'Incident, Ticket, Tanggal, SID, Telepon, Nama Cannot Empty!');
+                    button.setAttribute('data-toast-className', 'danger');
+                    button.click();
+                    return;
+                }
+                $.ajax({
+                    url: 'Tickets/editData',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        if(response=='success'){
+                            button.setAttribute('data-toast-text', 'Data Saved!');
+                            button.setAttribute('data-toast-className', 'success');
+                            button.click();
+                            location.reload();
+                        }else{
+                            button.setAttribute('data-toast-text', response);
+                            button.setAttribute('data-toast-className', 'danger');
+                            button.click();   
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        button.setAttribute('data-toast-text', error);
+                        button.setAttribute('data-toast-className', 'danger');
+                        button.click();
+                    }
+                });
+                console.log('asdasdsadasd');
+            });
+
+
         });
     </script>
     <script>
@@ -724,8 +796,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Pastikan ID yang digunakan sesuai dengan ID pada input form
             const fields = [
-                'insiden', 'tiket', 'tanggal', 'sid', 'telepon', 'nama', 'keluhan', 'alamat',
-                'editolt', 'sn', 'keterangan', 'prioritas', 'tim', 'kabupaten', 'provinsi', 'urutan', 'timestamp'
+                'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
+                'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editprovinsi', 'editurutan', 'edittimestamp'
             ];
 
             // Isi form dengan data yang ada pada atribut data-*

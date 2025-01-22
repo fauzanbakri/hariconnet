@@ -4,12 +4,8 @@ function initializeTables() {
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
-        order: [[18, 'desc']],
+        order: [[20, 'desc']],
         columnDefs: [
-            {
-                targets: 14,
-                visible: true
-            },
             {
                 targets: 20,
                 className: 'priority-column',
@@ -23,8 +19,14 @@ function initializeTables() {
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
-        order: [[18, 'desc']],
+        order: [[17, 'desc']],
         columnDefs: [
+            {
+                targets: 18,
+                className: 'priority-column',
+                responsivePriority: 1,
+                visible: true
+            },
             {
                 targets: 14,
                 visible: false

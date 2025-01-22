@@ -24,32 +24,33 @@ class tickets extends CI_Controller {
 		$this->db->query("SET @grup := ''");
 		$q['data'] = $this->db->query("
 			SELECT 
-				prioritas,
-				idInsiden,
-				idTiket,
-				tanggal,
-				olt.idOlt,
-				sid,
-				nama,
-				alamat,
-				telepon,
-				sn,
-				status,
-				keluhan,
-				keterangan,
-				kabupaten,
-				provinsi,
-				tim,
-				createby,
-				timestamp,
-				@urutan := IF(@grup = tim, @urutan + 1, 1) AS urutan,
-				@grup := tim
-			FROM 
-				tiket
-			LEFT JOIN 
-				olt ON olt.idOlt = tiket.idOlt
-			ORDER BY 
-				tim, tanggal ASC 
+			prioritas,
+			idInsiden,
+			idTiket,
+			tanggal,
+			olt.idOlt,
+			sid,
+			nama,
+			alamat,
+			telepon,
+			sn,
+			status,
+			keluhan,
+			keterangan,
+			kabupaten,
+			provinsi,
+			tim,
+			createby,
+			timestamp,
+			@urutan := IF(status IN ('closed', 'Solved (ICRM Open)'), 0, IF(@grup = tim, @urutan + 1, 1)) AS urutan,
+			@grup := tim
+		FROM 
+			tiket
+		LEFT JOIN 
+			olt ON olt.idOlt = tiket.idOlt
+		ORDER BY 
+			tim, prioritas, tanggal ASC;
+
 		")->result();
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		$this->load->view('navbar');
@@ -112,6 +113,58 @@ class tickets extends CI_Controller {
 				'$createby',
 				'$timestamp'
 				)");
+			if($q){
+				echo 'success';
+			}else{
+				$error = $this->db->error();
+				echo $error['message'];
+			}	
+		}else{
+			echo 'Tiket Cannot Empty';
+		}
+			
+	}
+	public function editData(){
+		date_default_timezone_set('Asia/Makassar');
+		session_start();
+		$idTiket = $this->input->post('tiket');
+		$idInsiden = $this->input->post('incident');
+		$rawtanggal = $this->input->post('tanggal');
+		$timestamp = strtotime(str_replace('/', '-', $rawtanggal));
+		$tanggal = date('Y-m-d H:i', $timestamp);
+		$sid = $this->input->post('sid');
+		$telepon = $this->input->post('telepon');
+		$nama = $this->input->post('nama');
+		$keluhan = $this->input->post('keluhan');
+		$alamat = $this->input->post('alamat');
+		$idOlt = $this->input->post('olt');
+		$sn = $this->input->post('sn');
+		$tim = $this->input->post('tim');
+		$keterangan = $this->input->post('keterangan');
+		$status = $this->input->post('status');
+		$prioritas = $this->input->post('prioritas');
+		$createby = $_SESSION['nama'];
+		$timestamp = date("Y-m-d H:i:s");
+		// die();
+		if($idTiket!=''){
+			$q = $this->db->query("UPDATE tiket SET
+				idInsiden='$idInsiden',
+				tanggal='$tanggal',
+				sid='$sid',
+				telepon='$telepon',
+				nama='$nama',
+				keluhan='$keluhan',
+				alamat='$alamat',
+				idOlt='$idOlt',
+				sn='$sn',
+				tim='$tim',
+				keterangan='$keterangan',
+				status='$status',
+				prioritas='$prioritas',
+				createby='$createby',
+				timestamp='$timestamp'
+				WHERE idTiket='$idTiket'
+				");
 			if($q){
 				echo 'success';
 			}else{
