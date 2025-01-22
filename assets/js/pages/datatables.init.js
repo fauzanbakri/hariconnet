@@ -22,14 +22,14 @@ function initializeTables() {
         order: [[17, 'desc']],
         columnDefs: [
             {
+                targets: 14,
+                visible: false
+            },
+            {
                 targets: 18,
                 className: 'priority-column',
                 responsivePriority: 1,
                 visible: true
-            },
-            {
-                targets: 14,
-                visible: false
             }
         ],
         responsive: true 
