@@ -48,41 +48,55 @@ class Feeder extends CI_Controller {
 	public function insertData(){
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
-		$idTiket = $this->input->post('tiket');
 		$idInsiden = $this->input->post('incident');
-		$rawtanggal = $this->input->post('tanggal');
-		$timestamp = strtotime(str_replace('/', '-', $rawtanggal));
-		$tanggal = date('Y-m-d H:i', $timestamp);
-		$sid = $this->input->post('sid');
-		$telepon = $this->input->post('telepon');
-		$nama = $this->input->post('nama');
-		$keluhan = $this->input->post('keluhan');
-		$alamat = $this->input->post('alamat');
-		$idOlt = $this->input->post('olt');
-		$sn = $this->input->post('sn');
+		$rawtanggal = $this->input->post('downtime');
+		$timestamps = strtotime(str_replace('/', '-', $rawtanggal));
+		$downtime = date('Y-m-d H:i', $timestamps);
+		$tipe = $this->input->post('tipe');
+		$kp = $this->input->post('kp');
+		$olt = $this->input->post('olt');
+		$area = $this->input->post('area');
+		$deskripsi = $this->input->post('deskripsi');
 		$tim = $this->input->post('tim');
+		$gangguan = $this->input->post('status');
+		$jumlahtiket = $this->input->post('jumlahtiket');
+		$tipePenyebab = $this->input->post('tipePenyebab');
 		$keterangan = $this->input->post('keterangan');
-		$status = 'NEW';
-		$prioritas = $this->input->post('prioritas');
+		$status = $this->input->post('status');
 		$createby = $_SESSION['nama'];
 		$timestamp = date("Y-m-d H:i:s");
 		// die();
-		if($idTiket!=''){
-			$q = $this->db->query("INSERT INTO tiket VALUES(
-				'$idTiket',
+		if($deskripsi!=''){
+			$q = $this->db->query("INSERT INTO 
+			feeder(
+			idInsiden,
+			downtime,
+			tipe,
+			kp,
+			kode,
+			idOlt,
+			gangguan,
+			tim,
+			status,
+			keterangan,
+			jumlahTiket,
+			tipePenyebab,
+			createby,
+			timestamp
+			) 
+			VALUES(
 				'$idInsiden',
-				'$tanggal',
-				'$sid',
-				'$telepon',
-				'$nama',
-				'$keluhan',
-				'$alamat',
-				'$idOlt',
-				'$sn',
+				'$downtime',
+				'$tipe',
+				'$kp',
+				'$area',
+				'$olt',
+				'$gangguan',
 				'$tim',
-				'$keterangan',
 				'$status',
-				'$prioritas',
+				'$keterangan',
+				'$jumlahtiket',
+				'$tipePenyebab',
 				'$createby',
 				'$timestamp'
 				)");
@@ -93,67 +107,8 @@ class Feeder extends CI_Controller {
 				echo $error['message'];
 			}	
 		}else{
-			echo 'Tiket Cannot Empty';
+			echo 'Deskripsi Cannot Empty';
 		}
-			
-	}
-	public function changeShift(){
-		$data = $this->db->query("SELECT * FROM tiket WHERE status='close'")->result();
-		$this->db->trans_start();
-		foreach ($data as $row){
-			$idTiket = $row->idTiket;
-			$idInsiden = $row->idInsiden;
-			$tanggal = $row->tanggal;
-			$sid = $row->sid;
-			$telepon = $row->telepon;
-			$nama = $row->nama;
-			$keluhan = $row->keluhan;
-			$alamat = $row->alamat;
-			$idOlt = $row->idOlt;
-			$sn = $row->sn;
-			$tim = $row->tim;
-			$keterangan = $row->keterangan;
-			$status = $row->status;
-			$prioritas = $row->prioritas;
-			$createby = $row->createby;
-
-			$this->db->query("INSERT INTO tiketClose VALUES(
-			'$idTiket',
-			'$idInsiden',
-			'$tanggal',
-			'$sid',
-			'$telepon',
-			'$nama',
-			'$keluhan',
-			'$alamat',
-			'$idOlt',
-			'$sn',
-			'$tim',
-			'$keterangan',
-			'$status',
-			'$prioritas',
-			'$createby'
-			)");
-			// echo $row->idTiket;
-		}
-		if ($this->db->trans_status() === FALSE){
-			$this->db->trans_rollback();
-		}
-		else{
-			$this->db->trans_commit();
-			$data = $this->db->query("SELECT * FROM tiket WHERE status='close'")->result();
-			$this->db->trans_start();
-			foreach ($data as $row){
-				$idTiket = $row->idTiket;
-				$this->db->query("DELETE FROM tiket WHERE idTiket='$idTiket'");
-			}
-			if ($this->db->trans_status() === FALSE){
-				$this->db->trans_rollback();
-			}
-			else{
-				$this->db->trans_commit();
-				echo 'success';
-			}
-		}
+	
 	}
 }

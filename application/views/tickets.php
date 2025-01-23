@@ -303,6 +303,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            date_default_timezone_set('Asia/Makassar');
                                             foreach ($data as $row){
                                                 if($row->status=="CLOSED"){
                                                     $a = '<span class="badge bg-success">CLOSED</span>';

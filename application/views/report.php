@@ -136,7 +136,21 @@
                                                             <div class="card-body">
                                                                 <div class="tab-content text-muted">
                                                                     <div class="tab-pane active" id="makassar" role="tabpanel">
-                                                                        makassar
+                                                                    *Laporan Gangguan Tanggal <?php echo date('d M Y'); ?>*<br><br>
+
+                                                                    Total Open Incident : <?php echo $total;?> <br>
+                                                                    Incident Closed : 22 <br>
+                                                                    New Open Incident : 15 <br>
+                                                                    Closed : Sulsel: 8, Sulbar : 5, Sultra: 5, Sulteng: 1, Gorontalo : 1, Sulut: 2 <br>
+                                                                    Open : Sulsel : 6, Sulbar : 2, Sultra : 2, Sulteng : 1, Gorontalo : 3, Sulut: 1 <br>
+                                                                    Incident Total : Sulsel: 73, Sulbar : 9, Sultra: 22, Sulteng : 3, Gorontalo: 9, Sulut: 6 
+                                                                    <br><br>
+                                                                    Piket Mini NOC Retail : <br>
+                                                                    Pagi : <br>
+                                                                    Sore : <br>
+                                                                    Malam : <br><br>
+
+
                                                                     </div>
                                                                     <div class="tab-pane" id="kendari" role="tabpanel">
                                                                         kendari

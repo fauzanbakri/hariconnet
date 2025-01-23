@@ -78,8 +78,8 @@ class tickets extends CI_Controller {
 		$idTiket = $this->input->post('tiket');
 		$idInsiden = $this->input->post('incident');
 		$rawtanggal = $this->input->post('tanggal');
-		$timestamp = strtotime(str_replace('/', '-', $rawtanggal));
-		$tanggal = date('Y-m-d H:i', $timestamp);
+		$timestamps = strtotime(str_replace('/', '-', $rawtanggal));
+		$tanggal = date('Y-m-d H:i', $timestamps);
 		$sid = $this->input->post('sid');
 		$telepon = $this->input->post('telepon');
 		$nama = $this->input->post('nama');
@@ -220,7 +220,7 @@ class tickets extends CI_Controller {
 		}
 		else{
 			$this->db->trans_commit();
-			$data = $this->db->query("SELECT * FROM tiket WHERE status='close'")->result();
+			$data = $this->db->query("SELECT * FROM tiket WHERE status='closed'")->result();
 			$this->db->trans_start();
 			foreach ($data as $row){
 				$idTiket = $row->idTiket;

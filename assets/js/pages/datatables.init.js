@@ -19,7 +19,7 @@ function initializeTables() {
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
-        order: [[17, 'desc']],
+        order: [[0, 'asc']],
         columnDefs: [
             {
                 targets: 14,

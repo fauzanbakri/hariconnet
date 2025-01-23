@@ -37,6 +37,7 @@
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
                                             Add New Incident
                                         </button>
+                                        <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                     </div>
                                  </div>
                                 <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
@@ -51,7 +52,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label class="form-label">Incident</label>
-                                                                <input type="text" class="form-control" name="incident" autocomplete="off" placeholder="Incident">
+                                                                <input type="text" class="form-control" name="incident" id="incident" autocomplete="off" placeholder="Incident">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -62,7 +63,7 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Type</label>
-                                                            <select class="form-select mb-3" name="type" aria-label="Default select example">
+                                                            <select class="form-select mb-3" name="tipe" id="tipe" aria-label="Default select example">
                                                                 <option value="FTTH BACKBONE">FTTH BACKBONE</option>
                                                                 <option value="FTTH FEEDER">FTTH FEEDER</option>
                                                                 <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
@@ -70,7 +71,7 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">KP</label>
-                                                            <select class="form-select mb-3" name="kp" aria-label="Default select example">
+                                                            <select class="form-select mb-3" name="kp" id="kp" aria-label="Default select example">
                                                                 <option value="MAKASSAR">MAKASSAR</option>
                                                                 <option value="KENDARI">KENDARI</option>
                                                                 <option value="MANADO">MANADO</option>
@@ -96,8 +97,8 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Tim</label>
-                                                            <select class="form-select mb-3" aria-label="Default select example" name="tim" >
-                                                                <option>Select</option>
+                                                            <select class="form-select mb-3" aria-label="Default select example" name="tim" id="tim" >
+                                                                <option value="">Select</option>
                                                                 <?php 
                                                                     foreach ($tim as $row){
                                                                         echo '
@@ -109,7 +110,7 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Status</label>
-                                                            <select class="form-select mb-3" name="kp" aria-label="Default select example">
+                                                            <select class="form-select mb-3" name="status" id="status1" aria-label="Default select example">
                                                                 <option value="OPEN">OPEN</option>
                                                                 <option value="ON PROGRESS">ON PROGRESS</option>
                                                                 <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
@@ -120,12 +121,13 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Jumlah Tiket</label>
-                                                                <input type="text" class="form-control" id="deskripsi" name="deskripsi" autocomplete="off" placeholder="Jumlah Tiket">
+                                                                <input type="text" class="form-control" id="jumlahtiket" name="jumlahtiket" autocomplete="off" placeholder="Jumlah Tiket">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Tipe Penyebab</label>
-                                                            <select class="form-select mb-3" name="tipePenyebab" aria-label="Default select example">
+                                                            <select class="form-select mb-3" name="tipePenyebab" id="tipePenyebab" aria-label="Default select example">
+                                                                <option value="Belum Diketahui">Belum Diketahui</option>
                                                                 <option value="Putus Kabel">Putus Kabel</option>
                                                                 <option value="Kabel Bending">Kabel Bending</option>
                                                                 <option value="Putus Core">Putus Core</option>
@@ -183,6 +185,7 @@
                                             <?php
                                             $count = 0;
                                             foreach ($data as $row){
+                                                date_default_timezone_set('Asia/Makassar');
                                                 $tanggalSekarang = new DateTime();
                                                 $durasi1 = new DateTime($row->downtime);
                                                 $selisih = $durasi1->diff($tanggalSekarang);
@@ -460,27 +463,27 @@
                 e.preventDefault();
                 const formData = {
                     incident: $('[name="incident"]').val(),
-                    tiket: $('[name="tiket"]').val(),
-                    tanggal: $('[name="tanggal"]').val(),
-                    sid: $('[name="sid"]').val(),
-                    telepon: $('[name="telepon"]').val(),
-                    nama: $('[name="nama"]').val(),
-                    keluhan: $('[name="keluhan"]').val(),
-                    alamat: $('[name="alamat"]').val(),
+                    downtime: $('[name="downtime"]').val(),
+                    tipe: $('[name="tipe"]').val(),
+                    kp: $('[name="kp"]').val(),
                     olt: $('[name="olt"]').val(),
-                    sn: $('[name="sn"]').val(),
+                    area: $('[name="area"]').val(),
+                    deskripsi: $('[name="deskripsi"]').val(),
                     tim: $('[name="tim"]').val(),
-                    keterangan: $('[name="keterangan"]').val(),
-                    prioritas: $('[name="prioritas"]').val(),
+                    status: $('[name="status"]').val(),
+                    jumlahtiket: $('[name="jumlahtiket"]').val(),
+                    tipePenyebab: $('[name="tipePenyebab"]').val(),
+                    keterangan: $('[name="keterangan"]').val()
+                   
                 };
-                if (!formData.incident || !formData.tiket || !formData.tanggal || !formData.sid || !formData.nama) {
-                    button.setAttribute('data-toast-text', 'Incident, Ticket, Tanggal, SID, Telepon, Nama Cannot Empty!');
+                if (!formData.deskripsi) {
+                    button.setAttribute('data-toast-text', 'Deskripsi Cannot Empty!');
                     button.setAttribute('data-toast-className', 'danger');
                     button.click();
                     return;
                 }
                 $.ajax({
-                    url: 'Tickets/insertData',
+                    url: 'Feeder/insertData',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
@@ -489,6 +492,7 @@
                             button.setAttribute('data-toast-text', 'Data Saved!');
                             button.setAttribute('data-toast-className', 'success');
                             button.click();
+                            location.reload();
                         }else{
                             button.setAttribute('data-toast-text', response);
                             button.setAttribute('data-toast-className', 'danger');
