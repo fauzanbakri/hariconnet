@@ -72,7 +72,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Srisyaha
+                            <script>document.write(new Date().getFullYear())</script> © Srisyaha ♥︎
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
@@ -131,7 +131,8 @@
                         key: keyValue
                     },
                     success: function(response) {
-                        console.log(response);
+                        $('#results').html(response);
+                        // console.log(response);
                     },
                     error: function(xhr, status, error) {
                         console.error('Error: ' + error);

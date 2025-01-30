@@ -20,8 +20,6 @@ class tickets extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->db->query("SET @urutan := 0");
-		$this->db->query("SET @grup := ''");
 		$q['data'] = $this->db->query("
 			SELECT 
 			prioritas,
@@ -42,12 +40,18 @@ class tickets extends CI_Controller {
 			tim,
 			createby,
 			timestamp,
-			@urutan := IF(status IN ('closed', 'Solved (ICRM Open)'), 0, IF(@grup = tim, @urutan + 1, 1)) AS urutan,
+			@urutan := IF(
+				status IN ('closed', 'Solved (ICRM Open)') OR tim = 'NO TIM', 
+				0, 
+				IF(@grup = tim, @urutan + 1, 1)
+			) AS urutan,
 			@grup := tim
 		FROM 
 			tiket
 		LEFT JOIN 
 			olt ON olt.idOlt = tiket.idOlt
+		CROSS JOIN 
+			(SELECT @urutan := 0, @grup := '') AS vars
 		ORDER BY 
 			tim, prioritas, tanggal ASC;
 
