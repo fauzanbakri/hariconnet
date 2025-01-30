@@ -36,14 +36,18 @@
                                     <div class="live-preview">
                                         <div class="row">
                                             <div class="col-lg-3">
-                                                <select class="form-select rounded-pill mb-3" aria-label="Default select example">
-                                                    <option value="ticket">ID Ticket</option>
-                                                    <option value="incident">Incident</option>
-                                                    <option value="idpln">ID PLN</option>
+                                                <select class="form-select rounded-pill mb-3" id="search-param" aria-label="Default select example">
+                                                    <option value="idTiket">ID Ticket</option>
+                                                    <option value="idInsiden">Incident</option>
+                                                    <option value="nama">Nama</option>
+                                                    <option value="telepon">Telepon</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-5">
-                                                <input type="password" class="form-control" id="placeholderInput" placeholder="">
+                                                <input type="text" class="form-control" id="key" placeholder="">
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <button type="button" id="search" class="btn rounded-pill btn-primary waves-effect waves-light">Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -52,35 +56,8 @@
                         </div> <!-- end col -->
                         <div class="col-lg-6">
                             <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-3">Detail</h5>
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless mb-0">
-                                            <tbody>
-                                                <tr>
-                                                    <th class="ps-0" scope="row">Nama User :</th>
-                                                    <td class="text-muted">John Doe</td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="ps-0" scope="row">No Telepon :</th>
-                                                    <td class="text-muted">+(1) 987 6543</td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="ps-0" scope="row">ID PLN :</th>
-                                                    <td class="text-muted">321312312</td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="ps-0" scope="row">SID :</th>
-                                                    <td class="text-muted">41134325423
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="ps-0" scope="row">Antrian ke</th>
-                                                    <td class="text-muted">0</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div class="card-body" id="results">
+                                    <center>No Data</center><br><br><br><br><br><br>
                                 </div><!-- end card body -->
                             </div><!-- end card -->
                         </div> <!-- end col -->
@@ -95,7 +72,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Velzon.
+                            <script>document.write(new Date().getFullYear())</script> © Srisyaha
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
@@ -138,8 +115,31 @@
 
     <!-- prismjs plugin -->
     <script src="assets/libs/prismjs/prism.js"></script>
+    <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script src="assets/js/app.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search').click(function() {
+                var selectedParam = $('#search-param').val();
+                var keyValue = $('#key').val();
+                $.ajax({
+                    url: 'DashboardCs/search',
+                    type: 'POST',
+                    data: {
+                        param: selectedParam,
+                        key: keyValue
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

@@ -23,4 +23,9 @@ class DashboardCs extends CI_Controller {
 		$this->load->view('navbar');
 		$this->load->view('dashboardCs');
 	}
+	public function search(){
+		$param = $this->input->post('param');
+		$key = $this->input->post('key');
+			
+	}
 }

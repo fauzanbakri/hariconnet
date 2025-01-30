@@ -44,7 +44,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalgridLabel">New Ticket</h5>
+                                                <h5 class="modal-title" id="exampleModalgridLabel">New Feeder</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -154,6 +154,123 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <!-- modal edit -->
+                                <div class="modal fade" id="exampleModalgrid1" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalgridLabel">Edit Feeder</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                    <div class="row g-3">
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Incident</label>
+                                                                <input type="text" class="form-control" name="editincident" id="incident" autocomplete="off" placeholder="Incident">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Downtime</label>
+                                                                <input type="text" class="form-control" name="editdowntime" id="downtime" autocomplete="off" placeholder="Tanggal">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Type</label>
+                                                            <select class="form-select mb-3" name="edittipe" id="tipe" aria-label="Default select example">
+                                                                <option value="FTTH BACKBONE">FTTH BACKBONE</option>
+                                                                <option value="FTTH FEEDER">FTTH FEEDER</option>
+                                                                <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">KP</label>
+                                                            <select class="form-select mb-3" name="editkp" id="kp" aria-label="Default select example">
+                                                                <option value="MAKASSAR">MAKASSAR</option>
+                                                                <option value="KENDARI">KENDARI</option>
+                                                                <option value="MANADO">MANADO</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="autoCompleteFruit" class="text-muted">OLT</label>
+                                                                <input id="olt" type="text" name="editolt" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kode Area</label>
+                                                                <input type="text" class="form-control" id="editarea" name="editarea" autocomplete="off" placeholder="Kode Area">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Deskripsi</label>
+                                                                <input type="text" class="form-control" id="editdeskripsi" name="editdeskripsi" autocomplete="off" placeholder="Deskripsi">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Tim</label>
+                                                            <select class="form-select mb-3" aria-label="Default select example" name="edittim" id="tim" >
+                                                                <option value="">Select</option>
+                                                                <?php 
+                                                                    foreach ($tim as $row){
+                                                                        echo '
+                                                                            <option value="'.$row->nama.'">'.$row->nama.'</option>
+                                                                        ';
+                                                                    }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Status</label>
+                                                            <select class="form-select mb-3" name="editstatus" id="editstatus" aria-label="Default select example">
+                                                                <option value="OPEN">OPEN</option>
+                                                                <option value="ON PROGRESS">ON PROGRESS</option>
+                                                                <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
+                                                                <option value="STOPCLOCK">STOPCLOCK</option>
+                                                                <option value="CLOSED">CLOSED</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Jumlah Tiket</label>
+                                                                <input type="text" class="form-control" id="editjumlahtiket" name="editjumlahtiket" autocomplete="off" placeholder="Jumlah Tiket">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Tipe Penyebab</label>
+                                                            <select class="form-select mb-3" name="edittipePenyebab" id="edittipePenyebab" aria-label="Default select example">
+                                                                <option value="Belum Diketahui">Belum Diketahui</option>
+                                                                <option value="Putus Kabel">Putus Kabel</option>
+                                                                <option value="Kabel Bending">Kabel Bending</option>
+                                                                <option value="Putus Core">Putus Core</option>
+                                                                <option value="FOC Konektor">FOC Konektor</option>
+                                                                <option value="FOT Perangakat">FOT Perangkat</option>
+                                                                <option value="FOC Konektor">Power Supply</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Keterangan</label>
+                                                                <input type="text" class="form-control" id="editketerangan" name="editketerangan" autocomplete="off" placeholder="Keterangan">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
+                                                            </div>
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                <!-- </form> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 </div>
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
@@ -247,8 +364,12 @@
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
-                                                                <li><a href='#' class='dropdown-item'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
-                                                                <li><a class='dropdown-item edit-item-btn'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>
+                                                                <li><a href='#' class='dropdown-item'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>                                                                
+                                                                <li>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-idInsiden='".$row->idInsiden."' data-downtime='".$row->downtime."' data-tipe='".$row->tipe."' data-kp='".$row->kp."' data-kode='".$row->kode."' data-idOlt='".$row->idOlt."' data-gangguan='".$row->gangguan."' data-tim='".$row->tim."' data-status='".$row->status."' data-keterangan='".$row->keterangan."' data-jumlahTiket='".$row->jumlahTiket."' data-tipePenyebab='".$row->tipePenyebab."'>
+                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
+                                                                    </a>
+                                                                </li>
                                                                 <li>
                                                                     <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->id.">
                                                                         <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
@@ -507,6 +628,53 @@
                 });
                 console.log('asdasdsadasd');
             });
+
+            $('#editsubmitBtn').on('click', function (e) {
+                e.preventDefault();
+                const formData = {
+                    incident: $('[name="editincident"]').val(),
+                    downtime: $('[name="editdowntime"]').val(),
+                    tipe: $('[name="edittipe"]').val(),
+                    kp: $('[name="editkp"]').val(),
+                    olt: $('[name="editolt"]').val(),
+                    area: $('[name="editarea"]').val(),
+                    deskripsi: $('[name="editdeskripsi"]').val(),
+                    tim: $('[name="edittim"]').val(),
+                    status: $('[name="editstatus"]').val(),
+                    jumlahtiket: $('[name="editjumlahtiket"]').val(),
+                    tipePenyebab: $('[name="edittipePenyebab"]').val(),
+                    keterangan: $('[name="editketerangan"]').val()
+                };
+                if (!formData.incident || !formData.tiket || !formData.tanggal || !formData.sid || !formData.nama) {
+                    button.setAttribute('data-toast-text', 'Incident, Ticket, Tanggal, SID, Telepon, Nama Cannot Empty!');
+                    button.setAttribute('data-toast-className', 'danger');
+                    button.click();
+                    return;
+                }
+                $.ajax({
+                    url: 'Tickets/editData',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        if(response=='success'){
+                            button.setAttribute('data-toast-text', 'Data Saved!');
+                            button.setAttribute('data-toast-className', 'success');
+                            button.click();
+                            location.reload();
+                        }else{
+                            button.setAttribute('data-toast-text', response);
+                            button.setAttribute('data-toast-className', 'danger');
+                            button.click();   
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        button.setAttribute('data-toast-text', error);
+                        button.setAttribute('data-toast-className', 'danger');
+                        button.click();
+                    }
+                });
+            });
         });
     </script>
     <script>
@@ -577,6 +745,31 @@
                 });
             });
         });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalElement = document.getElementById('exampleModalgrid1');
+        const modal = new bootstrap.Modal(modalElement);
+        document.querySelectorAll('.edit-item-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const ticketData = this.dataset;
+                console.log(ticketData);
+                const fields = [
+                    'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
+                    'editstatus', 'editjumlahtiket', 'edittipePenyebab', 'editketerangan'
+                ];
+                fields.forEach(field => {
+                    const inputElement = document.getElementById(field);
+                    if (inputElement) {
+                        console.log(`Setting ${field} with value:`, ticketData[field]);
+                        inputElement.value = ticketData[field] || ''; // Set value or empty if no data
+                    }
+                });
+                modal.show();
+            });
+        });
+    });
     </script>
 </body>
 

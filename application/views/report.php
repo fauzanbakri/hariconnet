@@ -20,25 +20,6 @@
                                                     <div class="col-lg-3">
                                                         <div class="card">
                                                         <div class="card-body">
-                                                        
-
-                                                        <!-- Hari/Tanggal : Kamis/16 Januari 2025
-                                                        Waktu : 07:24 WITA
-                                                        Total : 470 Tiket
-
-                                                        Makassar : 275 Tiket
-                                                        Tiket Non BB-FD-DT : 183 Tiket
-                                                        Tiket belum masuk SBU : 92 Tiket
-
-                                                        Kendari : 146 Tiket
-                                                        Tiket Non BB-FD-DT : 37 Tiket
-                                                        Impact Gangguan Feeder Wawotobi port Down : 4 Tiket
-                                                        >> Root cause : -
-                                                        Tiket belum masuk SBU : 105 Tiket
-                                                        
-                                                        Manado : 49 Tiket
-                                                        Tiket Non BB-FD-DT : 17 Tiket
-                                                        Tiket belum masuk SBU : 32 Tiket -->
                                                             <h5 class="card-title mb-3">UPDATE TOTAL TIKET</h5>
                                                             <div class="table-responsive">
                                                                 <table class="table table-borderless mb-0">
@@ -136,20 +117,45 @@
                                                             <div class="card-body">
                                                                 <div class="tab-content text-muted">
                                                                     <div class="tab-pane active" id="makassar" role="tabpanel">
-                                                                    *Laporan Gangguan Tanggal <?php echo date('d M Y'); ?>*<br><br>
+                                                                    <!-- <button class="btn btn-primary" id="copy-button">Copy</button><br><br> -->
+                                                                    *Laporan Gangguan Tanggal <?php 
+                                                                    date_default_timezone_set('Asia/Makassar');
+                                                                    echo date('d M Y'); 
+                                                                    ?>*<br><br>
 
-                                                                    Total Open Incident : <?php echo $total;?> <br>
-                                                                    Incident Closed : 22 <br>
-                                                                    New Open Incident : 15 <br>
-                                                                    Closed : Sulsel: 8, Sulbar : 5, Sultra: 5, Sulteng: 1, Gorontalo : 1, Sulut: 2 <br>
-                                                                    Open : Sulsel : 6, Sulbar : 2, Sultra : 2, Sulteng : 1, Gorontalo : 3, Sulut: 1 <br>
-                                                                    Incident Total : Sulsel: 73, Sulbar : 9, Sultra: 22, Sulteng : 3, Gorontalo: 9, Sulut: 6 
+                                                                    Total Open Incident : <?php echo $total->total;?> <br>
+                                                                    Incident Closed : <?php echo $close->close;?> <br>
+                                                                    New Open Incident : <?php echo $new->new;?> <br>
+                                                                    Closed : 
+                                                                    Sulsel: <?php echo $sulselC->sulselC;?>, 
+                                                                    Sulbar : <?php echo $sulbarC->sulbarC;?>,
+                                                                    Sultra: <?php echo $sultraC->sultraC;?>, 
+                                                                    Sulteng: <?php echo $sultengC->sultengC;?>,
+                                                                    Gorontalo : <?php echo $gorontaloC->gorontaloC;?>, 
+                                                                    Sulut: <?php echo $sulutC->sulutC;?> <br>
+
+                                                                    Open : 
+                                                                    Sulsel: <?php echo $sulselO->sulselO;?>, 
+                                                                    Sulbar : <?php echo $sulbarO->sulbarO;?>,
+                                                                    Sultra: <?php echo $sultraO->sultraO;?>, 
+                                                                    Sulteng: <?php echo $sultengO->sultengO;?>,
+                                                                    Gorontalo : <?php echo $gorontaloO->gorontaloO;?>, 
+                                                                    Sulut: <?php echo $sulutO->sulutO;?> <br>
+
+                                                                    Incident Total : 
+                                                                    Sulsel: <?php echo $sulselT->sulselT;?>, 
+                                                                    Sulbar : <?php echo $sulbarT->sulbarT;?>,
+                                                                    Sultra: <?php echo $sultraT->sultraT;?>, 
+                                                                    Sulteng: <?php echo $sultengT->sultengT;?>,
+                                                                    Gorontalo : <?php echo $gorontaloT->gorontaloT;?>, 
+                                                                    Sulut: <?php echo $sulutT->sulutT;?>
                                                                     <br><br>
+
                                                                     Piket Mini NOC Retail : <br>
                                                                     Pagi : <br>
                                                                     Sore : <br>
                                                                     Malam : <br><br>
-
+                                                                    <div id="makassar-content"></div>
 
                                                                     </div>
                                                                     <div class="tab-pane" id="kendari" role="tabpanel">
@@ -1904,6 +1910,7 @@
     <script src="assets/libs/feather-icons/feather.min.js"></script>
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="assets/js/plugins.js"></script>
+    <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!-- swiper js -->
     <script src="assets/libs/swiper/swiper-bundle.min.js"></script>
@@ -1913,6 +1920,57 @@
 
     <!-- App js -->
     <script src="assets/js/app.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Lakukan AJAX request saat halaman dibuka
+        $.ajax({
+            url: 'Report/makassar', // URL yang akan dipanggil
+            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
+            success: function(response) {
+                $('#makassar-content').html(response);
+                // console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
+            }
+        });
+
+        $.ajax({
+            url: 'Report/kendari', // URL yang akan dipanggil
+            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
+            success: function(response) {
+                $('#kendari').html(response);
+                // console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
+            }
+        });
+
+        $.ajax({
+            url: 'Report/manado', // URL yang akan dipanggil
+            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
+            success: function(response) {
+                $('#manado').html(response);
+                // console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
+            }
+        });
+
+        $('#copy-button').click(function() {
+         var content = $('#makassar').text();
+         var tempInput = document.createElement('input');
+         tempInput.value = content;
+         document.body.appendChild(tempInput);
+         tempInput.select();
+         document.execCommand('copy');
+         document.body.removeChild(tempInput);
+         alert('Konten telah disalin!');
+        });
+    });
+    </script>
 </body>
 
 
