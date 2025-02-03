@@ -23,6 +23,17 @@ class DashboardCs extends CI_Controller {
 		$this->load->view('navbar');
 		$this->load->view('dashboardCs');
 	}
+	public function hardcomplain()
+	{
+		$id = $this->input->get('id');
+		$q = $this->db->query("UPDATE tiket SET prioritas='High' WHERE idTiket='$id'");
+		if($q){
+			echo 'success';
+		}else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}	
+	}
 	public function search(){
 		$estimasihari = 3;
 		$param = $this->input->post('param');
@@ -69,19 +80,27 @@ class DashboardCs extends CI_Controller {
 		if (!empty($filteredData)) {
 			foreach ($filteredData as $row) {
 				// echo $row['idInsiden'] . ' - ' . $row['nama'] . ' - ' . $row['urutan'] . "<br>";
-				if ($row["urutan"]/$estimasihari<2){
-					$antrian = "Hari Ini";
+				if ($row["urutan"]==0){
+					$ke = "Belum Ada Tim";
+					$antrian = "Belum Ada Estimasi";
 				}else{
-					$calc = intval($row["urutan"]/$estimasihari)-1;
-					$antrian = $calc." Hari";
+					$ke = $row["urutan"];
+					if ($row["urutan"]/$estimasihari<2){
+						$antrian = "Hari Ini";
+					}else{
+						$calc = intval($row["urutan"]/$estimasihari)-1;
+						$antrian = $calc." Hari";
+					}
 				}
+
+				
 				echo '
                 <div class="row">
                     <div class="col-md-6">
                         <h5 class="card-title mb-3 flex">Detail</h5>
                     </div>
                     <div class="col-md-6" style="text-align: right;">
-                        <button type="button" data-id="'.$row["idInsiden"].'" class="btn rounded-pill btn-danger waves-effect waves-light">Hard Complaint</button>
+                        <button id="hardcomplain" type="button" data-id="'.$row["idInsiden"].'" class="btn rounded-pill btn-danger waves-effect waves-light">Hard Complain</button>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -96,29 +115,89 @@ class DashboardCs extends CI_Controller {
                                 <td class="text-muted">'.$row["telepon"].'</td>
                             </tr>
                             <tr>
-                                <th class="ps-0" scope="row">Alamat :</th>
-                                <td class="text-muted">'.$row["alamat"].'</td>
-                            </tr>
-                            <tr>
                                 <th class="ps-0" scope="row">SID :</th>
                                 <td class="text-muted">'.$row["sid"].'
                                 </td>
                             </tr>
-                            <tr>
-                                <th class="ps-0" scope="row">Antrian ke</th>
-                                <td class="text-muted">'.$row["urutan"].'</td>
+							<tr>
+                                <th class="ps-0" scope="row">Alamat :</th>
+                                <td class="text-muted">'.$row["alamat"].'</td>
                             </tr>
 							<tr>
-                                <th class="ps-0" scope="row">Estimasi</th>
+                                <th class="ps-0" scope="row">Kabupaten :</th>
+                                <td class="text-muted">'.$row["kabupaten"].'</td>
+                            </tr>
+							<tr>
+                                <th class="ps-0" scope="row">Tim :</th>
+                                <td class="text-muted">'.$row["tim"].'</td>
+                            </tr>
+							
+                            <tr>
+                                <th class="ps-0" scope="row">Antrian ke :</th>
+                                <td class="text-muted">'.$ke.'</td>
+                            </tr>
+							<tr>
+                                <th class="ps-0" scope="row">Estimasi :</th>
                                 <td class="text-muted">'.$antrian.'</td>
                             </tr>
 							<tr>
-                                <th class="ps-0" scope="row">Keterangan</th>
+                                <th class="ps-0" scope="row">Keterangan :</th>
                                 <td class="text-muted">'.$row["keterangan"].'</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+				<script>
+					document.getElementById("hardcomplain") && document.getElementById("hardcomplain").addEventListener("click", function() {
+						Swal.fire({
+							title: "Are you sure?",
+							text: "Ticket Priority Will Set to High!",
+							icon: "warning",
+							showCancelButton: !0,
+							customClass: {
+								confirmButton: "btn btn-primary w-xs me-2 mt-2",
+								cancelButton: "btn btn-danger w-xs mt-2"
+							},
+							confirmButtonText: "Yes",
+							buttonsStyling: !1,
+							showCloseButton: !0
+						}).then(function(t) {
+							console.log(t.value);
+							var response;
+							if(t.value){
+								$.ajax({
+									url: "DashboardCs/hardcomplain?id='.$row["idTiket"].'",
+									type: "GET",
+									success: function(res) {
+										console.log(res);
+										if (res=="success"){
+											Swal.fire({
+												title: "Success!",
+												text: "Priority Changed Successfully.",
+												icon: "success",
+												customClass: {
+													confirmButton: "btn btn-primary w-xs mt-2"
+												},
+												buttonsStyling: !1
+											}) 
+										}else{
+											Swal.fire({
+												title: "Error!",
+												text: "Unknown Error Occured.",
+												icon: "warning",
+												customClass: {
+													confirmButton: "btn btn-primary w-xs mt-2"
+												},
+												buttonsStyling: !1
+											})
+										}
+									}
+								})
+								
+							}
+						})
+					})
+				</script>
                 ';
 				break;
 			}

@@ -34,6 +34,12 @@ function initializeTables() {
         ],
         responsive: true 
     });
+    new DataTable('#datatim', {
+        responsive: true 
+    });
+    new DataTable('#dataolt', {
+        responsive: true 
+    });
 }
 document.addEventListener("DOMContentLoaded", function() {
     initializeTables();

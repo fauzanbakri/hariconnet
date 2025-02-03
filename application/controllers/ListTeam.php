@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Feeder extends CI_Controller {
+class ListTeam extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,14 +20,12 @@ class Feeder extends CI_Controller {
 	 */
 	public function index()
 	{
-		$q['data'] = $this->db->query("
-			SELECT * FROM feeder")->result();
 		$q['tim'] = $this->db->query("
 		SELECT * FROM tim")->result();
-		$q['olt'] = $this->db->query("
-		SELECT * FROM olt")->result();
+		// $q['olt'] = $this->db->query("
+		// SELECT * FROM tim")->result();
 		$this->load->view('navbar');
-		$this->load->view('feeder', $q);
+		$this->load->view('listTeam', $q);
 	}
 	public function autoArea(){
 		$olt = $this->input->get('area');

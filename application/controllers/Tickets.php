@@ -181,7 +181,8 @@ class tickets extends CI_Controller {
 			
 	}
 	public function changeShift(){
-		$data = $this->db->query("SELECT * FROM tiket WHERE status='close'")->result();
+		$data = $this->db->query("SELECT * FROM tiket WHERE status='closed'")->result();
+		$data2 = $this->db->query("SELECT * FROM feeder WHERE status='closed'")->result();
 		$this->db->trans_start();
 		foreach ($data as $row){
 			$idTiket = $row->idTiket;
@@ -201,6 +202,7 @@ class tickets extends CI_Controller {
 			$createby = $row->createby;
 
 			$this->db->query("INSERT INTO tiketClose VALUES(
+			'',
 			'$idTiket',
 			'$idInsiden',
 			'$tanggal',
@@ -219,16 +221,55 @@ class tickets extends CI_Controller {
 			)");
 			// echo $row->idTiket;
 		}
+		foreach ($data2 as $row){
+			$id = $row->id;
+			$idInsiden = $row->idInsiden;
+			$downtime = $row->downtime;
+			$tipe = $row->tipe;
+			$kp = $row->kp;
+			$kode = $row->kode;
+			$idOlt = $row->idOlt;
+			$gangguan = $row->gangguan;
+			$tim = $row->tim;
+			$status = $row->status;
+			$keterangan = $row->keterangan;
+			$jumlahTiket = $row->jumlahTiket;
+			$tipePenyebab = $row->tipePenyebab;
+			$createby = $row->createby;
+			$timestamp = $row->timestamp;
+			$this->db->query("INSERT INTO feederClose VALUES(
+			'$idTiket',
+			'$idInsiden',
+			'$downtime',
+			'$tipe',
+			'$kp',
+			'$kode',
+			'$idOlt',
+			'$gangguan',
+			'$tim',
+			'$status',
+			'$keterangan',
+			'$jumlahTiket',
+			'$tipePenyebab',
+			'$createby',
+			'$timestamp'
+			)");
+		}
 		if ($this->db->trans_status() === FALSE){
 			$this->db->trans_rollback();
 		}
 		else{
 			$this->db->trans_commit();
 			$data = $this->db->query("SELECT * FROM tiket WHERE status='closed'")->result();
+			$data2 = $this->db->query("SELECT * FROM feeder WHERE status='closed'")->result();
 			$this->db->trans_start();
 			foreach ($data as $row){
 				$idTiket = $row->idTiket;
 				$this->db->query("DELETE FROM tiket WHERE idTiket='$idTiket'");
+			}
+			foreach ($data2 as $row){
+				$id = $row->id;
+				$this->db->query("DELETE FROM feeder WHERE id='$id'");
 			}
 			if ($this->db->trans_status() === FALSE){
 				$this->db->trans_rollback();

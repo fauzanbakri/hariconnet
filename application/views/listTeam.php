@@ -28,14 +28,14 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Incident Feeder</h5><br>
+                                    <h5 class="card-title mb-0">List Team</h5><br>
                                     <!-- Base Buttons -->
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
                                  <div class="row">
                                     <div class="col-md-3">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
-                                            Add New Incident
+                                            Add New Team
                                         </button>
                                         <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                     </div>
@@ -44,7 +44,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalgridLabel">New Feeder</h5>
+                                                <h5 class="modal-title" id="exampleModalgridLabel">New Team</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -266,91 +266,28 @@
 
                                 </div>
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                    <table id="datatim" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Insiden</th>
-                                                <th>Downtime</th>
-                                                <th>Durasi</th>
-                                                <th>Tipe</th>
-                                                <th>KP</th>
-                                                <th>Kode Area</th>
-                                                <th>OLT</th>
-                                                <th>Deskripsi</th>
-                                                <th>Tim</th>
-                                                <th>Deskripsi Insiden</th>
-                                                <th>Status</th>
-                                                <th>Jumlah Tiket</th>
-                                                <th>Tipe Penyebab</th>
-                                                <th>ID</th>
-                                                <th>Keterangan</th>
-                                                <th>Last Update By</th>
-                                                <th>Timestamp</th>
+                                                <th>id</th>
+                                                <th>Team Name</th>
+                                                <th>Lattitude</th>
+                                                <th>Longitude</th>
+                                                <th>Segment</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <!-- <span class="badge bg-danger">Danger</span> -->
                                         <tbody>
                                             <?php
-                                            $count = 0;
-                                            foreach ($data as $row){
-                                                date_default_timezone_set('Asia/Makassar');
-                                                $tanggalSekarang = new DateTime();
-                                                $durasi1 = new DateTime($row->downtime);
-                                                $selisih = $durasi1->diff($tanggalSekarang);
-                                                $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
-                                                $count = $count + 1;
-                                                if($row->tipe=="FTTH BACKBONE"){
-                                                    $v = "OLT TO UPLINK";
-                                                }elseif($row->tipe=="FTTH FEEDER"){
-                                                    $v = "FDT TO OLT";
-                                                }else{
-                                                    $v = "FAT TO FDT";
-                                                }
-
-                                                if($row->tipe=="FTTH BACKBONE"){
-                                                    $a = '<span class="badge border border-danger text-danger">FTTH BACKBONE</span>';
-                                                }elseif($row->tipe=="FTTH FEEDER"){
-                                                    $a = '<span class="badge border border-warning text-warning">FTTH FEEDER</span>';
-                                                }else{
-                                                    $a = '<span class="badge border border-info text-info">FTTH DISTRIBUSI</span>';
-                                                }
-
-
-                                                if($row->status=="CLOSED"){
-                                                    $b = '<span class="badge bg-success">CLOSED</span>';
-                                                }elseif($row->status=="ON PROGRESS"){
-                                                    $b = '<span class="badge border border-info text-info">ON PROGRESS</span>';
-                                                }elseif($row->status=="SOLVED (ICRM OPEN)"){
-                                                    $b = '<span class="badge border border-success text-success">SOLVED (ICRM OPEN)</span>';
-                                                }elseif($row->status=="STOPCLOCK"){
-                                                    $b = '<span class="badge border border-primary text-primary">STOPCLOCK</span>';
-                                                }elseif($row->status=="ANTRIAN"){
-                                                    $b = '<span class="badge border border-warning text-warning">ANTRIAN</span>';
-                                                }else{
-                                                    $b = '<span class="badge border border-dark text-body">OPEN</span>';
-                                                }
+                                            foreach ($tim as $row){
                                                 echo "
                                                 <tr>
-                                                    <td>".$count."</td>
-                                                    <td>".$row->idInsiden."</td>
-                                                    <td>".$row->downtime."</td>
-                                                    <td>".$durasi."</td>
-                                                    <td>".$a."</td>
-                                                    <td>".$row->kp."</td>
-                                                    <td>".$row->kode."</td>
-                                                    <td>".$row->idOlt."</td>
-                                                    <td>".$row->gangguan."</td>
-                                                    <td>".$row->tim."</td>
-                                                    <td>"."INSIDEN NO. ".$row->idInsiden." ".$row->tipe."_".$row->kode." [PROAKTIF NOC SBU]_".$v." ".$row->idOlt." ".$row->gangguan."</td>
-                                                    <td>".$b."</td>
-                                                    <td>".$row->jumlahTiket."</td>
-                                                    <td>".$row->tipePenyebab."</td>
-                                                    <td>".$row->id."</td>
-                                                    <td>".$row->keterangan."</td>
-                                                    <td>".$row->createby."</td>  
-                                                    <td>".$row->timestamp."</td>  
+                                                    <td>".$row->idTim."</td>
+                                                    <td>".$row->nama."</td>
+                                                    <td>".$row->lat."</td>
+                                                    <td>".$row->longi."</td>
+                                                    <td>".$row->segmen."</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -359,12 +296,12 @@
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li><a href='#' class='dropdown-item'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>                                                                
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-idfeeder='".$row->id."' data-editarea='".$row->kode."' data-editdeskripsi='".$row->gangguan."' data-editincident='".$row->idInsiden."' data-editdowntime='".$row->downtime."' data-edittipe='".$row->tipe."' data-editkp='".$row->kp."' data-editkode='".$row->kode."' data-editolt='".$row->idOlt."' data-editgangguan='".$row->gangguan."' data-edittim='".$row->tim."' data-editstatus='".$row->status."' data-editketerangan='".$row->keterangan."' data-editjumlahTiket='".$row->jumlahTiket."' data-edittipepenyebab='".$row->tipePenyebab."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-idfeeder='".$row->idTim."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->id.">
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idTim."'>
                                                                         <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
                                                                     </a>
                                                                 </li>
