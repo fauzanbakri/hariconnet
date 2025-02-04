@@ -34,7 +34,7 @@
                                                     <div>
                                                         <p class="fw-medium text-muted mb-0">Total Incident</p>
                                                         <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?php foreach($total as $row){echo $row->total;}?>"></span></h2>
-                                                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> <i class="ri-arrow-up-line align-middle"></i> Closed </span> <?php foreach($close as $row){echo $row->close;}?> Tickets</p>
+                                                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> Closed </span> <?php foreach($close as $row){echo $row->close;}?> Tickets</p>
                                                     </div>
                                                     <div>
                                                         <div class="avatar-sm flex-shrink-0">
@@ -243,7 +243,5 @@
     <!-- App js -->
     <script src="assets/js/app.js"></script>
 </body>
-
-
 <!-- Mirrored from themesbrand.com/velzon/html/default/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 05:17:42 GMT -->
 </html>

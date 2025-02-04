@@ -287,17 +287,17 @@
                                                 <th>Nama</th>
                                                 <th>Status</th>
                                                 <th>OLT</th>
-                                                <th>Alamat</th>
+                                                <th>Keterangan</th>
                                                 <th>Kendala</th>
                                                 <th>Kabupaten</th>
-                                                <th>Provinsi</th>
+                                                <th>Serial Number</th>
                                                 <th>Tim</th>
                                                 <th>Posisi Antrian</th>
+                                                <th>Provinsi</th>
+                                                <th>Telepon</th>
+                                                <th>Alamat</th>
                                                 <th>Last Update By</th>
                                                 <th>timestamp</th>
-                                                <th>Serial Number</th>
-                                                <th>Telepon</th>
-                                                <th>Keterangan</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -340,17 +340,17 @@
                                                     <td>".$row->nama."</td>
                                                     <td>".$a."</td>
                                                     <td>".$row->idOlt."</td>
-                                                    <td>".$row->alamat."</td>
+                                                    <td>".$row->keterangan."</td>
                                                     <td>".$row->keluhan."</td>
                                                     <td>".$row->kabupaten."</td>
-                                                    <td>".$row->provinsi."</td>
+                                                    <td>".$row->sn."</td>  
                                                     <td>".$row->tim."</td>
                                                     <td>".$row->urutan."</td>  
+                                                    <td>".$row->provinsi."</td>
+                                                    <td>".$row->telepon."</td> 
+                                                    <td>".$row->alamat."</td>
                                                     <td>".$row->createby."</td>  
                                                     <td>".$row->timestamp."</td>  
-                                                    <td>".$row->sn."</td>  
-                                                    <td>".$row->telepon."</td> 
-                                                    <td>".$row->keterangan."</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
