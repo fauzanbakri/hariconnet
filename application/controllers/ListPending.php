@@ -80,26 +80,30 @@ class ListPending extends CI_Controller {
            }
        }
    }
-   public function manado(){
-        $q = $this->db->query("SELECT DISTINCT tiket.tim FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi IN ('Sulawesi Utara', 'Gorontalo') ORDER BY kabupaten DESC;")->result();
+   public function pending(){
+        $q = $this->db->query("SELECT DISTINCT tiket.tim FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt ORDER BY tim ASC;")->result();
         foreach($q as $kab){
-            if ($kab->kabupaten!=''){
-                echo "=====".$kab->kabupaten."=====<br><br>";
-                $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten';")->result();
-                $no = 1;
+            if ($kab->tim!=''){
+                echo ">>>>>>".$kab->tim."<<<<<<<br><br>";
+                $qn = $this->db->query("SELECT DISTINCT kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE tiket.tim='$kab->tim' ORDER BY kabupaten DESC;")->result();
                 foreach($qn as $d){
-                    echo $no.".
-                    NO INCIDENT: ".$d->idInsiden."<br>
-                    TANGGAL MASUK: ".$d->tanggal."<br>
-                    NO TIKET: ".$d->idTiket."<br>
-                    SID/CRM ID: ".$d->sid."<br>
-                    TELEPON: ".$d->telepon."<br>
-                    NAMA: ".$d->nama."<br>
-                    KELUHAN: ".$d->keluhan."<br>
-                    ALAMAT: ".$d->alamat."<br>
-                    TERMINATING: ".$d->idOlt."/".$d->sn."<br><br>
-                    ";
-                    $no++;
+                    echo "=====".$d->kabupaten."=====<br><br>";
+                    $qx = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$d->kabupaten' AND tim='$kab->tim' ORDER BY prioritas, tanggal ASC;")->result();
+                    $no = 1;
+                    foreach ($qx as $c){
+                        echo $no.".
+                        NO INCIDENT: ".$c->idInsiden."<br>
+                        TANGGAL MASUK: ".$c->tanggal."<br>
+                        NO TIKET: ".$c->idTiket."<br>
+                        SID/CRM ID: ".$c->sid."<br>
+                        TELEPON: ".$c->telepon."<br>
+                        NAMA: ".$c->nama."<br>
+                        KELUHAN: ".$c->keluhan."<br>
+                        ALAMAT: ".$c->alamat."<br>
+                        TERMINATING: ".$c->idOlt."/".$c->sn."<br><br>
+                        ";
+                        $no++;
+                    }
                 }
             }
         }

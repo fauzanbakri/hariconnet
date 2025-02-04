@@ -23,12 +23,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="tab-content text-muted">
-                                    <div class="tab-pane active" id="makassar" role="tabpanel">
-                                        <?php 
-                                            foreach ($pending as $row){
-
-                                            }
-                                        ?>
+                                    <div class="tab-pane active" id="tiketpending" role="tabpanel">
                                     </div>
                                 </div>
                             </div><!-- end card body -->
@@ -94,72 +89,15 @@
     <script src="assets/js/app.js"></script>
     <script>
     $(document).ready(function() {
-        // Lakukan AJAX request saat halaman dibuka
         $.ajax({
-            url: 'Report/makassar', // URL yang akan dipanggil
-            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
+            url: 'ListPending/pending', 
+            type: 'GET',
             success: function(response) {
-                $('#makassar-content').html(response);
-                // console.log(response);
+                $('#tiketpending').html(response);
             },
             error: function(xhr, status, error) {
                 $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
             }
-        });
-
-        $.ajax({
-            url: 'Report/kendari', // URL yang akan dipanggil
-            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
-            success: function(response) {
-                $('#kendari').html(response);
-                // console.log(response);
-            },
-            error: function(xhr, status, error) {
-                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
-            }
-        });
-
-        $.ajax({
-            url: 'Report/manado', // URL yang akan dipanggil
-            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
-            success: function(response) {
-                $('#manado').html(response);
-                // console.log(response);
-            },
-            error: function(xhr, status, error) {
-                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
-            }
-        });
-
-        $('#copy-button').click(function() {
-         var content = $('#makassar').text();
-         var tempInput = document.createElement('input');
-         tempInput.value = content;
-         document.body.appendChild(tempInput);
-         tempInput.select();
-         document.execCommand('copy');
-         document.body.removeChild(tempInput);
-         alert('Konten telah disalin!');
-        });
-
-        $('#generate').on('click', function (e) {
-            const formData = {
-                makassartotal: $('[name="makassartotal"]').val(),
-                makassardivision: $('[name="makassardivision"]').val(),
-                kendaritotal: $('[name="kendaritotal"]').val(),
-                kendaridivision: $('[name="kendaridivision"]').val(),
-                manadototal: $('[name="manadototal"]').val(),
-                manadodivision: $('[name="manadodivision"]').val()
-            };
-            $.ajax({
-                url: 'Report/totaltiket',
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    // console.log(response);
-                    $('#totaltiket').html(response);
-                }
-            });
         });
     });
     </script>
