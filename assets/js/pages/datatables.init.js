@@ -2,6 +2,9 @@ function initializeTables() {
     new DataTable('#tiketclosetable', {
         responsive: true 
     });
+    new DataTable('#feederclosetable', {
+        responsive: true 
+    });
     new DataTable('#example', {
         lengthMenu: [
             [-1, 10, 25, 50],
