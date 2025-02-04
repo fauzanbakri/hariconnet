@@ -511,9 +511,19 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="ClosedInc" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="mdi mdi-progress-check"></i> <span data-key="t-layouts">Closed Incident</span>
+                            <a class="nav-link menu-link" href="#closeincident" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                <i class="mdi mdi mdi-progress-check"></i> <span data-key="t-dashboards">Closed Incident</span>
                             </a>
+                            <div class="collapse menu-dropdown" id="closeincident">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="TicketClose" class="nav-link" data-key="t-analytics"> Tickets </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="FeederClose" class="nav-link" data-key="t-crm"> Feeder </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <!-- end Dashboard Menu -->
 

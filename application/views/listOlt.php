@@ -19,7 +19,6 @@
                                         <li class="breadcrumb-item active">Ticket</li>
                                     </ol>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -28,14 +27,14 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">List Team</h5><br>
+                                    <h5 class="card-title mb-0">List OLT</h5><br>
                                     <!-- Base Buttons -->
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
                                  <div class="row">
                                     <div class="col-md-3">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
-                                            Add New Team
+                                            Add New OLT
                                         </button>
                                         <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                     </div>
@@ -44,55 +43,33 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalgridLabel">New Team</h5>
+                                                <h5 class="modal-title" id="exampleModalgridLabel">New OLT</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                     <div class="row g-3">
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Incident</label>
-                                                                <input type="text" class="form-control" name="incident" id="incident" autocomplete="off" placeholder="Incident">
+                                                                <label class="form-label">Hostname</label>
+                                                                <input type="text" class="form-control" name="hostname" id="hostname" autocomplete="off" placeholder="Hostname OLT">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Downtime</label>
-                                                                <input type="text" class="form-control" name="downtime" id="downtime" autocomplete="off" placeholder="Tanggal">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Type</label>
-                                                            <select class="form-select mb-3" name="tipe" id="tipe" aria-label="Default select example">
-                                                                <option value="FTTH BACKBONE">FTTH BACKBONE</option>
-                                                                <option value="FTTH FEEDER">FTTH FEEDER</option>
-                                                                <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">KP</label>
-                                                            <select class="form-select mb-3" name="kp" id="kp" aria-label="Default select example">
-                                                                <option value="MAKASSAR">MAKASSAR</option>
-                                                                <option value="KENDARI">KENDARI</option>
-                                                                <option value="MANADO">MANADO</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="autoCompleteFruit" class="text-muted">OLT</label>
-                                                                <input id="olt" class="olt" type="text" name="olt" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
+                                                                <label for="lastName" class="form-label">UPE</label>
+                                                                <input type="text" class="form-control" name="upe" id="upe" autocomplete="off" placeholder="UPE">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Kode Area</label>
-                                                                <input type="text" class="form-control" id="area" name="area" autocomplete="off" placeholder="Kode Area">
+                                                                <label for="lastName" class="form-label">Latitude</label>
+                                                                <input type="text" class="form-control" name="latitude" id="latitude" autocomplete="off" placeholder="Latitude">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Deskripsi</label>
-                                                                <input type="text" class="form-control" id="deskripsi" name="deskripsi" autocomplete="off" placeholder="Deskripsi">
+                                                                <label for="lastName" class="form-label">Longitude</label>
+                                                                <input type="text" class="form-control" name="longitude" id="longitude" autocomplete="off" placeholder="Longitude">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -108,47 +85,6 @@
                                                                 ?>
                                                             </select>
                                                         </div>
-                                                        <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Status</label>
-                                                            <select class="form-select mb-3" name="status" id="status1" aria-label="Default select example">
-                                                                <option value="OPEN">OPEN</option>
-                                                                <option value="ANTRIAN">ANTRIAN</option>
-                                                                <option value="ON PROGRESS">ON PROGRESS</option>
-                                                                <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
-                                                                <option value="STOPCLOCK">STOPCLOCK</option>
-                                                                <option value="CLOSED">CLOSED</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="lastName" class="form-label">Jumlah Tiket</label>
-                                                                <input type="text" class="form-control" id="jumlahtiket" name="jumlahtiket" autocomplete="off" placeholder="Jumlah Tiket">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Tipe Penyebab</label>
-                                                            <select class="form-select mb-3" name="tipePenyebab" id="tipePenyebab" aria-label="Default select example">
-                                                                <option value="Belum Diketahui">Belum Diketahui</option>
-                                                                <option value="Putus Kabel">Putus Kabel</option>
-                                                                <option value="Kabel Bending">Kabel Bending</option>
-                                                                <option value="Putus Core">Putus Core</option>
-                                                                <option value="FOC Konektor">FOC Konektor</option>
-                                                                <option value="FOT Perangakat">FOT Perangkat</option>
-                                                                <option value="FOC Konektor">Power Supply</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="lastName" class="form-label">Keterangan</label>
-                                                                <input type="text" class="form-control" id="keterangan" name="keterangan" autocomplete="off" placeholder="Keterangan">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="hstack gap-2 justify-content-end">
-                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                <button class="btn btn-primary" id="submitBtn">Submit</button>
-                                                            </div>
-                                                        </div><!--end col-->
                                                     </div><!--end row-->
                                                 <!-- </form> -->
                                             </div>
@@ -269,25 +205,31 @@
                                     <table id="datatim" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>id</th>
-                                                <th>Team Name</th>
+                                                <th>Hostname</th>
                                                 <th>Lattitude</th>
                                                 <th>Longitude</th>
-                                                <th>Segment</th>
+                                                <th>UPE</th>
+                                                <th>Team</th>
+                                                <th>Kecamatan</th>
+                                                <th>Kabupaten</th>
+                                                <th>Provinsi</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <!-- <span class="badge bg-danger">Danger</span> -->
                                         <tbody>
                                             <?php
-                                            foreach ($tim as $row){
+                                            foreach ($olt as $row){
                                                 echo "
                                                 <tr>
-                                                    <td>".$row->idTim."</td>
-                                                    <td>".$row->nama."</td>
+                                                    <td>".$row->idOlt."</td>
                                                     <td>".$row->lat."</td>
                                                     <td>".$row->longi."</td>
-                                                    <td>".$row->segmen."</td>
+                                                    <td>".$row->upe."</td>
+                                                    <td>".$row->serpo."</td>
+                                                    <td>".$row->kecamatan."</td>
+                                                    <td>".$row->kabupaten."</td>
+                                                    <td>".$row->provinsi."</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -295,12 +237,12 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-idfeeder='".$row->idTim."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-idOlt='".$row->idOlt."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idTim."'>
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idOlt."'>
                                                                         <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
                                                                     </a>
                                                                 </li>
