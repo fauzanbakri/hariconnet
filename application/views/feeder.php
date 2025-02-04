@@ -221,6 +221,7 @@
                                                             <label for="lastName" class="form-label">Status</label>
                                                             <select class="form-select mb-3" name="editstatus" id="editstatus" aria-label="Default select example">
                                                                 <option value="OPEN">OPEN</option>
+                                                                <option value="ANTRIAN">ANTRIAN</option>
                                                                 <option value="ON PROGRESS">ON PROGRESS</option>
                                                                 <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
                                                                 <option value="STOPCLOCK">STOPCLOCK</option>

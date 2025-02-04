@@ -510,6 +510,11 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="ClosedInc" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                <i class="mdi mdi-progress-check"></i> <span data-key="t-layouts">Closed Incident</span>
+                            </a>
+                        </li>
                         <!-- end Dashboard Menu -->
 
                     </ul>
