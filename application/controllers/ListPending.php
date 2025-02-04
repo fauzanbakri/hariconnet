@@ -81,14 +81,14 @@ class ListPending extends CI_Controller {
        }
    }
    public function pending(){
-        $q = $this->db->query("SELECT DISTINCT tiket.tim FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt ORDER BY tim ASC;")->result();
+        $q = $this->db->query("SELECT DISTINCT tiket.tim FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE tiket.status!='closed' ORDER BY tim ASC;")->result();
         foreach($q as $kab){
             if ($kab->tim!=''){
                 echo '<span class="badge badge-label bg-secondary"><i class="mdi mdi-circle-medium"></i>'.$kab->tim.'</span><br><br>';
-                $qn = $this->db->query("SELECT DISTINCT kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE tiket.tim='$kab->tim' ORDER BY kabupaten DESC;")->result();
+                $qn = $this->db->query("SELECT DISTINCT kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE tiket.tim='$kab->tim' AND tiket.status!='closed' ORDER BY kabupaten DESC;")->result();
                 foreach($qn as $d){
                     echo "=====".$d->kabupaten."=====<br><br>";
-                    $qx = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$d->kabupaten' AND tim='$kab->tim' ORDER BY prioritas, tanggal ASC;")->result();
+                    $qx = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$d->kabupaten' AND tim='$kab->tim' AND tiket.status!='closed' ORDER BY prioritas, tanggal ASC;")->result();
                     $no = 1;
                     foreach ($qx as $c){
                         echo $no.".
