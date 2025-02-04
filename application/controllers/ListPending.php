@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Report extends CI_Controller {
+class ListPending extends CI_Controller {
 	public function index()
 	{
         $q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->row();
@@ -37,7 +37,7 @@ class Report extends CI_Controller {
         foreach($q as $kab){
             if ($kab->kabupaten!=''){
                 echo "=====".$kab->kabupaten."=====<br><br>";
-                $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten'  ORDER BY tanggal DESC;")->result();
+                $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten';")->result();
                 $no = 1;
                 foreach($qn as $d){
                     echo $no.".
@@ -61,7 +61,7 @@ class Report extends CI_Controller {
        foreach($q as $kab){
            if ($kab->kabupaten!=''){
                echo "=====".$kab->kabupaten."=====<br><br>";
-               $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten'  ORDER BY tanggal DESC;")->result();
+               $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten';")->result();
                $no = 1;
                foreach($qn as $d){
                    echo $no.".
@@ -85,7 +85,7 @@ class Report extends CI_Controller {
         foreach($q as $kab){
             if ($kab->kabupaten!=''){
                 echo "=====".$kab->kabupaten."=====<br><br>";
-                $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten' ORDER BY tanggal DESC;")->result();
+                $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten';")->result();
                 $no = 1;
                 foreach($qn as $d){
                     echo $no.".

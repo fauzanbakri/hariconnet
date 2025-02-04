@@ -458,7 +458,7 @@
                         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                                <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                                <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-dashboards">Dashboards</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarDashboards">
                                 <ul class="nav nav-sm flex-column">
@@ -476,30 +476,41 @@
                         </li> <!-- end Dashboard Menu -->
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="Feeder" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Incident Feeder</span>
+                                <i class="mdi mdi-access-point-network"></i> <span data-key="t-layouts">Incident Feeder</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="Tickets" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Tickets</span>
+                                <i class="mdi mdi-ticket-confirmation-outline"></i> <span data-key="t-layouts">Tickets</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="ListTeam" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="ri-layout-3-line"></i> <span data-key="t-layouts">List Team</span>
+                                <i class="mdi mdi-account-hard-hat"></i> <span data-key="t-layouts">List Team</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="ListOlt" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="ri-layout-3-line"></i> <span data-key="t-layouts">List OLT</span>
+                                <i class="mdi mdi-router-network"></i> <span data-key="t-layouts">List OLT</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="Report" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Report</span>
+                            <a class="nav-link menu-link" href="#sidereport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                <i class="mdi mdi-newspaper-variant-multiple-outline"></i> <span data-key="t-dashboards">Report</span>
                             </a>
-                        </li> <!-- end Dashboard Menu -->
+                            <div class="collapse menu-dropdown" id="sidereport">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="Report" class="nav-link" data-key="t-analytics"> Report Shift </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="ListPending" class="nav-link" data-key="t-crm"> List Pending Team </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- end Dashboard Menu -->
 
                     </ul>
                 </div>
