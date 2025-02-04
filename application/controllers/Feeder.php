@@ -137,6 +137,7 @@ class Feeder extends CI_Controller {
 				idInsiden='$idInsiden',
 				downtime='$downtime',
 				tipe='$tipe',
+				olt='$olt',
 				kp='$kp',
 				kode='$area',
 				gangguan='$deskripsi',
