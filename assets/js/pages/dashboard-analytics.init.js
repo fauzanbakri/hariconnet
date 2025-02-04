@@ -90,6 +90,60 @@ window.onresize = function() {
     }, 0)
 }, loadCharts();
 var barchartCountriesColors = getChartColorsArray("countries_charts");
+function generateData(e, t) {
+    for (var a = 0, o = []; a < e;) {
+        var r = (a + 1).toString() + "h",
+            n = Math.floor(Math.random() * (t.max - t.min + 1)) + t.min;
+        o.push({
+            x: r,
+            y: n
+        }), a++
+    }
+    return o
+}
+barchartCountriesColors && (options = {
+    series: [{
+        data: [1010, 1640, 490, 1255, 1050, 689, 800, 420, 1085, 589],
+        name: "Sessions"
+    }],
+    chart: {
+        type: "bar",
+        height: 436,
+        toolbar: {
+            show: !1
+        }
+    },
+    plotOptions: {
+        bar: {
+            borderRadius: 4,
+            horizontal: !0,
+            distributed: !0,
+            dataLabels: {
+                position: "top"
+            }
+        }
+    },
+    colors: barchartCountriesColors,
+    dataLabels: {
+        enabled: !0,
+        offsetX: 32,
+        style: {
+            fontSize: "12px",
+            fontWeight: 400,
+            colors: ["#adb5bd"]
+        }
+    },
+    legend: {
+        show: !1
+    },
+    grid: {
+        show: !1
+    },
+    xaxis: {
+        categories: ["India", "United States", "China", "Indonesia", "Russia", "Bangladesh", "Canada", "Brazil", "Vietnam", "UK"]
+    }
+}, (chart = new ApexCharts(document.querySelector("#countries_charts"), options)).render());
+
 var barchartCountriesColors2 = getChartColorsArray("countries_charts2");
 
 function generateData(e, t) {
@@ -144,7 +198,7 @@ barchartCountriesColors && (options = {
     xaxis: {
         categories: ["India", "United States", "China", "Indonesia", "Russia", "Bangladesh", "Canada", "Brazil", "Vietnam", "UK"]
     }
-}, (chart = new ApexCharts(document.querySelector("#countries_charts"), options)).render());
+}, (chart = new ApexCharts(document.querySelector("#countries_charts2"), options)).render());
 var columnoptions, options, chart, chartHeatMapBasicColors = getChartColorsArray("audiences-sessions-country-charts"),
     chartAudienceColumnChartsColors = (chartHeatMapBasicColors && (options = {
         series: [{

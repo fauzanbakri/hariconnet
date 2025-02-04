@@ -130,17 +130,6 @@
                                     <div class="card card-height-100">
                                         <div class="card-header align-items-center d-flex">
                                             <h4 class="card-title mb-0 flex-grow-1">Tiket by Kabupaten</h4>
-                                            <div>
-                                                <button type="button" class="btn btn-soft-secondary btn-sm">
-                                                    ALL
-                                                </button>
-                                                <button type="button" class="btn btn-soft-primary btn-sm">
-                                                    1M
-                                                </button>
-                                                <button type="button" class="btn btn-soft-secondary btn-sm">
-                                                    6M
-                                                </button>
-                                            </div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div>
@@ -152,18 +141,7 @@
                                 <div class="col-xl-6">
                                     <div class="card card-height-100">
                                         <div class="card-header align-items-center d-flex">
-                                            <h4 class="card-title mb-0 flex-grow-1">Tiket by Provinsi</h4>
-                                            <div>
-                                                <button type="button" class="btn btn-soft-secondary btn-sm">
-                                                    ALL
-                                                </button>
-                                                <button type="button" class="btn btn-soft-primary btn-sm">
-                                                    1M
-                                                </button>
-                                                <button type="button" class="btn btn-soft-secondary btn-sm">
-                                                    6M
-                                                </button>
-                                            </div>
+                                            <h4 class="card-title mb-0 flex-grow-1">Tiket by Tim</h4>
                                         </div>
                                         <div class="card-body p-0">
                                             <div>

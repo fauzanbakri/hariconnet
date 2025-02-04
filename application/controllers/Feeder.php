@@ -22,10 +22,8 @@ class Feeder extends CI_Controller {
 	{
 		$q['data'] = $this->db->query("
 			SELECT * FROM feeder")->result();
-		$q['tim'] = $this->db->query("
-		SELECT * FROM tim")->result();
-		$q['olt'] = $this->db->query("
-		SELECT * FROM olt")->result();
+		$q['tim'] = $this->db->query("SELECT * FROM tim WHERE segmen='Korporat'")->result();
+		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		$this->load->view('navbar');
 		$this->load->view('feeder', $q);
 	}
