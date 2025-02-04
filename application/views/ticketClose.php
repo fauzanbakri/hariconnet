@@ -276,7 +276,6 @@
                                                 <th>Kabupaten</th>
                                                 <th>Serial Number</th>
                                                 <th>Tim</th>
-                                                <th>Posisi Antrian</th>
                                                 <th>Provinsi</th>
                                                 <th>Telepon</th>
                                                 <th>Alamat</th>
@@ -327,7 +326,6 @@
                                                     <td>".$row->kabupaten."</td>
                                                     <td>".$row->sn."</td>  
                                                     <td>".$row->tim."</td>
-                                                    <td>".$row->urutan."</td>  
                                                     <td>".$row->provinsi."</td>
                                                     <td>".$row->telepon."</td> 
                                                     <td>".$row->alamat."</td>
