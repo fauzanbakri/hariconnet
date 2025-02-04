@@ -357,8 +357,7 @@
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
-                                                            <ul class='dropdown-menu dropdown-menu-end'>
-                                                                <li><a href='#' class='dropdown-item'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>                                                                
+                                                            <ul class='dropdown-menu dropdown-menu-end'>               
                                                                 <li>
                                                                     <a href='#' class='dropdown-item edit-item-btn' data-idfeeder='".$row->id."' data-editarea='".$row->kode."' data-editdeskripsi='".$row->gangguan."' data-editincident='".$row->idInsiden."' data-editdowntime='".$row->downtime."' data-edittipe='".$row->tipe."' data-editkp='".$row->kp."' data-editkode='".$row->kode."' data-editolt='".$row->idOlt."' data-editgangguan='".$row->gangguan."' data-edittim='".$row->tim."' data-editstatus='".$row->status."' data-editketerangan='".$row->keterangan."' data-editjumlahTiket='".$row->jumlahTiket."' data-edittipepenyebab='".$row->tipePenyebab."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit

@@ -61,7 +61,7 @@
                                                                         <div class="col-sm-6">
                                                                             <div class="card-body">
                                                                                 <label for="basiInput" class="form-label">Manado Division</label>
-                                                                                <input type="text" autocomplete="off" class="form-control" name="manadodivison" id="manadodivision">
+                                                                                <input type="text" autocomplete="off" class="form-control" name="manadodivision" id="manadodivision">
                                                                             </div>
                                                                         </div>
                                                                     </div>
