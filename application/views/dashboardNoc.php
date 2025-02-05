@@ -79,7 +79,7 @@
                                                     <div>
                                                         <div class="avatar-sm flex-shrink-0">
                                                             <span class="avatar-title bg-info-subtle rounded-circle fs-2">
-                                                                <i data-feather="users" class="text-info"></i>
+                                                                <i class="mdi mdi-router-network text-info"></i>
                                                             </span>
                                                         </div>
                                                     </div>

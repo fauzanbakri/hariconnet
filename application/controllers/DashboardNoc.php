@@ -21,7 +21,7 @@ class DashboardNoc extends CI_Controller {
 	public function index()
 	{
 		$q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->result();
-		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSE'")->result();
+		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->result();
 		$q['olt'] = $this->db->query("SELECT COUNT(idOlt) as olt FROM olt")->result();
 
 
