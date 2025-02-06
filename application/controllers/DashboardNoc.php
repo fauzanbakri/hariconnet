@@ -31,6 +31,15 @@ class DashboardNoc extends CI_Controller {
         $query = $this->db->get();
         $q['data'] = $query->result_array();
 
+		$this->db->select('tim, COUNT(*) as count');
+        $this->db->from('tiket');
+        $this->db->join('olt', 'olt.idOlt = tiket.idOlt', 'left');
+        $this->db->group_by('tim');
+        $this->db->order_by('count', 'DESC');
+        $query = $this->db->get();
+        $q['tim'] = $query->result_array();
+
+
 		$this->load->view('navbar');
 		$this->load->view('dashboardNoc', $q);
 	}

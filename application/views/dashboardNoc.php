@@ -145,7 +145,7 @@
                                         </div>
                                         <div class="card-body p-0">
                                             <div>
-                                                <div id="countries_charts2" data-colors='["--vz-info", "--vz-info", "--vz-info", "--vz-info", "--vz-danger", "--vz-info", "--vz-info", "--vz-info", "--vz-info", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                                <div id="tim_chart" data-colors='["--vz-info", "--vz-info", "--vz-info", "--vz-info", "--vz-danger", "--vz-info", "--vz-info", "--vz-info", "--vz-info", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                             </div>
                                         </div><!-- end card body -->
                                     </div><!-- end card -->
@@ -208,7 +208,7 @@
 
     <!-- apexcharts -->
     <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-    <!-- <script src="assets/js/pages/apexcharts-line.init.js"></script> -->
+    <script src="assets/js/pages/apexcharts-line.init.js"></script>
 
 
     <!-- Vector map-->
@@ -223,72 +223,122 @@
     <script>
         window.onload = function() {
         var kabupatenData = <?php echo json_encode($data); ?>;
-
         var kabupaten = kabupatenData.map(function(item) {
         return item.kabupaten;
-    }).filter(function(item) {
-        return item !== null;
-    });
-
-    var count = kabupatenData.map(function(item) {
-        return item.count;
-    }).filter(function(item, index) {
-        return kabupaten[index] !== null; // Hanya menyertakan count jika kabupaten valid
-    });
-
-    console.log(kabupaten); // Cek array kabupaten
-    console.log(count);     // Cek array count
-
-    // Membuat opsi untuk grafik
-    var options = {
-        series: [{
-            name: "Jumlah Tiket",
-            data: count // Data Y (jumlah tiket)
-        }],
-        chart: {
-            type: "bar",
-            height: 1000,
-            toolbar: {
-                show: false
-            }
-        },
-        plotOptions: {
-            bar: {
-                borderRadius: 3,
-                horizontal: true, // Vertical bar chart
-                distributed: false,
-                dataLabels: {
-                    position: "top"
+        }).filter(function(item) {
+            return item !== null;
+        });
+        var count = kabupatenData.map(function(item) {
+            return item.count;
+        }).filter(function(item, index) {
+            return kabupaten[index] !== null; 
+        });
+        console.log(kabupaten); 
+        console.log(count);   
+        var options = {
+            series: [{
+                name: "Jumlah Tiket",
+                data: count 
+            }],
+            chart: {
+                type: "bar",
+                height: 700,
+                toolbar: {
+                    show: false
                 }
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 3,
+                    horizontal: true, 
+                    distributed: true,
+                    dataLabels: {
+                        position: "top"
+                    }
+                }
+            },
+            colors: ['#405189'],
+            dataLabels: {
+                enabled: true,
+                offsetX: 32,
+                style: {
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    colors: ["#adb5bd"]
+                }
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                show: false
+            },
+            xaxis: {
+                categories: kabupaten,
             }
-        },
-        colors: ['#405189'],
-        dataLabels: {
-            enabled: true,
-            offsetX: 32,
-            style: {
-                fontSize: "12px",
-                fontWeight: 400,
-                colors: ["#adb5bd"]
+        };
+        var chart = new ApexCharts(document.querySelector("#kabupaten_chart"), options);
+        chart.render();
+
+        var timData = <?php echo json_encode($tim); ?>;
+        var tim = timData.map(function(item) {
+        return item.tim;
+        }).filter(function(item) {
+            return item !== null;
+        });
+        var count = timData.map(function(item) {
+            return item.count;
+        }).filter(function(item, index) {
+            return tim[index] !== null; 
+        });
+        console.log(tim); 
+        console.log(count);   
+        var options = {
+            series: [{
+                name: "Jumlah Tiket",
+                data: count 
+            }],
+            chart: {
+                type: "bar",
+                height: 700,
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 3,
+                    horizontal: true, 
+                    distributed: true,
+                    dataLabels: {
+                        position: "top"
+                    }
+                }
+            },
+            colors: ['#405189'],
+            dataLabels: {
+                enabled: true,
+                offsetX: 32,
+                style: {
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    colors: ["#adb5bd"]
+                }
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                show: false
+            },
+            xaxis: {
+                categories: tim,
             }
-        },
-        legend: {
-            show: false
-        },
-        grid: {
-            show: false
-        },
-        xaxis: {
-            categories: kabupaten, // Data X (Kabupaten)
-        }
-    };
+        };
+        var chart = new ApexCharts(document.querySelector("#tim_chart"), options);
+        chart.render();
 
-    // Render grafik
-    var chart = new ApexCharts(document.querySelector("#kabupaten_chart"), options);
-    chart.render();
-    };
-
-            
+        };      
     </script>
 </body>
 <!-- Mirrored from themesbrand.com/velzon/html/default/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 05:17:42 GMT -->
