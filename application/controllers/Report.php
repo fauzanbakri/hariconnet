@@ -118,9 +118,9 @@ class Report extends CI_Controller {
         $kendaridivision = $this->input->post('kendaridivision');
         $manadodivision = $this->input->post('manadodivision');
 
-        $qm = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MAKASSAR'")->result();
-        $qk = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='KENDARI'")->result();
-        $qn = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MANADO'")->result();
+        $qm = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MAKASSAR' AND status!='CLOSED'")->result();
+        $qk = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='KENDARI' AND status!='CLOSED'")->result();
+        $qn = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MANADO' AND status!='CLOSED'")->result();
 
         $cm = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MAKASSAR'")->result();
         // echo $cm[0]->total;

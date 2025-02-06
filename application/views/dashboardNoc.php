@@ -52,14 +52,34 @@
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
-                                                        <p class="fw-medium text-muted mb-0">Total Team</p>
-                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="15">15</span></h2>
-                                                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> <i class="ri-arrow-up-line align-middle"></i> Closed </span> 100 Tickets</p>
+                                                        <p class="fw-medium text-muted mb-0">Tiket Above 3 Days</p>
+                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= $sla[0]->sla;?>"></span></h2>
+                                                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">  Total </span> <?= $total[0]->total;?> Tickets</p>
                                                     </div>
                                                     <div>
                                                         <div class="avatar-sm flex-shrink-0">
                                                             <span class="avatar-title bg-info-subtle rounded-circle fs-2">
-                                                                <i data-feather="users" class="text-info"></i>
+                                                                <i data-feather="ri-alert-line" class="text-info ri-alert-line"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end card body -->
+                                        </div> <!-- end card-->
+                                    </div> <!-- end col-->
+                                    <div class="col-md-6">
+                                        <div class="card card-animate">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <p class="fw-medium text-muted mb-0">Total Team</p>
+                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= $total_tim[0]->total_tim;?>"></span></h2>
+                                                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-2"> </span></p>
+                                                    </div>
+                                                    <div>
+                                                        <div class="avatar-sm flex-shrink-0">
+                                                            <span class="avatar-title bg-info-subtle rounded-circle fs-2">
+                                                                <i class="text-info mdi mdi-account-hard-hat"></i>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -80,26 +100,6 @@
                                                         <div class="avatar-sm flex-shrink-0">
                                                             <span class="avatar-title bg-info-subtle rounded-circle fs-2">
                                                                 <i class="mdi mdi-router-network text-info"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div> <!-- end card-->
-                                    </div> <!-- end col-->
-                                    <div class="col-md-6">
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-between">
-                                                    <div>
-                                                        <p class="fw-medium text-muted mb-0">Total Over SLA</p>
-                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= $olt[0]->olt;?>"></span></h2>
-                                                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0"> <i class="ri-arrow-up-line align-middle"></i> Closed </span> 100 Tickets</p>
-                                                    </div>
-                                                    <div>
-                                                        <div class="avatar-sm flex-shrink-0">
-                                                            <span class="avatar-title bg-info-subtle rounded-circle fs-2">
-                                                                <i data-feather="users" class="text-info"></i>
                                                             </span>
                                                         </div>
                                                     </div>
