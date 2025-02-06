@@ -358,6 +358,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li><a href='#' class='dropdown-item copy-btn' data-row='".htmlspecialchars(json_encode($row))."'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
+                                                                <li><a href='#' class='dropdown-item telegram-btn' data-id='".htmlspecialchars(json_encode($row))."'><i class='ri-send-plane-fill align-bottom me-2 text-muted'></i> Telegram</a></li>
                                                                 <li>
                                                                     <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-editincident='".$row->idInsiden."' data-edittiket='".$row->idTiket."' data-edittanggal='".$row->tanggal."' data-editsid='".$row->sid."' data-edittelepon='".$row->telepon."' data-editnama='".$row->nama."' data-editkeluhan='".$row->keluhan."' data-editalamat='".$row->alamat."' data-editOlt='".$row->idOlt."' data-editsn='".$row->sn."' data-editketerangan='".$row->keterangan."' data-editprioritas='".$row->prioritas."' data-edittim='".$row->tim."' data-editcreateby='".$row->createby."' data-editkabupaten='".$row->kabupaten."' data-editprovinsi='".$row->provinsi."' data-urutan='".$row->urutan."' data-timestamp='".$row->timestamp."' data-editstatus='".$row->status."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
@@ -778,39 +779,80 @@ TERMINATING: ${rowData.idOlt}/${rowData.sn}
         });
     });
     </script>
+
+<!-- Telegram -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.telegram-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const button1 = document.getElementById('toast');
+                const rowData = JSON.parse(this.getAttribute('data-id'));
+
+const formattedText = `
+NEW AR
+
+NO. INCIDENT: ${rowData.idInsiden}
+TANGGAL MASUK: ${rowData.tanggal}
+NO TIKET: ${rowData.idTiket}
+SID/CRM ID: ${rowData.sid}
+TELEPON: ${rowData.telepon}
+NAMA: ${rowData.nama}
+KELUHAN: ${rowData.keluhan}
+ALAMAT: ${rowData.alamat}
+TERMINATING: ${rowData.idOlt}/${rowData.sn}
+`;
+                // navigator.clipboard.writeText(formattedText).then(function() {
+                    $.ajax({
+                        url: 'Tickets/sendTelegram',
+                        type: 'POST',
+                        data: {'data':formattedText, 'tim':rowData.tim},
+                        success: function (response) {
+                            // console.log(response);
+                            if(response){
+                                button1.setAttribute('data-toast-text', 'Sent Success!');
+                                button1.setAttribute('data-toast-className', 'success');
+                                button1.click();
+                                // location.reload();
+                            }else{
+                                button1.setAttribute('data-toast-text', 'Failed!');
+                                button1.setAttribute('data-toast-className', 'danger');
+                                button1.click();   
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            button1.setAttribute('data-toast-text', error);
+                            button1.setAttribute('data-toast-className', 'danger');
+                            button1.click();
+                        }
+                    });
+                // }, function(err) {
+                //     alert("Failed to copy text: " + err);
+                // });
+            });
+        });
+    });
+    </script>
+
     <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Pastikan modal dan tombol edit sudah ada sebelum diakses
     const modalElement = document.getElementById('exampleModalgrid1');
     const modal = new bootstrap.Modal(modalElement);
-
-    // Event listener untuk setiap tombol edit
     document.querySelectorAll('.edit-item-btn').forEach(btn => {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
-
-            // Ambil data yang ada di tombol edit
             const ticketData = this.dataset;
-
-            // Debugging untuk melihat apakah data berhasil diambil
             console.log(ticketData);
-
-            // Pastikan ID yang digunakan sesuai dengan ID pada input form
             const fields = [
                 'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
                 'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editprovinsi', 'editurutan', 'edittimestamp'
             ];
-
-            // Isi form dengan data yang ada pada atribut data-*
             fields.forEach(field => {
                 const inputElement = document.getElementById(field);
                 if (inputElement) {
                     console.log(`Setting ${field} with value:`, ticketData[field]);
-                    inputElement.value = ticketData[field] || ''; // Set value or empty if no data
+                    inputElement.value = ticketData[field] || '';
                 }
             });
-
-            // Tampilkan modal
             modal.show();
         });
     });

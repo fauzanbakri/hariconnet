@@ -140,7 +140,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Keterangan</label>
-                                                                <input type="text" class="form-control" id="keterangan" name="keterangan" autocomplete="off" placeholder="Keterangan">
+                                                                <textarea type="text" class="form-control" id="keterangan" name="keterangan" autocomplete="off" placeholder="Keterangan"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
@@ -249,7 +249,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Keterangan</label>
-                                                                <input type="text" class="form-control" id="editketerangan" name="editketerangan" autocomplete="off" placeholder="Keterangan">
+                                                                <textarea type="text" class="form-control" id="editketerangan" name="editketerangan" autocomplete="off" placeholder="Keterangan"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">

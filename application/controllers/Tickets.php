@@ -281,4 +281,26 @@ class tickets extends CI_Controller {
 			}
 		}
 	}
+
+	public function sendTelegram(){
+		$tim = $this->input->post('tim');
+		$message = $this->input->post('data');
+		$q = $this->db->query("SELECT * from tim WHERE nama='$tim'")->result();
+		$chat_id = $q[0]->chatId;
+		$token = "7981281915:AAEA_S_CAFV3EIl4281DRKRgsAxC9BTAUDA";
+		$url = "https://api.telegram.org/bot$token/sendMessage";
+		$data = [
+			'chat_id' => $chat_id,
+			'text' => $message
+		];
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		curl_close($ch);
+		$data = json_decode($response, true);
+		echo $data['ok'];
+	}
 }

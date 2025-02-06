@@ -23,7 +23,13 @@ class DashboardNoc extends CI_Controller {
 		$q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->result();
 		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->result();
 		$q['olt'] = $this->db->query("SELECT COUNT(idOlt) as olt FROM olt")->result();
-
+		$this->db->select('kabupaten, COUNT(*) as count');
+        $this->db->from('tiket');
+        $this->db->join('olt', 'olt.idOlt = tiket.idOlt', 'left');
+        $this->db->group_by('kabupaten');
+        $this->db->order_by('count', 'DESC');
+        $query = $this->db->get();
+        $q['data'] = $query->result_array();
 
 		$this->load->view('navbar');
 		$this->load->view('dashboardNoc', $q);
