@@ -213,6 +213,62 @@
                                     <h4 class="card-title mb-0">Top 10 Aging Feeder</h4>
                                 </div><!-- end card header -->
                                 <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th scope="col">Incident</th>
+                                                    <th scope="col">Tipe</th>
+                                                    <th scope="col">Tim</th>
+                                                    <th scope="col">Deskripsi</th>
+                                                    <th scope="col">Jumlah Tiket</th>
+                                                    <th scope="col">Durasi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    date_default_timezone_set('Asia/Makassar');
+                                                    $no = 1;
+                                                    foreach ($topf as $rows){
+                                                        $tanggalSekarang = new DateTime();
+                                                        $durasi1 = new DateTime($rows->downtime);
+                                                        $selisih = $durasi1->diff($tanggalSekarang);
+                                                        $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                        if ($selisih->d == 3 || $selisih->d == 4){
+                                                            $class="badge bg-warning";
+                                                        }else if ($selisih->d == 5 || $selisih->d == 6){
+                                                            $class="badge bg-danger";
+                                                        }else if ($selisih->d > 6){
+                                                            $class="badge bg-dark";
+                                                        }else{
+                                                            $class="badge bg-info";
+                                                        }
+
+                                                        if($rows->tipe=="FTTH BACKBONE"){
+                                                            $a = '<span class="badge border border-danger text-danger">FTTH BACKBONE</span>';
+                                                        }elseif($rows->tipe=="FTTH FEEDER"){
+                                                            $a = '<span class="badge border border-warning text-warning">FTTH FEEDER</span>';
+                                                        }else{
+                                                            $a = '<span class="badge border border-info text-info">FTTH DISTRIBUSI</span>';
+                                                        }
+                                                        echo'
+                                                        <tr>
+                                                            <td>'.$no.'</td>
+                                                            <td>'.$rows->idInsiden.'</td>
+                                                            <td>'.$a.'</td>
+                                                            <td>'.$rows->tim.'</td>
+                                                            <td>'.$rows->idOlt.' '.$rows->gangguan.'</td>
+                                                            <td>'.$rows->jumlahTiket.'</td>
+                                                            <td><span class="'.$class.'">'.$durasi.'</span></span></td>
+                                                        </tr>
+                                                        ';
+                                                        $no++;  
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div><!-- end card-body -->
                             </div><!-- end card -->
                         </div>

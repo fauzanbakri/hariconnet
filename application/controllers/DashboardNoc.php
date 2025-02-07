@@ -52,7 +52,7 @@ class DashboardNoc extends CI_Controller {
 		CROSS JOIN (SELECT @urutan := 0, @grup := '') AS vars 
 		WHERE tiket.status!='CLOSED' 
 		ORDER BY tiket.tanggal ASC LIMIT 10;")->result();
-		
+		$q['topf'] = $this->db->query("SELECT * FROM feeder WHERE status!='CLOSED' ORDER BY downtime ASC LIMIT 10")->result();
 		
 		$this->load->view('navbar');
 		$this->load->view('dashboardNoc', $q);
