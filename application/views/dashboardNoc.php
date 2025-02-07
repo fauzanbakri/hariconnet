@@ -366,7 +366,7 @@
                     size: 4
                 },
                 dataLabels: {
-                    enabled: false
+                    enabled: true
                 },
                 stroke: {
                     curve: "straight"
