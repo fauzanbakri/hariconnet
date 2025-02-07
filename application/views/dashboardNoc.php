@@ -244,7 +244,7 @@
                 type: "bar",
                 height: 700,
                 toolbar: {
-                    show: false
+                    show: true
                 }
             },
             plotOptions: {
@@ -302,7 +302,7 @@
                 type: "bar",
                 height: 700,
                 toolbar: {
-                    show: false
+                    show: true
                 }
             },
             plotOptions: {
@@ -353,13 +353,13 @@
                     data: ticketsData
                 }],
                 chart: {
-                    height: 350,
+                    height: 400,
                     type: "line",
                     zoom: {
-                        enabled: false
+                        enabled: true
                     },
                     toolbar: {
-                        show: false
+                        show: true
                     }
                 },
                 markers: {
