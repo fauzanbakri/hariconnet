@@ -180,13 +180,22 @@
                                                         $durasi1 = new DateTime($datas->tanggal);
                                                         $selisih = $durasi1->diff($tanggalSekarang);
                                                         $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                        if ($selisih->d == 3 || $selisih->d == 4){
+                                                            $class="badge bg-warning";
+                                                        }else if ($selisih->d == 5 || $selisih->d == 6){
+                                                            $class="badge bg-danger";
+                                                        }else if ($selisih->d > 6){
+                                                            $class="badge bg-dark";
+                                                        }else{
+                                                            $class="badge bg-info";
+                                                        }
                                                         echo'
                                                         <tr>
                                                             <td>'.$no.'</td>
                                                             <td>'.$datas->idInsiden.'</td>
                                                             <td>'.$datas->tim.'</td>
                                                             <td>'.$datas->kabupaten.'</td>
-                                                            <td>'.$durasi.'</td>
+                                                            <td><span class="'.$class.'">'.$durasi.'</span></span></td>
                                                         </tr>
                                                         ';
                                                         $no++;  
