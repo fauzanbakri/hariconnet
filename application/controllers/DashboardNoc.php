@@ -23,6 +23,17 @@ class DashboardNoc extends CI_Controller {
 		$q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->result();
 		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->result();
 		$q['olt'] = $this->db->query("SELECT COUNT(idOlt) as olt FROM olt")->result();
+		$q['top'] = $this->db->query("
+		SELECT prioritas, idInsiden, idTiket, tanggal, olt.idOlt, sid, nama, 
+		alamat, telepon, sn, status, keluhan, keterangan, kabupaten, provinsi, 
+		tim, createby, timestamp, 
+		@urutan := IF( status IN ('closed', 'Solved (ICRM Open)') 
+		OR 
+		tim = 'NO TIM', 0, IF(@grup = tim, @urutan + 1, 1) ) AS urutan, 
+		@grup := tim FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt 
+		CROSS JOIN (SELECT @urutan := 0, @grup := '') AS vars 
+		WHERE tiket.status!='CLOSED' 
+		ORDER BY tiket.tanggal ASC LIMIT 10;")->result();
 		$this->db->select('kabupaten, COUNT(*) as count');
         $this->db->from('tiket');
         $this->db->join('olt', 'olt.idOlt = tiket.idOlt', 'left');

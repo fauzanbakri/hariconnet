@@ -122,7 +122,6 @@
                                 </div> <!-- end row-->
                             </div>
                         </div> <!-- end col-->
-
                         <div class="col-xxl-7">
                             <div class="row h-100">
                                 
@@ -154,6 +153,61 @@
                         </div><!-- end col -->
                     </div> <!-- end row-->
                         <!-- end col -->
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Top 10 Aging Ticket</h4>
+                                </div><!-- end card header -->
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th scope="col">Incident</th>
+                                                    <th scope="col">Tim</th>
+                                                    <th scope="col">Kabupaten</th>
+                                                    <th scope="col">Durasi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    date_default_timezone_set('Asia/Makassar');
+                                                    $no = 1;
+                                                    foreach ($top as $data){
+                                                        $tanggalSekarang = new DateTime();
+                                                        $durasi1 = new DateTime($data->tanggal);;
+                                                        $selisih = $durasi1->diff($tanggalSekarang);
+                                                        $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                        echo'
+                                                        <tr>
+                                                            <td>'.$no.'</td>
+                                                            <td>'.$data->idInsiden.'</td>
+                                                            <td>'.$data->tim.'</td>
+                                                            <td>'.$data->kabupaten.'</td>
+                                                            <td>'.$durasi.'</td>
+                                                        </tr>
+                                                        ';
+                                                        $no++;  
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!-- end card-body -->
+                            </div><!-- end card -->
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Top 10 Aging Feeder</h4>
+                                </div><!-- end card header -->
+                                <div class="card-body">
+                                </div><!-- end card-body -->
+                            </div><!-- end card -->
+                        </div>
+                    </div>
                 </div>
                 <!-- container-fluid -->
             </div>
