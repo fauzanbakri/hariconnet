@@ -175,17 +175,17 @@
                                                 <?php
                                                     date_default_timezone_set('Asia/Makassar');
                                                     $no = 1;
-                                                    foreach ($top as $data){
+                                                    foreach ($top as $datas){
                                                         $tanggalSekarang = new DateTime();
-                                                        $durasi1 = new DateTime($data->tanggal);;
+                                                        $durasi1 = new DateTime($datas->tanggal);
                                                         $selisih = $durasi1->diff($tanggalSekarang);
                                                         $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
                                                         echo'
                                                         <tr>
                                                             <td>'.$no.'</td>
-                                                            <td>'.$data->idInsiden.'</td>
-                                                            <td>'.$data->tim.'</td>
-                                                            <td>'.$data->kabupaten.'</td>
+                                                            <td>'.$datas->idInsiden.'</td>
+                                                            <td>'.$datas->tim.'</td>
+                                                            <td>'.$datas->kabupaten.'</td>
                                                             <td>'.$durasi.'</td>
                                                         </tr>
                                                         ';
