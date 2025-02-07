@@ -113,7 +113,7 @@
                                                 <h4 class="card-title mb-0">Tiket by Month</h4>
                                             </div><!-- end card header -->
                                             <div class="card-body">
-                                                <div id="line_chart_basic" data-colors='["--vz-primary"]' class="apex-charts" dir="ltr"></div>
+                                                <div id="tiketmonth" data-colors='["--vz-primary"]' class="apex-charts" dir="ltr"></div>
                                             </div><!-- end card-body -->
                                         </div><!-- end card -->
                                     </div>
@@ -340,6 +340,55 @@
 
         };      
     </script>
+    <script>
+        var queryResult = <?php echo json_encode($month); ?>;
+        var ticketsData = queryResult.map(function(record) {
+            var date = new Date(record.year, record.month - 1, 1).getTime();
+            return { x: date, y: record.total_tiket };
+        });
+        var linechartBasicColors = getChartColorsArray("tiketmonth"),
+            linechartZoomColors = (linechartBasicColors && (options = {
+                series: [{
+                    name: "Total Tiket",
+                    data: ticketsData
+                }],
+                chart: {
+                    height: 350,
+                    type: "line",
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false
+                    }
+                },
+                markers: {
+                    size: 4
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: "straight"
+                },
+                colors: linechartBasicColors,
+                title: {
+                    text: "Total Tiket by Month",
+                    align: "left",
+                    style: {
+                        fontWeight: 500
+                    }
+                },
+                xaxis: {
+                    type: "datetime",
+                    labels: {
+                        formatter: function (value) {
+                            return new Date(value).toLocaleString("default", { month: "short", year: "numeric" });
+                        }
+                    }
+                }
+            }, 
+            (chart = new ApexCharts(document.querySelector("#tiketmonth"), options)).render()));
+    </script>
 </body>
-<!-- Mirrored from themesbrand.com/velzon/html/default/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 05:17:42 GMT -->
 </html>
