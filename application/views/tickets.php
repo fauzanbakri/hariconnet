@@ -284,21 +284,20 @@
                                                 <th>Tanggal</th>
                                                 <!-- <th>Durasi</th> -->
                                                 <th>Durasi<br>
-    <select id="filterDurasi" class="form-select form-select-sm">
-        <option value="">Semua</option>
-        <option value="1">1 Hari</option>
-        <option value="2">2 Hari</option>
-        <option value="3">3 Hari</option>
-        <option value="4">4 Hari</option>
-        <option value="5">5 Hari</option>
-        <option value="6">6 Hari</option>
-        <option value="7">7 Hari</option>
-        <option value="8">8 Hari</option>
-        <option value="9">9 Hari</option>
-        <option value="10">10 Hari</option>
-    </select>
-</th>
-
+                                                    <select id="filterDurasi" class="form-select form-select-sm">
+                                                        <option value="">Semua</option>
+                                                        <option value="1">1 Hari</option>
+                                                        <option value="2">2 Hari</option>
+                                                        <option value="3">3 Hari</option>
+                                                        <option value="4">4 Hari</option>
+                                                        <option value="5">5 Hari</option>
+                                                        <option value="6">6 Hari</option>
+                                                        <option value="7">7 Hari</option>
+                                                        <option value="8">8 Hari</option>
+                                                        <option value="9">9 Hari</option>
+                                                        <option value="10">10 Hari</option>
+                                                    </select>
+                                                </th>
                                                 <th>SID</th>
                                                 <th>Nama</th>
                                                 <th>Status</th>

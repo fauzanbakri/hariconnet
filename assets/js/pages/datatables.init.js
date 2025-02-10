@@ -15,9 +15,17 @@ function initializeTables() {
     });
 
     new DataTable('#tiketclosetable', {
+        lengthMenu: [
+            [-1, 10, 25, 50],
+            ['All', 10, 25, 50]
+        ],
         responsive: true 
     });
     new DataTable('#feederclosetable', {
+        lengthMenu: [
+            [-1, 10, 25, 50],
+            ['All', 10, 25, 50]
+        ],
         responsive: true 
     });
     new DataTable('#example', {
@@ -56,9 +64,17 @@ function initializeTables() {
         responsive: true 
     });
     new DataTable('#datatim', {
+        lengthMenu: [
+            [-1, 10, 25, 50],
+            ['All', 10, 25, 50]
+        ],
         responsive: true 
     });
     new DataTable('#dataolt', {
+        lengthMenu: [
+            [-1, 10, 25, 50],
+            ['All', 10, 25, 50]
+        ],
         responsive: true 
     });
 }
