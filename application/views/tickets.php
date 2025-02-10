@@ -282,7 +282,23 @@
                                                 <th>Insiden</th>
                                                 <th>Tiket</th>
                                                 <th>Tanggal</th>
-                                                <th>Durasi</th>
+                                                <!-- <th>Durasi</th> -->
+                                                <th>Durasi<br>
+    <select id="filterDurasi" class="form-select form-select-sm">
+        <option value="">Semua</option>
+        <option value="1">1 Hari</option>
+        <option value="2">2 Hari</option>
+        <option value="3">3 Hari</option>
+        <option value="4">4 Hari</option>
+        <option value="5">5 Hari</option>
+        <option value="6">6 Hari</option>
+        <option value="7">7 Hari</option>
+        <option value="8">8 Hari</option>
+        <option value="9">9 Hari</option>
+        <option value="10">10 Hari</option>
+    </select>
+</th>
+
                                                 <th>SID</th>
                                                 <th>Nama</th>
                                                 <th>Status</th>
@@ -570,6 +586,23 @@
                     }
                 });
             });
+        });
+        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+            var selectedHari = $('#filterDurasi').val();
+            var durasiText = data[4]; // Ambil data dari kolom "Durasi"
+
+            // Ambil angka sebelum "Hari"
+            var match = durasiText.match(/^(\d+)\s+Hari/);
+            var hari = match ? match[1] : "";
+
+            if (selectedHari === "" || hari === selectedHari) {
+                return true;
+            }
+            return false;
+        });
+
+        $('#filterDurasi').on('change', function() {
+            table.draw();
         });
     </script>
     <script>
