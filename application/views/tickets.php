@@ -587,23 +587,29 @@
                 });
             });
         });
-        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-            var selectedHari = $('#filterDurasi').val();
-            var durasiText = data[4]; // Ambil data dari kolom "Durasi"
+    </script>
+    <script>
+        $(document).ready(function() {
+        var table = $('#example').DataTable();
 
-            // Ambil angka sebelum "Hari"
+        // Custom search untuk filter Durasi
+        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+            var selectedHari = $('#filterDurasi').val(); // Ambil nilai dropdown
+            var durasiText = data[4] || ''; // Ambil data kolom Durasi
+
+            // Ambil angka sebelum "Hari" dengan regex
             var match = durasiText.match(/^(\d+)\s+Hari/);
             var hari = match ? match[1] : "";
 
-            if (selectedHari === "" || hari === selectedHari) {
-                return true;
-            }
-            return false;
+            // Jika dropdown kosong atau angka cocok, tampilkan baris
+            return selectedHari === "" || hari === selectedHari;
         });
 
+        // Event listener saat dropdown berubah
         $('#filterDurasi').on('change', function() {
-            table.draw();
+            table.draw(); // Refresh DataTable agar filter diterapkan
         });
+    });
     </script>
     <script>
         const button = document.getElementById('toast');
