@@ -305,7 +305,11 @@
                                                 <th>OLT</th>
                                                 <th>Keterangan</th>
                                                 <th>Kendala</th>
-                                                <th>Kabupaten</th>
+                                                <th>Kabupaten<br>
+                                                    <select id="filterKabupaten" class="form-select form-select-sm">
+                                                        <option value="">Semua</option>
+                                                    </select>
+                                                </th>
                                                 <th>Serial Number</th>
                                                 <th>Tim</th>
                                                 <th>Posisi Antrian</th>
@@ -591,25 +595,35 @@
     <script>
         $(document).ready(function() {
         var table = $('#example').DataTable();
-
-        // Custom search untuk filter Durasi
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-            var selectedHari = $('#filterDurasi').val(); // Ambil nilai dropdown
-            var durasiText = data[4] || ''; // Ambil data kolom Durasi
-
-            // Ambil angka sebelum "Hari" dengan regex
+            var selectedHari = $('#filterDurasi').val();
+            var durasiText = data[4] || '';
             var match = durasiText.match(/^(\d+)\s+Hari/);
             var hari = match ? match[1] : "";
-
-            // Jika dropdown kosong atau angka cocok, tampilkan baris
             return selectedHari === "" || hari === selectedHari;
         });
-
-        // Event listener saat dropdown berubah
         $('#filterDurasi').on('change', function() {
-            table.draw(); // Refresh DataTable agar filter diterapkan
+            table.draw();
         });
     });
+    </script>
+    <script>
+        $('#filterKabupaten').on('change', function() {
+            var table = $('#example').DataTable();
+            $.fn.dataTable.ext.search.pop(); // Hapus filter lama
+            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+                var selectedKabupaten = $('#filterKabupaten').val();
+                var kabupatenText = data[11] || '';
+
+                return selectedKabupaten === "" || kabupatenText === selectedKabupaten;
+            });
+            $('#filterKabupaten').on('change', function() {
+                table.draw();
+             });
+
+        });
+
+
     </script>
     <script>
         const button = document.getElementById('toast');

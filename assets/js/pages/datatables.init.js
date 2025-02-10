@@ -1,4 +1,19 @@
 function initializeTables() {
+    var kabupatenSet = new Set();
+
+    // Ambil data Kabupaten langsung dari tabel sebelum DataTable aktif
+    $('#example tbody tr').each(function() {
+        var kabupaten = $(this).find('td:eq(11)').text().trim(); // Kolom ke-12 (index 11)
+        if (kabupaten) {
+            kabupatenSet.add(kabupaten);
+        }
+    });
+
+    // Tambahkan data ke dropdown
+    kabupatenSet.forEach(function(kabupaten) {
+        $('#filterKabupaten').append(`<option value="${kabupaten}">${kabupaten}</option>`);
+    });
+
     new DataTable('#tiketclosetable', {
         responsive: true 
     });
