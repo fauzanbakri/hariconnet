@@ -305,10 +305,11 @@
                                                 <th>OLT</th>
                                                 <th>Keterangan</th>
                                                 <th>Kendala</th>
-                                                <th>Kabupaten<br>
+                                                <th>Kabupaten
+                                                    <!-- <br>
                                                     <select id="filterKabupaten" class="form-select form-select-sm">
                                                         <option value="">Semua</option>
-                                                    </select>
+                                                    </select> -->
                                                 </th>
                                                 <th>Serial Number</th>
                                                 <th>Tim</th>
@@ -608,22 +609,20 @@
     });
     </script>
     <script>
-        $('#filterKabupaten').on('change', function() {
-            var table = $('#example').DataTable();
-            $.fn.dataTable.ext.search.pop(); // Hapus filter lama
-            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-                var selectedKabupaten = $('#filterKabupaten').val();
-                var kabupatenText = data[11] || '';
+        // $('#filterKabupaten').on('change', function() {
+        //     var table = $('#example').DataTable();
+        //     $.fn.dataTable.ext.search.pop(); // Hapus filter lama
+        //     $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        //         var selectedKabupaten = $('#filterKabupaten').val();
+        //         var kabupatenText = data[11] || '';
 
-                return selectedKabupaten === "" || kabupatenText === selectedKabupaten;
-            });
-            $('#filterKabupaten').on('change', function() {
-                table.draw();
-             });
+        //         return selectedKabupaten === "" || kabupatenText === selectedKabupaten;
+        //     });
+        //     $('#filterKabupaten').on('change', function() {
+        //         table.draw();
+        //      });
 
-        });
-
-
+        // });
     </script>
     <script>
         const button = document.getElementById('toast');
