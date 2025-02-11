@@ -322,15 +322,15 @@
                                                 if($row->status=="CLOSED"){
                                                     $b = '<span class="badge bg-success">CLOSED</span>';
                                                 }elseif($row->status=="ON PROGRESS"){
-                                                    $b = '<span class="badge border border-info text-info">ON PROGRESS</span>';
+                                                    $b = '<span class="badge bg-info">ON PROGRESS</span>';
                                                 }elseif($row->status=="SOLVED (ICRM OPEN)"){
                                                     $b = '<span class="badge border border-success text-success">SOLVED (ICRM OPEN)</span>';
                                                 }elseif($row->status=="STOPCLOCK"){
-                                                    $b = '<span class="badge border border-primary text-primary">STOPCLOCK</span>';
+                                                    $b = '<span class="badge bg-dark">STOPCLOCK</span>';
                                                 }elseif($row->status=="ANTRIAN"){
-                                                    $b = '<span class="badge border border-warning text-warning">ANTRIAN</span>';
+                                                    $b = '<span class="badge bg-warning">ANTRIAN</span>';
                                                 }else{
-                                                    $b = '<span class="badge border border-dark text-body">OPEN</span>';
+                                                    $b = '<span class="badge bg-primary">OPEN</span>';
                                                 }
                                                 echo "
                                                 <tr>
