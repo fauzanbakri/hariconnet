@@ -85,6 +85,41 @@
                                                                 ?>
                                                             </select>
                                                         </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Provinsi</label>
+                                                            <select class="form-select mb-3" aria-label="Default select example" name="prov" id="prov" >
+                                                                <option value="Sulawesi Selatan">Sulawesi Selatan</option>
+                                                                <option value="Sulawesi Barat">Sulawesi Barat</option>
+                                                                <option value="Sulawesi Tengah">Sulawesi Tengah</option>
+                                                                <option value="Sulawesi Tenggara">Sulawesi Tenggara</option>
+                                                                <option value="Gorontalo">Gorontalo</option>
+                                                                <option value="Sulawesi Utara">Sulawesi Utara</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kabupaten</label>
+                                                                <input type="text" class="form-control" name="kabupaten" id="kabupaten" autocomplete="off" placeholder="Kabupaten">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kecamatan</label>
+                                                                <input type="text" class="form-control" name="kecamatan" id="kecamatan" autocomplete="off" placeholder="Kecamatan">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kelurahan</label>
+                                                                <input type="text" class="form-control" name="kelurahan" id="kelurahan" autocomplete="off" placeholder="Kelurahan">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary" id="submitBtn">Submit</button>
+                                                            </div>
+                                                        </div><!--end col-->
                                                     </div><!--end row-->
                                                 <!-- </form> -->
                                             </div>
@@ -97,94 +132,66 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalgridLabel">Edit Feeder</h5>
+                                                <h5 class="modal-title" id="exampleModalgridLabel">Edit OLT</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                     <div class="row g-3">
                                                         <div class="col-xxl-6">
-                                                            <input type="hidden" class="form-control" name="idfeeder" id="idfeeder" autocomplete="off" placeholder="Incident">
                                                             <div>
-                                                                <label class="form-label">Incident</label>
-                                                                <input type="text" class="form-control" name="editincident" id="editincident" autocomplete="off" placeholder="Incident">
+                                                                <label class="form-label">Hostname</label>
+                                                                <input disabled type="text" class="form-control" name="edithostname" id="edithostname" autocomplete="off" placeholder="Hostname OLT">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Downtime</label>
-                                                                <input type="text" class="form-control" name="editdowntime" id="editdowntime" autocomplete="off" placeholder="Tanggal">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Type</label>
-                                                            <select class="form-select mb-3" name="edittipe" id="edittipe" aria-label="Default select example">
-                                                                <option value="FTTH BACKBONE">FTTH BACKBONE</option>
-                                                                <option value="FTTH FEEDER">FTTH FEEDER</option>
-                                                                <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">KP</label>
-                                                            <select class="form-select mb-3" name="editkp" id="editkp" aria-label="Default select example">
-                                                                <option value="MAKASSAR">MAKASSAR</option>
-                                                                <option value="KENDARI">KENDARI</option>
-                                                                <option value="MANADO">MANADO</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="olt" class="form-label">OLT</label>
-                                                                <input type="text" class="form-control" name="editolt" id="editolt" autocomplete="off" placeholder="OLT">
+                                                                <label for="lastName" class="form-label">UPE</label>
+                                                                <input type="text" class="form-control" name="editupe" id="editupe" autocomplete="off" placeholder="UPE">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Kode Area</label>
-                                                                <input type="text" class="form-control" id="editarea" name="editarea" autocomplete="off" placeholder="Kode Area">
+                                                                <label for="lastName" class="form-label">Latitude</label>
+                                                                <input type="text" class="form-control" name="editlatitude" id="editlatitude" autocomplete="off" placeholder="Latitude">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Deskripsi</label>
-                                                                <input type="text" class="form-control" id="editdeskripsi" name="editdeskripsi" autocomplete="off" placeholder="Deskripsi">
+                                                                <label for="lastName" class="form-label">Longitude</label>
+                                                                <input type="text" class="form-control" name="editlongitude" id="editlongitude" autocomplete="off" placeholder="Longitude">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Tim</label>
-                                                            <input class="form-control mb-3" aria-label="Default select example" name="edittim" id="edittim" >
+                                                            <input type="text" class="form-control" name="edittim" id="edittim" autocomplete="off" placeholder="Tim">
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Status</label>
-                                                            <select class="form-select mb-3" name="editstatus" id="editstatus" aria-label="Default select example">
-                                                                <option value="OPEN">OPEN</option>
-                                                                <option value="ON PROGRESS">ON PROGRESS</option>
-                                                                <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
-                                                                <option value="STOPCLOCK">STOPCLOCK</option>
-                                                                <option value="CLOSED">CLOSED</option>
+                                                            <label for="lastName" class="form-label">Provinsi</label>
+                                                            <select class="form-select mb-3" aria-label="Default select example" name="editprov" id="editprov" >
+                                                                <option value="Sulawesi Selatan">Sulawesi Selatan</option>
+                                                                <option value="Sulawesi Barat">Sulawesi Barat</option>
+                                                                <option value="Sulawesi Tengah">Sulawesi Tengah</option>
+                                                                <option value="Sulawesi Tenggara">Sulawesi Tenggara</option>
+                                                                <option value="Gorontalo">Gorontalo</option>
+                                                                <option value="Sulawesi Utara">Sulawesi Utara</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Jumlah Tiket</label>
-                                                                <input type="text" class="form-control" id="editjumlahtiket" name="editjumlahtiket" autocomplete="off" placeholder="Jumlah Tiket">
+                                                                <label for="lastName" class="form-label">Kabupaten</label>
+                                                                <input type="text" class="form-control" name="editkabupaten" id="editkabupaten" autocomplete="off" placeholder="Kabupaten">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Tipe Penyebab</label>
-                                                            <select class="form-select mb-3" name="edittipepenyebab" id="edittipepenyebab" aria-label="Default select example">
-                                                                <option value="Belum Diketahui">Belum Diketahui</option>
-                                                                <option value="Putus Kabel">Putus Kabel</option>
-                                                                <option value="Kabel Bending">Kabel Bending</option>
-                                                                <option value="Putus Core">Putus Core</option>
-                                                                <option value="FOC Konektor">FOC Konektor</option>
-                                                                <option value="FOT Perangakat">FOT Perangkat</option>
-                                                                <option value="FOC Konektor">Power Supply</option>
-                                                            </select>
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kecamatan</label>
+                                                                <input type="text" class="form-control" name="editkecamatan" id="editkecamatan" autocomplete="off" placeholder="Kecamatan">
+                                                            </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Keterangan</label>
-                                                                <input type="text" class="form-control" id="editketerangan" name="editketerangan" autocomplete="off" placeholder="Keterangan">
+                                                                <label for="lastName" class="form-label">Kelurahan</label>
+                                                                <input type="text" class="form-control" name="editkelurahan" id="editkelurahan" autocomplete="off" placeholder="Kelurahan">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
@@ -237,12 +244,12 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-idOlt='".$row->idOlt."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-edithostname='".$row->idOlt."' data-edittim='".$row->serpo."' data-editkabupaten='".$row->kabupaten."' data-editkecamatan='".$row->kecamatan."' data-editkelurahan='".$row->kelurahan."'  data-editlongitude='".$row->longi."' data-editlatitude='".$row->lat."' data-editupe='".$row->upe."' data-editprov='".$row->provinsi."' >
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idOlt."'>
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id='".$row->idOlt."'>
                                                                         <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
                                                                     </a>
                                                                 </li>
@@ -380,102 +387,29 @@
         }));
     </script>
     <script>
-        document.getElementById("sa-warning") && document.getElementById("sa-warning").addEventListener("click", function() {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: !0,
-                customClass: {
-                    confirmButton: "btn btn-primary w-xs me-2 mt-2",
-                    cancelButton: "btn btn-danger w-xs mt-2"
-                },
-                confirmButtonText: "Yes, Change Shift!",
-                buttonsStyling: !1,
-                showCloseButton: !0
-            }).then(function(t) {
-                console.log(t.value);
-                var response;
-                if(t.value){
-                    $.ajax({
-                        url: "Tickets/changeShift",
-                        type: 'GET',
-                        success: function(res) {
-                            if (res=='success'){
-                                Swal.fire({
-                                    title: "Success!",
-                                    text: "Shift Change Successfully.",
-                                    icon: "success",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary w-xs mt-2"
-                                    },
-                                    buttonsStyling: !1
-                                }) 
-                            }else{
-                                Swal.fire({
-                                    title: "Error!",
-                                    text: "Failed to Change Shift",
-                                    icon: "warning",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary w-xs mt-2"
-                                    },
-                                    buttonsStyling: !1
-                                })
-                            }
-                        }
-                    })
-                    
-                }
-            })
-        })
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#olt').on('click change keyup keydown', function () {
-                let oltValue = $(this).val();
-                console.log(oltValue);
-                $.ajax({
-                    url: 'Feeder/autoArea?area='+oltValue,
-                    method: 'GET',
-                    success: function (response) {
-                        console.log('Response:', response);
-                        $('#area').val(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error); 
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
         const button = document.getElementById('toast');
         $(document).ready(function () {
             $('#submitBtn').on('click', function (e) {
                 e.preventDefault();
                 const formData = {
-                    incident: $('[name="incident"]').val(),
-                    downtime: $('[name="downtime"]').val(),
-                    tipe: $('[name="tipe"]').val(),
-                    kp: $('[name="kp"]').val(),
-                    olt: $('[name="olt"]').val(),
-                    area: $('[name="area"]').val(),
-                    deskripsi: $('[name="deskripsi"]').val(),
+                    hostname: $('[name="hostname"]').val(),
+                    upe: $('[name="upe"]').val(),
+                    latitude: $('[name="latitude"]').val(),
+                    longitude: $('[name="longitude"]').val(),
                     tim: $('[name="tim"]').val(),
-                    status: $('[name="status"]').val(),
-                    jumlahtiket: $('[name="jumlahtiket"]').val(),
-                    tipePenyebab: $('[name="tipePenyebab"]').val(),
-                    keterangan: $('[name="keterangan"]').val()
-                   
+                    prov: $('[name="prov"]').val(),
+                    kabupaten: $('[name="kabupaten"]').val(),
+                    kecamatan: $('[name="kecamatan"]').val(),
+                    kelurahan: $('[name="kelurahan"]').val()
                 };
-                if (!formData.deskripsi) {
-                    button.setAttribute('data-toast-text', 'Deskripsi Cannot Empty!');
+                if (!formData.hostname) {
+                    button.setAttribute('data-toast-text', 'Hostname Cannot Empty!');
                     button.setAttribute('data-toast-className', 'danger');
                     button.click();
                     return;
                 }
                 $.ajax({
-                    url: 'Feeder/insertData',
+                    url: 'ListOlt/insertData',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
@@ -503,28 +437,24 @@
             $('#editsubmitBtn').on('click', function (e) {
                 e.preventDefault();
                 const formData = {
-                    id: $('[name="idfeeder"]').val(),
-                    incident: $('[name="editincident"]').val(),
-                    downtime: $('[name="editdowntime"]').val(),
-                    tipe: $('[name="edittipe"]').val(),
-                    kp: $('[name="editkp"]').val(),
-                    olt: $('[name="editolt"]').val(),
-                    area: $('[name="editarea"]').val(),
-                    deskripsi: $('[name="editdeskripsi"]').val(),
+                    hostname: $('[name="edithostname"]').val(),
+                    upe: $('[name="editupe"]').val(),
+                    latitude: $('[name="editlatitude"]').val(),
+                    longitude: $('[name="editlongitude"]').val(),
                     tim: $('[name="edittim"]').val(),
-                    status: $('[name="editstatus"]').val(),
-                    jumlahtiket: $('[name="editjumlahtiket"]').val(),
-                    tipePenyebab: $('[name="edittipepenyebab"]').val(),
-                    keterangan: $('[name="editketerangan"]').val()
+                    prov: $('[name="editprov"]').val(),
+                    kabupaten: $('[name="editkabupaten"]').val(),
+                    kecamatan: $('[name="editkecamatan"]').val(),
+                    kelurahan: $('[name="editkelurahan"]').val()
                 };
-                if (!formData.deskripsi) {
-                    button.setAttribute('data-toast-text', 'Deskripsi Cannot Empty!');
+                if (!formData.hostname) {
+                    button.setAttribute('data-toast-text', 'Hostname Cannot Empty!');
                     button.setAttribute('data-toast-className', 'danger');
                     button.click();
                     return;
                 }
                 $.ajax({
-                    url: 'Feeder/editData',
+                    url: 'ListOlt/editData',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
@@ -555,8 +485,8 @@
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function (e) {
                     e.preventDefault();
-                    const idTiket = this.getAttribute('data-id');
-                    console.log(idTiket);
+                    const idOlt = this.getAttribute('data-id');
+                    console.log(idOlt);
                     Swal.fire({
                         title: "Are you sure?",
                         text: "This action cannot be undone!",
@@ -572,7 +502,7 @@
                     }).then(function(result) {
                         if (result.value) {
                             $.ajax({
-                                url: 'Feeder/deleteRow?id='+idTiket,
+                                url: 'ListOlt/deleteRow?id='+idOlt,
                                 type: 'GET',
                                 success: function(response) {
                                     console.log(response.success);
@@ -628,8 +558,15 @@
                 const ticketData = this.dataset;
                 console.log(ticketData);
                 const fields = [
-                    'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
-                    'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
+                    'edithostname',
+                    'editupe',
+                    'editlatitude',
+                    'editlongitude',
+                    'edittim',
+                    'editprov',
+                    'editkabupaten',
+                    'editkecamatan',
+                    'editkelurahan'
                 ];
                 fields.forEach(field => {
                     const inputElement = document.getElementById(field);

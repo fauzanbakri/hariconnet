@@ -19,59 +19,38 @@ class ListOlt extends CI_Controller {
 		}
 	}
 	public function insertData(){
-		date_default_timezone_set('Asia/Makassar');
-		session_start();
-		$idInsiden = $this->input->post('incident');
-		$rawtanggal = $this->input->post('downtime');
-		$timestamps = strtotime(str_replace('/', '-', $rawtanggal));
-		$downtime = date('Y-m-d H:i', $timestamps);
-		$tipe = $this->input->post('tipe');
-		$kp = $this->input->post('kp');
-		$olt = $this->input->post('olt');
-		$area = $this->input->post('area');
-		$deskripsi = $this->input->post('deskripsi');
+		$hostname = $this->input->post('hostname');
+		$upe = $this->input->post('upe');
+		$latitude = $this->input->post('latitude');
+		$longitude = $this->input->post('longitude');
 		$tim = $this->input->post('tim');
-		// $gangguan = $this->input->post('status');
-		$jumlahtiket = $this->input->post('jumlahtiket');
-		$tipePenyebab = $this->input->post('tipePenyebab');
-		$keterangan = $this->input->post('keterangan');
-		$status = $this->input->post('status');
-		$createby = $_SESSION['nama'];
-		$timestamp = date("Y-m-d H:i:s");
-		// die();
-		if($deskripsi!=''){
+		$prov = $this->input->post('prov');
+		$kabupaten = $this->input->post('kabupaten');
+		$kecamatan = $this->input->post('kecamatan');
+		$kelurahan = $this->input->post('kelurahan');
+		if($hostname!=''){
 			$q = $this->db->query("INSERT INTO 
-			feeder(
-			idInsiden,
-			downtime,
-			tipe,
-			kp,
-			kode,
+			olt(
 			idOlt,
-			gangguan,
-			tim,
-			status,
-			keterangan,
-			jumlahTiket,
-			tipePenyebab,
-			createby,
-			timestamp
+			lat,
+			longi,
+			upe,
+			serpo,
+			kelurahan,
+			kecamatan,
+			kabupaten,
+			provinsi
 			) 
 			VALUES(
-				'$idInsiden',
-				'$downtime',
-				'$tipe',
-				'$kp',
-				'$area',
-				'$olt',
-				'$deskripsi',
+				'$hostname',
+				'$latitude',
+				'$longitude',
+				'$upe',
 				'$tim',
-				'$status',
-				'$keterangan',
-				'$jumlahtiket',
-				'$tipePenyebab',
-				'$createby',
-				'$timestamp'
+				'$kelurahan',
+				'$kecamatan',
+				'$kabupaten',
+				'$prov'
 				)");
 			if($q){
 				echo 'success';
@@ -86,41 +65,26 @@ class ListOlt extends CI_Controller {
 	}
 
 	public function editData(){
-		date_default_timezone_set('Asia/Makassar');
-		session_start();
-		$id = $this->input->post('id');
-		$idInsiden = $this->input->post('incident');
-		$rawtanggal = $this->input->post('downtime');
-		$timestamp = strtotime(str_replace('/', '-', $rawtanggal));
-		$downtime = date('Y-m-d H:i', $timestamp);
-		$tipe = $this->input->post('tipe');
-		$kp = $this->input->post('kp');
-		$olt = $this->input->post('olt');
-		$area = $this->input->post('area');
-		$deskripsi = $this->input->post('deskripsi');
+		$hostname = $this->input->post('hostname');
+		$upe = $this->input->post('upe');
+		$latitude = $this->input->post('latitude');
+		$longitude = $this->input->post('longitude');
 		$tim = $this->input->post('tim');
-		$status = $this->input->post('status');
-		$jumlahtiket = $this->input->post('jumlahtiket');
-		$tipepenyebab = $this->input->post('tipePenyebab');
-		$keterangan = $this->input->post('keterangan');
-		$createby = $_SESSION['nama'];
-		$timestamps = date("Y-m-d H:i:s");
-		if($deskripsi!=''){
-			$q = $this->db->query("UPDATE feeder SET
-				idInsiden='$idInsiden',
-				downtime='$downtime',
-				tipe='$tipe',
-				kp='$kp',
-				kode='$area',
-				gangguan='$deskripsi',
-				tim='$tim',
-				status='$status',
-				jumlahTiket='$jumlahtiket',
-				tipePenyebab='$tipepenyebab',
-				keterangan='$keterangan',
-				createby='$createby',
-				timestamp='$timestamps'
-				WHERE id='$id'
+		$prov = $this->input->post('prov');
+		$kabupaten = $this->input->post('kabupaten');
+		$kecamatan = $this->input->post('kecamatan');
+		$kelurahan = $this->input->post('kelurahan');
+		if($hostname!=''){
+			$q = $this->db->query("UPDATE olt SET
+				lat='$latitude',
+				longi='$longitude',
+				upe='$upe',
+				serpo='$tim',
+				kelurahan='$kelurahan',
+				kecamatan='$kecamatan',
+				kabupaten='$kabupaten',
+				provinsi='$prov'
+				WHERE idOlt='$hostname'
 				");
 			if($q){
 				echo 'success';
@@ -129,7 +93,7 @@ class ListOlt extends CI_Controller {
 				echo $error['message'];
 			}	
 		}else{
-			echo 'Deskripsi Cannot Empty';
+			echo 'Hostname Cannot Empty';
 		}
 			
 	}
