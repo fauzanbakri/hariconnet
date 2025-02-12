@@ -68,12 +68,28 @@ function initializeTables() {
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
+        columnDefs: [
+            {
+                targets: 5,
+                className: 'priority-column',
+                responsivePriority: 1,
+                visible: true
+            }
+        ],
         responsive: true 
     });
     new DataTable('#dataolt', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
+        ],
+        columnDefs: [
+            {
+                targets: 8,
+                className: 'priority-column',
+                responsivePriority: 1,
+                visible: true
+            }
         ],
         responsive: true 
     });

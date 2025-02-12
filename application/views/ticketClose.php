@@ -275,7 +275,11 @@
                                                 <th>Kendala</th>
                                                 <th>Kabupaten</th>
                                                 <th>Serial Number</th>
-                                                <th>Tim</th>
+                                                <th>Tim<br>
+                                                <select id="filterTim" class="form-select" style="width: 200px; margin-bottom: 10px;">
+                                                    <option value="">Semua Tim</option>
+                                                </select>
+                                                </th>
                                                 <th>Provinsi</th>
                                                 <th>Telepon</th>
                                                 <th>Alamat</th>
@@ -777,6 +781,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
     </script>
+    <script>
+$(document).ready(function() {
+    var table = $('#tiketclosetable').DataTable();
+
+    var timSet = new Set();
+    table.column(13).data().each(function(value) {
+        timSet.add(value);
+    });
+
+    timSet.forEach(function(tim) {
+        $('#filterTim').append('<option value="' + tim + '">' + tim + '</option>');
+    });
+
+    $('#filterTim').on('change', function() {
+        table.column(13).search(this.value).draw();
+    });
+});
+</script>
 </body>
 
 
