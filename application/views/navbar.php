@@ -451,7 +451,10 @@
                     echo isset($_SESSION['role']);
                     if(isset($_SESSION['role'])!=1){
                         header('location:Login');
-                    }?>
+                    }else{
+                        session_start();
+                    }
+                    ?>
                     <div id="two-column-menu">
                     </div>
                     <ul class="navbar-nav" id="navbar-nav">
