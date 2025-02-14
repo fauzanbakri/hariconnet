@@ -31,7 +31,7 @@ class DashboardCs extends CI_Controller {
 			$this->load->view('navbar');
 			$this->load->view('dashboardCs');
 		}else{
-			header('location: ./DashboardNoc');
+			// header('location: ./DashboardNoc');
 		}
 	}
 	public function hardcomplain()
