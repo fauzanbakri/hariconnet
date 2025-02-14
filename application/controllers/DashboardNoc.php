@@ -64,7 +64,7 @@ class DashboardNoc extends CI_Controller {
 				$this->load->view('navbar');
 				$this->load->view('dashboardNoc', $q);
 		}else{
-			header('location: ./DashboardCs');
+			// header('location: ./DashboardCs');
 		}
 		
 	}
