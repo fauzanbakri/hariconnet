@@ -29,8 +29,17 @@ class TicketClose extends CI_Controller {
 			olt ON olt.idOlt = tiketClose.idOlt
 		")->result();
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
-		$this->load->view('navbar');
-		$this->load->view('ticketClose', $q);
+		session_start();
+		if(
+			$_SESSION['role']=='Superadmin' ||
+			$_SESSION['role']=='NOC Ritel' ||
+			$_SESSION['role']=='Team Leader'
+			){
+				$this->load->view('navbar');
+				$this->load->view('ticketClose', $q);
+		}else{
+			header('location: ./DashboardNoc');
+		}
 	}
 	public function autoTim(){
 		$olt = $this->input->get('olt');

@@ -24,8 +24,19 @@ class Feeder extends CI_Controller {
 			SELECT * FROM feeder")->result();
 		$q['tim'] = $this->db->query("SELECT * FROM tim WHERE segmen='Korporat'")->result();
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
-		$this->load->view('navbar');
-		$this->load->view('feeder', $q);
+		session_start();
+		if(
+			$_SESSION['role']=='Superadmin' || 
+			$_SESSION['role']=='NOC Ritel' || 
+			$_SESSION['role']=='Team Leader' || 
+			$_SESSION['role']=='Pemeliharaan Ritel' || 
+			$_SESSION['role']=='Resepsionis' 
+			){
+				$this->load->view('navbar');
+				$this->load->view('feeder', $q);
+		}else{
+			header('location: ./DashboardNoc');
+		}
 	}
 	public function autoArea(){
 		$olt = $this->input->get('area');

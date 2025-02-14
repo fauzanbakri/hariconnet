@@ -24,8 +24,18 @@ class ListTeam extends CI_Controller {
 		SELECT * FROM tim")->result();
 		// $q['olt'] = $this->db->query("
 		// SELECT * FROM tim")->result();
-		$this->load->view('navbar');
-		$this->load->view('listTeam', $q);
+		session_start();
+		if(
+			$_SESSION['role']=='Superadmin' || 
+			$_SESSION['role']=='NOC Ritel' || 
+			$_SESSION['role']=='Team Leader' || 
+			$_SESSION['role']=='Pemeliharaan Ritel'
+			){
+				$this->load->view('navbar');
+				$this->load->view('listTeam', $q);
+		}else{
+			header('location: ./DashboardNoc');
+		}
 	}
 	public function autoArea(){
 		$olt = $this->input->get('area');

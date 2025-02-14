@@ -10,8 +10,17 @@ class FeederClose extends CI_Controller {
 		SELECT * FROM tim")->result();
 		$q['olt'] = $this->db->query("
 		SELECT * FROM olt")->result();
-		$this->load->view('navbar');
-		$this->load->view('feederClose', $q);
+		session_start();
+		if(
+			$_SESSION['role']=='Superadmin' ||
+			$_SESSION['role']=='NOC Ritel' ||
+			$_SESSION['role']=='Team Leader'
+			){
+				$this->load->view('navbar');
+				$this->load->view('feederClose', $q);
+		}else{
+			header('location: ./DashboardNoc');
+		}
 	}
 	public function autoArea(){
 		$olt = $this->input->get('area');

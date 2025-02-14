@@ -54,7 +54,18 @@ class DashboardNoc extends CI_Controller {
 		ORDER BY tiket.tanggal ASC LIMIT 10;")->result();
 		$q['topf'] = $this->db->query("SELECT * FROM feeder WHERE status!='CLOSED' ORDER BY downtime ASC LIMIT 10")->result();
 		
-		$this->load->view('navbar');
-		$this->load->view('dashboardNoc', $q);
+		session_start();
+		if(
+			$_SESSION['role']=='Superadmin' || 
+			$_SESSION['role']=='NOC Ritel' || 
+			$_SESSION['role']=='Team Leader' || 
+			$_SESSION['role']=='Pemeliharaan Ritel'			
+			){
+				$this->load->view('navbar');
+				$this->load->view('dashboardNoc', $q);
+		}else{
+			header('location: ./DashboardCs');
+		}
+		
 	}
 }

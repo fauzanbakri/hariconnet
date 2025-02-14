@@ -20,8 +20,19 @@ class DashboardCs extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('navbar');
-		$this->load->view('dashboardCs');
+		session_start();
+		if(
+			$_SESSION['role']=='Superadmin' || 
+			$_SESSION['role']=='NOC Ritel' || 
+			$_SESSION['role']=='Team Leader' || 
+			$_SESSION['role']=='Pemeliharaan Ritel' || 
+			$_SESSION['role']=='Resepsionis' 
+			){
+			$this->load->view('navbar');
+			$this->load->view('dashboardCs');
+		}else{
+			header('location: ./DashboardNoc');
+		}
 	}
 	public function hardcomplain()
 	{
