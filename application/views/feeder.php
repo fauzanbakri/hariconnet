@@ -34,9 +34,16 @@
                                 <!-- Grids in modals -->
                                  <div class="row">
                                     <div class="col-md-3">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
+                                        <?php
+                                            if(
+                                                $_SESSION['role']!='Resepsionis'
+                                                ){
+                                            echo '
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
                                             Add New Incident
-                                        </button>
+                                            </button>';
+                                                }
+                                        ?>
                                         <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                     </div>
                                  </div>
@@ -288,7 +295,15 @@
                                                 <th>Keterangan</th>
                                                 <th>Last Update By</th>
                                                 <th>Timestamp</th>
-                                                <th>Action</th>
+                                                <?php
+                                                if(
+                                                    $_SESSION['role']!='Resepsionis'
+                                                    ){
+                                                        echo "<th>Action</th>";
+                                                }
+
+                                                    
+                                                ?>
                                             </tr>
                                         </thead>
                                         <!-- <span class="badge bg-danger">Danger</span> -->
@@ -332,6 +347,15 @@
                                                 }else{
                                                     $b = '<span class="badge bg-primary">OPEN</span>';
                                                 }
+
+                                                if(
+                                                    $_SESSION['role']=='Resepsionis'
+                                                    ){
+                                                        $s = "hidden";
+                                                }else{
+                                                        $s ="";
+                                                }
+
                                                 echo "
                                                 <tr>
                                                     <td>".$count."</td>
@@ -352,7 +376,7 @@
                                                     <td>".$row->keterangan."</td>
                                                     <td>".$row->createby."</td>  
                                                     <td>".$row->timestamp."</td>  
-                                                    <td>
+                                                    <td ".$s.">
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                 <i class='ri-more-fill align-middle'></i>
