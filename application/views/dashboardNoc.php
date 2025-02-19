@@ -29,7 +29,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="card card-animate">
-                                            <div class="card-body">
+                                            <a href="Tickets" class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
                                                         <p class="fw-medium text-muted mb-0">Total Incident</p>
@@ -44,12 +44,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div><!-- end card body -->
+    </a><!-- end card body -->
                                         </div> <!-- end card-->
                                     </div> <!-- end col-->
                                     <div class="col-md-6">
                                         <div class="card card-animate">
-                                            <div class="card-body">
+                                            <a href="OverSLA" class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
                                                         <p class="fw-medium text-muted mb-0">Tiket Above 3 Days</p>
@@ -65,11 +65,11 @@
                                                     </div>
                                                 </div>
                                             </div><!-- end card body -->
-                                        </div> <!-- end card-->
+                                            </a> <!-- end card-->
                                     </div> <!-- end col-->
                                     <div class="col-md-6">
                                         <div class="card card-animate">
-                                            <div class="card-body">
+                                            <a href="ListTeam" class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
                                                         <p class="fw-medium text-muted mb-0">Total Team</p>
@@ -84,12 +84,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div><!-- end card body -->
+                                            </a><!-- end card body -->
                                         </div> <!-- end card-->
                                     </div> <!-- end col-->
                                     <div class="col-md-6">
                                         <div class="card card-animate">
-                                            <div class="card-body">
+                                            <a href="ListOlt" class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
                                                         <p class="fw-medium text-muted mb-0">Total OLT</p>
@@ -104,7 +104,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div><!-- end card body -->
+                                            </a><!-- end card body -->
                                         </div> <!-- end card-->
                                     </div> <!-- end col-->
                                     <div class="col-xl-12">
