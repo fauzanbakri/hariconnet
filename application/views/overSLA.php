@@ -21,6 +21,8 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th scope="col">Incident</th>
+                                                    <th scope="col">Nama</th>
+                                                    <th scope="col">OLT</th>
                                                     <th scope="col">Tim</th>
                                                     <th scope="col">Kabupaten</th>
                                                     <th scope="col">Durasi</th>
@@ -48,6 +50,8 @@
                                                         <tr>
                                                             <td>'.$no.'</td>
                                                             <td>'.$datas->idInsiden.'</td>
+                                                            <td>'.$datas->nama.'</td>
+                                                            <td>'.$datas->idOlt.'</td>
                                                             <td>'.$datas->tim.'</td>
                                                             <td>'.$datas->kabupaten.'</td>
                                                             <td><span class="'.$class.'">'.$durasi.'</span></span></td>
