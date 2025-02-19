@@ -156,9 +156,14 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Top 10 Aging Ticket</h4>
-                                </div><!-- end card header -->
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">Top 10 Aging Ticket</h4>
+                                    <div class="flex-shrink-0">
+                                        <a href="OverSLA" type="button" class="btn btn-soft-info btn-sm">
+                                            <i class="ri-file-list-3-line align-middle"></i> All Over SLA
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-borderless align-middle mb-0">
