@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class FeederClose extends CI_Controller {
 	public function index()
 	{
+		$title['title']="Feeder Close";
 		$q['data'] = $this->db->query("
 			SELECT * FROM feederClose")->result();
 		$q['tim'] = $this->db->query("
@@ -16,7 +17,7 @@ class FeederClose extends CI_Controller {
 			$_SESSION['role']=='NOC Ritel' ||
 			$_SESSION['role']=='Team Leader'
 			){
-				$this->load->view('navbar');
+				$this->load->view('navbar', $title);
 				$this->load->view('feederClose', $q);
 		}else{
 			header('location: ./DashboardNoc');

@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Report extends CI_Controller {
 	public function index()
 	{
+        $title['title']="Report";
         $q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->row();
 		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->row();
 		$q['new'] = $this->db->query("SELECT COUNT(idTiket) as new FROM tiket WHERE status='NEW'")->row();
@@ -32,7 +33,7 @@ class Report extends CI_Controller {
 			$_SESSION['role']=='Superadmin' || 
 			$_SESSION['role']=='NOC Ritel'
 			){
-                $this->load->view('navbar');
+                $this->load->view('navbar', $title);
                 $this->load->view('report', $q);
 		}else{
 			header('location: ./DashboardNoc');

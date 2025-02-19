@@ -20,6 +20,7 @@ class Feeder extends CI_Controller {
 	 */
 	public function index()
 	{
+		$title['title']="Incident Feeder";
 		$q['data'] = $this->db->query("
 			SELECT * FROM feeder")->result();
 		$q['tim'] = $this->db->query("SELECT * FROM tim WHERE segmen='Korporat'")->result();
@@ -32,7 +33,7 @@ class Feeder extends CI_Controller {
 			$_SESSION['role']=='Pemeliharaan Ritel' || 
 			$_SESSION['role']=='Resepsionis' 
 			){
-				$this->load->view('navbar');
+				$this->load->view('navbar',$title);
 				$this->load->view('feeder', $q);
 		}else{
 			header('location: ./DashboardNoc');

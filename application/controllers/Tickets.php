@@ -20,6 +20,7 @@ class tickets extends CI_Controller {
 	 */
 	public function index()
 	{
+		$title['title']="Tickets";
 		$q['data'] = $this->db->query("
 			SELECT 
 			prioritas,
@@ -64,7 +65,7 @@ class tickets extends CI_Controller {
 			$_SESSION['role']=='Team Leader' || 
 			$_SESSION['role']=='Pemeliharaan Ritel'
 			){
-				$this->load->view('navbar');
+				$this->load->view('navbar', $title);
 				$this->load->view('tickets', $q);
 		}else{
 			header('location: ./DashboardNoc');

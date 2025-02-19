@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ListOlt extends CI_Controller {
 	public function index()
 	{
+		$title['title']="List OLT";
+
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		$q['tim'] = $this->db->query("SELECT * FROM tim")->result();
 		session_start();
@@ -13,7 +15,7 @@ class ListOlt extends CI_Controller {
 			$_SESSION['role']=='Team Leader' || 
 			$_SESSION['role']=='Pemeliharaan Ritel'
 			){
-				$this->load->view('navbar');
+				$this->load->view('navbar', $title);
 				$this->load->view('listOlt', $q);
 		}else{
 			header('location: ./DashboardNoc');

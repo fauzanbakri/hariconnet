@@ -20,6 +20,7 @@ class ListTeam extends CI_Controller {
 	 */
 	public function index()
 	{
+		$title['title']="List Team";
 		$q['tim'] = $this->db->query("
 		SELECT * FROM tim")->result();
 		// $q['olt'] = $this->db->query("
@@ -31,7 +32,7 @@ class ListTeam extends CI_Controller {
 			$_SESSION['role']=='Team Leader' || 
 			$_SESSION['role']=='Pemeliharaan Ritel'
 			){
-				$this->load->view('navbar');
+				$this->load->view('navbar', $title);
 				$this->load->view('listTeam', $q);
 		}else{
 			header('location: ./DashboardNoc');

@@ -20,6 +20,7 @@ class DashboardNoc extends CI_Controller {
 	 */
 	public function index()
 	{
+		$title['title']="Dashboard NOC";
 		$q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->result();
 		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->result();
 		$q['olt'] = $this->db->query("SELECT COUNT(idOlt) as olt FROM olt")->result();
@@ -61,7 +62,7 @@ class DashboardNoc extends CI_Controller {
 			$_SESSION['role']=='Team Leader' || 
 			$_SESSION['role']=='Pemeliharaan Ritel'			
 			){
-				$this->load->view('navbar');
+				$this->load->view('navbar',$title);
 				$this->load->view('dashboardNoc', $q);
 		}else{
 			header('location: ./DashboardCs');

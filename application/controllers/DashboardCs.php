@@ -20,6 +20,7 @@ class DashboardCs extends CI_Controller {
 	 */
 	public function index()
 	{
+		$title['title']="Dashboard CS";
 		session_start();
 		if(isset($_SESSION['role'])){
 			if(
@@ -29,7 +30,7 @@ class DashboardCs extends CI_Controller {
 				$_SESSION['role']=='Pemeliharaan Ritel' || 
 				$_SESSION['role']=='Resepsionis' 
 				){
-				$this->load->view('navbar');
+				$this->load->view('navbar', $title);
 				$this->load->view('dashboardCs');
 			}else{
 				header('location: ./DashboardNoc');

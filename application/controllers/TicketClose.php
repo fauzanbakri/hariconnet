@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class TicketClose extends CI_Controller {
 	public function index()
 	{
+		$title['title']="Ticket Close";
 		$q['data'] = $this->db->query("
 			SELECT 
 			prioritas,
@@ -35,7 +36,7 @@ class TicketClose extends CI_Controller {
 			$_SESSION['role']=='NOC Ritel' ||
 			$_SESSION['role']=='Team Leader'
 			){
-				$this->load->view('navbar');
+				$this->load->view('navbar', $title);
 				$this->load->view('ticketClose', $q);
 		}else{
 			header('location: ./DashboardNoc');
