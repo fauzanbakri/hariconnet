@@ -21,6 +21,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th scope="col">Incident</th>
+                                                    <th scope="col">Tiket</th>
                                                     <th scope="col">Nama</th>
                                                     <th scope="col">OLT</th>
                                                     <th scope="col">Tim</th>
@@ -50,6 +51,7 @@
                                                         <tr>
                                                             <td>'.$no.'</td>
                                                             <td>'.$datas->idInsiden.'</td>
+                                                            <td>'.$datas->idTiket.'</td>
                                                             <td>'.$datas->nama.'</td>
                                                             <td>'.$datas->idOlt.'</td>
                                                             <td>'.$datas->tim.'</td>
