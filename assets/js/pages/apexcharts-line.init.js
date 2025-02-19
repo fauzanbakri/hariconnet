@@ -569,7 +569,9 @@ var linechartBasicColors = getChartColorsArray("line_chart_basic"),
                 }
             }
         }]
-    }, (chart = new ApexCharts(document.querySelector("#line_chart_datalabel"), options)).render()), getChartColorsArray("line_chart_dashed")),
+    }, 
+    // closed ticket percent
+    (chart = new ApexCharts(document.querySelector("#line_chart_datalabel"), options)).render()), getChartColorsArray("line_chart_dashed")),
     linechartannotationsColors = (linechartDashedColors && (options = {
         chart: {
             height: 380,
@@ -586,22 +588,22 @@ var linechartBasicColors = getChartColorsArray("line_chart_basic"),
             enabled: !1
         },
         stroke: {
-            width: [3, 4, 3],
+            width: [3, 3, 3],
             curve: "straight",
-            dashArray: [0, 8, 5]
+            dashArray: [0, 0, 4]
         },
         series: [{
-            name: "Session Duration",
+            name: "Ticket Closed <1 Hari",
             data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
         }, {
-            name: "Page Views",
+            name: "Ticket Closed >1 Hari",
             data: [36, 42, 60, 42, 13, 18, 29, 37, 36, 51, 32, 35]
         }, {
-            name: "Total Visits",
-            data: [89, 56, 74, 98, 72, 38, 64, 46, 84, 58, 46, 49]
+            name: "Target",
+            data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
         }],
         title: {
-            text: "Page Statistics",
+            text: "",
             align: "left",
             style: {
                 fontWeight: 500
@@ -627,12 +629,6 @@ var linechartBasicColors = getChartColorsArray("line_chart_basic"),
                 title: {
                     formatter: function(e) {
                         return e + " per session"
-                    }
-                }
-            }, {
-                title: {
-                    formatter: function(e) {
-                        return e
                     }
                 }
             }]

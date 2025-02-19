@@ -154,6 +154,18 @@
                     </div> <!-- end row-->
                         <!-- end col -->
                     <div class="row">
+                    <div class="card card-height-100">
+                                    <div class="card-header border-0 align-items-center d-flex">
+                                        <h4 class="card-title mb-0 flex-grow-1">Percent Closed Ticket</h4>
+                                    </div><!-- end card header -->
+                                    <div class="card-body p-0 pb-2">
+                                        <div class="w-100">
+                                            <div id="line_chart_dashed" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                        </div>
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                    </div>
+                    <div class="row">
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">

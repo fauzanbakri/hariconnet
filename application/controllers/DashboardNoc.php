@@ -69,4 +69,24 @@ class DashboardNoc extends CI_Controller {
 		}
 		
 	}
+	public function getTicketData() {
+        $query = $this->db->query("SELECT DATE_FORMAT(t.tanggal, '%b') AS bulan,
+            SUM(TIMESTAMPDIFF(HOUR, t.tanggal, tc.timestamp) < 24) AS closed_less_than_1,
+            SUM(TIMESTAMPDIFF(HOUR, t.tanggal, tc.timestamp) >= 24) AS closed_more_than_1
+            FROM tiket t
+            JOIN tiketClose tc ON t.idTiket = tc.idTiket
+            WHERE tc.status = 'closed'
+            GROUP BY MONTH(t.tanggal)
+            ORDER BY MONTH(t.tanggal)");
+
+        $result = $query->result_array();
+
+        $data = [
+            "categories" => array_column($result, 'bulan'),
+            "closed_less_than_1" => array_map('intval', array_column($result, 'closed_less_than_1')),
+            "closed_more_than_1" => array_map('intval', array_column($result, 'closed_more_than_1'))
+        ];
+
+        echo json_encode($data);
+    }
 }

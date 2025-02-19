@@ -211,6 +211,7 @@ class tickets extends CI_Controller {
 			$status = $row->status;
 			$prioritas = $row->prioritas;
 			$createby = $row->createby;
+			$timestamp = $row->timestamp;
 
 			$this->db->query("INSERT INTO tiketClose VALUES(
 			'',
@@ -228,7 +229,8 @@ class tickets extends CI_Controller {
 			'$keterangan',
 			'$status',
 			'$prioritas',
-			'$createby'
+			'$createby',
+			'$timestamp'
 			)");
 			// echo $row->idTiket;
 		}
