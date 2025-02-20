@@ -529,7 +529,7 @@
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         var data = <?= json_encode($datapercent) ?>;
-
+        console.log(data);
         var options = {
             chart: {
                 height: 380,
