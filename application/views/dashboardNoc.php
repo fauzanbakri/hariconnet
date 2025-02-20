@@ -369,8 +369,8 @@
         }).filter(function(item, index) {
             return kabupaten[index] !== null; 
         });
-        console.log(kabupaten); 
-        console.log(count);   
+        // console.log(kabupaten); 
+        // console.log(count);   
         var options = {
             series: [{
                 name: "Jumlah Tiket",
@@ -427,8 +427,8 @@
         }).filter(function(item, index) {
             return tim[index] !== null; 
         });
-        console.log(tim); 
-        console.log(count);   
+        // console.log(tim); 
+        // console.log(count);   
         var options = {
             series: [{
                 name: "Jumlah Tiket",
@@ -533,6 +533,7 @@
             type: "GET",
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 var options = {
                     chart: {
                         height: 380,
