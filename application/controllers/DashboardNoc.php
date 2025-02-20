@@ -54,23 +54,7 @@ class DashboardNoc extends CI_Controller {
 		WHERE tiket.status!='CLOSED' 
 		ORDER BY tiket.tanggal ASC LIMIT 10;")->result();
 		$q['topf'] = $this->db->query("SELECT * FROM feeder WHERE status!='CLOSED' ORDER BY downtime ASC LIMIT 10")->result();
-		
-		session_start();
-		if(
-			$_SESSION['role']=='Superadmin' || 
-			$_SESSION['role']=='NOC Ritel' || 
-			$_SESSION['role']=='Team Leader' || 
-			$_SESSION['role']=='Pemeliharaan Ritel'			
-			){
-				$this->load->view('navbar',$title);
-				$this->load->view('dashboardNoc', $q);
-		}else{
-			header('location: ./DashboardCs');
-		}
-		
-	}
-	public function getTicketData() {
-        $query = $this->db->query("SELECT bulan, 
+		$query = $this->db->query("SELECT bulan, 
             SUM(more_than_1_day) AS more_than_1_day, 
             SUM(more_than_3_days) AS more_than_3_days,
             (SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
@@ -108,6 +92,22 @@ class DashboardNoc extends CI_Controller {
             "percent_more_than_3_days" => array_map('floatval', array_column($result, 'percent_more_than_3_days'))
         ];
 
-        echo json_encode($data);
+        $q['datapercent']= json_encode($data);
+		session_start();
+		if(
+			$_SESSION['role']=='Superadmin' || 
+			$_SESSION['role']=='NOC Ritel' || 
+			$_SESSION['role']=='Team Leader' || 
+			$_SESSION['role']=='Pemeliharaan Ritel'			
+			){
+				$this->load->view('navbar',$title);
+				$this->load->view('dashboardNoc', $q);
+		}else{
+			header('location: ./DashboardCs');
+		}
+		
+	}
+	public function getTicketData() {
+        
     }
 }

@@ -527,59 +527,49 @@
             (chart = new ApexCharts(document.querySelector("#tiketmonth"), options)).render()));
     </script>
     <script>
-        $(document).ready(function () {
-        $.ajax({
-            url: "DashboardNoc/getTicketData",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                var options = {
-                    chart: {
-                        height: 380,
-                        type: "line",
-                        zoom: { enabled: false },
-                        toolbar: { show: false }
-                    },
-                    colors: ["#556ee6", "#34c38f", "#f46a6a"],
-                    dataLabels: { enabled: false },
-                    stroke: { width: [3, 3, 3], curve: "smooth" },
-                    series: [
-                        {
-                            name: "Ticket Closed <1 Hari (%)",
-                            data: data.percent_more_than_1_day
-                        },
-                        {
-                            name: "Ticket Closed >3 Hari (%)",
-                            data: data.percent_more_than_3_days
-                        },
-                        {
-                            name: "Target (%)",
-                            data: Array(data.categories.length).fill(64)
-                        }
-                    ],
-                    title: { text: "Persentase Tiket Closed", align: "left" },
-                    markers: { size: 0, hover: { sizeOffset: 6 } },
-                    xaxis: { categories: data.categories },
-                    tooltip: {
-                        y: {
-                            formatter: function (val) {
-                                return val.toFixed(2) + " %";
-                            }
-                        }
-                    },
-                    grid: { borderColor: "#f1f1f1" }
-                };
+    document.addEventListener("DOMContentLoaded", function () {
+        var data = <?= json_encode($datapercent) ?>;
 
-                var chart = new ApexCharts(document.querySelector("#chartaging"), options);
-                chart.render();
+        var options = {
+            chart: {
+                height: 380,
+                type: "line",
+                zoom: { enabled: false },
+                toolbar: { show: false }
             },
-            error: function (xhr, status, error) {
-                console.error("Error fetching data:", error);
-            }
-        });
-    });
+            colors: ["#556ee6", "#34c38f", "#f46a6a"],
+            dataLabels: { enabled: false },
+            stroke: { width: [3, 3, 3], curve: "smooth" },
+            series: [
+                {
+                    name: "Ticket Closed <1 Hari (%)",
+                    data: data.percent_more_than_1_day
+                },
+                {
+                    name: "Ticket Closed >3 Hari (%)",
+                    data: data.percent_more_than_3_days
+                },
+                {
+                    name: "Target (%)",
+                    data: Array(data.categories.length).fill(64)
+                }
+            ],
+            title: { text: "Persentase Tiket Closed", align: "left" },
+            markers: { size: 0, hover: { sizeOffset: 6 } },
+            xaxis: { categories: data.categories },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val.toFixed(2) + " %";
+                    }
+                }
+            },
+            grid: { borderColor: "#f1f1f1" }
+        };
 
-    </script>
+        var chart = new ApexCharts(document.querySelector("#line_chart_datalabel"), options);
+        chart.render();
+    });
+</script>
 </body>
 </html>
