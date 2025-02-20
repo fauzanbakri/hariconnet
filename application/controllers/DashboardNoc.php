@@ -70,21 +70,42 @@ class DashboardNoc extends CI_Controller {
 		
 	}
 	public function getTicketData() {
-        $query = $this->db->query("SELECT DATE_FORMAT(t.tanggal, '%b') AS bulan,
-            SUM(TIMESTAMPDIFF(HOUR, t.tanggal, tc.timestamp) < 24) AS closed_less_than_1,
-            SUM(TIMESTAMPDIFF(HOUR, t.tanggal, tc.timestamp) >= 24) AS closed_more_than_1
-            FROM tiket t
-            JOIN tiketClose tc ON t.idTiket = tc.idTiket
-            WHERE tc.status = 'closed'
-            GROUP BY MONTH(t.tanggal)
-            ORDER BY MONTH(t.tanggal)");
+        $query = $this->db->query("SELECT bulan, 
+            SUM(more_than_1_day) AS more_than_1_day, 
+            SUM(more_than_3_days) AS more_than_3_days,
+            (SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
+            (SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+            FROM (
+                SELECT DATE_FORMAT(tanggal, '%b') AS bulan,
+                    YEAR(tanggal) AS tahun,
+                    COUNT(CASE WHEN TIMESTAMPDIFF(DAY, tanggal, timestamp) < 1 THEN 1 END) AS more_than_1_day,
+                    COUNT(CASE WHEN TIMESTAMPDIFF(DAY, tanggal, timestamp) > 3 THEN 1 END) AS more_than_3_days,
+                    (SELECT COUNT(*) FROM tiket WHERE YEAR(tiket.tanggal) = YEAR(t.tanggal) AND MONTH(tiket.tanggal) = MONTH(t.tanggal)) + 
+                    (SELECT COUNT(*) FROM tiketClose WHERE YEAR(tiketClose.tanggal) = YEAR(t.tanggal) AND MONTH(tiketClose.tanggal) = MONTH(t.tanggal)) 
+                    AS total_tickets_month
+                FROM (
+                    SELECT idTiket, tanggal, timestamp FROM tiket WHERE status='CLOSED'
+                    UNION ALL
+                    SELECT idTiket, tanggal, timestamp FROM tiketClose WHERE status='CLOSED'
+                ) AS t
+                GROUP BY YEAR(tanggal), MONTH(tanggal)
+            ) AS grouped_data
+            GROUP BY bulan, tahun
+            ORDER BY tahun, STR_TO_DATE(bulan, '%b')");
 
         $result = $query->result_array();
 
+        if (empty($result)) {
+            echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+            return;
+        }
+
         $data = [
             "categories" => array_column($result, 'bulan'),
-            "closed_less_than_1" => array_map('intval', array_column($result, 'closed_less_than_1')),
-            "closed_more_than_1" => array_map('intval', array_column($result, 'closed_more_than_1'))
+            "more_than_1_day" => array_map('intval', array_column($result, 'more_than_1_day')),
+            "more_than_3_days" => array_map('intval', array_column($result, 'more_than_3_days')),
+            "percent_more_than_1_day" => array_map('floatval', array_column($result, 'percent_more_than_1_day')),
+            "percent_more_than_3_days" => array_map('floatval', array_column($result, 'percent_more_than_3_days'))
         ];
 
         echo json_encode($data);

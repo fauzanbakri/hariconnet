@@ -596,11 +596,11 @@ var linechartBasicColors = getChartColorsArray("line_chart_basic"),
             name: "Ticket Closed <1 Hari",
             data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
         }, {
-            name: "Ticket Closed >1 Hari",
+            name: "Ticket Closed >3 Hari",
             data: [36, 42, 60, 42, 13, 18, 29, 37, 36, 51, 32, 35]
         }, {
             name: "Target",
-            data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65]
+            data: [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64]
         }],
         title: {
             text: "",

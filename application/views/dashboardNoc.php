@@ -160,7 +160,7 @@
                                     </div><!-- end card header -->
                                     <div class="card-body p-0 pb-2">
                                         <div class="w-100">
-                                            <div id="line_chart_dashed" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                            <div id="chartaging" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                         </div>
                                     </div><!-- end card body -->
                                 </div><!-- end card -->
@@ -525,6 +525,60 @@
                 }
             }, 
             (chart = new ApexCharts(document.querySelector("#tiketmonth"), options)).render()));
+    </script>
+    <script>
+        $(document).ready(function () {
+        $.ajax({
+            url: "DashboardNoc/getTicketData",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                var options = {
+                    chart: {
+                        height: 380,
+                        type: "line",
+                        zoom: { enabled: false },
+                        toolbar: { show: false }
+                    },
+                    colors: ["#556ee6", "#34c38f", "#f46a6a"],
+                    dataLabels: { enabled: false },
+                    stroke: { width: [3, 3, 3], curve: "smooth" },
+                    series: [
+                        {
+                            name: "Ticket Closed <1 Hari (%)",
+                            data: data.percent_more_than_1_day
+                        },
+                        {
+                            name: "Ticket Closed >3 Hari (%)",
+                            data: data.percent_more_than_3_days
+                        },
+                        {
+                            name: "Target (%)",
+                            data: Array(data.categories.length).fill(64)
+                        }
+                    ],
+                    title: { text: "Persentase Tiket Closed", align: "left" },
+                    markers: { size: 0, hover: { sizeOffset: 6 } },
+                    xaxis: { categories: data.categories },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val.toFixed(2) + " %";
+                            }
+                        }
+                    },
+                    grid: { borderColor: "#f1f1f1" }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chartaging"), options);
+                chart.render();
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data:", error);
+            }
+        });
+    });
+
     </script>
 </body>
 </html>
