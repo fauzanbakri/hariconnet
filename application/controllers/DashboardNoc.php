@@ -57,15 +57,25 @@ class DashboardNoc extends CI_Controller {
 		$query = $this->db->query("SELECT bulan, 
             SUM(more_than_1_day) AS more_than_1_day, 
             SUM(more_than_3_days) AS more_than_3_days,
-            (SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-            (SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+            CASE 
+                WHEN SUM(total_tickets_month) > 0 
+                THEN (SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 
+                ELSE 0 
+            END AS percent_more_than_1_day,
+            CASE 
+                WHEN SUM(total_tickets_month) > 0 
+                THEN (SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 
+                ELSE 0 
+            END AS percent_more_than_3_days
             FROM (
                 SELECT DATE_FORMAT(tanggal, '%b') AS bulan,
                     YEAR(tanggal) AS tahun,
                     COUNT(CASE WHEN TIMESTAMPDIFF(DAY, tanggal, timestamp) < 1 THEN 1 END) AS more_than_1_day,
                     COUNT(CASE WHEN TIMESTAMPDIFF(DAY, tanggal, timestamp) > 3 THEN 1 END) AS more_than_3_days,
-                    (SELECT COUNT(*) FROM tiket WHERE YEAR(tiket.tanggal) = YEAR(t.tanggal) AND MONTH(tiket.tanggal) = MONTH(t.tanggal)) + 
-                    (SELECT COUNT(*) FROM tiketClose WHERE YEAR(tiketClose.tanggal) = YEAR(t.tanggal) AND MONTH(tiketClose.tanggal) = MONTH(t.tanggal)) 
+                    COALESCE(
+                        (SELECT COUNT(*) FROM tiket WHERE YEAR(tiket.tanggal) = YEAR(t.tanggal) AND MONTH(tiket.tanggal) = MONTH(t.tanggal)), 0) + 
+                    COALESCE(
+                        (SELECT COUNT(*) FROM tiketClose WHERE YEAR(tiketClose.tanggal) = YEAR(t.tanggal) AND MONTH(tiketClose.tanggal) = MONTH(t.tanggal)), 0) 
                     AS total_tickets_month
                 FROM (
                     SELECT idTiket, tanggal, timestamp FROM tiket WHERE status='CLOSED'
@@ -75,7 +85,7 @@ class DashboardNoc extends CI_Controller {
                 GROUP BY YEAR(tanggal), MONTH(tanggal)
             ) AS grouped_data
             GROUP BY bulan, tahun
-            ORDER BY tahun, STR_TO_DATE(bulan, '%b')");
+            ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
 
         $result = $query->result_array();
 
