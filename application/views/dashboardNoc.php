@@ -529,7 +529,7 @@
     </script>
     <script>
     // Data
-    const data1 = <?php echo json_encode($datpercent); ?>;
+    const data1 = <?php echo json_encode($datapercent); ?>;
     const target = 64;
     const options2 = {
       series: [
