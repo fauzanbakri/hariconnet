@@ -527,8 +527,6 @@
             }, 
             (chart = new ApexCharts(document.querySelector("#tiketmonth"), options)).render()));
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-            
     <script>
      document.addEventListener("DOMContentLoaded", function () {
         var data = <?= json_encode($datapercent); ?>;
