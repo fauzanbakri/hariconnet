@@ -105,7 +105,7 @@
     <script>
     // Data
     const target = 64;
-    const data1 = <?php echo $top; ?>; // Pastikan menggunakan json_encode
+    const data1 = <?php echo $datapercent; ?>; // Pastikan menggunakan json_encode
     const options2 = {
       series: [
         {
