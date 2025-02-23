@@ -530,16 +530,16 @@
     <script>
     // Data
     const data1 = <?php echo json_encode($datapercent); ?>;
-    const target = 64;
+    // Chart 2: Data Persentase
     const options2 = {
       series: [
         {
-          name: "More than 1 Day (%)",
-          data: data.percent_more_than_1_day
+          name: "Less than 1 Day (%)",
+          data: data1.percent_more_than_1_day
         },
         {
           name: "More than 3 Days (%)",
-          data: data.percent_more_than_3_days
+          data: data1.percent_more_than_3_days
         }
       ],
       chart: {
@@ -562,7 +562,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: data.categories
+        categories: data1.categories
       },
       yaxis: {
         title: {
@@ -572,26 +572,10 @@
       fill: {
         opacity: 1
       },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#FF0000', // Warna garis target
-            label: {
-              borderColor: '#FF0000',
-              style: {
-                color: '#fff',
-                background: '#FF0000'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
       tooltip: {
         y: {
           formatter: function (val) {
-            return val;
+            return val + "%";
           }
         }
       }
