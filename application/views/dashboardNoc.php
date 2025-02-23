@@ -528,39 +528,22 @@
             (chart = new ApexCharts(document.querySelector("#tiketmonth"), options)).render()));
     </script>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var data = <?php echo json_encode($datapercent); ?>;
-
+     document.addEventListener("DOMContentLoaded", function () {
+        var data = <?= json_encode($datapercent); ?>;
+        
         var options = {
-            chart: {
-                height: 380,
-                type: "line",
-                zoom: { enabled: false },
-                toolbar: { show: false }
-            },
+            chart: { height: 380, type: "line", zoom: { enabled: false }, toolbar: { show: false } },
             colors: ["#556ee6", "#34c38f"],
             dataLabels: { enabled: false },
             stroke: { width: [3, 3], curve: "smooth" },
             series: [
-                {
-                    name: "Ticket Closed >1 Hari (%)",
-                    data: data.percent_more_than_1_day
-                },
-                {
-                    name: "Ticket Closed >3 Hari (%)",
-                    data: data.percent_more_than_3_days
-                }
+                { name: "Ticket Closed >1 Hari (%)", data: data.percent_more_than_1_day || [] },
+                { name: "Ticket Closed >3 Hari (%)", data: data.percent_more_than_3_days || [] }
             ],
             title: { text: "Persentase Tiket Closed", align: "left" },
             markers: { size: 0, hover: { sizeOffset: 6 } },
-            xaxis: { categories: data.categories },
-            tooltip: {
-                y: {
-                    formatter: function (val) {
-                        return val.toFixed(2) + " %";
-                    }
-                }
-            },
+            xaxis: { categories: data.categories || [] },
+            tooltip: { y: { formatter: function (val) { return val.toFixed(2) + " %"; } } },
             grid: { borderColor: "#f1f1f1" }
         };
 
