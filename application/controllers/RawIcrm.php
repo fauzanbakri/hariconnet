@@ -21,28 +21,7 @@ class RawIcrm extends CI_Controller {
 	public function index()
 	{
 		$title['title']="RAW ICRM+";
-		$q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->result();
-		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->result();
-		$q['olt'] = $this->db->query("SELECT COUNT(idOlt) as olt FROM olt")->result();
-		$this->db->select('kabupaten, COUNT(*) as count');
-        $this->db->from('tiket');
-        $this->db->join('olt', 'olt.idOlt = tiket.idOlt', 'left');
-        $this->db->group_by('kabupaten');
-        $this->db->order_by('count', 'DESC');
-        $query = $this->db->get();
-        $q['data'] = $query->result_array();
-
-		$this->db->select('tim, COUNT(*) as count');
-        $this->db->from('tiket');
-        $this->db->join('olt', 'olt.idOlt = tiket.idOlt', 'left');
-        $this->db->group_by('tim');
-        $this->db->order_by('count', 'DESC');
-        $query = $this->db->get();
-        $q['tim'] = $query->result_array();
-		$q['total_tim'] = $this->db->query("SELECT COUNT(*) as total_tim FROM tim WHERE segmen='Retail'")->result();
-		$q['sla'] = $this->db->query("SELECT COUNT(*) AS sla FROM tiket WHERE DATEDIFF(CURDATE(), STR_TO_DATE(tanggal, '%Y-%m-%d')) > 2;")->result();
-		$q['month'] = $this->db->query("SELECT YEAR(tanggal) AS year, MONTH(tanggal) AS month, SUM(CASE WHEN table_name = 'tiket' THEN 1 ELSE 0 END) AS tiket_total, SUM(CASE WHEN table_name = 'tiketClose' THEN 1 ELSE 0 END) AS tiketClose_total, SUM(1) AS total_tiket FROM ( SELECT 'tiket' AS table_name, tanggal FROM tiket UNION ALL SELECT 'tiketClose' AS table_name, tanggal FROM tiketClose ) AS combined_tables GROUP BY YEAR(tanggal), MONTH(tanggal) ORDER BY year, month;")->result_array();
-		$q['top'] = $this->db->query("SELECT bulan, 
+		$query = $this->db->query("SELECT bulan, 
             SUM(more_than_1_day) AS more_than_1_day, 
             SUM(more_than_3_days) AS more_than_3_days,
             (SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
@@ -77,7 +56,6 @@ class RawIcrm extends CI_Controller {
             "percent_more_than_1_day" => array_map('floatval', array_column($result, 'percent_more_than_1_day')),
             "percent_more_than_3_days" => array_map('floatval', array_column($result, 'percent_more_than_3_days'))
         ];
-
         $q['datapercent']= json_encode($data);
 		session_start();
 		if(
