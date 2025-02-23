@@ -360,6 +360,7 @@
     <script>
         window.onload = function() {
         var kabupatenData = <?php echo json_encode($data); ?>;
+        console.log(kabupatenData);
         var kabupaten = kabupatenData.map(function(item) {
         return item.kabupaten;
         }).filter(function(item) {
