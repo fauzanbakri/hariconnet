@@ -536,66 +536,11 @@
       percent_more_than_1_day: [1.3889, 21.8647],
       percent_more_than_3_days: [77.7778, 17.3342]
     };
-
-    // Chart 1: Data Absolut
-    const options1 = {
-      series: [
-        {
-          name: "More than 1 Day",
-          data: data1.more_than_1_day
-        },
-        {
-          name: "More than 3 Days",
-          data: data1.more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded'
-        },
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: data1.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Jumlah'
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val;
-          }
-        }
-      }
-    };
-
-    const chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
-    chart1.render();
-
     // Chart 2: Data Persentase
     const options2 = {
       series: [
         {
-          name: "More than 1 Day (%)",
+          name: "Less than 1 Day (%)",
           data: data1.percent_more_than_1_day
         },
         {
@@ -604,7 +549,7 @@
         }
       ],
       chart: {
-        type: 'bar',
+        type: 'line',
         height: 350
       },
       plotOptions: {
