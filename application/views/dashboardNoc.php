@@ -529,7 +529,7 @@
     </script>
     <script>
     // Data
-    const data = {
+    const data1 = {
       categories: ["Jan", "Feb"],
       more_than_1_day: [1, 333],
       more_than_3_days: [56, 264],
@@ -542,11 +542,11 @@
       series: [
         {
           name: "More than 1 Day",
-          data: data.more_than_1_day
+          data: data1.more_than_1_day
         },
         {
           name: "More than 3 Days",
-          data: data.more_than_3_days
+          data: data1.more_than_3_days
         }
       ],
       chart: {
@@ -569,7 +569,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: data.categories
+        categories: data1.categories
       },
       yaxis: {
         title: {
@@ -596,11 +596,11 @@
       series: [
         {
           name: "More than 1 Day (%)",
-          data: data.percent_more_than_1_day
+          data: data1.percent_more_than_1_day
         },
         {
           name: "More than 3 Days (%)",
-          data: data.percent_more_than_3_days
+          data: data1.percent_more_than_3_days
         }
       ],
       chart: {
@@ -623,7 +623,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: data.categories
+        categories: data1.categories
       },
       yaxis: {
         title: {
@@ -642,7 +642,7 @@
       }
     };
 
-    const chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+    const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     chart2.render();
 </script>
 </body>
