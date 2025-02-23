@@ -165,6 +165,7 @@
                                     </div><!-- end card body -->
                                 </div><!-- end card -->
                     </div>
+                     </div>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="card">
