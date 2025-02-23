@@ -549,7 +549,7 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
       },
       plotOptions: {
