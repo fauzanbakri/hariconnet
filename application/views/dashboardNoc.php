@@ -529,13 +529,8 @@
     </script>
     <script>
     // Data
-    const data1 = {
-      categories: ["Jan", "Feb"],
-      more_than_1_day: [1, 333],
-      more_than_3_days: [56, 264],
-      percent_more_than_1_day: [1.3889, 21.8647],
-      percent_more_than_3_days: [77.7778, 17.3342]
-    };
+    const data1 = <?php echo json_encode($datpercent); ?>;
+    const target = 64;
     const options2 = {
       series: [
         {
