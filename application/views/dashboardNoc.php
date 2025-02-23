@@ -536,16 +536,15 @@
       percent_more_than_1_day: [1.3889, 21.8647],
       percent_more_than_3_days: [77.7778, 17.3342]
     };
-    // Chart 2: Data Persentase
     const options2 = {
       series: [
         {
-          name: "Less than 1 Day (%)",
-          data: data1.percent_more_than_1_day
+          name: "More than 1 Day (%)",
+          data: data.percent_more_than_1_day
         },
         {
           name: "More than 3 Days (%)",
-          data: data1.percent_more_than_3_days
+          data: data.percent_more_than_3_days
         }
       ],
       chart: {
@@ -568,7 +567,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: data1.categories
+        categories: data.categories
       },
       yaxis: {
         title: {
@@ -577,6 +576,22 @@
       },
       fill: {
         opacity: 1
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: target,
+            borderColor: '#FF0000', // Warna garis target
+            label: {
+              borderColor: '#FF0000',
+              style: {
+                color: '#fff',
+                background: '#FF0000'
+              },
+              text: `Target: ${target}%`
+            }
+          }
+        ]
       },
       tooltip: {
         y: {
@@ -587,7 +602,7 @@
       }
     };
 
-    const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
+    const chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
     chart2.render();
 </script>
 </body>
