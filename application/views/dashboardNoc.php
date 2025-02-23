@@ -597,7 +597,7 @@
       }
     };
 
-    const chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+    const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     chart2.render();
 </script>
 </body>
