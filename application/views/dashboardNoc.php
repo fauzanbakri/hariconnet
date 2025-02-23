@@ -359,8 +359,7 @@
     <script src="assets/js/app.js"></script>
     <script>
         window.onload = function() {
-        var kabupatenData = <?php echo json_encode($datapercent); ?>;
-        console.log(kabupatenData);
+        var kabupatenData = <?php echo json_encode($data); ?>;
         var kabupaten = kabupatenData.map(function(item) {
         return item.kabupaten;
         }).filter(function(item) {
@@ -531,7 +530,7 @@
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         var data = <?= json_encode($datapercent) ?>;
-
+        console.log(data);
         var options = {
             chart: {
                 height: 380,
