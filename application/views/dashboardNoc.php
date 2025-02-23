@@ -359,7 +359,7 @@
     <script src="assets/js/app.js"></script>
     <script>
         window.onload = function() {
-        var kabupatenData = <?php echo json_encode($data); ?>;
+        var kabupatenData = <?php echo json_encode($datapercent); ?>;
         console.log(kabupatenData);
         var kabupaten = kabupatenData.map(function(item) {
         return item.kabupaten;
