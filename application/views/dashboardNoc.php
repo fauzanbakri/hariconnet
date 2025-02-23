@@ -535,11 +535,11 @@
       series: [
         {
           name: "More than 1 Day (%)",
-          data: dataFromPHP.percent_more_than_1_day
+          data: data1.percent_more_than_1_day
         },
         {
           name: "More than 3 Days (%)",
-          data: dataFromPHP.percent_more_than_3_days
+          data: data1.percent_more_than_3_days
         }
       ],
       chart: {
@@ -562,7 +562,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: dataFromPHP.categories
+        categories: data1.categories
       },
       yaxis: {
         title: {
