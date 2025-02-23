@@ -30,7 +30,7 @@
                                         </div><!-- end card header -->
                                         <div class="card-body p-0 pb-2">
                                             <div class="w-100">
-                                                <div id="chartaging" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                                <div id="chartaging2" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                             </div>
                                         </div><!-- end card body -->
                                     </div><!-- end card -->
@@ -173,7 +173,7 @@
       }
     };
 
-    const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
+    const chart2 = new ApexCharts(document.querySelector("#chartaging2"), options2);
     chart2.render();
 </script>
 </body>
