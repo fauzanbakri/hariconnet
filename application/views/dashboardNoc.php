@@ -156,7 +156,7 @@
                     <div class="row">
                     <div class="card card-height-100">
                                     <div class="card-header border-0 align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan</h4>
+                                        <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan  </h4>
                                     </div><!-- end card header -->
                                     <div class="card-body p-0 pb-2">
                                         <div class="w-100">
@@ -530,11 +530,11 @@
     <script>
     // Data
     const target = 64;
-    const data1 = <?php echo $datapercent; ?>;
+    const data1 = <?php echo json_encode($datapercent); ?>; // Pastikan menggunakan json_encode
     const options2 = {
       series: [
         {
-          name: "More than 1 Day (%)",
+          name: "Less than 1 Day (%)",
           data: data1.percent_more_than_1_day
         },
         {
@@ -553,6 +553,7 @@
           endingShape: 'rounded'
         },
       },
+      colors: ['#4CAF50', '#F44336'], // Warna bar: Hijau untuk Less than 1 Day, Merah untuk More than 3 Days
       dataLabels: {
         enabled: false
       },
