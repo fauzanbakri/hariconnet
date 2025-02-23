@@ -528,29 +528,122 @@
             (chart = new ApexCharts(document.querySelector("#tiketmonth"), options)).render()));
     </script>
     <script>
-     document.addEventListener("DOMContentLoaded", function () {
-        var data = <?= json_encode($datapercent); ?>;
-        
-        var options = {
-            chart: { height: 380, type: "line", zoom: { enabled: false }, toolbar: { show: false } },
-            colors: ["#556ee6", "#34c38f"],
-            dataLabels: { enabled: false },
-            stroke: { width: [3, 3], curve: "smooth" },
-            series: [
-                { name: "Ticket Closed >1 Hari (%)", data: data.percent_more_than_1_day || [] },
-                { name: "Ticket Closed >3 Hari (%)", data: data.percent_more_than_3_days || [] }
-            ],
-            title: { text: "Persentase Tiket Closed", align: "left" },
-            markers: { size: 0, hover: { sizeOffset: 6 } },
-            xaxis: { categories: data.categories || [] },
-            tooltip: { y: { formatter: function (val) { return val.toFixed(2) + " %"; } } },
-            grid: { borderColor: "#f1f1f1" }
-        };
+    // Data
+    const data = {
+      categories: ["Jan", "Feb"],
+      more_than_1_day: [1, 333],
+      more_than_3_days: [56, 264],
+      percent_more_than_1_day: [1.3889, 21.8647],
+      percent_more_than_3_days: [77.7778, 17.3342]
+    };
 
-        var chart = new ApexCharts(document.querySelector("#chartaging"), options);
-        chart.render();
-    });
+    // Chart 1: Data Absolut
+    const options1 = {
+      series: [
+        {
+          name: "More than 1 Day",
+          data: data.more_than_1_day
+        },
+        {
+          name: "More than 3 Days",
+          data: data.more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: data.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Jumlah'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val;
+          }
+        }
+      }
+    };
 
+    const chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
+    chart1.render();
+
+    // Chart 2: Data Persentase
+    const options2 = {
+      series: [
+        {
+          name: "More than 1 Day (%)",
+          data: data.percent_more_than_1_day
+        },
+        {
+          name: "More than 3 Days (%)",
+          data: data.percent_more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: data.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Persentase (%)'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+
+    const chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+    chart2.render();
 </script>
 </body>
 </html>
