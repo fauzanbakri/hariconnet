@@ -530,7 +530,7 @@
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         var data = <?= json_encode($datapercent) ?>;
-        console.log(data.categories.length());
+        console.log(data.length);
         var options = {
             chart: {
                 height: 380,
@@ -552,7 +552,7 @@
                 },
                 {
                     name: "Target (%)",
-                    data: Array(data.categories.length).fill(64)
+                    data: Array(data.length).fill(64)
                 }
             ],
             title: { text: "Persentase Tiket Closed", align: "left" },
