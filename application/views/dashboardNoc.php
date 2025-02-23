@@ -591,7 +591,7 @@
       tooltip: {
         y: {
           formatter: function (val) {
-            return val + "%";
+            return val;
           }
         }
       }
