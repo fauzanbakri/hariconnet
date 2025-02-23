@@ -529,8 +529,8 @@
     </script>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var data = <?= json_encode($datapercent) ?>;
-        console.log(data.length);
+        var data = <?php echo json_encode($datapercent); ?>;
+
         var options = {
             chart: {
                 height: 380,
@@ -538,21 +538,17 @@
                 zoom: { enabled: false },
                 toolbar: { show: false }
             },
-            colors: ["#556ee6", "#34c38f", "#f46a6a"],
+            colors: ["#556ee6", "#34c38f"],
             dataLabels: { enabled: false },
-            stroke: { width: [3, 3, 3], curve: "smooth" },
+            stroke: { width: [3, 3], curve: "smooth" },
             series: [
                 {
-                    name: "Ticket Closed <1 Hari (%)",
+                    name: "Ticket Closed >1 Hari (%)",
                     data: data.percent_more_than_1_day
                 },
                 {
                     name: "Ticket Closed >3 Hari (%)",
                     data: data.percent_more_than_3_days
-                },
-                {
-                    name: "Target (%)",
-                    data: Array(data.length).fill(64)
                 }
             ],
             title: { text: "Persentase Tiket Closed", align: "left" },
@@ -568,9 +564,10 @@
             grid: { borderColor: "#f1f1f1" }
         };
 
-        var chart = new ApexCharts(document.querySelector("#line_chart_datalabel"), options);
+        var chart = new ApexCharts(document.querySelector("#chartaging"), options);
         chart.render();
     });
+
 </script>
 </body>
 </html>
