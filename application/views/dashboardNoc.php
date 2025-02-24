@@ -615,17 +615,17 @@
 </script>
 <script>
     // Data
-    const target = 64;
-    const data1 = <?php echo $datapercent2; ?>;
+    // const target = 64;
+    const data2 = <?php echo $datapercent2; ?>;
     const options2 = {
       series: [
         {
           name: "Less than 1 Day (%)",
-          data: data1.percent_more_than_1_day
+          data: data2.percent_more_than_1_day
         },
         {
           name: "More than 3 Days (%)",
-          data: data1.percent_more_than_3_days
+          data: data2.percent_more_than_3_days
         }
       ],
       chart: {
