@@ -153,7 +153,7 @@
                         </div><!-- end col -->
                     </div> <!-- end row-->
                         <!-- end col -->
-                     <div class="row" hidden>
+                     <div class="row">
                         <div class="card card-height-100">
                             <div class="card-header border-0 align-items-center d-flex">
                                 <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan ICRM </h4>
@@ -165,7 +165,7 @@
                             </div><!-- end card body -->
                         </div><!-- end card -->
                     </div>
-                    <div class="row">
+                    <div class="row" hidden>
                         <div class="card card-height-100">
                             <div class="card-header border-0 align-items-center d-flex">
                                 <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan Rekap </h4>
