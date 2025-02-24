@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <!-- end page title -->
-                    <div class="row">
+                    <div class="row" hidden>
                         <div class="card card-height-100">
                             <div class="card-header border-0 align-items-center d-flex">
                                 <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan  </h4>
