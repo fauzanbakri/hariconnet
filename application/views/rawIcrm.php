@@ -130,7 +130,7 @@
       },
       colors: ['#4CAF50', '#F44336'], // Warna bar: Hijau untuk Less than 1 Day, Merah untuk More than 3 Days
       dataLabels: {
-        enabled: false
+        enabled: true
       },
       stroke: {
         show: true,
