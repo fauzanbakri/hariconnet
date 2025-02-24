@@ -94,7 +94,7 @@ class RawIcrm extends CI_Controller {
             "percent_more_than_1_day" => array_map('floatval', array_column($result, 'percent_more_than_1_day')),
             "percent_more_than_3_days" => array_map('floatval', array_column($result, 'percent_more_than_3_days'))
         ];
-        $q['datapercent']= json_encode($datapercent2);
+        $q['datapercent2']= json_encode($data);
 
 		session_start();
 		if(
