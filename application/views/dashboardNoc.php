@@ -649,7 +649,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: data1.categories
+        categories: data2.categories
       },
       yaxis: {
         title: {
