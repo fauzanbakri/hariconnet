@@ -541,77 +541,77 @@
     </script>
     <script>
     // Data
-    const target = 64;
-    const data1 = <?php echo $datapercent; ?>; // Pastikan menggunakan json_encode
-    const options2 = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: data1.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: data1.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '20%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#4CAF50', '#F44336'], // Warna bar: Hijau untuk Less than 1 Day, Merah untuk More than 3 Days
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: data1.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#FF0000',
-            label: {
-              borderColor: '#FF0000',
-              style: {
-                color: '#fff',
-                background: '#FF0000'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      }
-    };
+    // const target = 64;
+    // const data1 = <?php //echo $datapercent; ?>; // Pastikan menggunakan json_encode
+    // const options2 = {
+    //   series: [
+    //     {
+    //       name: "Less than 1 Day (%)",
+    //       data: data1.percent_more_than_1_day
+    //     },
+    //     {
+    //       name: "More than 3 Days (%)",
+    //       data: data1.percent_more_than_3_days
+    //     }
+    //   ],
+    //   chart: {
+    //     type: 'bar',
+    //     height: 350
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       horizontal: false,
+    //       columnWidth: '20%',
+    //       endingShape: 'rounded'
+    //     },
+    //   },
+    //   colors: ['#4CAF50', '#F44336'], // Warna bar: Hijau untuk Less than 1 Day, Merah untuk More than 3 Days
+    //   dataLabels: {
+    //     enabled: false
+    //   },
+    //   stroke: {
+    //     show: true,
+    //     width: 2,
+    //     colors: ['transparent']
+    //   },
+    //   xaxis: {
+    //     categories: data1.categories
+    //   },
+    //   yaxis: {
+    //     title: {
+    //       text: 'Persentase (%)'
+    //     }
+    //   },
+    //   fill: {
+    //     opacity: 1
+    //   },
+    //   annotations: {
+    //     yaxis: [
+    //       {
+    //         y: target,
+    //         borderColor: '#FF0000',
+    //         label: {
+    //           borderColor: '#FF0000',
+    //           style: {
+    //             color: '#fff',
+    //             background: '#FF0000'
+    //           },
+    //           text: `Target: ${target}%`
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   tooltip: {
+    //     y: {
+    //       formatter: function (val) {
+    //         return val + "%";
+    //       }
+    //     }
+    //   }
+    // };
 
-    const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
-    chart2.render();
+    // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
+    // chart2.render();
 </script>
 <script>
     // Data
