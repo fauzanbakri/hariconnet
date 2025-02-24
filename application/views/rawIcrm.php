@@ -105,7 +105,7 @@
     <script>
     // Data
     const target = 64;
-    const data1 = <?php echo $datapercent; ?>; // Pastikan menggunakan json_encode
+    const data1 = <?php echo $datapercent; ?>;
     const options2 = {
       series: [
         {
@@ -128,7 +128,7 @@
           endingShape: 'rounded'
         },
       },
-      colors: ['#4CAF50', '#F44336'], // Warna bar: Hijau untuk Less than 1 Day, Merah untuk More than 3 Days
+      colors: ['#4CAF50', '#F44336'],
       dataLabels: {
         enabled: true
       },
@@ -156,7 +156,7 @@
             label: {
               borderColor: '#FF0000',
               style: {
-                color: '#fff',
+                color: '#42aaf5',
                 background: '#FF0000'
               },
               text: `Target: ${target}%`
