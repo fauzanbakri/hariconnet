@@ -153,18 +153,30 @@
                         </div><!-- end col -->
                     </div> <!-- end row-->
                         <!-- end col -->
-                    <div class="row">
-                    <div class="card card-height-100">
-                                    <div class="card-header border-0 align-items-center d-flex">
-                                        <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan  </h4>
-                                    </div><!-- end card header -->
-                                    <div class="card-body p-0 pb-2">
-                                        <div class="w-100">
-                                            <div id="chartaging" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                        </div>
-                                    </div><!-- end card body -->
-                                </div><!-- end card -->
+                     <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan ICRM </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging2" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
                     </div>
+                    <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan Rekap </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                        </div>
                      </div>
                     <div class="row">
                         <div class="col-xl-6">
@@ -599,6 +611,80 @@
     };
 
     const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
+    chart2.render();
+</script>
+<script>
+    // Data
+    const target = 64;
+    const data1 = <?php echo $datapercent2; ?>;
+    const options2 = {
+      series: [
+        {
+          name: "Less than 1 Day (%)",
+          data: data1.percent_more_than_1_day
+        },
+        {
+          name: "More than 3 Days (%)",
+          data: data1.percent_more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '20%',
+          endingShape: 'rounded'
+        },
+      },
+      colors: ['#4CAF50', '#F44336'],
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: data1.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Persentase (%)'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: target,
+            borderColor: '#42aaf5',
+            label: {
+              borderColor: '#42aaf5',
+              style: {
+                color: '#fff',
+                background: '#42aaf5'
+              },
+              text: `Target: ${target}%`
+            }
+          }
+        ]
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+
+    const chart2 = new ApexCharts(document.querySelector("#chartaging2"), options2);
     chart2.render();
 </script>
 </body>
