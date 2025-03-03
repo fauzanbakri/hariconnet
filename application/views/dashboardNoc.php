@@ -639,7 +639,7 @@
           endingShape: 'rounded'
         },
       },
-      colors: ['#4CAF50', '#F44336'],
+      colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
@@ -663,12 +663,12 @@
         yaxis: [
           {
             y: target,
-            borderColor: '#42aaf5',
+            borderColor: '#f44336',
             label: {
-              borderColor: '#42aaf5',
+              borderColor: '#f44336',
               style: {
                 color: '#fff',
-                background: '#42aaf5'
+                background: '#f44336'
               },
               text: `Target: ${target}%`
             }
