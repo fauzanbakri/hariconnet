@@ -28,7 +28,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Incident Feeder</h5><br>
+                                    <h5 class="card-title mb-0">Improvement</h5><br>
                                     <!-- Base Buttons -->
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
@@ -40,7 +40,7 @@
                                                 ){
                                             echo '
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
-                                            Add New Incident
+                                            Add New Improvement
                                             </button>';
                                                 }
                                         ?>
