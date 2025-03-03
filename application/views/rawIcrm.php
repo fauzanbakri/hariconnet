@@ -544,5 +544,78 @@
     const chartkdi = new ApexCharts(document.querySelector("#chartaging_kendari"), optionskdi);
     chartkdi.render();
 </script>
+<script>
+    // Data gorontalo
+    const datagto = <?php echo $datapercent_gorontalo; ?>;
+    const optionsgto = {
+      series: [
+        {
+          name: "Less than 1 Day (%)",
+          data: datagto.percent_more_than_1_day
+        },
+        {
+          name: "More than 3 Days (%)",
+          data: datagto.percent_more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
+      },
+      colors: ['#347892', '#ffc107'],
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: datagto.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Persentase (%)'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: target,
+            borderColor: '#f44336',
+            label: {
+              borderColor: '#f44336',
+              style: {
+                color: '#fff',
+                background: '#f44336'
+              },
+              text: `Target: ${target}%`
+            }
+          }
+        ]
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+
+    const chartgto = new ApexCharts(document.querySelector("#chartaging_gorontalo"), optionsgto);
+    chartgto.render();
+</script>
 </body>
 </html>
