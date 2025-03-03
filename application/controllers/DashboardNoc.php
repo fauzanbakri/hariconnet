@@ -157,26 +157,34 @@ class DashboardNoc extends CI_Controller {
 		
 	}
 	public function getTicketData() {
-        $query = $this->db->query("SELECT bulan, 
-		SUM(more_than_1_day) AS more_than_1_day, 
-		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+        $query = $this->db->query("
+		SELECT 
+			CONCAT('Week ', WEEK(waktulapor, 1)) AS minggu,
+			YEAR(waktulapor) AS tahun,
+			SUM(more_than_1_day) AS more_than_1_day, 
+			SUM(more_than_3_days) AS more_than_3_days,
+			(SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
+			(SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
 		FROM (
-			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
+			SELECT 
+				WEEK(waktulapor, 1) AS minggu,
 				YEAR(waktulapor) AS tahun,
 				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
 				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
-				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
-				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
-				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
-				AS total_tickets_month
+				(SELECT COUNT(*) FROM rawicrm 
+				WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
+				AND penyebab!='NOT INCIDENT' 
+				AND status='TICKET CLOSE' 
+				AND namakelompok='GANGGUAN') 
+				AS total_tickets_week
 			FROM rawicrm r
 			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
-			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
+			GROUP BY YEAR(waktulapor), WEEK(waktulapor, 1)
 		) AS grouped_data
-		GROUP BY bulan, tahun
-		ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
+		GROUP BY minggu, tahun
+		ORDER BY tahun, minggu;
+	");
 
 	$result = $query->result_array();
 
@@ -186,12 +194,14 @@ class DashboardNoc extends CI_Controller {
 	}
 
 	$data = [
-		"categories" => array_column($result, 'bulan'),
+		"categories" => array_column($result, 'minggu'),
 		"more_than_1_day" => array_map('intval', array_column($result, 'more_than_1_day')),
 		"more_than_3_days" => array_map('intval', array_column($result, 'more_than_3_days')),
 		"percent_more_than_1_day" => array_map('floatval', array_column($result, 'percent_more_than_1_day')),
 		"percent_more_than_3_days" => array_map('floatval', array_column($result, 'percent_more_than_3_days'))
 	];
-        echo json_encode($data);
+
+	$q['datapercent2'] = json_encode($data);
+        echo json_encode($q['datapercent2']);
     }
 }
