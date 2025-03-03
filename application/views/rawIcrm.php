@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="card card-height-100">
                             <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan  </h4>
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan SIBT</h4>
                             </div><!-- end card header -->
                             <div class="card-body p-0 pb-2">
                                 <div class="w-100">
