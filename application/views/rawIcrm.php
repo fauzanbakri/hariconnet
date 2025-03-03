@@ -250,8 +250,7 @@
 </script>
 
 <script>
-    // Data SIBT
-    const target = 64;
+    // Data Makassar
     const data1 = <?php echo $datapercent_makassar; ?>;
     const options2 = {
       series: [
