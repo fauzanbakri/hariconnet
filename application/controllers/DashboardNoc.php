@@ -157,42 +157,42 @@ class DashboardNoc extends CI_Controller {
 		
 	}
 	public function getTicketData() {
-        $query = $this->db->query("
+		$query = $this->db->query("
 		SELECT 
-			CONCAT('Week ', WEEK(waktulapor, 1)) AS minggu,
-			YEAR(waktulapor) AS tahun,
+			CONCAT('Week ', minggu) AS minggu,
+			tahun,
 			SUM(more_than_1_day) AS more_than_1_day, 
 			SUM(more_than_3_days) AS more_than_3_days,
 			(SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
 			(SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
 		FROM (
 			SELECT 
-				WEEK(waktulapor, 1) AS minggu,
-				YEAR(waktulapor) AS tahun,
-				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
-				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+				WEEK(r.waktulapor, 1) AS minggu,
+				YEAR(r.waktulapor) AS tahun,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, r.waktulapor, r.waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, r.waktulapor, r.waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
 				(SELECT COUNT(*) FROM rawicrm 
-				WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
-				AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-				AND penyebab!='NOT INCIDENT' 
-				AND status='TICKET CLOSE' 
-				AND namakelompok='GANGGUAN') 
+				 WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				 AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
+				 AND penyebab!='NOT INCIDENT' 
+				 AND status='TICKET CLOSE' 
+				 AND namakelompok='GANGGUAN') 
 				AS total_tickets_week
 			FROM rawicrm r
 			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
-			GROUP BY YEAR(waktulapor), WEEK(waktulapor, 1)
+			GROUP BY tahun, minggu
 		) AS grouped_data
 		GROUP BY minggu, tahun
 		ORDER BY tahun, minggu;
 	");
-
+	
 	$result = $query->result_array();
-
+	
 	if (empty($result)) {
 		echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
 		return;
 	}
-
+	
 	$data = [
 		"categories" => array_column($result, 'minggu'),
 		"more_than_1_day" => array_map('intval', array_column($result, 'more_than_1_day')),
@@ -200,8 +200,9 @@ class DashboardNoc extends CI_Controller {
 		"percent_more_than_1_day" => array_map('floatval', array_column($result, 'percent_more_than_1_day')),
 		"percent_more_than_3_days" => array_map('floatval', array_column($result, 'percent_more_than_3_days'))
 	];
-
-	$q['datapercent2'] = json_encode($data);
-        echo json_encode($q['datapercent2']);
-    }
+	
+	echo json_encode($data);
+	
+	}	
+    
 }
