@@ -136,7 +136,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '20%',
+          columnWidth: '40%',
           endingShape: 'rounded'
         },
       },
@@ -146,7 +146,7 @@
       },
       stroke: {
         show: true,
-        width: 4,
+        width: 0,
         colors: ['transparent']
       },
       xaxis: {
