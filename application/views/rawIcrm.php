@@ -284,7 +284,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: data1.categories
+        categories: datamks.categories
       },
       yaxis: {
         title: {
@@ -324,7 +324,7 @@
 </script>
 
 <script>
-    // Data Makassar
+    // Data mamuju
     const datammj = <?php echo $datapercent_mamuju; ?>;
     const optionsmmj = {
       series: [
@@ -358,7 +358,7 @@
         colors: ['transparent']
       },
       xaxis: {
-        categories: data1.categories
+        categories: datammj.categories
       },
       yaxis: {
         title: {
@@ -395,6 +395,80 @@
 
     const chartmmj = new ApexCharts(document.querySelector("#chartaging_mamuju"), optionsmmj);
     chartmmj.render();
+</script>
+
+<script>
+    // Data palu
+    const datapal = <?php echo $datapercent_palu; ?>;
+    const optionspal = {
+      series: [
+        {
+          name: "Less than 1 Day (%)",
+          data: datapal.percent_more_than_1_day
+        },
+        {
+          name: "More than 3 Days (%)",
+          data: datapal.percent_more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
+      },
+      colors: ['#347892', '#ffc107'],
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: datapal.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Persentase (%)'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: target,
+            borderColor: '#f44336',
+            label: {
+              borderColor: '#f44336',
+              style: {
+                color: '#fff',
+                background: '#f44336'
+              },
+              text: `Target: ${target}%`
+            }
+          }
+        ]
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+
+    const chartpal = new ApexCharts(document.querySelector("#chartaging_palu"), optionspal);
+    chartpal.render();
 </script>
 </body>
 </html>
