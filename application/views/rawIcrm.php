@@ -38,11 +38,71 @@
                     <div class="row">
                         <div class="card card-height-100">
                             <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan KP/KR </h4>
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Makassar </h4>
                             </div><!-- end card header -->
                             <div class="card-body p-0 pb-2">
                                 <div class="w-100">
-                                    <div id="chartaging3" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                    <div id="chartaging_makassar" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div>
+                    <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Mamuju </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging_mamuju" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div>
+                    <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Palu </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging_palu" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div>
+                    <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Kendari </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging_kendari" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div>
+                    <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Gorontalo </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging_gorontalo" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div>
+                    <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Manado </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging_manado" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
                             </div><!-- end card body -->
                         </div><!-- end card -->
@@ -115,7 +175,7 @@
     <!-- App js -->
     <script src="assets/js/app.js"></script>
     <script>
-    // Data
+    // Data SIBT
     const target = 64;
     const data1 = <?php echo $datapercent; ?>;
     const options2 = {
@@ -188,5 +248,81 @@
     const chart2 = new ApexCharts(document.querySelector("#chartaging2"), options2);
     chart2.render();
 </script>
+
+<script>
+    // Data SIBT
+    const target = 64;
+    const data1 = <?php echo $datapercent_makassar; ?>;
+    const options2 = {
+      series: [
+        {
+          name: "Less than 1 Day (%)",
+          data: data1.percent_more_than_1_day
+        },
+        {
+          name: "More than 3 Days (%)",
+          data: data1.percent_more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
+      },
+      colors: ['#347892', '#ffc107'],
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: data1.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Persentase (%)'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: target,
+            borderColor: '#f44336',
+            label: {
+              borderColor: '#f44336',
+              style: {
+                color: '#fff',
+                background: '#f44336'
+              },
+              text: `Target: ${target}%`
+            }
+          }
+        ]
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+
+    const chart2 = new ApexCharts(document.querySelector("#chartaging_makassar"), options2);
+    chart2.render();
+</script>
+
 </body>
 </html>
