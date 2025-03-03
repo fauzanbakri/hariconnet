@@ -620,7 +620,7 @@
 <script>
     // Data manado
     const datamnd = <?php echo $datapercent_manado; ?>;
-    const datamnd = {
+    const optionsmnd = {
       series: [
         {
           name: "Less than 1 Day (%)",
