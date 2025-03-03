@@ -26,11 +26,23 @@
                     <div class="row">
                         <div class="card card-height-100">
                             <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Total Penangangan Gangguan  </h4>
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan  </h4>
                             </div><!-- end card header -->
                             <div class="card-body p-0 pb-2">
                                 <div class="w-100">
                                     <div id="chartaging2" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div>
+                    <div class="row">
+                        <div class="card card-height-100">
+                            <div class="card-header border-0 align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan KP/KR </h4>
+                            </div><!-- end card header -->
+                            <div class="card-body p-0 pb-2">
+                                <div class="w-100">
+                                    <div id="chartaging3" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
                             </div><!-- end card body -->
                         </div><!-- end card -->
@@ -134,7 +146,7 @@
       },
       stroke: {
         show: true,
-        width: 2,
+        width: 4,
         colors: ['transparent']
       },
       xaxis: {
