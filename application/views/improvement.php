@@ -581,7 +581,7 @@
                 let oltValue = $(this).val();
                 console.log(oltValue);
                 $.ajax({
-                    url: 'Feeder/autoArea?area='+oltValue,
+                    url: 'Improvement/autoArea?area='+oltValue,
                     method: 'GET',
                     success: function (response) {
                         console.log('Response:', response);
@@ -621,7 +621,7 @@
                     return;
                 }
                 $.ajax({
-                    url: 'Feeder/insertData',
+                    url: 'Improvement/insertData',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
@@ -670,7 +670,7 @@
                     return;
                 }
                 $.ajax({
-                    url: 'Feeder/editData',
+                    url: 'Improvement/editData',
                     type: 'POST',
                     data: formData,
                     success: function (response) {
@@ -718,7 +718,7 @@
                     }).then(function(result) {
                         if (result.value) {
                             $.ajax({
-                                url: 'Feeder/deleteRow?id='+idTiket,
+                                url: 'Improvement/deleteRow?id='+idTiket,
                                 type: 'GET',
                                 success: function(response) {
                                     console.log(response.success);

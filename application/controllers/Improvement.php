@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Improvement extends CI_Controller {
 	public function index()
 	{
-		$title['title']="Incident Feeder";
+		$title['title']="Improvement";
 		$q['data'] = $this->db->query("
-			SELECT * FROM feeder")->result();
+			SELECT * FROM improvement")->result();
 		$q['tim'] = $this->db->query("SELECT * FROM tim WHERE segmen='Korporat'")->result();
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		session_start();
@@ -33,7 +33,7 @@ class Improvement extends CI_Controller {
 	public function deleteRow()
 	{
 		$idTiket = $this->input->get('id');
-		if ($this->db->delete('feeder', ['id' => $idTiket])) {
+		if ($this->db->delete('improvement', ['id' => $idTiket])) {
 			echo true;
 		} else {
 			echo false;
@@ -62,7 +62,7 @@ class Improvement extends CI_Controller {
 		// die();
 		if($deskripsi!=''){
 			$q = $this->db->query("INSERT INTO 
-			feeder(
+			improvement(
 			idInsiden,
 			downtime,
 			tipe,
@@ -127,7 +127,7 @@ class Improvement extends CI_Controller {
 		$createby = $_SESSION['nama'];
 		$timestamps = date("Y-m-d H:i:s");
 		if($deskripsi!=''){
-			$q = $this->db->query("UPDATE feeder SET
+			$q = $this->db->query("UPDATE improvement SET
 				idInsiden='$idInsiden',
 				downtime='$downtime',
 				tipe='$tipe',
