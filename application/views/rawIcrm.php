@@ -164,12 +164,12 @@
         yaxis: [
           {
             y: target,
-            borderColor: '#42aaf5',
+            borderColor: '#f44336',
             label: {
-              borderColor: '#42aaf5',
+              borderColor: '#f44336',
               style: {
                 color: '#fff',
-                background: '#42aaf5'
+                background: '#f44336'
               },
               text: `Target: ${target}%`
             }
