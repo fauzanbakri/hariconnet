@@ -470,5 +470,79 @@
     const chartpal = new ApexCharts(document.querySelector("#chartaging_palu"), optionspal);
     chartpal.render();
 </script>
+
+<script>
+    // Data kendari
+    const datakdi = <?php echo $datapercent_kendari; ?>;
+    const optionskdi = {
+      series: [
+        {
+          name: "Less than 1 Day (%)",
+          data: datakdi.percent_more_than_1_day
+        },
+        {
+          name: "More than 3 Days (%)",
+          data: datakdi.percent_more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
+      },
+      colors: ['#347892', '#ffc107'],
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: datakdi.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Persentase (%)'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: target,
+            borderColor: '#f44336',
+            label: {
+              borderColor: '#f44336',
+              style: {
+                color: '#fff',
+                background: '#f44336'
+              },
+              text: `Target: ${target}%`
+            }
+          }
+        ]
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+
+    const chartkdi = new ApexCharts(document.querySelector("#chartaging_kendari"), optionskdi);
+    chartkdi.render();
+</script>
 </body>
 </html>
