@@ -140,7 +140,7 @@
           endingShape: 'rounded'
         },
       },
-      colors: ['#4CAF50', '#F44336'],
+      colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
