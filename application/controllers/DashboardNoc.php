@@ -28,7 +28,7 @@ class DashboardNoc extends CI_Controller {
         $this->db->from('tiket');
         $this->db->join('olt', 'olt.idOlt = tiket.idOlt', 'left');
         $this->db->group_by('kabupaten');
-        $this->db->order_by('kabupaten', 'ASC');
+        $this->db->order_by('count', 'DESC');
         $query = $this->db->get();
         $q['data'] = $query->result_array();
 
@@ -36,7 +36,7 @@ class DashboardNoc extends CI_Controller {
         $this->db->from('tiket');
         $this->db->join('olt', 'olt.idOlt = tiket.idOlt', 'left');
         $this->db->group_by('tim');
-        $this->db->order_by('tim', 'ASC');
+        $this->db->order_by('count', 'DESC');
         $query = $this->db->get();
         $q['tim'] = $query->result_array();
 		$q['total_tim'] = $this->db->query("SELECT COUNT(*) as total_tim FROM tim WHERE segmen='Retail'")->result();
