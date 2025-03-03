@@ -275,10 +275,10 @@ class RawIcrm extends CI_Controller {
                     AND penyebab!='NOT INCIDENT' 
                     AND status='TICKET CLOSE' 
                     AND namakelompok='GANGGUAN'
-                    AND provinsipelanggan='SULAWESI TENGAH') 
+                    AND provinsipelanggan='SULAWESI TENGGARA') 
                     AS total_tickets_week
                 FROM rawicrm r
-                WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH'
+                WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGGARA'
                 GROUP BY tahun, minggu
             ) AS grouped_data
             GROUP BY minggu, tahun
