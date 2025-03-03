@@ -251,16 +251,16 @@
 
 <script>
     // Data Makassar
-    const data1 = <?php echo $datapercent_makassar; ?>;
-    const options2 = {
+    const datamks = <?php echo $datapercent_makassar; ?>;
+    const optionsmks = {
       series: [
         {
           name: "Less than 1 Day (%)",
-          data: data1.percent_more_than_1_day
+          data: datamks.percent_more_than_1_day
         },
         {
           name: "More than 3 Days (%)",
-          data: data1.percent_more_than_3_days
+          data: datamks.percent_more_than_3_days
         }
       ],
       chart: {
@@ -319,8 +319,8 @@
       }
     };
 
-    const chart2 = new ApexCharts(document.querySelector("#chartaging_makassar"), options2);
-    chart2.render();
+    const chartmks = new ApexCharts(document.querySelector("#chartaging_makassar"), optionsmks);
+    chartmks.render();
 </script>
 
 </body>
