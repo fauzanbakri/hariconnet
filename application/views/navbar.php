@@ -511,6 +511,11 @@
                             $_SESSION['role']=='Resepsionis'
                             ){
                                 echo '
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="Improvement" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="ri-rocket-line"></i> <span data-key="t-layouts">Improvement</span>
+                                    </a>
+                                </li> 
                                  <li class="nav-item">
                                     <a class="nav-link menu-link" href="Feeder" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                         <i class="mdi mdi-access-point-network"></i> <span data-key="t-layouts">Incident Feeder</span>
