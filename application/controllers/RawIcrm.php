@@ -150,7 +150,7 @@ class RawIcrm extends CI_Controller {
                 return;
             }
             
-            $data2 = [
+            $data1 = [
                 "categories" => array_column($result1, 'minggu'),
                 "more_than_1_day" => array_map('intval', array_column($result1, 'more_than_1_day')),
                 "more_than_3_days" => array_map('intval', array_column($result1, 'more_than_3_days')),
@@ -158,7 +158,7 @@ class RawIcrm extends CI_Controller {
                 "percent_more_than_3_days" => array_map('floatval', array_column($result1, 'percent_more_than_3_days'))
             ];
             
-            $q['datapercent_makassar'] = json_encode($data2);
+            $q['datapercent_makassar'] = json_encode($data1);
             //------------------------------------------------------------------
             $query = $this->db->query("
                 SELECT 
@@ -190,22 +190,22 @@ class RawIcrm extends CI_Controller {
                 ORDER BY tahun, minggu;
             ");
             
-            $result = $query->result_array();
+            $result2 = $query->result_array();
             
-            if (empty($result)) {
+            if (empty($result2)) {
                 echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
                 return;
             }
             
-            $data = [
-                "categories" => array_column($result, 'minggu'),
-                "more_than_1_day" => array_map('intval', array_column($result, 'more_than_1_day')),
-                "more_than_3_days" => array_map('intval', array_column($result, 'more_than_3_days')),
-                "percent_more_than_1_day" => array_map('floatval', array_column($result, 'percent_more_than_1_day')),
-                "percent_more_than_3_days" => array_map('floatval', array_column($result, 'percent_more_than_3_days'))
+            $data2 = [
+                "categories" => array_column($result2, 'minggu'),
+                "more_than_1_day" => array_map('intval', array_column($result2, 'more_than_1_day')),
+                "more_than_3_days" => array_map('intval', array_column($result2, 'more_than_3_days')),
+                "percent_more_than_1_day" => array_map('floatval', array_column($result2, 'percent_more_than_1_day')),
+                "percent_more_than_3_days" => array_map('floatval', array_column($result2, 'percent_more_than_3_days'))
             ];
             
-            $q['datapercent_mamuju'] = json_encode($data);
+            $q['datapercent_mamuju'] = json_encode($data2);
 
 		session_start();
 		if(

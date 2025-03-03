@@ -323,5 +323,78 @@
     chartmks.render();
 </script>
 
+<script>
+    // Data Makassar
+    const datammj = <?php echo $datapercent_mamuju; ?>;
+    const optionsmmj = {
+      series: [
+        {
+          name: "Less than 1 Day (%)",
+          data: datammj.percent_more_than_1_day
+        },
+        {
+          name: "More than 3 Days (%)",
+          data: datammj.percent_more_than_3_days
+        }
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
+      },
+      colors: ['#347892', '#ffc107'],
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: data1.categories
+      },
+      yaxis: {
+        title: {
+          text: 'Persentase (%)'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      annotations: {
+        yaxis: [
+          {
+            y: target,
+            borderColor: '#f44336',
+            label: {
+              borderColor: '#f44336',
+              style: {
+                color: '#fff',
+                background: '#f44336'
+              },
+              text: `Target: ${target}%`
+            }
+          }
+        ]
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+
+    const chartmmj = new ApexCharts(document.querySelector("#chartaging_mamuju"), optionsmmj);
+    chartmmj.render();
+</script>
 </body>
 </html>
