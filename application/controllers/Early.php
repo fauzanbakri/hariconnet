@@ -37,6 +37,7 @@ class Early extends CI_Controller {
 			olt ON olt.idOlt = tiket.idOlt
 		CROSS JOIN 
 			(SELECT @urutan := 0, @grup := '') AS vars
+		WHERE status='EARLY'
 		ORDER BY 
 			tim, prioritas, tanggal ASC;
 
