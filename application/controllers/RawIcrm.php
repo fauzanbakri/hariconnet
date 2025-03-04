@@ -474,6 +474,240 @@ class RawIcrm extends CI_Controller {
 	];
 	$q['monthlymks']= json_encode($data8);
 
+
+    //------------------------------------------------------------
+    $query = $this->db->query("SELECT bulan, 
+		SUM(more_than_1_day) AS more_than_1_day, 
+		SUM(more_than_3_days) AS more_than_3_days,
+		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
+		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		FROM (
+			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
+				YEAR(waktulapor) AS tahun,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
+				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI BARAT') 
+				AS total_tickets_month
+			FROM rawicrm r
+			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI BARAT'
+			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
+		) AS grouped_data
+		GROUP BY bulan, tahun
+		ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
+
+	$result9 = $query->result_array();
+
+	if (empty($result8)) {
+		echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+		return;
+	}
+
+	$data9 = [
+		"categories" => array_column($result9, 'bulan'),
+		"more_than_1_day" => array_map('intval', array_column($result9, 'more_than_1_day')),
+		"more_than_3_days" => array_map('intval', array_column($result9, 'more_than_3_days')),
+		"percent_more_than_1_day" => array_map('floatval', array_column($result9, 'percent_more_than_1_day')),
+		"percent_more_than_3_days" => array_map('floatval', array_column($result9, 'percent_more_than_3_days'))
+	];
+	$q['monthlymmj']= json_encode($data9);
+
+//------------------------------------------------------------
+    $query = $this->db->query("SELECT bulan, 
+		SUM(more_than_1_day) AS more_than_1_day, 
+		SUM(more_than_3_days) AS more_than_3_days,
+		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
+		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		FROM (
+			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
+				YEAR(waktulapor) AS tahun,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
+				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI BARAT') 
+				AS total_tickets_month
+			FROM rawicrm r
+			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI BARAT'
+			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
+		) AS grouped_data
+		GROUP BY bulan, tahun
+		ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
+
+	$result9 = $query->result_array();
+
+	if (empty($result9)) {
+		echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+		return;
+	}
+
+	$data9 = [
+		"categories" => array_column($result9, 'bulan'),
+		"more_than_1_day" => array_map('intval', array_column($result9, 'more_than_1_day')),
+		"more_than_3_days" => array_map('intval', array_column($result9, 'more_than_3_days')),
+		"percent_more_than_1_day" => array_map('floatval', array_column($result9, 'percent_more_than_1_day')),
+		"percent_more_than_3_days" => array_map('floatval', array_column($result9, 'percent_more_than_3_days'))
+	];
+	$q['monthlymmj']= json_encode($data9);
+
+
+
+    //------------------------------------------------------------
+    $query = $this->db->query("SELECT bulan, 
+		SUM(more_than_1_day) AS more_than_1_day, 
+		SUM(more_than_3_days) AS more_than_3_days,
+		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
+		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		FROM (
+			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
+				YEAR(waktulapor) AS tahun,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
+				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH') 
+				AS total_tickets_month
+			FROM rawicrm r
+			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH'
+			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
+		) AS grouped_data
+		GROUP BY bulan, tahun
+		ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
+
+	$result10 = $query->result_array();
+
+	if (empty($result10)) {
+		echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+		return;
+	}
+
+	$data10 = [
+		"categories" => array_column($result10, 'bulan'),
+		"more_than_1_day" => array_map('intval', array_column($result10, 'more_than_1_day')),
+		"more_than_3_days" => array_map('intval', array_column($result10, 'more_than_3_days')),
+		"percent_more_than_1_day" => array_map('floatval', array_column($result10, 'percent_more_than_1_day')),
+		"percent_more_than_3_days" => array_map('floatval', array_column($result10, 'percent_more_than_3_days'))
+	];
+	$q['monthlypal']= json_encode($data10);
+
+
+    //------------------------------------------------------------
+    $query = $this->db->query("SELECT bulan, 
+		SUM(more_than_1_day) AS more_than_1_day, 
+		SUM(more_than_3_days) AS more_than_3_days,
+		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
+		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		FROM (
+			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
+				YEAR(waktulapor) AS tahun,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
+				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGGARA') 
+				AS total_tickets_month
+			FROM rawicrm r
+			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGGARA'
+			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
+		) AS grouped_data
+		GROUP BY bulan, tahun
+		ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
+
+	$result11 = $query->result_array();
+
+	if (empty($result11)) {
+		echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+		return;
+	}
+
+	$data11 = [
+		"categories" => array_column($result11, 'bulan'),
+		"more_than_1_day" => array_map('intval', array_column($result11, 'more_than_1_day')),
+		"more_than_3_days" => array_map('intval', array_column($result11, 'more_than_3_days')),
+		"percent_more_than_1_day" => array_map('floatval', array_column($result11, 'percent_more_than_1_day')),
+		"percent_more_than_3_days" => array_map('floatval', array_column($result11, 'percent_more_than_3_days'))
+	];
+	$q['monthlykdi']= json_encode($data11);
+
+
+    //------------------------------------------------------------
+    $query = $this->db->query("SELECT bulan, 
+		SUM(more_than_1_day) AS more_than_1_day, 
+		SUM(more_than_3_days) AS more_than_3_days,
+		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
+		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		FROM (
+			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
+				YEAR(waktulapor) AS tahun,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
+				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='GORONTALO') 
+				AS total_tickets_month
+			FROM rawicrm r
+			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='GORONTALO'
+			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
+		) AS grouped_data
+		GROUP BY bulan, tahun
+		ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
+
+	$result12 = $query->result_array();
+
+	if (empty($result12)) {
+		echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+		return;
+	}
+
+	$data12 = [
+		"categories" => array_column($result12, 'bulan'),
+		"more_than_1_day" => array_map('intval', array_column($result12, 'more_than_1_day')),
+		"more_than_3_days" => array_map('intval', array_column($result12, 'more_than_3_days')),
+		"percent_more_than_1_day" => array_map('floatval', array_column($result12, 'percent_more_than_1_day')),
+		"percent_more_than_3_days" => array_map('floatval', array_column($result12, 'percent_more_than_3_days'))
+	];
+	$q['monthlygto']= json_encode($data12);
+
+
+    //------------------------------------------------------------
+    $query = $this->db->query("SELECT bulan, 
+		SUM(more_than_1_day) AS more_than_1_day, 
+		SUM(more_than_3_days) AS more_than_3_days,
+		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
+		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		FROM (
+			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
+				YEAR(waktulapor) AS tahun,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
+				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI UTARA') 
+				AS total_tickets_month
+			FROM rawicrm r
+			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI UTARA'
+			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
+		) AS grouped_data
+		GROUP BY bulan, tahun
+		ORDER BY tahun, STR_TO_DATE(bulan, '%b');");
+
+	$result13 = $query->result_array();
+
+	if (empty($result13)) {
+		echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+		return;
+	}
+
+	$data13 = [
+		"categories" => array_column($result13, 'bulan'),
+		"more_than_1_day" => array_map('intval', array_column($result13, 'more_than_1_day')),
+		"more_than_3_days" => array_map('intval', array_column($result13, 'more_than_3_days')),
+		"percent_more_than_1_day" => array_map('floatval', array_column($result13, 'percent_more_than_1_day')),
+		"percent_more_than_3_days" => array_map('floatval', array_column($result13, 'percent_more_than_3_days'))
+	];
+	$q['monthlymnd']= json_encode($data13);
+
 		session_start();
 		if(
 			$_SESSION['role']=='Superadmin' || 
