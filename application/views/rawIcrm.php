@@ -373,7 +373,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -447,7 +449,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -521,7 +525,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -595,7 +601,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -668,7 +676,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -741,7 +751,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -817,7 +829,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -967,7 +981,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -1041,7 +1057,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -1115,7 +1133,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -1188,7 +1208,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
@@ -1261,7 +1283,9 @@
       yaxis: {
         title: {
           text: 'Persentase (%)'
-        }
+        },
+        min: 0,
+        max: 100,
       },
       fill: {
         opacity: 1
