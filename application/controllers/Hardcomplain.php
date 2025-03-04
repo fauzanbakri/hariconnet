@@ -33,6 +33,7 @@ class Hardcomplain extends CI_Controller {
 			@grup := tim
 		FROM 
 			tiket
+		WHERE prioritas='High'
 		LEFT JOIN 
 			olt ON olt.idOlt = tiket.idOlt
 		CROSS JOIN 

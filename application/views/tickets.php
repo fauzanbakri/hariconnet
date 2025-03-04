@@ -15,8 +15,8 @@
                                 <h4 class="mb-sm-0">Tickets</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">All Tickets</a></li>
-                                        <li class="breadcrumb-item active">Ticket</li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Tickets</a></li>
+                                        <li class="breadcrumb-item active">All Tickets</li>
                                     </ol>
                                 </div>
 
