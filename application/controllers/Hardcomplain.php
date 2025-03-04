@@ -51,7 +51,7 @@ class Hardcomplain extends CI_Controller {
 			$_SESSION['role']=='Pemeliharaan Ritel'
 			){
 				$this->load->view('navbar', $title);
-				$this->load->view('tickets', $q);
+				$this->load->view('hardcomplain', $q);
 		}else{
 			header('location: ./DashboardNoc');
 		}
