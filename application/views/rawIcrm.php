@@ -798,7 +798,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '90%',
+          columnWidth: '50%',
           endingShape: 'rounded'
         },
       },
@@ -872,7 +872,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '90%',
+          columnWidth: '50%',
           endingShape: 'rounded'
         },
       },
@@ -946,7 +946,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '90%',
+          columnWidth: '50%',
           endingShape: 'rounded'
         },
       },
@@ -1020,7 +1020,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '90%',
+          columnWidth: '50%',
           endingShape: 'rounded'
         },
       },
@@ -1094,7 +1094,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '90%',
+          columnWidth: '50%',
           endingShape: 'rounded'
         },
       },
@@ -1167,7 +1167,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '90%',
+          columnWidth: '50%',
           endingShape: 'rounded'
         },
       },
@@ -1240,7 +1240,7 @@
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '90%',
+          columnWidth: '50%',
           endingShape: 'rounded'
         },
       },
