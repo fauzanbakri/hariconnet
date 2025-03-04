@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tickets extends CI_Controller {
+class Early extends CI_Controller {
 	public function index()
 	{
 		$title['title']="Tickets";
@@ -50,7 +50,7 @@ class Tickets extends CI_Controller {
 			$_SESSION['role']=='Pemeliharaan Ritel'
 			){
 				$this->load->view('navbar', $title);
-				$this->load->view('tickets', $q);
+				$this->load->view('early', $q);
 		}else{
 			header('location: ./DashboardNoc');
 		}
