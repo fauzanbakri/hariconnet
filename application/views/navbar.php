@@ -531,6 +531,25 @@
                             ){
                                 echo '
                                 <li class="nav-item">
+                                    <a class="nav-link menu-link" href="#sidereport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                        <i class="mdi mdi-ticket-confirmation-outline"></i> <span data-key="t-dashboards">Tickets</span>
+                                    </a>
+                                    <div class="collapse menu-dropdown" id="sidereport">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="Tickets" class="nav-link" data-key="t-analytics"> All Tickets </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="Early" class="nav-link" data-key="t-crm"> Early </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="Hardcomplain" class="nav-link" data-key="t-crm"> Hard Complain </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item">
                                     <a class="nav-link menu-link" href="Tickets" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                         <i class="mdi mdi-ticket-confirmation-outline"></i> <span data-key="t-layouts">Tickets</span>
                                     </a>
