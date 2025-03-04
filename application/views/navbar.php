@@ -548,12 +548,6 @@
                                         </ul>
                                     </div>
                                 </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link menu-link" href="Tickets" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                        <i class="mdi mdi-ticket-confirmation-outline"></i> <span data-key="t-layouts">Tickets</span>
-                                    </a>
-                                </li>
                                 ';
                         }
                         if(
