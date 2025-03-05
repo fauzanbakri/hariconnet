@@ -23,6 +23,7 @@
                         </div>
                     </div>
                     <!-- end page title -->
+                    <div class="card">
                     <div class="table-responsive table-card">
                         <table class="table table-nowrap table-striped-columns mb-0">
                             <thead class="table-light">
@@ -108,6 +109,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
                     </div>
                      </div>
                 </div>
