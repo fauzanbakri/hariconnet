@@ -24,7 +24,7 @@
                     </div>
                     <!-- end page title -->
                     <div class="row">
-                        <div class="card">
+                        <div class="container card">
                         <div class="table-responsive table-card">
                         <table class="table table-nowrap table-striped-columns mb-0">
                             <thead class="table-primary">
