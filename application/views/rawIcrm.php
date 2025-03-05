@@ -61,23 +61,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tana Toraja</td>
-                                <td>10</td><td>7.67</td>
-                                <td>5</td><td>3.91</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td>-</td><td>-</td>
-                                <td class="highlight">15</td>
-                                <td class="highlight">6.42</td>
-                            </tr>
+                            <?php
+                                foreach($makassar as $row){
+                                    echo '
+                                    <tr>
+                                        <td>'.$row->kabupatenpelanggan.'</td>
+                                        <td>'.$row->total_jan.'</td><td>'.$row->percentage_less_1_day_jan.'</td>
+                                        <td>'.$row->total_feb.'</td><td>'.$row->percentage_less_1_day_feb.'</td>
+                                        <td>'.$row->total_mar.'</td><td>'.$row->percentage_less_1_day_mar.'</td>
+                                        <td>'.$row->total_apr.'</td><td>'.$row->percentage_less_1_day_apr.'</td>
+                                        <td>'.$row->total_may.'</td><td>'.$row->percentage_less_1_day_may.'</td>
+                                        <td>'.$row->total_jun.'</td><td>'.$row->percentage_less_1_day_jun.'</td>
+                                        <td>'.$row->total_jul.'</td><td>'.$row->percentage_less_1_day_jul.'</td>
+                                        <td>'.$row->total_aug.'</td><td>'.$row->percentage_less_1_day_aug.'</td>
+                                        <td>'.$row->total_sep.'</td><td>'.$row->percentage_less_1_day_sep.'</td>
+                                        <td>'.$row->total_oct.'</td><td>'.$row->percentage_less_1_day_oct.'</td>
+                                        <td>'.$row->total_nov.'</td><td>'.$row->percentage_less_1_day_nov.'</td>
+                                        <td>'.$row->total_dec.'</td><td>'.$row->percentage_less_1_day_dec.'</td>
+                                        <td class="highlight">'.$row->total_semua_bulan.'</td>
+                                        <td class="highlight">6.42</td>
+                                    </tr>
+                                    ';
+                                }
+                            ?>
                         </tbody>
                         </table>
                     </div>
