@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="card">
                         <div class="table-responsive">
-                        <h5 class="mb-sm-4">PENCAPAIAN MTTR RITEL MAKASSAR – PER KABUPATEN</h5>
+                        <h5 class="mb-sm-4 mt-sm-4">PENCAPAIAN MTTR RITEL MAKASSAR – PER KABUPATEN</h5>
                         <table class="table table-nowrap table-striped-columns mb-0">
                             <thead class="table-primary">
                             <tr>
