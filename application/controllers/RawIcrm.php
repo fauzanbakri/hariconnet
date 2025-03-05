@@ -103,7 +103,7 @@ class RawIcrm extends CI_Controller {
                 NULLIF(COUNT(*), 0)) * 100, 2), 0) AS percentage_less_1_day_semua_bulan
 
         FROM rawicrm
-        WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-'
+        WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY kabupatenpelanggan
         ORDER BY kabupatenpelanggan;
 
