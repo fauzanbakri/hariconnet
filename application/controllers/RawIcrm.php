@@ -25,78 +25,83 @@ class RawIcrm extends CI_Controller {
         SELECT 
             kabupatenpelanggan,
 
-            -- Januari - Juni
-            SUM(CASE WHEN MONTH(waktulapor) = 1 THEN 1 ELSE 0 END) AS total_jan,
-            SUM(CASE WHEN MONTH(waktulapor) = 1 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_jan,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 1 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 1 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_jan,
+            -- Januari
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 1 THEN 1 ELSE 0 END), 0) AS total_jan,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 1 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_jan,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 1 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 1 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_jan,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 2 THEN 1 ELSE 0 END) AS total_feb,
-            SUM(CASE WHEN MONTH(waktulapor) = 2 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_feb,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 2 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 2 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_feb,
+            -- Februari
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 2 THEN 1 ELSE 0 END), 0) AS total_feb,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 2 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_feb,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 2 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 2 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_feb,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 3 THEN 1 ELSE 0 END) AS total_mar,
-            SUM(CASE WHEN MONTH(waktulapor) = 3 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_mar,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 3 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 3 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_mar,
+            -- Maret
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 3 THEN 1 ELSE 0 END), 0) AS total_mar,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 3 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_mar,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 3 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 3 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_mar,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 4 THEN 1 ELSE 0 END) AS total_apr,
-            SUM(CASE WHEN MONTH(waktulapor) = 4 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_apr,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 4 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 4 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_apr,
+            -- April
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 4 THEN 1 ELSE 0 END), 0) AS total_apr,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 4 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_apr,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 4 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 4 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_apr,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 5 THEN 1 ELSE 0 END) AS total_may,
-            SUM(CASE WHEN MONTH(waktulapor) = 5 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_may,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 5 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 5 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_may,
+            -- Mei
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 5 THEN 1 ELSE 0 END), 0) AS total_may,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 5 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_may,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 5 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 5 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_may,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 6 THEN 1 ELSE 0 END) AS total_jun,
-            SUM(CASE WHEN MONTH(waktulapor) = 6 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_jun,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 6 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 6 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_jun,
+            -- Juni
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 6 THEN 1 ELSE 0 END), 0) AS total_jun,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 6 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_jun,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 6 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 6 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_jun,
 
-            -- Juli - Desember
-            SUM(CASE WHEN MONTH(waktulapor) = 7 THEN 1 ELSE 0 END) AS total_jul,
-            SUM(CASE WHEN MONTH(waktulapor) = 7 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_jul,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 7 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 7 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_jul,
+            -- Juli
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 7 THEN 1 ELSE 0 END), 0) AS total_jul,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 7 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_jul,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 7 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 7 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_jul,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 8 THEN 1 ELSE 0 END) AS total_aug,
-            SUM(CASE WHEN MONTH(waktulapor) = 8 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_aug,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 8 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 8 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_aug,
+            -- Agustus
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 8 THEN 1 ELSE 0 END), 0) AS total_aug,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 8 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_aug,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 8 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 8 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_aug,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 9 THEN 1 ELSE 0 END) AS total_sep,
-            SUM(CASE WHEN MONTH(waktulapor) = 9 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_sep,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 9 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 9 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_sep,
+            -- September
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 9 THEN 1 ELSE 0 END), 0) AS total_sep,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 9 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_sep,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 9 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 9 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_sep,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 10 THEN 1 ELSE 0 END) AS total_oct,
-            SUM(CASE WHEN MONTH(waktulapor) = 10 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_oct,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 10 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 10 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_oct,
+            -- Oktober
+                IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 10 THEN 1 ELSE 0 END), 0) AS total_oct,
+                IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 10 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_oct,
+                IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 10 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                    NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 10 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_oct,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 11 THEN 1 ELSE 0 END) AS total_nov,
-            SUM(CASE WHEN MONTH(waktulapor) = 11 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_nov,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 11 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 11 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_nov,
+            -- November
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 11 THEN 1 ELSE 0 END), 0) AS total_nov,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 11 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_nov,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 11 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 11 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_nov,
 
-            SUM(CASE WHEN MONTH(waktulapor) = 12 THEN 1 ELSE 0 END) AS total_dec,
-            SUM(CASE WHEN MONTH(waktulapor) = 12 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_dec,
-            ROUND((SUM(CASE WHEN MONTH(waktulapor) = 12 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 12 THEN 1 ELSE 0 END), 0)) * 100, 2) AS percentage_less_1_day_dec,
-
-
-            COUNT(*) AS total_semua_bulan,
-            SUM(CASE WHEN TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_semua_bulan,
-            ROUND((SUM(CASE WHEN TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(COUNT(*), 0)) * 100, 2) AS percentage_less_1_day_semua_bulan
+            -- Desember
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 12 THEN 1 ELSE 0 END), 0) AS total_dec,
+            IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 12 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_dec,
+            IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 12 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 12 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_dec
 
         FROM rawicrm
-        WHERE provinsipelanggan = 'SULAWESI SELATAN'
+        WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-'
         GROUP BY kabupatenpelanggan
         ORDER BY kabupatenpelanggan;
+
         ")->result();
 		session_start();
 		if(
