@@ -89,7 +89,9 @@ class RawIcrm extends CI_Controller {
 
 
             COUNT(*) AS total_semua_bulan,
-            SUM(CASE WHEN TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_semua_bulan
+            SUM(CASE WHEN TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) AS less_1_day_semua_bulan,
+            ROUND((SUM(CASE WHEN TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
+                NULLIF(COUNT(*), 0)) * 100, 2) AS percentage_less_1_day_semua_bulan
 
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI SELATAN'
