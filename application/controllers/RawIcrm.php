@@ -95,7 +95,7 @@ class RawIcrm extends CI_Controller {
             IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 12 THEN 1 ELSE 0 END), 0) AS total_dec,
             IFNULL(SUM(CASE WHEN MONTH(waktulapor) = 12 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_dec,
             IFNULL(ROUND((SUM(CASE WHEN MONTH(waktulapor) = 12 AND TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END) /
-                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 12 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_dec
+                NULLIF(SUM(CASE WHEN MONTH(waktulapor) = 12 THEN 1 ELSE 0 END), 0)) * 100, 2), 0) AS percentage_less_1_day_dec,
 
             IFNULL(COUNT(*), 0) AS total_semua_bulan,
             IFNULL(SUM(CASE WHEN TIMESTAMPDIFF(HOUR, waktulapor, waktulaporanselesai) < 24 THEN 1 ELSE 0 END), 0) AS less_1_day_semua_bulan,
