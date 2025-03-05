@@ -43,7 +43,7 @@
                                 <th colspan="2">November</th>
                                 <th colspan="2">Desember</th>
                                 <th rowspan="2" class="highlight">Total Insiden</th>
-                                <th rowspan="2" class="highlight">Average MTTR</th>
+                                <th rowspan="2" class="highlight">MTTR</th>
                             </tr>
                             <tr>
                                 <th>Insiden</th><th>MTTR</th>
@@ -79,7 +79,7 @@
                                         <td>'.$row->total_nov.'</td><td>'.$row->percentage_less_1_day_nov.'%</td>
                                         <td>'.$row->total_dec.'</td><td>'.$row->percentage_less_1_day_dec.'%</td>
                                         <td class="highlight">'.$row->total_semua_bulan.'</td>
-                                        <td class="highlight">'.$row->percentage_less_1_day_semua_bulan.'</td>
+                                        <td class="highlight">'.$row->percentage_less_1_day_semua_bulan.'%</td>
                                     </tr>
                                     ';
                                 }
