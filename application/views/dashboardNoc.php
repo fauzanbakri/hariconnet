@@ -792,7 +792,7 @@
       },
       stroke: {
             width: 4,
-            curve: 'stepline'
+            curve: 'straight'
         },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
