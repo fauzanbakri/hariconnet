@@ -791,8 +791,8 @@
         height: 350
       },
       stroke: {
-            width: 4, // Perbesar ketebalan garis
-            curve: 'smooth' // Lebih halus dari 'smooth'
+            width: 4,
+            curve: 'stepline'
         },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
