@@ -774,7 +774,7 @@
 <script>
     // Data
     // const target = 64;
-    const data2 = <?php echo $datapercent2; ?>;
+    const data2 = <?php echo $datapercent; ?>;
     const options2 = {
       series: [
         {
