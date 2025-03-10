@@ -128,7 +128,7 @@
                             </div>
                             
                             <div class="tab-content">
-                                <div class="tab-pane active" id="MamujuPage" role="tabpanel">
+                                <div class="tab-pane" id="MamujuPage" role="tabpanel">
                                 <div class="table-responsive">
                                         <h5 class="mb-sm-4 mt-sm-4">PENCAPAIAN MTTR RITEL MAMUJU – PER KABUPATEN</h5>
                                         <table class="table table-nowrap table-striped-columns mb-0">
