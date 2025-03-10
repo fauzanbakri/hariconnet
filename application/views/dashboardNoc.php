@@ -798,11 +798,6 @@
       dataLabels: {
         enabled: true
       },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
       xaxis: {
         categories: data2.categories
       },
