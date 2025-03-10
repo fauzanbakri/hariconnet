@@ -844,6 +844,53 @@ class DashboardNoc extends CI_Controller {
 		
 	}
 	public function getTicketData() {
+		$query = $this->db->query("
+         SELECT 
+             CONCAT('Week ', minggu) AS minggu,
+             tahun,
+             SUM(more_than_1_day) AS more_than_1_day, 
+             SUM(more_than_3_days) AS more_than_3_days,
+             (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
+             (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+         FROM (
+             SELECT 
+                 WEEK(r.waktulapor, 1) AS minggu,
+                 YEAR(r.waktulapor) AS tahun,
+                 COUNT(CASE WHEN TIMESTAMPDIFF(DAY, r.waktulapor, r.waktulaporanselesai) < 1 THEN 1 END) AS more_than_1_day,
+                 COUNT(CASE WHEN TIMESTAMPDIFF(DAY, r.waktulapor, r.waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
+                 (SELECT COUNT(*) FROM rawicrm 
+                 WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
+                 AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
+                 AND penyebab!='NOT INCIDENT' 
+                 AND status='TICKET CLOSE' 
+                 AND namakelompok='GANGGUAN'
+                 AND provinsipelanggan='GORONTALO') 
+                 AS total_tickets_week
+             FROM rawicrm r
+             WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='GORONTALO'
+             GROUP BY tahun, minggu
+         ) AS grouped_data
+         GROUP BY minggu, tahun
+            ORDER BY minggu, tahun;
+     ");
+     
+     $result5 = $query->result_array();
+     
+     if (empty($result5)) {
+         echo json_encode(["categories" => [], "more_than_1_day" => [], "more_than_3_days" => [], "percent_more_than_1_day" => [], "percent_more_than_3_days" => []]);
+         return;
+     }
+     
+     $data5 = [
+         "categories" => array_column($result5, 'minggu'),
+         "more_than_1_day" => array_map('intval', array_column($result5, 'more_than_1_day')),
+         "more_than_3_days" => array_map('intval', array_column($result5, 'more_than_3_days')),
+         "percent_more_than_1_day" => array_map('floatval', array_column($result5, 'percent_more_than_1_day')),
+         "percent_more_than_3_days" => array_map('floatval', array_column($result5, 'percent_more_than_3_days'))
+     ];
+     
+	 echo json_encode($data5);
+	 
 	}	
     
 }
