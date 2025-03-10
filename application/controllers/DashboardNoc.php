@@ -168,7 +168,7 @@ class DashboardNoc extends CI_Controller {
                 GROUP BY tahun, minggu
             ) AS grouped_data
             GROUP BY minggu, tahun
-            ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
         ");
         
         $result = $query->result_array();
@@ -214,7 +214,7 @@ class DashboardNoc extends CI_Controller {
                         GROUP BY tahun, minggu
                     ) AS grouped_data
                     GROUP BY minggu, tahun
-                    ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
                 ");
                 
                 $result = $query->result_array();
@@ -261,7 +261,7 @@ class DashboardNoc extends CI_Controller {
                     GROUP BY tahun, minggu
                 ) AS grouped_data
                 GROUP BY minggu, tahun
-                ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
             ");
             
             $result1 = $query->result_array();
@@ -308,7 +308,7 @@ class DashboardNoc extends CI_Controller {
                     GROUP BY tahun, minggu
                 ) AS grouped_data
                 GROUP BY minggu, tahun
-                ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
             ");
             
             $result2 = $query->result_array();
@@ -356,7 +356,7 @@ class DashboardNoc extends CI_Controller {
                     GROUP BY tahun, minggu
                 ) AS grouped_data
                 GROUP BY minggu, tahun
-                ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
             ");
             
             $result3 = $query->result_array();
@@ -403,7 +403,7 @@ class DashboardNoc extends CI_Controller {
                 GROUP BY tahun, minggu
             ) AS grouped_data
             GROUP BY minggu, tahun
-            ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
         ");
         
         $result4 = $query->result_array();
@@ -450,7 +450,7 @@ class DashboardNoc extends CI_Controller {
              GROUP BY tahun, minggu
          ) AS grouped_data
          GROUP BY minggu, tahun
-         ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
      ");
      
      $result5 = $query->result_array();
@@ -499,7 +499,7 @@ class DashboardNoc extends CI_Controller {
             GROUP BY tahun, minggu
         ) AS grouped_data
         GROUP BY minggu, tahun
-        ORDER BY tahun, minggu;
+            ORDER BY minggu, tahun;
     ");
     
     $result6 = $query->result_array();
