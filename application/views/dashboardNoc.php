@@ -791,7 +791,7 @@
         height: 350
       },
       stroke: {
-            width: 4, // Perbesar ketebalan garis
+            width: 10, // Perbesar ketebalan garis
             curve: 'monotoneCubic' // Lebih halus dari 'smooth'
         },
         fill: {
