@@ -105,7 +105,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY kabupatenpelanggan
-        ORDER BY kabupatenpelanggan;
+        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan DESC;
 
         ")->result();
 		session_start();
