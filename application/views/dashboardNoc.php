@@ -790,13 +790,10 @@
         type: 'line',
         height: 350
       },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
+      stroke: {
+            width: 3,
+            curve: 'smooth'
         },
-      },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
