@@ -791,8 +791,17 @@
         height: 350
       },
       stroke: {
-            width: 3,
-            curve: 'smooth'
+            width: 4, // Perbesar ketebalan garis
+            curve: 'monotoneCubic' // Lebih halus dari 'smooth'
+        },
+        fill: {
+            type: 'gradient', // Tambahkan warna gradient
+            gradient: {
+            shade: 'light',
+            type: 'vertical',
+            opacityFrom: 0.6,
+            opacityTo: 0.3
+            }
         },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
