@@ -28,38 +28,38 @@
                         <div class="card-header">
                                     <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#Makassar" role="tab">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#MakassarPage" role="tab">
                                                 <i class="fas fa-home"></i> Makassar
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#Mamuju" role="tab">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#MamujuPage" role="tab">
                                                 <i class="far fa-user"></i> Mamuju
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#Palu" role="tab">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#PaluPage" role="tab">
                                                 <i class="far fa-envelope"></i> Palu
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#Kendari" role="tab">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#KendariPage" role="tab">
                                                 <i class="far fa-envelope"></i> Kendari
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#Gorontalo" role="tab">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#GorontaloPage" role="tab">
                                                 <i class="far fa-envelope"></i> Gorontalo
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#Manado" role="tab">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#ManadoPage" role="tab">
                                                 <i class="far fa-envelope"></i> Manado
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
-                            <div class="tab-pane active" id="Makassar" role="tabpanel">
+                            <div class="tab-pane active" id="MakassarPage" role="tabpanel">
                                 <div class="table-responsive">
                                     <h5 class="mb-sm-4 mt-sm-4">PENCAPAIAN MTTR RITEL MAKASSAR – PER KABUPATEN</h5>
                                     <table class="table table-nowrap table-striped-columns mb-0">
