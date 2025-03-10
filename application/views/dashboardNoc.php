@@ -790,13 +790,21 @@
         type: 'line',
         height: 350
       },
-      stroke: {
-            width: 1,
-            curve: 'straight'
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
         },
+      },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
       },
       xaxis: {
         categories: data2.categories
@@ -853,17 +861,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: data1.categories
       },
@@ -921,17 +937,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datamks.categories
       },
@@ -989,17 +1013,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datammj.categories
       },
@@ -1057,17 +1089,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datapal.categories
       },
@@ -1125,17 +1165,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datakdi.categories
       },
@@ -1192,17 +1240,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datagto.categories
       },
@@ -1259,17 +1315,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '90%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datamnd.categories
       },
@@ -1329,17 +1393,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datasibt.categories
       },
@@ -1397,17 +1469,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datamks_.categories
       },
@@ -1465,17 +1545,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datammj_.categories
       },
@@ -1533,17 +1621,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datapal_.categories
       },
@@ -1601,17 +1697,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datakdi_.categories
       },
@@ -1668,17 +1772,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datagto_.categories
       },
@@ -1735,17 +1847,25 @@
         }
       ],
       chart: {
-        type: 'line',
+        type: 'bar',
         height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '50%',
+          endingShape: 'rounded'
+        },
       },
       colors: ['#347892', '#ffc107'],
       dataLabels: {
         enabled: true
       },
       stroke: {
-            width: 1,
-            curve: 'straight'
-        },
+        show: true,
+        width: 0,
+        colors: ['transparent']
+      },
       xaxis: {
         categories: datamnd_.categories
       },
