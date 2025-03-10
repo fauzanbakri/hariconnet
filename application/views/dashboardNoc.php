@@ -791,7 +791,7 @@
         height: 350
       },
       stroke: {
-            width: 4,
+            width: 3,
             curve: 'straight'
         },
       colors: ['#347892', '#ffc107'],
