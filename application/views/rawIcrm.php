@@ -124,6 +124,49 @@
                                         </tbody>
                                         </table>
                                     </div>
+                                    <br>
+                                    <br>
+                                    <div class="table-responsive">
+                                        <h5 class="mb-sm-4 mt-sm-4">PENCAPAIAN MTTR RITEL MAKASSAR – PER KABUPATEN</h5>
+                                        <table class="table table-nowrap table-striped-columns mb-0">
+                                            <thead class="table-primary">
+                                            <tr>
+                                                <th rowspan="2">Kabupaten/Kota</th>
+                                                <th colspan="2">Januari</th>
+                                                <th colspan="2">Februari</th>
+                                                <th colspan="2">Maret</th>
+                                                <th colspan="2">April</th>
+                                                <th colspan="2">Mei</th>
+                                                <th colspan="2">Juni</th>
+                                                <th colspan="2">Juli</th>
+                                                <th colspan="2">Agustus</th>
+                                                <th colspan="2">September</th>
+                                                <th colspan="2">Oktober</th>
+                                                <th colspan="2">November</th>
+                                                <th colspan="2">Desember</th>
+                                                <th rowspan="2" class="highlight">Total Insiden</th>
+                                                <th rowspan="2" class="highlight">MTTR</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             
