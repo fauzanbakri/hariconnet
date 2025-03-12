@@ -107,7 +107,7 @@
     <script>
     $('#submitBtn').on('click', function (e) {
         console.log('asdasdsadasd');
-
+        const button = document.getElementById('toast');
         e.preventDefault();
         const formData = {
             oldPass: $('[name="oldPass"]').val(),
