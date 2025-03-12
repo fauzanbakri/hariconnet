@@ -19,7 +19,7 @@ class ChangePass extends CI_Controller {
 		if($q->num_rows()>0){
 			$n = $this->db->query("UPDATE user SET password='$newPass' WHERE idUser='$idUser'");
 			if($n){
-				echo 'Success';
+				echo 'success';
 			}else{
 				echo 'Faied';
 			}
