@@ -129,7 +129,7 @@
                     button.setAttribute('data-toast-text', 'Data Saved!');
                     button.setAttribute('data-toast-className', 'success');
                     button.click();
-                    location.reload();
+                    // location.reload();
                 }else{
                     button.setAttribute('data-toast-text', response);
                     button.setAttribute('data-toast-className', 'danger');
