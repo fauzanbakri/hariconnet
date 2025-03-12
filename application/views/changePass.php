@@ -13,6 +13,7 @@
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Change Password</h4>
+                                    <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                 </div><!-- end card header -->
                                 <div class="card-body">
                                     <div class="live-preview">
@@ -20,14 +21,14 @@
                                             <div class="col-xxl-12 col-md-12">
                                                 <div>
                                                     <label for="basiInput" class="form-label">Old Password</label>
-                                                    <input type="text" class="form-control" id="oldPass">
+                                                    <input type="text" class="form-control" id="oldPass" name="oldPass">
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="col-xxl-12 col-md-12">
                                                 <div>
                                                     <label for="basiInput" class="form-label">New Password</label>
-                                                    <input type="text" class="form-control" id="newPass">
+                                                    <input type="text" class="form-control" id="newPass"  name="newPass">
                                                 </div>
                                             </div>
                                             <br>
@@ -104,74 +105,44 @@
     <!-- App js -->
     <script src="assets/js/app.js"></script>
     <script>
-    $(document).ready(function() {
-        // Lakukan AJAX request saat halaman dibuka
+    $('#submitBtn').on('click', function (e) {
+        console.log('asdasdsadasd');
+
+        e.preventDefault();
+        const formData = {
+            oldPass: $('[name="oldPass"]').val(),
+            newPass: $('[name="newPass"]').val()
+        };
+        if (!formData.oldPass || !formData.newPass) {
+            button.setAttribute('data-toast-text', 'Please Fill the Field!');
+            button.setAttribute('data-toast-className', 'danger');
+            button.click();
+            return;
+        }
         $.ajax({
-            url: 'Report/makassar', // URL yang akan dipanggil
-            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
-            success: function(response) {
-                $('#makassar-content').html(response);
-                // console.log(response);
-            },
-            error: function(xhr, status, error) {
-                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
-            }
-        });
-
-        $.ajax({
-            url: 'Report/kendari', // URL yang akan dipanggil
-            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
-            success: function(response) {
-                $('#kendari').html(response);
-                // console.log(response);
-            },
-            error: function(xhr, status, error) {
-                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
-            }
-        });
-
-        $.ajax({
-            url: 'Report/manado', // URL yang akan dipanggil
-            type: 'GET', // Tipe request (GET atau POST, tergantung kebutuhan)
-            success: function(response) {
-                $('#manado').html(response);
-                // console.log(response);
-            },
-            error: function(xhr, status, error) {
-                $('#makassar-content').html('<p>Terjadi kesalahan saat memuat data.</p>');
-            }
-        });
-
-        $('#copy-button').click(function() {
-         var content = $('#makassar').text();
-         var tempInput = document.createElement('input');
-         tempInput.value = content;
-         document.body.appendChild(tempInput);
-         tempInput.select();
-         document.execCommand('copy');
-         document.body.removeChild(tempInput);
-         alert('Konten telah disalin!');
-        });
-
-        $('#generate').on('click', function (e) {
-            const formData = {
-                makassartotal: $('[name="makassartotal"]').val(),
-                makassardivision: $('[name="makassardivision"]').val(),
-                kendaritotal: $('[name="kendaritotal"]').val(),
-                kendaridivision: $('[name="kendaridivision"]').val(),
-                manadototal: $('[name="manadototal"]').val(),
-                manadodivision: $('[name="manadodivision"]').val()
-            };
-            $.ajax({
-                url: 'Report/totaltiket',
-                type: 'POST',
-                data: formData,
-                success: function (response) {
-                    // console.log(response);
-                    $('#totaltiket').html(response);
+            url: 'ChangePass/change',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                console.log(response);
+                if(response=='success'){
+                    button.setAttribute('data-toast-text', 'Data Saved!');
+                    button.setAttribute('data-toast-className', 'success');
+                    button.click();
+                    location.reload();
+                }else{
+                    button.setAttribute('data-toast-text', response);
+                    button.setAttribute('data-toast-className', 'danger');
+                    button.click();   
                 }
-            });
+            },
+            error: function (xhr, status, error) {
+                button.setAttribute('data-toast-text', error);
+                button.setAttribute('data-toast-className', 'danger');
+                button.click();
+            }
         });
+        console.log('asdasdsadasd');
     });
     </script>
 </body>
