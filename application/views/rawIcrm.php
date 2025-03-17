@@ -196,7 +196,7 @@
                                         <table class="table table-nowrap table-striped-columns mb-0">
                                             <thead class="table-primary">
                                             <tr>
-                                                <th rowspan="2">Penyebab Gangguan</th>
+                                                <th rowspan="2">Penyebab Gangguan Detail</th>
                                                 <th colspan="2">Januari</th>
                                                 <th colspan="2">Februari</th>
                                                 <th colspan="2">Maret</th>
