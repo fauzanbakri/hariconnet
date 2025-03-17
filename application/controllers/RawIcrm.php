@@ -194,7 +194,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebab
-        ORDER BY percentage_less_1_day_semua_bulan DESC, less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY percentage_less_1_day_semua_bulan ASC, less_1_day_semua_bulan DESC LIMIT 10;
 
         ")->result();
         $q['makassartop10_2'] = $this->db->query("
@@ -281,7 +281,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebabdetail
-        ORDER BY percentage_less_1_day_semua_bulan DESC, less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY percentage_less_1_day_semua_bulan ASC, less_1_day_semua_bulan DESC LIMIT 10;
 
         ")->result();
 
