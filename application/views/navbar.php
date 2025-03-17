@@ -598,6 +598,9 @@
                                             <li class="nav-item">
                                                 <a href="ListPending" class="nav-link" data-key="t-crm"> List Pending Team </a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a href="UpdateReport" class="nav-link" data-key="t-crm"> Update Report Tiket </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>

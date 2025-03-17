@@ -127,11 +127,11 @@
                                     <br>
                                     <br>
                                     <div class="table-responsive">
-                                        <h5 class="mb-sm-4 mt-sm-4">PENCAPAIAN MTTR RITEL MAKASSAR – PER KABUPATEN</h5>
+                                        <h5 class="mb-sm-4 mt-sm-4">TOP TEN ROOTCAUSE GANGGUAN RITEL MAKASSAR</h5>
                                         <table class="table table-nowrap table-striped-columns mb-0">
                                             <thead class="table-primary">
                                             <tr>
-                                                <th rowspan="2">Kabupaten/Kota</th>
+                                                <th rowspan="2">Penyebab Gangguan</th>
                                                 <th colspan="2">Januari</th>
                                                 <th colspan="2">Februari</th>
                                                 <th colspan="2">Maret</th>
@@ -163,7 +163,94 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            <?php
+                                                foreach($makassartop10_1 as $row){
+                                                    echo '
+                                                    <tr>
+                                                        <td>'.$row->penyebab.'</td>
+                                                        <td>'.$row->total_jan.'</td><td>'.$row->percentage_less_1_day_jan.'%</td>
+                                                        <td>'.$row->total_feb.'</td><td>'.$row->percentage_less_1_day_feb.'%</td>
+                                                        <td>'.$row->total_mar.'</td><td>'.$row->percentage_less_1_day_mar.'%</td>
+                                                        <td>'.$row->total_apr.'</td><td>'.$row->percentage_less_1_day_apr.'%</td>
+                                                        <td>'.$row->total_may.'</td><td>'.$row->percentage_less_1_day_may.'%</td>
+                                                        <td>'.$row->total_jun.'</td><td>'.$row->percentage_less_1_day_jun.'%</td>
+                                                        <td>'.$row->total_jul.'</td><td>'.$row->percentage_less_1_day_jul.'%</td>
+                                                        <td>'.$row->total_aug.'</td><td>'.$row->percentage_less_1_day_aug.'%</td>
+                                                        <td>'.$row->total_sep.'</td><td>'.$row->percentage_less_1_day_sep.'%</td>
+                                                        <td>'.$row->total_oct.'</td><td>'.$row->percentage_less_1_day_oct.'%</td>
+                                                        <td>'.$row->total_nov.'</td><td>'.$row->percentage_less_1_day_nov.'%</td>
+                                                        <td>'.$row->total_dec.'</td><td>'.$row->percentage_less_1_day_dec.'%</td>
+                                                        <td class="highlight">'.$row->total_semua_bulan.'</td>
+                                                        <td class="highlight">'.$row->percentage_less_1_day_semua_bulan.'%</td>
+                                                    </tr>
+                                                    ';
+                                                }
+                                            ?>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="table-responsive">
+                                        <h5 class="mb-sm-4 mt-sm-4">TOP TEN ROOTCAUSE GANGGUAN RITEL MAKASSAR</h5>
+                                        <table class="table table-nowrap table-striped-columns mb-0">
+                                            <thead class="table-primary">
+                                            <tr>
+                                                <th rowspan="2">Penyebab Gangguan</th>
+                                                <th colspan="2">Januari</th>
+                                                <th colspan="2">Februari</th>
+                                                <th colspan="2">Maret</th>
+                                                <th colspan="2">April</th>
+                                                <th colspan="2">Mei</th>
+                                                <th colspan="2">Juni</th>
+                                                <th colspan="2">Juli</th>
+                                                <th colspan="2">Agustus</th>
+                                                <th colspan="2">September</th>
+                                                <th colspan="2">Oktober</th>
+                                                <th colspan="2">November</th>
+                                                <th colspan="2">Desember</th>
+                                                <th rowspan="2" class="highlight">Total Insiden</th>
+                                                <th rowspan="2" class="highlight">MTTR</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                                <th>Insiden</th><th>MTTR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                foreach($makassartop10_2 as $row){
+                                                    echo '
+                                                    <tr>
+                                                        <td>'.$row->penyebabdetail.'</td>
+                                                        <td>'.$row->total_jan.'</td><td>'.$row->percentage_less_1_day_jan.'%</td>
+                                                        <td>'.$row->total_feb.'</td><td>'.$row->percentage_less_1_day_feb.'%</td>
+                                                        <td>'.$row->total_mar.'</td><td>'.$row->percentage_less_1_day_mar.'%</td>
+                                                        <td>'.$row->total_apr.'</td><td>'.$row->percentage_less_1_day_apr.'%</td>
+                                                        <td>'.$row->total_may.'</td><td>'.$row->percentage_less_1_day_may.'%</td>
+                                                        <td>'.$row->total_jun.'</td><td>'.$row->percentage_less_1_day_jun.'%</td>
+                                                        <td>'.$row->total_jul.'</td><td>'.$row->percentage_less_1_day_jul.'%</td>
+                                                        <td>'.$row->total_aug.'</td><td>'.$row->percentage_less_1_day_aug.'%</td>
+                                                        <td>'.$row->total_sep.'</td><td>'.$row->percentage_less_1_day_sep.'%</td>
+                                                        <td>'.$row->total_oct.'</td><td>'.$row->percentage_less_1_day_oct.'%</td>
+                                                        <td>'.$row->total_nov.'</td><td>'.$row->percentage_less_1_day_nov.'%</td>
+                                                        <td>'.$row->total_dec.'</td><td>'.$row->percentage_less_1_day_dec.'%</td>
+                                                        <td class="highlight">'.$row->total_semua_bulan.'</td>
+                                                        <td class="highlight">'.$row->percentage_less_1_day_semua_bulan.'%</td>
+                                                    </tr>
+                                                    ';
+                                                }
+                                            ?>
                                         </tbody>
                                         </table>
                                     </div>
