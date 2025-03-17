@@ -140,8 +140,8 @@
                                                                 <option value="Kabel Bending">Kabel Bending</option>
                                                                 <option value="Putus Core">Putus Core</option>
                                                                 <option value="FOC Konektor">FOC Konektor</option>
-                                                                <option value="FOT Perangakat">FOT Perangkat</option>
-                                                                <option value="FOC Konektor">Power Supply</option>
+                                                                <option value="FOT Perangkat">FOT Perangkat</option>
+                                                                <option value="Power Supply">Power Supply</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xxl-6">
