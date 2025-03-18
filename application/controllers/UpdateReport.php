@@ -4,30 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class UpdateReport extends CI_Controller {
 	public function index()
 	{
-        $title['title']="Report";
-        $q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->row();
-		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->row();
-		$q['new'] = $this->db->query("SELECT COUNT(idTiket) as new FROM tiket WHERE status='NEW'")->row();
-		$q['sulselC'] = $this->db->query("SELECT COUNT(*) AS sulselC FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Selatan' AND status='CLOSED';")->row();
-		$q['sulbarC'] = $this->db->query("SELECT COUNT(*) AS sulbarC FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Barat' AND status='CLOSED';")->row();
-		$q['sultraC'] = $this->db->query("SELECT COUNT(*) AS sultraC FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tenggara' AND status='CLOSED';")->row();
-		$q['sultengC'] = $this->db->query("SELECT COUNT(*) AS sultengC FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tengah' AND status='CLOSED';")->row();
-		$q['sulutC'] = $this->db->query("SELECT COUNT(*) AS sulutC FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Utara' AND status='CLOSED';")->row();
-		$q['gorontaloC'] = $this->db->query("SELECT COUNT(*) AS gorontaloC FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Gorontalo' AND status='CLOSED';")->row();
-
-        $q['sulselO'] = $this->db->query("SELECT COUNT(*) AS sulselO FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Selatan' AND status='NEW';")->row();
-		$q['sulbarO'] = $this->db->query("SELECT COUNT(*) AS sulbarO FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Barat' AND status='NEW';")->row();
-		$q['sultraO'] = $this->db->query("SELECT COUNT(*) AS sultraO FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tenggara' AND status='NEW';")->row();
-		$q['sultengO'] = $this->db->query("SELECT COUNT(*) AS sultengO FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tengah' AND status='NEW';")->row();
-		$q['sulutO'] = $this->db->query("SELECT COUNT(*) AS sulutO FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Utara' AND status='NEW';")->row();
-		$q['gorontaloO'] = $this->db->query("SELECT COUNT(*) AS gorontaloO FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Gorontalo' AND status='NEW';")->row();
-        
-        $q['sulselT'] = $this->db->query("SELECT COUNT(*) AS sulselT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Selatan';")->row();
-		$q['sulbarT'] = $this->db->query("SELECT COUNT(*) AS sulbarT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Barat';")->row();
-		$q['sultraT'] = $this->db->query("SELECT COUNT(*) AS sultraT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tenggara';")->row();
-		$q['sultengT'] = $this->db->query("SELECT COUNT(*) AS sultengT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tengah';")->row();
-		$q['sulutT'] = $this->db->query("SELECT COUNT(*) AS sulutT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Utara';")->row();
-		$q['gorontaloT'] = $this->db->query("SELECT COUNT(*) AS gorontaloT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Gorontalo';")->row();
+        $title['title']="Update Report";
+        $q['terbanyak_makassar'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Selatan' ORDER BY jumlahTiket DESC LIMIT 3;");
+        $q['terbanyak_mamuju'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Barat' ORDER BY jumlahTiket DESC LIMIT 3;");
+        $q['terbanyak_palu'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Tengah' ORDER BY jumlahTiket DESC LIMIT 3;");
+        $q['terbanyak_kendari'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Tenggara' ORDER BY jumlahTiket DESC LIMIT 3;");
+        $q['terbanyak_gorontalo'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Gorontalo' ORDER BY jumlahTiket DESC LIMIT 3;");
+        $q['terbanyak_manado'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Utara' ORDER BY jumlahTiket DESC LIMIT 3;");
         session_start();
         if(
 			$_SESSION['role']=='Superadmin' || 

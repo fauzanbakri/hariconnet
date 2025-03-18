@@ -18,7 +18,7 @@
                                             <div class="col-xxl-12">
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <div class="card">
+                                                        <div class="card">  
                                                             <div class="card-header align-items-center d-flex">
                                                                 <h4 class="card-title mb-0  me-2">Report</h4>
                                                                 <div class="flex-shrink-0 ms-auto">
@@ -34,52 +34,29 @@
                                                             <div class="card-body">
                                                                 <div class="tab-content text-muted">
                                                                     <div class="tab-pane active" id="makassar" role="tabpanel">
-                                                                    <!-- <button class="btn btn-primary" id="copy-button">Copy</button><br><br> -->
-                                                                    *Laporan Gangguan Tanggal <?php 
-                                                                    date_default_timezone_set('Asia/Makassar');
-                                                                    echo date('d M Y'); 
-                                                                    ?>*<br><br>
+                                                                        TOP 3 HIGHLIGHT INSIDEN SBU SIBT
+                                                                        Tgl : 18 Maret 2025
+                                                                        Pukul : 09:05 WITA
+                                                                        ⚠️ : Insiden Open
+                                                                        ✅ : Insiden Closed
 
-                                                                    Total Open Incident : <?php echo $total->total;?> <br>
-                                                                    Incident Closed : <?php echo $close->close;?> <br>
-                                                                    New Open Incident : <?php echo $new->new;?> <br>
-                                                                    Closed : 
-                                                                    Sulsel: <?php echo $sulselC->sulselC;?>, 
-                                                                    Sulbar : <?php echo $sulbarC->sulbarC;?>,
-                                                                    Sultra: <?php echo $sultraC->sultraC;?>, 
-                                                                    Sulteng: <?php echo $sultengC->sultengC;?>,
-                                                                    Gorontalo : <?php echo $gorontaloC->gorontaloC;?>, 
-                                                                    Sulut: <?php echo $sulutC->sulutC;?> <br>
-
-                                                                    Open : 
-                                                                    Sulsel: <?php echo $sulselO->sulselO;?>, 
-                                                                    Sulbar : <?php echo $sulbarO->sulbarO;?>,
-                                                                    Sultra: <?php echo $sultraO->sultraO;?>, 
-                                                                    Sulteng: <?php echo $sultengO->sultengO;?>,
-                                                                    Gorontalo : <?php echo $gorontaloO->gorontaloO;?>, 
-                                                                    Sulut: <?php echo $sulutO->sulutO;?> <br>
-
-                                                                    Incident Total : 
-                                                                    Sulsel: <?php echo $sulselT->sulselT;?>, 
-                                                                    Sulbar : <?php echo $sulbarT->sulbarT;?>,
-                                                                    Sultra: <?php echo $sultraT->sultraT;?>, 
-                                                                    Sulteng: <?php echo $sultengT->sultengT;?>,
-                                                                    Gorontalo : <?php echo $gorontaloT->gorontaloT;?>, 
-                                                                    Sulut: <?php echo $sulutT->sulutT;?>
-                                                                    <br><br>
-
-                                                                    Piket Mini NOC Retail : <br>
-                                                                    Pagi : <br>
-                                                                    Sore : <br>
-                                                                    Malam : <br><br>
-                                                                    <div id="makassar-content"></div>
-
-                                                                    </div>
-                                                                    <div class="tab-pane" id="kendari" role="tabpanel">
-                                                                        kendari
-                                                                    </div>
-                                                                    <div class="tab-pane" id="manado" role="tabpanel">
-                                                                        manado
+                                                                        INSIDEN RITEL TIKET TERBANYAK MAKASSAR:  
+                                                                        <?php
+                                                                        $tanggalSekarang = new DateTime();
+                                                                        foreach ($terbanyak_makassar as $row){
+                                                                            $no=1;
+                                                                            $durasi1 = new DateTime($row->downtime);
+                                                                            $selisih = $durasi1->diff($tanggalSekarang);
+                                                                            $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                                            echo $no.'. '.$row->idInsiden.'⚠<br>'.
+                                                                            '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
+                                                                            '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
+                                                                            '* aging : '. $durasi.'<br>'.                                                                            
+                                                                            '* posisi tiket : <input name="mitra[]"><br>'.
+                                                                            '* update :  <input name="update[]"><br>';
+                                                                            $no++;
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             </div><!-- end card body -->
