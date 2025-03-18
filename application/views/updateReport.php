@@ -43,8 +43,8 @@
                                                                         INSIDEN RITEL TIKET TERBANYAK MAKASSAR:   <br>
                                                                         <?php
                                                                         $tanggalSekarang = new DateTime();
+                                                                        $no=1;
                                                                         foreach ($terbanyak_makassar as $row){
-                                                                            $no=1;
                                                                             $durasi1 = new DateTime($row->downtime);
                                                                             $selisih = $durasi1->diff($tanggalSekarang);
                                                                             $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
