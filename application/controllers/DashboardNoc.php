@@ -148,8 +148,8 @@ class DashboardNoc extends CI_Controller {
                 tahun,
                 SUM(more_than_1_day) AS more_than_1_day, 
                 SUM(more_than_3_days) AS more_than_3_days,
-                (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-                (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+                ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+    			ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
             FROM (
                 SELECT 
                     WEEK(r.waktulapor, 1) AS minggu,
@@ -169,6 +169,9 @@ class DashboardNoc extends CI_Controller {
             ) AS grouped_data
             GROUP BY minggu, tahun
 ORDER BY tahun, CAST(minggu AS UNSIGNED);
+
+
+
         ");
         
         $result = $query->result_array();
@@ -194,8 +197,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                         tahun,
                         SUM(more_than_1_day) AS more_than_1_day, 
                         SUM(more_than_3_days) AS more_than_3_days,
-                        (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-                        (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+						ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+						ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
                     FROM (
                         SELECT 
                             WEEK(r.waktulapor, 1) AS minggu,
@@ -240,8 +243,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                     tahun,
                     SUM(more_than_1_day) AS more_than_1_day, 
                     SUM(more_than_3_days) AS more_than_3_days,
-                    (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-                    (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+					ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+    				ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
                 FROM (
                     SELECT 
                         WEEK(r.waktulapor, 1) AS minggu,
@@ -287,8 +290,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                     tahun,
                     SUM(more_than_1_day) AS more_than_1_day, 
                     SUM(more_than_3_days) AS more_than_3_days,
-                    (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-                    (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+					ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+    				ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
                 FROM (
                     SELECT 
                         WEEK(r.waktulapor, 1) AS minggu,
@@ -335,8 +338,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                     tahun,
                     SUM(more_than_1_day) AS more_than_1_day, 
                     SUM(more_than_3_days) AS more_than_3_days,
-                    (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-                    (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+					ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+    				ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
                 FROM (
                     SELECT 
                         WEEK(r.waktulapor, 1) AS minggu,
@@ -382,8 +385,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                 tahun,
                 SUM(more_than_1_day) AS more_than_1_day, 
                 SUM(more_than_3_days) AS more_than_3_days,
-                (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-                (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+				ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+   				ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
             FROM (
                 SELECT 
                     WEEK(r.waktulapor, 1) AS minggu,
@@ -429,8 +432,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
              tahun,
              SUM(more_than_1_day) AS more_than_1_day, 
              SUM(more_than_3_days) AS more_than_3_days,
-             (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-             (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+			ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+    		ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
          FROM (
              SELECT 
                  WEEK(r.waktulapor, 1) AS minggu,
@@ -478,8 +481,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
             tahun,
             SUM(more_than_1_day) AS more_than_1_day, 
             SUM(more_than_3_days) AS more_than_3_days,
-            (SUM(more_than_1_day) / SUM(total_tickets_week)) * 100 AS percent_more_than_1_day,
-            (SUM(more_than_3_days) / SUM(total_tickets_week)) * 100 AS percent_more_than_3_days
+            ROUND((SUM(more_than_1_day) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_1_day,
+    		ROUND((SUM(more_than_3_days) / SUM(total_tickets_week)) * 100, 2) AS percent_more_than_3_days
         FROM (
             SELECT 
                 WEEK(r.waktulapor, 1) AS minggu,
@@ -523,8 +526,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
@@ -561,8 +564,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
@@ -600,8 +603,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
@@ -638,8 +641,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
@@ -678,8 +681,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
@@ -717,8 +720,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
@@ -756,8 +759,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
@@ -795,8 +798,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		(SUM(more_than_1_day) / SUM(total_tickets_month)) * 100 AS percent_more_than_1_day,
-		(SUM(more_than_3_days) / SUM(total_tickets_month)) * 100 AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
