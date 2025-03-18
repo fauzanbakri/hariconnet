@@ -5,12 +5,12 @@ class UpdateReport extends CI_Controller {
 	public function index()
 	{
         $title['title']="Update Report";
-        $q['terbanyak_makassar'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Selatan' ORDER BY jumlahTiket DESC LIMIT 3;");
-        $q['terbanyak_mamuju'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Barat' ORDER BY jumlahTiket DESC LIMIT 3;");
-        $q['terbanyak_palu'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Tengah' ORDER BY jumlahTiket DESC LIMIT 3;");
-        $q['terbanyak_kendari'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Tenggara' ORDER BY jumlahTiket DESC LIMIT 3;");
-        $q['terbanyak_gorontalo'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Gorontalo' ORDER BY jumlahTiket DESC LIMIT 3;");
-        $q['terbanyak_manado'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Utara' ORDER BY jumlahTiket DESC LIMIT 3;");
+        $q['terbanyak_makassar'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Selatan' ORDER BY jumlahTiket DESC LIMIT 3;")->result();
+        $q['terbanyak_mamuju'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Barat' ORDER BY jumlahTiket DESC LIMIT 3;")->result();
+        $q['terbanyak_palu'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Tengah' ORDER BY jumlahTiket DESC LIMIT 3;")->result();
+        $q['terbanyak_kendari'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Tenggara' ORDER BY jumlahTiket DESC LIMIT 3;")->result();
+        $q['terbanyak_gorontalo'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Gorontalo' ORDER BY jumlahTiket DESC LIMIT 3;")->result();
+        $q['terbanyak_manado'] = $this->db->query("SELECT * FROM feeder LEFT JOIN olt ON feeder.idOlt = olt.idOlt WHERE olt.provinsi = 'Sulawesi Utara' ORDER BY jumlahTiket DESC LIMIT 3;")->result();
         session_start();
         if(
 			$_SESSION['role']=='Superadmin' || 
