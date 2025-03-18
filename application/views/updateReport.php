@@ -40,7 +40,7 @@
                                                                         ⚠️ : Insiden Open <br>
                                                                         ✅ : Insiden Closed <br> <br>
 
-                                                                        INSIDEN RITEL TIKET TERBANYAK MAKASSAR:   <br>
+                                                                        INSIDEN RITEL TIKET TERBANYAK MAKASSAR:   <br><br>
                                                                         <?php
                                                                         $tanggalSekarang = new DateTime();
                                                                         $no=1;
