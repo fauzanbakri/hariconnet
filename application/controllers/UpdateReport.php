@@ -34,7 +34,7 @@ class UpdateReport extends CI_Controller {
 			$_SESSION['role']=='NOC Ritel'
 			){
                 $this->load->view('navbar', $title);
-                $this->load->view('report', $q);
+                $this->load->view('updateReport', $q);
 		}else{
 			header('location: ./DashboardNoc');
 		}
