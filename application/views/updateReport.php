@@ -34,13 +34,13 @@
                                                             <div class="card-body">
                                                                 <div class="tab-content text-muted">
                                                                     <div class="tab-pane active" id="makassar" role="tabpanel">
-                                                                        TOP 3 HIGHLIGHT INSIDEN SBU SIBT
-                                                                        Tgl : 18 Maret 2025
-                                                                        Pukul : 09:05 WITA
-                                                                        ⚠️ : Insiden Open
-                                                                        ✅ : Insiden Closed
+                                                                        TOP 3 HIGHLIGHT INSIDEN SBU SIBT <br>
+                                                                        Tgl : 18 Maret 2025 <br>
+                                                                        Pukul : 09:05 WITA <br>
+                                                                        ⚠️ : Insiden Open <br>
+                                                                        ✅ : Insiden Closed <br> <br>
 
-                                                                        INSIDEN RITEL TIKET TERBANYAK MAKASSAR:  
+                                                                        INSIDEN RITEL TIKET TERBANYAK MAKASSAR:   <br>
                                                                         <?php
                                                                         $tanggalSekarang = new DateTime();
                                                                         foreach ($terbanyak_makassar as $row){
