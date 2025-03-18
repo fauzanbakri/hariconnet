@@ -53,7 +53,7 @@
                                                                             '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
                                                                             '* aging : '. $durasi.'<br>'.                                                                            
                                                                             '* posisi tiket : <input name="mitra[]"><br>'.
-                                                                            '* update :  <input name="update[]"><br>';
+                                                                            '* update :  <input name="update[]"><br><br>';
                                                                             $no=$no+1;
                                                                         }
                                                                         ?>
