@@ -45,7 +45,7 @@
                                                                         $tanggalSekarang = new DateTime();
                                                                         foreach ($terbanyak_makassar as $row){
                                                                             $no=1;
-                                                                            $durasi1 = new DateTime($row->downtime);
+                                                                            $durasi1 = new DateTime();
                                                                             $selisih = $durasi1->diff($tanggalSekarang);
                                                                             $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
                                                                             echo $no.'. '.$row->idInsiden.'⚠<br>'.
