@@ -45,16 +45,24 @@
                                                                         $tanggalSekarang = new DateTime();
                                                                         $no=1;
                                                                         foreach ($terbanyak_makassar as $row){
-                                                                            $durasi1 = new DateTime($row->downtime);
-                                                                            $selisih = $durasi1->diff($tanggalSekarang);
-                                                                            $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
-                                                                            echo $no.'. '.$row->idInsiden.' ⚠<br>'.
-                                                                            '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
-                                                                            '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
-                                                                            '* aging : '. $durasi.'<br>'.                                                                            
-                                                                            '* posisi tiket : <input name="mitra[]"><br>'.
-                                                                            '* update :  <input name="update[]"><br><br>';
-                                                                            $no=$no+1;
+                                                                            if(!empty($row)){
+                                                                                if(!empty($row->idInsiden)){
+                                                                                    $durasi1 = new DateTime($row->downtime);
+                                                                                    $selisih = $durasi1->diff($tanggalSekarang);
+                                                                                    $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                                                    echo $no.'. '.$row->idInsiden.' ⚠<br>'.
+                                                                                    '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
+                                                                                    '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
+                                                                                    '* aging : '. $durasi.'<br>'.                                                                            
+                                                                                    '* posisi tiket : <input name="mitra[]"><br>'.
+                                                                                    '* update :  <input name="update[]"><br><br>';
+                                                                                    $no=$no+1;
+                                                                                }else{
+                                                                                    echo 'NIHIL';
+                                                                                }
+                                                                            }else{
+                                                                                echo 'NIHIL';
+                                                                            }
                                                                         }
                                                                         ?>
                                                                         <br><br>
@@ -63,16 +71,24 @@
                                                                         $tanggalSekarang = new DateTime();
                                                                         $no=1;
                                                                         foreach ($terbanyak_mamuju as $row){
-                                                                            $durasi1 = new DateTime($row->downtime);
-                                                                            $selisih = $durasi1->diff($tanggalSekarang);
-                                                                            $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
-                                                                            echo $no.'. '.$row->idInsiden.' ⚠<br>'.
-                                                                            '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
-                                                                            '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
-                                                                            '* aging : '. $durasi.'<br>'.                                                                            
-                                                                            '* posisi tiket : <input name="mitra[]"><br>'.
-                                                                            '* update :  <input name="update[]"><br><br>';
-                                                                            $no=$no+1;
+                                                                            if(!empty($row)){
+                                                                                if(!empty($row->idInsiden)){
+                                                                                    $durasi1 = new DateTime($row->downtime);
+                                                                                    $selisih = $durasi1->diff($tanggalSekarang);
+                                                                                    $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                                                    echo $no.'. '.$row->idInsiden.' ⚠<br>'.
+                                                                                    '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
+                                                                                    '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
+                                                                                    '* aging : '. $durasi.'<br>'.                                                                            
+                                                                                    '* posisi tiket : <input name="mitra[]"><br>'.
+                                                                                    '* update :  <input name="update[]"><br><br>';
+                                                                                    $no=$no+1;
+                                                                                }else{
+                                                                                    echo 'NIHIL';
+                                                                                }
+                                                                            }else{
+                                                                                echo 'NIHIL';
+                                                                            }
                                                                         }
                                                                         ?>
                                                                         <br><br>
@@ -81,16 +97,24 @@
                                                                         $tanggalSekarang = new DateTime();
                                                                         $no=1;
                                                                         foreach ($terbanyak_palu as $row){
-                                                                            $durasi1 = new DateTime($row->downtime);
-                                                                            $selisih = $durasi1->diff($tanggalSekarang);
-                                                                            $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
-                                                                            echo $no.'. '.$row->idInsiden.' ⚠<br>'.
-                                                                            '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
-                                                                            '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
-                                                                            '* aging : '. $durasi.'<br>'.                                                                            
-                                                                            '* posisi tiket : <input name="mitra[]"><br>'.
-                                                                            '* update :  <input name="update[]"><br><br>';
-                                                                            $no=$no+1;
+                                                                            if(!empty($row)){
+                                                                                if(!empty($row->idInsiden)){
+                                                                                    $durasi1 = new DateTime($row->downtime);
+                                                                                    $selisih = $durasi1->diff($tanggalSekarang);
+                                                                                    $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                                                    echo $no.'. '.$row->idInsiden.' ⚠<br>'.
+                                                                                    '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
+                                                                                    '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
+                                                                                    '* aging : '. $durasi.'<br>'.                                                                            
+                                                                                    '* posisi tiket : <input name="mitra[]"><br>'.
+                                                                                    '* update :  <input name="update[]"><br><br>';
+                                                                                    $no=$no+1;
+                                                                                }else{
+                                                                                    echo 'NIHIL';
+                                                                                }
+                                                                            }else{
+                                                                                echo 'NIHIL';
+                                                                            }
                                                                         }
                                                                         ?>
                                                                         <br><br>
