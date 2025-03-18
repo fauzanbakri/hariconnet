@@ -49,7 +49,7 @@
                                                                             $selisih = $durasi1->diff($tanggalSekarang);
                                                                             $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
                                                                             echo $no.'. '.$row->idInsiden.'⚠<br>'.
-                                                                            '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
+                                                                            '* '.$row->idOlt.' '.$row->downtime.'<br>'.
                                                                             '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
                                                                             '* aging : '. $durasi.'<br>'.                                                                            
                                                                             '* posisi tiket : <input name="mitra[]"><br>'.
