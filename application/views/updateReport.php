@@ -17,63 +17,7 @@
                                             <!--end col-->
                                             <div class="col-xxl-12">
                                                 <div class="row">
-                                                    <div class="col-lg-3">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="card container">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="card-body">
-                                                                                <label for="basiInput" class="form-label">Makassar Total</label>
-                                                                                <input type="text" autocomplete="off" class="form-control" name="makassartotal" id="makassartotal">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="card-body">
-                                                                                <label for="basiInput" class="form-label">Makassar Division</label>
-                                                                                <input type="text" autocomplete="off" class="form-control" name="makassardivision" id="makassardivision">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="card-body">
-                                                                                <label for="basiInput" class="form-label">Kendari Total</label>
-                                                                                <input type="text" autocomplete="off" class="form-control" name="kendaritotal" id="kendaritotal">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="card-body">
-                                                                                <label for="basiInput" class="form-label">Kendari Division</label>
-                                                                                <input type="text" autocomplete="off" class="form-control" name="kendaridivision" id="kendaridivision">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="row mb-4">
-                                                                        <div class="col-sm-6">
-                                                                            <div class="card-body">
-                                                                                <label for="basiInput" class="form-label">Manado Total</label>
-                                                                                <input type="text" autocomplete="off" class="form-control" name="manadototal" id="manadototal">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <div class="card-body">
-                                                                                <label for="basiInput" class="form-label">Manado Division</label>
-                                                                                <input type="text" autocomplete="off" class="form-control" name="manadodivision" id="manadodivision">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <button class="btn btn-primary mb-4" id="generate">Generate</button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 code-view" id="totaltiket">
-                                                                
-                                                        </div>
-                                                    </div><!-- end card -->
-                                                    </div>
-                                                    <div class="col-lg-9">
+                                                    <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header align-items-center d-flex">
                                                                 <h4 class="card-title mb-0  me-2">Report</h4>
@@ -81,17 +25,7 @@
                                                                     <ul class="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
                                                                         <li class="nav-item">
                                                                             <a class="nav-link active" data-bs-toggle="tab" href="#makassar" role="tab">
-                                                                                Makassar
-                                                                            </a>
-                                                                        </li>
-                                                                        <li class="nav-item">
-                                                                            <a class="nav-link" data-bs-toggle="tab" href="#kendari" role="tab">
-                                                                                Kendari
-                                                                            </a>
-                                                                        </li>
-                                                                        <li class="nav-item">
-                                                                            <a class="nav-link" data-bs-toggle="tab" href="#manado" role="tab">
-                                                                                Manado
+                                                                                Report Hourly
                                                                             </a>
                                                                         </li>
                                                                     </ul>
