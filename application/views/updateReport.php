@@ -57,6 +57,24 @@
                                                                             $no=$no+1;
                                                                         }
                                                                         ?>
+                                                                        <br><br>
+                                                                        INSIDEN RITEL TIKET TERBANYAK MAMUJU:   <br><br>
+                                                                        <?php
+                                                                        $tanggalSekarang = new DateTime();
+                                                                        $no=1;
+                                                                        foreach ($terbanyak_mamuju as $row){
+                                                                            $durasi1 = new DateTime($row->downtime);
+                                                                            $selisih = $durasi1->diff($tanggalSekarang);
+                                                                            $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                                            echo $no.'. '.$row->idInsiden.' ⚠<br>'.
+                                                                            '* '.$row->idOlt.' '.$row->gangguan.'<br>'.
+                                                                            '* tiket impact : '.$row->jumlahTiket.' tiket<br>'.
+                                                                            '* aging : '. $durasi.'<br>'.                                                                            
+                                                                            '* posisi tiket : <input name="mitra[]"><br>'.
+                                                                            '* update :  <input name="update[]"><br><br>';
+                                                                            $no=$no+1;
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             </div><!-- end card body -->
