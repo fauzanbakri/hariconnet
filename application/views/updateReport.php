@@ -54,7 +54,7 @@
                                                                             '* aging : '. $durasi.'<br>'.                                                                            
                                                                             '* posisi tiket : <input name="mitra[]"><br>'.
                                                                             '* update :  <input name="update[]"><br>';
-                                                                            $no+1;
+                                                                            $no=$no+1;
                                                                         }
                                                                         ?>
                                                                     </div>
