@@ -172,7 +172,7 @@
                                                                         <br><br>
                                                                         INSIDEN RITEL TIKET TERBANYAK MANADO:   <br><br>
                                                                         <?php
-                                                                        echo count($terbanyak_manado);
+                                                                        echo count($terbanyak_mamuju);
                                                                         $tanggalSekarang = new DateTime();
                                                                         $no=1;
                                                                         foreach ($terbanyak_manado as $row){
