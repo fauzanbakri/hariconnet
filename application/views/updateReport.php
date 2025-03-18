@@ -111,6 +111,8 @@
                                                                                     '* posisi tiket : <input name="mitra[]"><br>'.
                                                                                     '* update :  <input name="update[]"><br><br>';
                                                                                     $no=$no+1;
+                                                                                }else{
+                                                                                    echo 'NIHIL';
                                                                                 }
                                                                             }else{
                                                                                 echo 'NIHIL';
