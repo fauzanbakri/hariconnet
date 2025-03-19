@@ -587,10 +587,10 @@
                             ){
                                 echo '
                                 <li class="nav-item">
-                                    <a class="nav-link menu-link" href="#sidereport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                    <a class="nav-link menu-link" href="#sidereport2" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                                         <i class="mdi mdi-newspaper-variant-multiple-outline"></i> <span data-key="t-dashboards">Report</span>
                                     </a>
-                                    <div class="collapse menu-dropdown" id="sidereport">
+                                    <div class="collapse menu-dropdown" id="sidereport2">
                                         <ul class="nav nav-sm flex-column">
                                             <li class="nav-item">
                                                 <a href="Report" class="nav-link" data-key="t-analytics"> Report Shift </a>
