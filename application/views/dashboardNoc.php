@@ -72,8 +72,8 @@
                                             <a href="ListTeam" class="card-body">
                                                 <div class="d-flex justify-content-between">
                                                     <div>
-                                                        <p class="fw-medium text-muted mb-0">Total Team</p>
-                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= $total_tim[0]->total_tim;?>"></span></h2>
+                                                        <p class="fw-medium text-muted mb-0">Tiket Impact Feeder</p>
+                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= $total_feeder[0]->total_feeder;?>"></span></h2>
                                                         <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-2"> </span></p>
                                                     </div>
                                                     <div>
@@ -87,6 +87,26 @@
                                             </a><!-- end card body -->
                                         </div> <!-- end card-->
                                     </div> <!-- end col-->
+                                    <!-- <div class="col-md-6">
+                                        <div class="card card-animate">
+                                            <a href="ListTeam" class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <p class="fw-medium text-muted mb-0">Total Team</p>
+                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= //$total_tim[0]->total_tim;?>"></span></h2>
+                                                        <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-2"> </span></p>
+                                                    </div>
+                                                    <div>
+                                                        <div class="avatar-sm flex-shrink-0">
+                                                            <span class="avatar-title bg-info-subtle rounded-circle fs-2">
+                                                                <i class="text-info mdi mdi-account-hard-hat"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            <!-- </a>
+                                        </div>
+                                    </div> -->
                                     <div class="col-md-6">
                                         <div class="card card-animate">
                                             <a href="ListOlt" class="card-body">

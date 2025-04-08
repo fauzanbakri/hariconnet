@@ -40,6 +40,7 @@ class DashboardNoc extends CI_Controller {
         $query = $this->db->get();
         $q['tim'] = $query->result_array();
 		$q['total_tim'] = $this->db->query("SELECT COUNT(*) as total_tim FROM tim WHERE segmen='Retail'")->result();
+		$q['total_feeder'] = $this->db->query("SELECT SUM(jumlahTiket) AS total_feeder FROM feeder")->result();
 		$q['sla'] = $this->db->query("SELECT COUNT(*) AS sla FROM tiket WHERE DATEDIFF(CURDATE(), STR_TO_DATE(tanggal, '%Y-%m-%d')) > 2;")->result();
 		$q['month'] = $this->db->query("SELECT YEAR(tanggal) AS year, MONTH(tanggal) AS month, SUM(CASE WHEN table_name = 'tiket' THEN 1 ELSE 0 END) AS tiket_total, SUM(CASE WHEN table_name = 'tiketClose' THEN 1 ELSE 0 END) AS tiketClose_total, SUM(1) AS total_tiket FROM ( SELECT 'tiket' AS table_name, tanggal FROM tiket UNION ALL SELECT 'tiketClose' AS table_name, tanggal FROM tiketClose ) AS combined_tables GROUP BY YEAR(tanggal), MONTH(tanggal) ORDER BY year, month;")->result_array();
 		$q['top'] = $this->db->query("
