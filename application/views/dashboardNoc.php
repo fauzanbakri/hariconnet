@@ -93,7 +93,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     <div>
                                                         <p class="fw-medium text-muted mb-0">Total Team</p>
-                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="<?= //$total_tim[0]->total_tim;?>"></span></h2>
+                                                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="//$total_tim[0]->total_tim;?>"></span></h2>
                                                         <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-2"> </span></p>
                                                     </div>
                                                     <div>
