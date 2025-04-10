@@ -719,7 +719,7 @@
     </script>
     <script>
     // Data
-    const target = 64;
+    const target = 62;
     // const data1 = <?php //echo $datapercent; ?>; // Pastikan menggunakan json_encode
     // const options2 = {
     //   series: [
@@ -793,7 +793,7 @@
 </script>
 <script>
     // Data
-    // const target = 64;
+    // const target = 62;
     const data2 = <?php echo $datapercent; ?>;
     const options2 = {
       series: [
@@ -867,7 +867,7 @@
 </script>
 <script>
     // Data SIBT
-    const target = 64;
+    const target = 62;
     const data1 = <?php echo $datapercent; ?>;
     const options2 = {
       series: [
