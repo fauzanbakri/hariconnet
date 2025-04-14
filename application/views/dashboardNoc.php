@@ -1409,13 +1409,6 @@ const optionssibt = {
     {
       name: "More than 3 Days (%)",
       data: datasibt.percent_more_than_3_days
-    },
-    {
-      name: "YTD Less than 1 Day (%)",
-      type: "bar", // atau gunakan bar juga jika ingin sejajar
-      data: datasibt.categories.map((bulan, index) => {
-        return bulan === 'YTD' ? datasibt.percent_more_than_1_day[datasibt.percent_more_than_1_day.length - 1] : null;
-      })
     }
   ],
   chart: {
