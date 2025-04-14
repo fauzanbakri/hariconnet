@@ -117,10 +117,10 @@ class DashboardNoc extends CI_Controller {
 				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
 				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
 				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
-				 AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
+				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
 				AS total_tickets_month
 			FROM rawicrm r
-			WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN'
+			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
 			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
 		) AS grouped_data
 		GROUP BY bulan, tahun
@@ -536,10 +536,10 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
 				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
 				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
 				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
-				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
+				 AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
 				AS total_tickets_month
 			FROM rawicrm r
-			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
+			WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN'
 			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
 		) AS grouped_data
 		GROUP BY bulan, tahun
