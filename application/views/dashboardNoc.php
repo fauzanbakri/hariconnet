@@ -1416,13 +1416,6 @@ const optionssibt = {
       data: datasibt.categories.map((bulan, index) => {
         return bulan === 'YTD' ? datasibt.percent_more_than_1_day[datasibt.percent_more_than_1_day.length - 1] : null;
       })
-    },
-    {
-      name: "YTD More than 3 Days (%)",
-      type: "bar",
-      data: datasibt.categories.map((bulan, index) => {
-        return bulan === 'YTD' ? datasibt.percent_more_than_3_days[datasibt.percent_more_than_3_days.length - 1] : null;
-      })
     }
   ],
   chart: {
