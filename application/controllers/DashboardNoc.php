@@ -559,6 +559,22 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
 		"percent_more_than_1_day" => array_map('floatval', array_column($result7, 'percent_more_than_1_day')),
 		"percent_more_than_3_days" => array_map('floatval', array_column($result7, 'percent_more_than_3_days'))
 	];
+
+    // Hitung YTD values
+    $total_days_ytd = count($result7);
+    $sum_percent_more_than_1_day = array_sum(array_column($result7, 'percent_more_than_1_day'));
+    $sum_percent_more_than_3_days = array_sum(array_column($result7, 'percent_more_than_3_days'));
+
+    $ytd_percent_more_than_1_day = round($sum_percent_more_than_1_day / $total_days_ytd, 2);
+    $ytd_percent_more_than_3_days = round($sum_percent_more_than_3_days / $total_days_ytd, 2);
+
+    // Tambahkan ke data grafik sebagai bulan "YTD"
+    $data7['categories'][] = 'YTD';
+    $data7['percent_more_than_1_day'][] = $ytd_percent_more_than_1_day;
+    $data7['percent_more_than_3_days'][] = $ytd_percent_more_than_3_days;
+    $data7['more_than_1_day'][] = null; // placeholder jika tidak ditampilkan
+    $data7['more_than_3_days'][] = null;
+
 	$q['monthlyall']= json_encode($data7);
 
     //------------------------------------------------------------

@@ -1399,79 +1399,92 @@
 <!-- =================================MONTHLY================================== -->
 
 <script>
-    // Data SIBT
-    const datasibt = <?php echo $monthlyall; ?>;
-    const optionssibt = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: datasibt.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: datasibt.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '50%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: datasibt.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        },
-        min: 0,
-        max: 100,
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
+const datasibt = <?php echo $monthlyall; ?>;
+const optionssibt = {
+  series: [
+    {
+      name: "Less than 1 Day (%)",
+      data: datasibt.percent_more_than_1_day
+    },
+    {
+      name: "More than 3 Days (%)",
+      data: datasibt.percent_more_than_3_days
+    },
+    {
+      name: "YTD Less than 1 Day (%)",
+      type: "line", // atau gunakan bar juga jika ingin sejajar
+      data: datasibt.categories.map((bulan, index) => {
+        return bulan === 'YTD' ? datasibt.percent_more_than_1_day[datasibt.percent_more_than_1_day.length - 1] : null;
+      })
+    },
+    {
+      name: "YTD More than 3 Days (%)",
+      type: "line",
+      data: datasibt.categories.map((bulan, index) => {
+        return bulan === 'YTD' ? datasibt.percent_more_than_3_days[datasibt.percent_more_than_3_days.length - 1] : null;
+      })
+    }
+  ],
+  chart: {
+    type: 'bar',
+    height: 350
+  },
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: '50%',
+      endingShape: 'rounded'
+    },
+  },
+  colors: ['#347892', '#ffc107', '#0f9d58', '#ff7043'],
+  dataLabels: {
+    enabled: true
+  },
+  stroke: {
+    show: true,
+    width: 2,
+    colors: ['transparent', 'transparent', '#0f9d58', '#ff7043']
+  },
+  xaxis: {
+    categories: datasibt.categories
+  },
+  yaxis: {
+    title: {
+      text: 'Persentase (%)'
+    },
+    min: 0,
+    max: 100,
+  },
+  fill: {
+    opacity: 1
+  },
+  annotations: {
+    yaxis: [
+      {
+        y: target,
+        borderColor: '#f44336',
+        label: {
+          borderColor: '#f44336',
+          style: {
+            color: '#fff',
+            background: '#f44336'
+          },
+          text: `Target: ${target}%`
         }
       }
-    };
+    ]
+  },
+  tooltip: {
+    y: {
+      formatter: function (val) {
+        return val + "%";
+      }
+    }
+  }
+};
 
-    const chartsibt = new ApexCharts(document.querySelector("#chartaging2_"), optionssibt);
-    chartsibt.render();
+const chartsibt = new ApexCharts(document.querySelector("#chartaging2_"), optionssibt);
+chartsibt.render();
 </script>
 
 <script>
