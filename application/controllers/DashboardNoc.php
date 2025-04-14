@@ -120,7 +120,7 @@ class DashboardNoc extends CI_Controller {
 				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
 				AS total_tickets_month
 			FROM rawicrm r
-			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
+			WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN'
 			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
 		) AS grouped_data
 		GROUP BY bulan, tahun
