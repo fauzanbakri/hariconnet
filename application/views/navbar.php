@@ -456,7 +456,7 @@
                     <div id="two-column-menu">
                     </div>
                     <ul class="navbar-nav" id="navbar-nav">
-                        <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+                        <li class="menu-title"><span data-key="t-menu">NOC</span></li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                                 <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-dashboards">Dashboards</span>
