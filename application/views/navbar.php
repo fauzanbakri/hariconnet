@@ -636,7 +636,7 @@
                          <li class="menu-title"><span data-key="t-menu">Customer Exp</span></li>
                          <li class="nav-item">
                             <a class="nav-link menu-link" href="DashboardCusex" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-layouts">Dashboard</span>
+                                <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-layouts">Dashboard CusEx</span>
                             </a>
                         </li> 
                         <li class="nav-item">
