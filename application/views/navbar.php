@@ -646,7 +646,7 @@
                         </li> 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="DashboardCusex" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="mdi mdi-account-multiple-plus-outline"></i> <span data-key="t-layouts">List Permohonan Free</span>
+                                <i class="mdi mdi-account-multiple-plus-outline"></i> <span data-key="t-layouts">List Permohonan Bursa</span>
                             </a>
                         </li> 
                         <li class="nav-item">
