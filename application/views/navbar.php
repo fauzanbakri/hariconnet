@@ -501,7 +501,7 @@
                                     ?>
                                 </ul>
                             </div>
-                        </li> <!-- end Dashboard Menu -->
+                        </li> 
                         <?php 
                         if(
                             $_SESSION['role']=='Superadmin' || 
@@ -631,8 +631,183 @@
                                 ';
                         }
                         ?>
-                        
-                        <!-- end Dashboard Menu -->
+                        <!-- end Dashboard noc -->
+                         ===============
+                         <li class="menu-title"><span data-key="t-menu">Customer Exp</span></li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-dashboards">Dashboards</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarDashboards">
+                                <ul class="nav nav-sm flex-column">
+                                    <?php
+                                    if(
+                                        $_SESSION['role']=='Superadmin' || 
+                                        $_SESSION['role']=='NOC Ritel' || 
+                                        $_SESSION['role']=='Team Leader' || 
+                                        $_SESSION['role']=='Pemeliharaan Ritel'	
+                                        ){
+                                            echo '
+                                             <li class="nav-item">
+                                                <a href="DashboardNoc" class="nav-link" data-key="t-analytics"> NOC </a>
+                                            </li>
+                                            ';   
+                                    }
+
+                                    if(
+                                        $_SESSION['role']=='Superadmin' || 
+                                        $_SESSION['role']=='NOC Ritel' || 
+                                        $_SESSION['role']=='Team Leader' || 
+                                        $_SESSION['role']=='Pemeliharaan Ritel'	||
+                                        $_SESSION['role']=='Resepsionis'
+                                        ){
+                                            echo '
+                                             <li class="nav-item">
+                                                <a href="DashboardCs" class="nav-link" data-key="t-crm"> CS </a>
+                                            </li>
+                                            ';   
+                                    }
+                                    if(
+                                        $_SESSION['role']=='Superadmin'
+                                        ){
+                                            echo '
+                                            <li class="nav-item">
+                                                <a href="RawIcrm" class="nav-link" data-key="t-crm"> RAW ICRM+ </a>
+                                            </li>';
+                                        }
+                                    ?>
+                                </ul>
+                            </div>
+                        </li> 
+                        <?php 
+                        if(
+                            $_SESSION['role']=='Superadmin' || 
+                            $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='Team Leader' || 
+                            $_SESSION['role']=='Pemeliharaan Ritel'	||
+                            $_SESSION['role']=='Resepsionis'
+                            ){
+                                echo '
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="Improvement" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="ri-rocket-line"></i> <span data-key="t-layouts">Improvement</span>
+                                    </a>
+                                </li> 
+                                 <li class="nav-item">
+                                    <a class="nav-link menu-link" href="Feeder" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="mdi mdi-access-point-network"></i> <span data-key="t-layouts">Incident Feeder</span>
+                                    </a>
+                                </li> 
+                                ';   
+                        }
+                        if(
+                            $_SESSION['role']=='Superadmin' || 
+                            $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='Team Leader' || 
+                            $_SESSION['role']=='Pemeliharaan Ritel'
+                            ){
+                                echo '
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="#sidereport" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                        <i class="mdi mdi-ticket-confirmation-outline"></i> <span data-key="t-dashboards">Tickets</span>
+                                    </a>
+                                    <div class="collapse menu-dropdown" id="sidereport">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="Tickets" class="nav-link" data-key="t-analytics"> All Tickets </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="Early" class="nav-link" data-key="t-crm"> Early </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="Hardcomplain" class="nav-link" data-key="t-crm"> Hard Complain </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                ';
+                        }
+                        if(
+                            $_SESSION['role']=='Superadmin' || 
+                            $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='Team Leader' || 
+                            $_SESSION['role']=='Pemeliharaan Ritel'
+                            ){
+                                echo '
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="ListTeam" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="mdi mdi-account-hard-hat"></i> <span data-key="t-layouts">List Team</span>
+                                    </a>
+                                </li>
+                                ';
+                        }
+
+                        if(
+                            $_SESSION['role']=='Superadmin' || 
+                            $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='Team Leader' || 
+                            $_SESSION['role']=='Pemeliharaan Ritel'
+                            ){
+                                echo '
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="ListOlt" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="mdi mdi-router-network"></i> <span data-key="t-layouts">List OLT</span>
+                                    </a>
+                                </li>
+                                ';
+                        }
+
+
+                        if(
+                            $_SESSION['role']=='Superadmin' || 
+                            $_SESSION['role']=='NOC Ritel' 
+                            ){
+                                echo '
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="#sidereport2" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                        <i class="mdi mdi-newspaper-variant-multiple-outline"></i> <span data-key="t-dashboards">Report</span>
+                                    </a>
+                                    <div class="collapse menu-dropdown" id="sidereport2">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="Report" class="nav-link" data-key="t-analytics"> Report Shift </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="ListPending" class="nav-link" data-key="t-crm"> List Pending Team </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="UpdateReport" class="nav-link" data-key="t-crm"> Update Report Tiket </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                ';
+                        }
+
+                        if(
+                            $_SESSION['role']=='Superadmin' || 
+                            $_SESSION['role']=='Team Leader' || 
+                            $_SESSION['role']=='NOC Ritel' 
+                            ){
+                                echo '
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="#closeincident" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                                        <i class="mdi mdi mdi-progress-check"></i> <span data-key="t-dashboards">Closed Incident</span>
+                                    </a>
+                                    <div class="collapse menu-dropdown" id="closeincident">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                <a href="TicketClose" class="nav-link" data-key="t-analytics"> Tickets </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="FeederClose" class="nav-link" data-key="t-crm"> Feeder </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                ';
+                        }
+                        ?>
 
                     </ul>
                 </div>
