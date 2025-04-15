@@ -634,50 +634,10 @@
                         <!-- end Dashboard noc -->
                         <!-- start Dashboard cusex -->
                          <li class="menu-title"><span data-key="t-menu">Customer Exp</span></li>
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                                <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-dashboards">Dashboards</span>
+                         <li class="nav-item">
+                            <a class="nav-link menu-link" href="DashboardCusex" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                <i class="ri-rocket-line"></i> <span data-key="t-layouts">Dashboard</span>
                             </a>
-                            <div class="collapse menu-dropdown" id="sidebarDashboards">
-                                <ul class="nav nav-sm flex-column">
-                                    <?php
-                                    if(
-                                        $_SESSION['role']=='Superadmin' || 
-                                        $_SESSION['role']=='NOC Ritel' || 
-                                        $_SESSION['role']=='Team Leader' || 
-                                        $_SESSION['role']=='Pemeliharaan Ritel'	
-                                        ){
-                                            echo '
-                                             <li class="nav-item">
-                                                <a href="DashboardNoc" class="nav-link" data-key="t-analytics"> NOC </a>
-                                            </li>
-                                            ';   
-                                    }
-
-                                    if(
-                                        $_SESSION['role']=='Superadmin' || 
-                                        $_SESSION['role']=='NOC Ritel' || 
-                                        $_SESSION['role']=='Team Leader' || 
-                                        $_SESSION['role']=='Pemeliharaan Ritel'	||
-                                        $_SESSION['role']=='Resepsionis'
-                                        ){
-                                            echo '
-                                             <li class="nav-item">
-                                                <a href="DashboardCs" class="nav-link" data-key="t-crm"> CS </a>
-                                            </li>
-                                            ';   
-                                    }
-                                    if(
-                                        $_SESSION['role']=='Superadmin'
-                                        ){
-                                            echo '
-                                            <li class="nav-item">
-                                                <a href="RawIcrm" class="nav-link" data-key="t-crm"> RAW ICRM+ </a>
-                                            </li>';
-                                        }
-                                    ?>
-                                </ul>
-                            </div>
                         </li> 
                         <?php 
                         if(
