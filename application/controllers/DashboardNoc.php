@@ -519,8 +519,8 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $query = $this->db->query("SELECT bulan, 
 		SUM(more_than_1_day) AS more_than_1_day, 
 		SUM(more_than_3_days) AS more_than_3_days,
-		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,0) AS percent_more_than_1_day,
-		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,0) AS percent_more_than_3_days
+		ROUND((SUM(more_than_1_day) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_1_day,
+		ROUND((SUM(more_than_3_days) / SUM(total_tickets_month)) * 100,2) AS percent_more_than_3_days
 		FROM (
 			SELECT DATE_FORMAT(waktulapor, '%b') AS bulan,
 				YEAR(waktulapor) AS tahun,
