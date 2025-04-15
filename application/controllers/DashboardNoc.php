@@ -117,10 +117,10 @@ class DashboardNoc extends CI_Controller {
 				COUNT(CASE WHEN TIMESTAMPDIFF(DAY, waktulapor, waktulaporanselesai) > 3 THEN 1 END) AS more_than_3_days,
 				(SELECT COUNT(*) FROM rawicrm WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
 				 AND MONTH(rawicrm.waktulapor) = MONTH(r.waktulapor) 
-				 AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
+				 AND status='TICKET CLOSE' AND namakelompok='GANGGUAN') 
 				AS total_tickets_month
 			FROM rawicrm r
-			WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
+			WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN'
 			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
 		) AS grouped_data
 		GROUP BY bulan, tahun
@@ -160,12 +160,11 @@ class DashboardNoc extends CI_Controller {
                     (SELECT COUNT(*) FROM rawicrm 
                     WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                     AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                    AND penyebab!='NOT INCIDENT' 
                     AND status='TICKET CLOSE' 
                     AND namakelompok='GANGGUAN') 
                     AS total_tickets_week
                 FROM rawicrm r
-                WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
+                WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN'
                 GROUP BY tahun, minggu
             ) AS grouped_data
             GROUP BY minggu, tahun
@@ -209,12 +208,11 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                             (SELECT COUNT(*) FROM rawicrm 
                             WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                             AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                            AND penyebab!='NOT INCIDENT' 
                             AND status='TICKET CLOSE' 
                             AND namakelompok='GANGGUAN') 
                             AS total_tickets_week
                         FROM rawicrm r
-                        WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
+                        WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN'
                         GROUP BY tahun, minggu
                     ) AS grouped_data
                     GROUP BY minggu, tahun
@@ -255,13 +253,12 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                         (SELECT COUNT(*) FROM rawicrm 
                         WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                         AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                        AND penyebab!='NOT INCIDENT' 
                         AND status='TICKET CLOSE' 
                         AND namakelompok='GANGGUAN'
                         AND provinsipelanggan='SULAWESI SELATAN') 
                         AS total_tickets_week
                     FROM rawicrm r
-                    WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI SELATAN'
+                    WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI SELATAN'
                     GROUP BY tahun, minggu
                 ) AS grouped_data
                 GROUP BY minggu, tahun
@@ -302,13 +299,12 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                         (SELECT COUNT(*) FROM rawicrm 
                         WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                         AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                        AND penyebab!='NOT INCIDENT' 
                         AND status='TICKET CLOSE' 
                         AND namakelompok='GANGGUAN'
                         AND provinsipelanggan='SULAWESI BARAT') 
                         AS total_tickets_week
                     FROM rawicrm r
-                    WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI BARAT'
+                    WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI BARAT'
                     GROUP BY tahun, minggu
                 ) AS grouped_data
                 GROUP BY minggu, tahun
@@ -350,13 +346,12 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                         (SELECT COUNT(*) FROM rawicrm 
                         WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                         AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                        AND penyebab!='NOT INCIDENT' 
                         AND status='TICKET CLOSE' 
                         AND namakelompok='GANGGUAN'
                         AND provinsipelanggan='SULAWESI TENGAH') 
                         AS total_tickets_week
                     FROM rawicrm r
-                    WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH'
+                    WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH'
                     GROUP BY tahun, minggu
                 ) AS grouped_data
                 GROUP BY minggu, tahun
@@ -397,13 +392,12 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                     (SELECT COUNT(*) FROM rawicrm 
                     WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                     AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                    AND penyebab!='NOT INCIDENT' 
                     AND status='TICKET CLOSE' 
                     AND namakelompok='GANGGUAN'
                     AND provinsipelanggan='SULAWESI TENGGARA') 
                     AS total_tickets_week
                 FROM rawicrm r
-                WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGGARA'
+                WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGGARA'
                 GROUP BY tahun, minggu
             ) AS grouped_data
             GROUP BY minggu, tahun
@@ -444,13 +438,12 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                  (SELECT COUNT(*) FROM rawicrm 
                  WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                  AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                 AND penyebab!='NOT INCIDENT' 
                  AND status='TICKET CLOSE' 
                  AND namakelompok='GANGGUAN'
                  AND provinsipelanggan='GORONTALO') 
                  AS total_tickets_week
              FROM rawicrm r
-             WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='GORONTALO'
+             WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='GORONTALO'
              GROUP BY tahun, minggu
          ) AS grouped_data
          GROUP BY minggu, tahun
@@ -493,13 +486,12 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                 (SELECT COUNT(*) FROM rawicrm 
                 WHERE YEAR(rawicrm.waktulapor) = YEAR(r.waktulapor) 
                 AND WEEK(rawicrm.waktulapor, 1) = WEEK(r.waktulapor, 1) 
-                AND penyebab!='NOT INCIDENT' 
                 AND status='TICKET CLOSE' 
                 AND namakelompok='GANGGUAN'
                 AND provinsipelanggan='SULAWESI UTARA') 
                 AS total_tickets_week
             FROM rawicrm r
-            WHERE penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI UTARA'
+            WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI UTARA'
             GROUP BY tahun, minggu
         ) AS grouped_data
         GROUP BY minggu, tahun
@@ -710,7 +702,7 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
 				 AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH') 
 				AS total_tickets_month
 			FROM rawicrm r
-			WHERE AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH'
+			WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='SULAWESI TENGAH'
 			GROUP BY YEAR(waktulapor), MONTH(waktulapor)
 		) AS grouped_data
 		GROUP BY bulan, tahun
@@ -886,7 +878,7 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                  AND provinsipelanggan='GORONTALO') 
                  AS total_tickets_week
              FROM rawicrm r
-             WHERE AND status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='GORONTALO'
+             WHERE status='TICKET CLOSE' AND namakelompok='GANGGUAN' AND provinsipelanggan='GORONTALO'
              GROUP BY tahun, minggu
          ) AS grouped_data
          GROUP BY minggu, tahun
