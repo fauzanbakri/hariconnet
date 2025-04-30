@@ -908,7 +908,7 @@
             series: combinedSeries.map(series => {
                 return {
                     ...series,
-                    data: filteredData[series.name.toLowerCase().replace(/ /g, "_")]
+                    data: filteredData[series.name.toLowerCase().replace(/ /g, "_")] || []
                 };
             }),
             xaxis: {
@@ -954,7 +954,9 @@
                 // Add filtered data for each series
                 combinedSeries.forEach(series => {
                     const dataKey = series.name.toLowerCase().replace(/ /g, "_");
-                    filteredData[dataKey].push(datamks[dataKey][i]);
+                    if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
+                        filteredData[dataKey].push(datamks[dataKey][i]);
+                    }
                 });
             }
         }
@@ -1034,9 +1036,22 @@
     // Initialize the chart
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
-    console.log(datamks.categories); // Ensure this is not undefined
-
 </script>
+
+<!-- HTML Filter Form -->
+<div>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate">
+    
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate">
+    
+    <button onclick="applyDateFilter()">Apply Filter</button>
+</div>
+
+<!-- Chart Container -->
+<div id="chartaging_combined"></div>
+
 
 
 <!-- =================================MONTHLY================================== -->
