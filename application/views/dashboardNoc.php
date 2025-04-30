@@ -801,6 +801,8 @@
     // chart2.render();
 </script>
 <!-- Include ApexCharts Library -->
+<!-- Include ApexCharts Library -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script>
     // Combine all data
@@ -889,10 +891,15 @@
         const startWeek = convertDateToWeek(startDate);
         const endWeek = convertDateToWeek(endDate);
 
+        // Log the available categories and data before filtering
+        console.log('Categories Before Filtering:', datamks.categories);
+        console.log('Makassar Data Before Filtering:', datamks.percent_more_than_1_day);
+        console.log('Makassar Data Before Filtering:', datamks.percent_more_than_3_days);
+
         // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
 
-        // Log filtered data to console for debugging
+        // Log the filtered data to console for debugging
         console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
@@ -944,9 +951,6 @@
         // Extract the numeric week number from the week label
         const startWeekNum = extractWeekNumber(startWeek);
         const endWeekNum = extractWeekNumber(endWeek);
-
-        // Log categories before filtering
-        console.log('Categories Before Filtering:', datamks.categories);
 
         for (let i = 0; i < datamks.categories.length; i++) {
             const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
