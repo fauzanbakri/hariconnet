@@ -1034,6 +1034,8 @@
     // Initialize the chart
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
+    console.log(datamks.categories); // Ensure this is not undefined
+
 </script>
 
 
