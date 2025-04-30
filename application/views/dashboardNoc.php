@@ -801,8 +801,6 @@
     // chart2.render();
 </script>
 <!-- Include ApexCharts Library -->
-<!-- Include ApexCharts Library -->
-<!-- Include ApexCharts Library -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script>
@@ -905,15 +903,20 @@
         }
 
         // Update chart data
+        const updatedSeries = combinedSeries.map(series => {
+            const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+            const updatedData = filteredData[dataKey] || [];
+            if (updatedData.length === 0) {
+                console.log(`${series.name} has no data for the selected weeks.`);
+            }
+            return {
+                ...series,
+                data: updatedData
+            };
+        });
+
         chartCombined.updateOptions({
-            series: combinedSeries.map(series => {
-                const dataKey = series.name.toLowerCase().replace(/ /g, "_");
-                const updatedData = filteredData[dataKey] || [];
-                return {
-                    ...series,
-                    data: updatedData
-                };
-            }),
+            series: updatedSeries,
             xaxis: {
                 categories: filteredData.categories
             }
@@ -958,8 +961,6 @@
                     const dataKey = series.name.toLowerCase().replace(/ /g, "_");
                     if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
                         filteredData[dataKey].push(datamks[dataKey][i]);
-                    } else {
-                        console.log(`${dataKey} has no data for ${datamks.categories[i]}`);
                     }
                 });
             }
@@ -1041,6 +1042,7 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
+
 
 <!-- =================================MONTHLY================================== -->
 
