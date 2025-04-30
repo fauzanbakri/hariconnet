@@ -802,6 +802,8 @@
 </script>
 <!-- Include ApexCharts Library -->
 <!-- Include ApexCharts Library -->
+<!-- Include ApexCharts Library -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script>
     // Combine all data
@@ -956,6 +958,8 @@
                     const dataKey = series.name.toLowerCase().replace(/ /g, "_");
                     if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
                         filteredData[dataKey].push(datamks[dataKey][i]);
+                    } else {
+                        console.log(`${dataKey} has no data for ${datamks.categories[i]}`);
                     }
                 });
             }
@@ -1037,7 +1041,6 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
-
 
 <!-- =================================MONTHLY================================== -->
 
