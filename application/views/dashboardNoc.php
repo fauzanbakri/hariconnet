@@ -333,12 +333,12 @@
                                 <div class="w-100">
                                     <div>
                                         <label for="startDate">Start Date:</label>
-                                        <input type="date" id="startDate" name="startDate">
+                                        <input type="date" id="startDate2" name="startDate">
 
                                         <label for="endDate">End Date:</label>
-                                        <input type="date" id="endDate" name="endDate">
+                                        <input type="date" id="endDate2" name="endDate">
 
-                                        <button class="btn btn-sm btn-primary" onclick="applyDateFilter()">Apply Filter</button>
+                                        <button class="btn btn-sm btn-primary" onclick="applyDateFilter2()">Apply Filter</button>
                                     </div>
                                     <div id="chartaging2" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
@@ -804,28 +804,28 @@
     const data2 = <?php echo $datapercent; ?>;
 
     // Function to apply the date filter and update the chart
-    function applyDateFilter() {
-        const startDate = document.getElementById("startDate").value;
-        const endDate = document.getElementById("endDate").value;
+    function applyDateFilter2() {
+        const startDate2 = document.getElementById("startDate2").value;
+        const endDate2 = document.getElementById("endDate2").value;
 
-        if (!startDate || !endDate) {
+        if (!startDate2 || !endDate2) {
             alert('Please select both start date and end date.');
             return;
         }
 
         // Convert the start and end dates to week numbers
-        const startWeek = convertDateToWeek(startDate);
-        const endWeek = convertDateToWeek(endDate);
+        const startWeek2 = convertDateToWeek(startDate2);
+        const endWeek2 = convertDateToWeek(endDate2);
 
         // Log the start and end week numbers for debugging
-        console.log('Start Week:', startWeek);
-        console.log('End Week:', endWeek);
+        console.log('Start Week:', startWeek2);
+        console.log('End Week:', endWeek2);
 
         // Filter data based on the week range
-        const filteredData = filterDataByWeek(startWeek, endWeek);
+        const filteredData = filterDataByWeek(startWeek2, endWeek2);
 
         // Log filtered data to console for debugging
-        console.log('Filtered Data:', filteredData);
+        console.log('Filtered Data:', filteredData2);
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
