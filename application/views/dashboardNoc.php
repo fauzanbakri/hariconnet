@@ -801,7 +801,6 @@
     // chart2.render();
 </script>
 <!-- Include ApexCharts Library -->
-<!-- Include ApexCharts Library -->
 <script>
     // Combine all data
     const datamks = <?php echo $datapercent_makassar; ?>;
@@ -893,6 +892,10 @@
         console.log('Categories Before Filtering:', datamks.categories);
         console.log('Makassar Data Before Filtering:', datamks.percent_more_than_1_day);
         console.log('Makassar Data Before Filtering:', datamks.percent_more_than_3_days);
+
+        // Log the start and end weeks to verify matching
+        console.log('Start Week:', startWeek); 
+        console.log('End Week:', endWeek); 
 
         // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
@@ -1046,8 +1049,6 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
-
-
 
 <!-- =================================MONTHLY================================== -->
 
