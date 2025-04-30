@@ -319,6 +319,15 @@
                             </div><!-- end card header -->
                             <div class="card-body p-0 pb-2">
                                 <div class="w-100">
+                                    <div>
+                                        <label for="startDate">Start Date:</label>
+                                        <input type="date" id="startDate" name="startDate">
+
+                                        <label for="endDate">End Date:</label>
+                                        <input type="date" id="endDate" name="endDate">
+
+                                        <button onclick="applyDateFilter()">Apply Filter</button>
+                                    </div>
                                     <div id="chartaging2_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
                             </div><!-- end card body -->
@@ -791,77 +800,131 @@
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
 </script>
-<script>
-    // Data
-    // const target = 62;
+<<script>
+    // Sample data for testing
     const data2 = <?php echo $datapercent; ?>;
-    const options2 = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: data2.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: data2.percent_more_than_3_days
+
+    // Function to filter data based on selected date range
+    function applyDateFilter() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        if (!startDate || !endDate) {
+            alert('Please select both start date and end date.');
+            return;
         }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: data2.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
+
+        const filteredData = filterDataByDate(startDate, endDate);
+
+        // Update chart data
+        chart2.updateOptions({
+            series: [
+                {
+                    name: "Less than 1 Day (%)",
+                    data: filteredData.percent_more_than_1_day
+                },
+                {
+                    name: "More than 3 Days (%)",
+                    data: filteredData.percent_more_than_3_days
+                }
+            ],
+            xaxis: {
+                categories: filteredData.categories
             }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
+        });
+    }
+
+    // Function to filter data based on the date range
+    function filterDataByDate(startDate, endDate) {
+        const filteredCategories = [];
+        const filteredMoreThan1Day = [];
+        const filteredMoreThan3Days = [];
+
+        for (let i = 0; i < data2.categories.length; i++) {
+            const categoryDate = new Date(data2.categories[i]);
+            if (categoryDate >= new Date(startDate) && categoryDate <= new Date(endDate)) {
+                filteredCategories.push(data2.categories[i]);
+                filteredMoreThan1Day.push(data2.percent_more_than_1_day[i]);
+                filteredMoreThan3Days.push(data2.percent_more_than_3_days[i]);
+            }
         }
-      }
+
+        return {
+            categories: filteredCategories,
+            percent_more_than_1_day: filteredMoreThan1Day,
+            percent_more_than_3_days: filteredMoreThan3Days
+        };
+    }
+
+    // Chart options
+    const options2 = {
+        series: [
+            {
+                name: "Less than 1 Day (%)",
+                data: data2.percent_more_than_1_day
+            },
+            {
+                name: "More than 3 Days (%)",
+                data: data2.percent_more_than_3_days
+            }
+        ],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '90%',
+                endingShape: 'rounded'
+            },
+        },
+        colors: ['#347892', '#ffc107'],
+        dataLabels: {
+            enabled: true
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: data2.categories
+        },
+        yaxis: {
+            title: {
+                text: 'Persentase (%)'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        annotations: {
+            yaxis: [
+                {
+                    y: 62, // This is your target value
+                    borderColor: '#f44336',
+                    label: {
+                        borderColor: '#f44336',
+                        style: {
+                            color: '#fff',
+                            background: '#f44336'
+                        },
+                        text: `Target: 62%`
+                    }
+                }
+            ]
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + "%";
+                }
+            }
+        }
     };
 
+    // Initialize the chart
     const chart2 = new ApexCharts(document.querySelector("#chartaging2"), options2);
     chart2.render();
 </script>
