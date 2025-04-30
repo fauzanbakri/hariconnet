@@ -800,6 +800,9 @@
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
 </script>
+<!-- Include ApexCharts Library -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 <script>
     // Combine all data
     const datamks = <?php echo $datapercent_makassar; ?>;
@@ -889,6 +892,9 @@
 
         // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
+
+        // Log filtered data to console for debugging
+        console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
@@ -1028,6 +1034,20 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
+
+<!-- HTML Filter Form -->
+<div>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate">
+    
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate">
+    
+    <button onclick="applyDateFilter()">Apply Filter</button>
+</div>
+
+<!-- Chart Container -->
+<div id="chartaging_combined" style="height: 350px;"></div>
 
 
 <!-- =================================MONTHLY================================== -->
