@@ -800,7 +800,6 @@
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
 </script>
-<!-- Include ApexCharts Library -->
 <script>
     // Combine all data
     const datamks = <?php echo $datapercent_makassar; ?>;
@@ -1074,7 +1073,6 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
-
 
 
 <!-- =================================MONTHLY================================== -->
