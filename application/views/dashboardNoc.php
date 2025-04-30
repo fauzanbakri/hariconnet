@@ -801,6 +801,7 @@
     // chart2.render();
 </script>
 <!-- Include ApexCharts Library -->
+<!-- Include ApexCharts Library -->
 
 <script>
     // Combine all data
@@ -940,6 +941,9 @@
         const startWeekNum = extractWeekNumber(startWeek);
         const endWeekNum = extractWeekNumber(endWeek);
 
+        // Log categories before filtering
+        console.log('Categories Before Filtering:', datamks.categories);
+
         for (let i = 0; i < datamks.categories.length; i++) {
             const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
 
@@ -1033,6 +1037,7 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
+
 
 <!-- =================================MONTHLY================================== -->
 
