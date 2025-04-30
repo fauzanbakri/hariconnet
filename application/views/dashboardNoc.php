@@ -887,15 +887,8 @@
         const startWeek = convertDateToWeek(startDate);
         const endWeek = convertDateToWeek(endDate);
 
-        // Log the start and end week numbers for debugging
-        console.log('Start Week:', startWeek);
-        console.log('End Week:', endWeek);
-
         // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
-
-        // Log filtered data to console for debugging
-        console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
@@ -906,9 +899,11 @@
         // Update chart data
         chartCombined.updateOptions({
             series: combinedSeries.map(series => {
+                const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+                const updatedData = filteredData[dataKey] || [];
                 return {
                     ...series,
-                    data: filteredData[series.name.toLowerCase().replace(/ /g, "_")] || []
+                    data: updatedData
                 };
             }),
             xaxis: {
@@ -940,12 +935,8 @@
         const startWeekNum = extractWeekNumber(startWeek);
         const endWeekNum = extractWeekNumber(endWeek);
 
-        console.log('Start Week Number:', startWeekNum);
-        console.log('End Week Number:', endWeekNum);
-
         for (let i = 0; i < datamks.categories.length; i++) {
             const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
-            console.log('Category Week:', datamks.categories[i], 'Week Number:', categoryWeekNum);
 
             // Compare week number with start and end week
             if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
@@ -1037,21 +1028,6 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
-
-<!-- HTML Filter Form -->
-<div>
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" name="startDate">
-    
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" name="endDate">
-    
-    <button onclick="applyDateFilter()">Apply Filter</button>
-</div>
-
-<!-- Chart Container -->
-<div id="chartaging_combined"></div>
-
 
 
 <!-- =================================MONTHLY================================== -->
