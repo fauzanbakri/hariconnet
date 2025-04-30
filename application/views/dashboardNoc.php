@@ -333,12 +333,12 @@
                                 <div class="w-100">
                                     <div>
                                         <label for="startDate">Start Date:</label>
-                                        <input type="date" id="startDate2" name="startDate">
+                                        <input type="date" id="startDate" name="startDate">
 
                                         <label for="endDate">End Date:</label>
-                                        <input type="date" id="endDate2" name="endDate">
+                                        <input type="date" id="endDate" name="endDate">
 
-                                        <button class="btn btn-sm btn-primary" onclick="applyDateFilter2()">Apply Filter</button>
+                                        <button class="btn btn-sm btn-primary" onclick="applyDateFilter()">Apply Filter</button>
                                     </div>
                                     <div id="chartaging2" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
@@ -804,31 +804,31 @@
     const data2 = <?php echo $datapercent; ?>;
 
     // Function to apply the date filter and update the chart
-    function applyDateFilter2() {
-        const startDate2 = document.getElementById("startDate2").value;
-        const endDate2 = document.getElementById("endDate2").value;
+    function applyDateFilter() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
 
-        if (!startDate2 || !endDate2) {
+        if (!startDate || !endDate) {
             alert('Please select both start date and end date.');
             return;
         }
 
         // Convert the start and end dates to week numbers
-        const startWeek2 = convertDateToWeek(startDate2);
-        const endWeek2 = convertDateToWeek(endDate2);
+        const startWeek = convertDateToWeek(startDate);
+        const endWeek = convertDateToWeek(endDate);
 
         // Log the start and end week numbers for debugging
-        console.log('Start Week:', startWeek2);
-        console.log('End Week:', endWeek2);
+        console.log('Start Week:', startWeek);
+        console.log('End Week:', endWeek);
 
         // Filter data based on the week range
-        const filteredData2 = filterDataByWeek(startWeek2, endWeek2);
+        const filteredData = filterDataByWeek(startWeek, endWeek);
 
         // Log filtered data to console for debugging
-        console.log('Filtered Data:', filteredData2);
+        console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
-        if (filteredData2.categories.length === 0) {
+        if (filteredData.categories.length === 0) {
             alert("No data found for the selected week range.");
             return;
         }
@@ -838,15 +838,15 @@
             series: [
                 {
                     name: "Less than 1 Day (%)",
-                    data: filteredData2.percent_more_than_1_day
+                    data: filteredData.percent_more_than_1_day
                 },
                 {
                     name: "More than 3 Days (%)",
-                    data: filteredData2.percent_more_than_3_days
+                    data: filteredData.percent_more_than_3_days
                 }
             ],
             xaxis: {
-                categories: filteredData2.categories
+                categories: filteredData.categories
             }
         });
     }
@@ -867,18 +867,18 @@
         const filteredMoreThan3Days = [];
 
         // Extract the numeric week number from the week label
-        const startWeekNum2 = extractWeekNumber(startWeek2);
-        const endWeekNum2 = extractWeekNumber(endWeek2);
+        const startWeekNum = extractWeekNumber(startWeek);
+        const endWeekNum = extractWeekNumber(endWeek);
 
-        console.log('Start Week Number:', startWeekNum2);
-        console.log('End Week Number:', endWeekNum2);
+        console.log('Start Week Number:', startWeekNum);
+        console.log('End Week Number:', endWeekNum);
 
         for (let i = 0; i < data2.categories.length; i++) {
-            const categoryWeekNum2 = extractWeekNumber(data2.categories[i]);
-            console.log('Category Week:', data2.categories[i], 'Week Number:', categoryWeekNum2);
+            const categoryWeekNum = extractWeekNumber(data2.categories[i]);
+            console.log('Category Week:', data2.categories[i], 'Week Number:', categoryWeekNum);
 
             // Compare week number with start and end week
-            if (categoryWeekNum2 >= startWeekNum2 && categoryWeekNum2 <= endWeekNum2) {
+            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
                 filteredCategories.push(data2.categories[i]);
                 filteredMoreThan1Day.push(data2.percent_more_than_1_day[i]);
                 filteredMoreThan3Days.push(data2.percent_more_than_3_days[i]);
