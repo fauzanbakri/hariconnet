@@ -800,11 +800,10 @@
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
 </script>
-<<script>
-    // Sample data for testing
+<script>
     const data2 = <?php echo $datapercent; ?>;
 
-    // Function to filter data based on selected date range
+    // Function to apply the date filter and update the chart
     function applyDateFilter() {
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
@@ -814,7 +813,17 @@
             return;
         }
 
+        // Filter data based on date range
         const filteredData = filterDataByDate(startDate, endDate);
+
+        // Log filtered data to console for debugging
+        console.log(filteredData);
+
+        // If no data is found, alert the user
+        if (filteredData.categories.length === 0) {
+            alert("No data found for the selected date range.");
+            return;
+        }
 
         // Update chart data
         chart2.updateOptions({
@@ -834,7 +843,7 @@
         });
     }
 
-    // Function to filter data based on the date range
+    // Function to filter data based on the selected start and end date
     function filterDataByDate(startDate, endDate) {
         const filteredCategories = [];
         const filteredMoreThan1Day = [];
@@ -902,7 +911,7 @@
         annotations: {
             yaxis: [
                 {
-                    y: 62, // This is your target value
+                    y: 62, // Target value
                     borderColor: '#f44336',
                     label: {
                         borderColor: '#f44336',
@@ -928,6 +937,7 @@
     const chart2 = new ApexCharts(document.querySelector("#chartaging2"), options2);
     chart2.render();
 </script>
+
 <script>
     // Data SIBT
     const target = 62;
