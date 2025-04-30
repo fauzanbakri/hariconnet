@@ -813,9 +813,9 @@
             return;
         }
 
-        // Log start and end date values
-        console.log('Start Date:', startDate);
-        console.log('End Date:', endDate);
+        // Log start and end date values for debugging
+        console.log('Selected Start Date:', startDate);
+        console.log('Selected End Date:', endDate);
 
         // Filter data based on date range
         const filteredData = filterDataByDate(startDate, endDate);
@@ -853,19 +853,18 @@
         const filteredMoreThan1Day = [];
         const filteredMoreThan3Days = [];
 
-        // Convert input start and end date to Date objects
-        const start = new Date(startDate + "T00:00:00"); // Add default time if only date is given
-        const end = new Date(endDate + "T23:59:59");   // Add time to cover the whole day
-
+        // Convert input start and end date to Date objects (with default time handling)
+        const start = new Date(startDate + "T00:00:00"); // Add time to start date
+        const end = new Date(endDate + "T23:59:59");   // Add time to end date
         console.log('Converted Start Date:', start);
         console.log('Converted End Date:', end);
 
         for (let i = 0; i < data2.categories.length; i++) {
-            // Convert the category date to a Date object (ensure to parse the full datetime string)
+            // Convert category date to Date object
             const categoryDate = new Date(data2.categories[i]);
             console.log('Category Date:', data2.categories[i], 'Parsed:', categoryDate);
 
-            // Compare the category date with the start and end dates
+            // Compare the category date with start and end dates
             if (categoryDate >= start && categoryDate <= end) {
                 filteredCategories.push(data2.categories[i]);
                 filteredMoreThan1Day.push(data2.percent_more_than_1_day[i]);
