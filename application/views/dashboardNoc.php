@@ -319,15 +319,6 @@
                             </div><!-- end card header -->
                             <div class="card-body p-0 pb-2">
                                 <div class="w-100">
-                                    <div>
-                                        <label for="startDate">Start Date:</label>
-                                        <input type="date" id="startDate" name="startDate">
-
-                                        <label for="endDate">End Date:</label>
-                                        <input type="date" id="endDate" name="endDate">
-
-                                        <button onclick="applyDateFilter()">Apply Filter</button>
-                                    </div>
                                     <div id="chartaging2_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
                             </div><!-- end card body -->
@@ -340,6 +331,15 @@
                             </div><!-- end card header -->
                             <div class="card-body p-0 pb-2">
                                 <div class="w-100">
+                                    <div>
+                                        <label for="startDate">Start Date:</label>
+                                        <input type="date" id="startDate" name="startDate">
+
+                                        <label for="endDate">End Date:</label>
+                                        <input type="date" id="endDate" name="endDate">
+
+                                        <button onclick="applyDateFilter()">Apply Filter</button>
+                                    </div>
                                     <div id="chartaging2" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
                             </div><!-- end card body -->
