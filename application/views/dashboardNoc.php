@@ -338,7 +338,7 @@
                                         <label for="endDate">End Date:</label>
                                         <input type="date" id="endDate" name="endDate">
 
-                                        <button class="btn btn-small btn-primary" onclick="applyDateFilter()">Apply Filter</button>
+                                        <button class="btn btn-sm btn-primary" onclick="applyDateFilter()">Apply Filter</button>
                                     </div>
                                     <div id="chartaging2" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
