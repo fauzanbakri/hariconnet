@@ -801,7 +801,6 @@
     // chart2.render();
 </script>
 <!-- Include ApexCharts Library -->
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script>
     // Combine all data
