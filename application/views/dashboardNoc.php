@@ -801,115 +801,81 @@
     // chart2.render();
 </script>
 <script>
-    const data2 = <?php echo $datapercent; ?>;
+    // Combine all data
+    const datamks = <?php echo $datapercent_makassar; ?>;
+    const datammj = <?php echo $datapercent_mamuju; ?>;
+    const datapal = <?php echo $datapercent_palu; ?>;
+    const datakdi = <?php echo $datapercent_kendari; ?>;
+    const datagto = <?php echo $datapercent_gorontalo; ?>;
+    const datamnd = <?php echo $datapercent_manado; ?>;
 
-    // Function to apply the date filter and update the chart
-    function applyDateFilter() {
-        const startDate = document.getElementById("startDate").value;
-        const endDate = document.getElementById("endDate").value;
-
-        if (!startDate || !endDate) {
-            alert('Please select both start date and end date.');
-            return;
+    // Combined series
+    const combinedSeries = [
+        {
+            name: "Makassar - Less than 1 Day (%)",
+            data: datamks.percent_more_than_1_day,
+            color: '#347892'
+        },
+        {
+            name: "Makassar - More than 3 Days (%)",
+            data: datamks.percent_more_than_3_days,
+            color: '#ffc107'
+        },
+        {
+            name: "Mamuju - Less than 1 Day (%)",
+            data: datammj.percent_more_than_1_day,
+            color: '#28a745'
+        },
+        {
+            name: "Mamuju - More than 3 Days (%)",
+            data: datammj.percent_more_than_3_days,
+            color: '#dc3545'
+        },
+        {
+            name: "Palu - Less than 1 Day (%)",
+            data: datapal.percent_more_than_1_day,
+            color: '#007bff'
+        },
+        {
+            name: "Palu - More than 3 Days (%)",
+            data: datapal.percent_more_than_3_days,
+            color: '#ffc107'
+        },
+        {
+            name: "Kendari - Less than 1 Day (%)",
+            data: datakdi.percent_more_than_1_day,
+            color: '#6f42c1'
+        },
+        {
+            name: "Kendari - More than 3 Days (%)",
+            data: datakdi.percent_more_than_3_days,
+            color: '#fd7e14'
+        },
+        {
+            name: "Gorontalo - Less than 1 Day (%)",
+            data: datagto.percent_more_than_1_day,
+            color: '#6610f2'
+        },
+        {
+            name: "Gorontalo - More than 3 Days (%)",
+            data: datagto.percent_more_than_3_days,
+            color: '#e83e8c'
+        },
+        {
+            name: "Manado - Less than 1 Day (%)",
+            data: datamnd.percent_more_than_1_day,
+            color: '#20c997'
+        },
+        {
+            name: "Manado - More than 3 Days (%)",
+            data: datamnd.percent_more_than_3_days,
+            color: '#fd3f43'
         }
-
-        // Convert the start and end dates to week numbers
-        const startWeek = convertDateToWeek(startDate);
-        const endWeek = convertDateToWeek(endDate);
-
-        // Log the start and end week numbers for debugging
-        console.log('Start Week:', startWeek);
-        console.log('End Week:', endWeek);
-
-        // Filter data based on the week range
-        const filteredData = filterDataByWeek(startWeek, endWeek);
-
-        // Log filtered data to console for debugging
-        console.log('Filtered Data:', filteredData);
-
-        // If no data is found, alert the user
-        if (filteredData.categories.length === 0) {
-            alert("No data found for the selected week range.");
-            return;
-        }
-
-        // Update chart data
-        chart2.updateOptions({
-            series: [
-                {
-                    name: "Less than 1 Day (%)",
-                    data: filteredData.percent_more_than_1_day
-                },
-                {
-                    name: "More than 3 Days (%)",
-                    data: filteredData.percent_more_than_3_days
-                }
-            ],
-            xaxis: {
-                categories: filteredData.categories
-            }
-        });
-    }
-
-    // Convert a date (yyyy-mm-dd) to a week number
-    function convertDateToWeek(dateStr) {
-        const date = new Date(dateStr);
-        const startOfYear = new Date(date.getFullYear(), 0, 1);
-        const daysPassed = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
-        const weekNumber = Math.ceil((daysPassed + 1) / 7); // Week starts from 1
-        return `Week ${weekNumber}`;
-    }
-
-    // Function to filter data based on the selected week range
-    function filterDataByWeek(startWeek, endWeek) {
-        const filteredCategories = [];
-        const filteredMoreThan1Day = [];
-        const filteredMoreThan3Days = [];
-
-        // Extract the numeric week number from the week label
-        const startWeekNum = extractWeekNumber(startWeek);
-        const endWeekNum = extractWeekNumber(endWeek);
-
-        console.log('Start Week Number:', startWeekNum);
-        console.log('End Week Number:', endWeekNum);
-
-        for (let i = 0; i < data2.categories.length; i++) {
-            const categoryWeekNum = extractWeekNumber(data2.categories[i]);
-            console.log('Category Week:', data2.categories[i], 'Week Number:', categoryWeekNum);
-
-            // Compare week number with start and end week
-            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
-                filteredCategories.push(data2.categories[i]);
-                filteredMoreThan1Day.push(data2.percent_more_than_1_day[i]);
-                filteredMoreThan3Days.push(data2.percent_more_than_3_days[i]);
-            }
-        }
-
-        return {
-            categories: filteredCategories,
-            percent_more_than_1_day: filteredMoreThan1Day,
-            percent_more_than_3_days: filteredMoreThan3Days
-        };
-    }
-
-    // Function to extract the week number from a string like "Week 1", "Week 2", etc.
-    function extractWeekNumber(weekLabel) {
-        const match = weekLabel.match(/Week (\d+)/);
-        return match ? parseInt(match[1]) : -1;  // Return -1 if no valid week number found
-    }
+    ];
 
     // Chart options
-    const options2 = {
-        series: [
-            {
-                name: "Less than 1 Day (%)",
-                data: data2.percent_more_than_1_day
-            },
-            {
-                name: "More than 3 Days (%)",
-                data: data2.percent_more_than_3_days
-            }
-        ],
+    const optionsCombined = {
+        series: combinedSeries,
         chart: {
             type: 'bar',
             height: 350
@@ -919,9 +885,8 @@
                 horizontal: false,
                 columnWidth: '90%',
                 endingShape: 'rounded'
-            },
+            }
         },
-        colors: ['#347892', '#ffc107'],
         dataLabels: {
             enabled: true
         },
@@ -931,12 +896,14 @@
             colors: ['transparent']
         },
         xaxis: {
-            categories: data2.categories
+            categories: datamks.categories // Assuming all categories are the same across datasets
         },
         yaxis: {
             title: {
                 text: 'Persentase (%)'
-            }
+            },
+            min: 0,
+            max: 100,
         },
         fill: {
             opacity: 1
@@ -944,7 +911,7 @@
         annotations: {
             yaxis: [
                 {
-                    y: 62, // Target value
+                    y: target,
                     borderColor: '#f44336',
                     label: {
                         borderColor: '#f44336',
@@ -952,7 +919,7 @@
                             color: '#fff',
                             background: '#f44336'
                         },
-                        text: `Target: 62%`
+                        text: `Target: ${target}%`
                     }
                 }
             ]
@@ -967,463 +934,10 @@
     };
 
     // Initialize the chart
-    const chart2 = new ApexCharts(document.querySelector("#chartaging2"), options2);
-    chart2.render();
+    const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
+    chartCombined.render();
 </script>
 
-<script>
-    // Data Makassar
-    const datamks = <?php echo $datapercent_makassar; ?>;
-    const optionsmks = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: datamks.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: datamks.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: datamks.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        },
-        min: 0,
-        max: 100,
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      }
-    };
-
-    const chartmks = new ApexCharts(document.querySelector("#chartaging_makassar"), optionsmks);
-    chartmks.render();
-</script>
-
-<script>
-    // Data mamuju
-    const datammj = <?php echo $datapercent_mamuju; ?>;
-    const optionsmmj = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: datammj.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: datammj.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: datammj.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        },
-        min: 0,
-        max: 100,
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      }
-    };
-
-    const chartmmj = new ApexCharts(document.querySelector("#chartaging_mamuju"), optionsmmj);
-    chartmmj.render();
-</script>
-
-<script>
-    // Data palu
-    const datapal = <?php echo $datapercent_palu; ?>;
-    const optionspal = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: datapal.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: datapal.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: datapal.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        },
-        min: 0,
-        max: 100,
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      }
-    };
-
-    const chartpal = new ApexCharts(document.querySelector("#chartaging_palu"), optionspal);
-    chartpal.render();
-</script>
-
-<script>
-    // Data kendari
-    const datakdi = <?php echo $datapercent_kendari; ?>;
-    const optionskdi = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: datakdi.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: datakdi.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: datakdi.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        },
-        min: 0,
-        max: 100,
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      }
-    };
-
-    const chartkdi = new ApexCharts(document.querySelector("#chartaging_kendari"), optionskdi);
-    chartkdi.render();
-</script>
-<script>
-    // Data gorontalo
-    const datagto = <?php echo $datapercent_gorontalo; ?>;
-    const optionsgto = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: datagto.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: datagto.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: datagto.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        },
-        min: 0,
-        max: 100,
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      }
-    };
-
-    const chartgto = new ApexCharts(document.querySelector("#chartaging_gorontalo"), optionsgto);
-    chartgto.render();
-</script>
-<script>
-    // Data manado
-    const datamnd = <?php echo $datapercent_manado; ?>;
-    const optionsmnd = {
-      series: [
-        {
-          name: "Less than 1 Day (%)",
-          data: datamnd.percent_more_than_1_day
-        },
-        {
-          name: "More than 3 Days (%)",
-          data: datamnd.percent_more_than_3_days
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '90%',
-          endingShape: 'rounded'
-        },
-      },
-      colors: ['#347892', '#ffc107'],
-      dataLabels: {
-        enabled: true
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: datamnd.categories
-      },
-      yaxis: {
-        title: {
-          text: 'Persentase (%)'
-        },
-        min: 0,
-        max: 100,
-      },
-      fill: {
-        opacity: 1
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: target,
-            borderColor: '#f44336',
-            label: {
-              borderColor: '#f44336',
-              style: {
-                color: '#fff',
-                background: '#f44336'
-              },
-              text: `Target: ${target}%`
-            }
-          }
-        ]
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      }
-    };
-
-    const chartmnd = new ApexCharts(document.querySelector("#chartaging_manado"), optionsmnd);
-    chartmnd.render();
-</script>
 
 <!-- =================================MONTHLY================================== -->
 
