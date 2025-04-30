@@ -909,18 +909,18 @@
             return;
         }
 
-        // Update chart data
-        const updatedSeries = combinedSeries.map(series => {
-            const dataKey = series.name.toLowerCase().replace(/ /g, "_");
-            const updatedData = filteredData[dataKey] || [];
-            if (updatedData.length === 0) {
-                console.log(`${series.name} has no data for the selected weeks.`);
+        // Calculate the average data for SIBT
+        const sibtData = calculateSIBT(filteredData);
+
+        // Add SIBT to the chart
+        const updatedSeries = [
+            ...combinedSeries,
+            {
+                name: "SIBT - Average (%)",
+                data: sibtData,
+                color: '#17a2b8'
             }
-            return {
-                ...series,
-                data: updatedData
-            };
-        });
+        ];
 
         chartCombined.updateOptions({
             series: updatedSeries,
@@ -928,6 +928,31 @@
                 categories: filteredData.categories
             }
         });
+    }
+
+    // Calculate the average data for each week
+    function calculateSIBT(filteredData) {
+        const sibtData = [];
+        const weeks = filteredData.categories;
+
+        for (let i = 0; i < weeks.length; i++) {
+            let sum = 0;
+            let count = 0;
+
+            // Sum up data for "Less than 1 Day (%)" and "More than 3 Days (%)" across all cities
+            combinedSeries.forEach(series => {
+                const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+                if (filteredData[dataKey] && filteredData[dataKey][i] !== undefined) {
+                    sum += filteredData[dataKey][i];
+                    count++;
+                }
+            });
+
+            // Calculate average
+            sibtData.push(sum / count);
+        }
+
+        return sibtData;
     }
 
     // Convert a date (yyyy-mm-dd) to a week number
