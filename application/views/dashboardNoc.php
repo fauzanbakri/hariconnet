@@ -802,8 +802,8 @@
 </script>
 <script>
     const data2 = <?php echo $datapercent; ?>;
-    console.log(data2);
-    // Function to apply the date filter and update the chart
+
+    // Function to apply the week filter and update the chart
     function applyDateFilter() {
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
@@ -814,18 +814,18 @@
         }
 
         // Log start and end date values for debugging
-        console.log('Selected Start Date:', startDate);
-        console.log('Selected End Date:', endDate);
+        console.log('Selected Start Week:', startDate);
+        console.log('Selected End Week:', endDate);
 
-        // Filter data based on date range
-        const filteredData = filterDataByDate(startDate, endDate);
+        // Filter data based on week range
+        const filteredData = filterDataByWeek(startDate, endDate);
 
         // Log filtered data to console for debugging
         console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
-            alert("No data found for the selected date range.");
+            alert("No data found for the selected week range.");
             return;
         }
 
@@ -847,26 +847,25 @@
         });
     }
 
-    // Function to filter data based on the selected start and end date
-    function filterDataByDate(startDate, endDate) {
+    // Function to filter data based on the selected week range
+    function filterDataByWeek(startWeek, endWeek) {
         const filteredCategories = [];
         const filteredMoreThan1Day = [];
         const filteredMoreThan3Days = [];
 
-        // Normalize input start and end dates by stripping the time portion
-        const start = normalizeDate(new Date(startDate));  // Normalize to 00:00:00
-        const end = normalizeDate(new Date(endDate));      // Normalize to 23:59:59
+        // Convert startWeek and endWeek to integers for easy comparison
+        const startWeekNum = extractWeekNumber(startWeek);
+        const endWeekNum = extractWeekNumber(endWeek);
 
-        console.log('Normalized Start Date:', start);
-        console.log('Normalized End Date:', end);
+        console.log('Start Week Number:', startWeekNum);
+        console.log('End Week Number:', endWeekNum);
 
         for (let i = 0; i < data2.categories.length; i++) {
-            // Normalize category date by stripping time
-            const categoryDate = normalizeDate(new Date(data2.categories[i]));
-            console.log('Category Date:', data2.categories[i], 'Normalized:', categoryDate);
+            const categoryWeekNum = extractWeekNumber(data2.categories[i]);
+            console.log('Category Week:', data2.categories[i], 'Week Number:', categoryWeekNum);
 
-            // Compare the category date with start and end dates
-            if (categoryDate >= start && categoryDate <= end) {
+            // Compare week number with start and end week
+            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
                 filteredCategories.push(data2.categories[i]);
                 filteredMoreThan1Day.push(data2.percent_more_than_1_day[i]);
                 filteredMoreThan3Days.push(data2.percent_more_than_3_days[i]);
@@ -880,11 +879,10 @@
         };
     }
 
-    // Function to normalize a Date object by stripping the time portion
-    function normalizeDate(date) {
-        // Set the time to 00:00:00 for start date and 23:59:59 for end date
-        date.setHours(0, 0, 0, 0); // Normalize to 00:00:00 (midnight)
-        return date;
+    // Function to extract the week number from a string like "Week 1", "Week 2", etc.
+    function extractWeekNumber(weekLabel) {
+        const match = weekLabel.match(/Week (\d+)/);
+        return match ? parseInt(match[1]) : -1;  // Return -1 if no valid week number found
     }
 
     // Chart options
