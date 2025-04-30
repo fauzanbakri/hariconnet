@@ -813,11 +813,15 @@
             return;
         }
 
+        // Log start and end date values
+        console.log('Start Date:', startDate);
+        console.log('End Date:', endDate);
+
         // Filter data based on date range
         const filteredData = filterDataByDate(startDate, endDate);
 
         // Log filtered data to console for debugging
-        console.log(filteredData);
+        console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
@@ -849,9 +853,20 @@
         const filteredMoreThan1Day = [];
         const filteredMoreThan3Days = [];
 
+        // Convert input start and end date to Date objects
+        const start = new Date(startDate + "T00:00:00"); // Add default time if only date is given
+        const end = new Date(endDate + "T23:59:59");   // Add time to cover the whole day
+
+        console.log('Converted Start Date:', start);
+        console.log('Converted End Date:', end);
+
         for (let i = 0; i < data2.categories.length; i++) {
+            // Convert the category date to a Date object (ensure to parse the full datetime string)
             const categoryDate = new Date(data2.categories[i]);
-            if (categoryDate >= new Date(startDate) && categoryDate <= new Date(endDate)) {
+            console.log('Category Date:', data2.categories[i], 'Parsed:', categoryDate);
+
+            // Compare the category date with the start and end dates
+            if (categoryDate >= start && categoryDate <= end) {
                 filteredCategories.push(data2.categories[i]);
                 filteredMoreThan1Day.push(data2.percent_more_than_1_day[i]);
                 filteredMoreThan3Days.push(data2.percent_more_than_3_days[i]);
@@ -937,6 +952,7 @@
     const chart2 = new ApexCharts(document.querySelector("#chartaging2"), options2);
     chart2.render();
 </script>
+
 
 <script>
     // Data SIBT
