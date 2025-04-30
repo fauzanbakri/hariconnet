@@ -802,7 +802,7 @@
 </script>
 <script>
     const data2 = <?php echo $datapercent; ?>;
-
+    console.log(data2);
     // Function to apply the date filter and update the chart
     function applyDateFilter() {
         const startDate = document.getElementById("startDate").value;
