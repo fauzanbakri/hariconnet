@@ -853,16 +853,17 @@
         const filteredMoreThan1Day = [];
         const filteredMoreThan3Days = [];
 
-        // Convert input start and end date to Date objects (with default time handling)
-        const start = new Date(startDate + "T00:00:00"); // Add time to start date
-        const end = new Date(endDate + "T23:59:59");   // Add time to end date
-        console.log('Converted Start Date:', start);
-        console.log('Converted End Date:', end);
+        // Normalize input start and end dates by stripping the time portion
+        const start = normalizeDate(new Date(startDate));  // Normalize to 00:00:00
+        const end = normalizeDate(new Date(endDate));      // Normalize to 23:59:59
+
+        console.log('Normalized Start Date:', start);
+        console.log('Normalized End Date:', end);
 
         for (let i = 0; i < data2.categories.length; i++) {
-            // Convert category date to Date object
-            const categoryDate = new Date(data2.categories[i]);
-            console.log('Category Date:', data2.categories[i], 'Parsed:', categoryDate);
+            // Normalize category date by stripping time
+            const categoryDate = normalizeDate(new Date(data2.categories[i]));
+            console.log('Category Date:', data2.categories[i], 'Normalized:', categoryDate);
 
             // Compare the category date with start and end dates
             if (categoryDate >= start && categoryDate <= end) {
@@ -877,6 +878,13 @@
             percent_more_than_1_day: filteredMoreThan1Day,
             percent_more_than_3_days: filteredMoreThan3Days
         };
+    }
+
+    // Function to normalize a Date object by stripping the time portion
+    function normalizeDate(date) {
+        // Set time to 00:00:00 for start date and 23:59:59 for end date
+        date.setHours(0, 0, 0, 0); // Normalize to 00:00:00
+        return date;
     }
 
     // Chart options
