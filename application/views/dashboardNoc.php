@@ -873,6 +873,104 @@
         }
     ];
 
+    // Function to apply the date filter and update the chart
+    function applyDateFilter() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        if (!startDate || !endDate) {
+            alert('Please select both start date and end date.');
+            return;
+        }
+
+        // Convert the start and end dates to week numbers
+        const startWeek = convertDateToWeek(startDate);
+        const endWeek = convertDateToWeek(endDate);
+
+        // Log the start and end week numbers for debugging
+        console.log('Start Week:', startWeek);
+        console.log('End Week:', endWeek);
+
+        // Filter data based on the week range
+        const filteredData = filterDataByWeek(startWeek, endWeek);
+
+        // Log filtered data to console for debugging
+        console.log('Filtered Data:', filteredData);
+
+        // If no data is found, alert the user
+        if (filteredData.categories.length === 0) {
+            alert("No data found for the selected week range.");
+            return;
+        }
+
+        // Update chart data
+        chartCombined.updateOptions({
+            series: combinedSeries.map(series => {
+                return {
+                    ...series,
+                    data: filteredData[series.name.toLowerCase().replace(/ /g, "_")]
+                };
+            }),
+            xaxis: {
+                categories: filteredData.categories
+            }
+        });
+    }
+
+    // Convert a date (yyyy-mm-dd) to a week number
+    function convertDateToWeek(dateStr) {
+        const date = new Date(dateStr);
+        const startOfYear = new Date(date.getFullYear(), 0, 1);
+        const daysPassed = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
+        const weekNumber = Math.ceil((daysPassed + 1) / 7); // Week starts from 1
+        return `Week ${weekNumber}`;
+    }
+
+    // Function to filter data based on the selected week range
+    function filterDataByWeek(startWeek, endWeek) {
+        const filteredCategories = [];
+        const filteredData = {};
+
+        // Initialize filtered data for each city
+        combinedSeries.forEach(series => {
+            filteredData[series.name.toLowerCase().replace(/ /g, "_")] = [];
+        });
+
+        // Extract the numeric week number from the week label
+        const startWeekNum = extractWeekNumber(startWeek);
+        const endWeekNum = extractWeekNumber(endWeek);
+
+        console.log('Start Week Number:', startWeekNum);
+        console.log('End Week Number:', endWeekNum);
+
+        for (let i = 0; i < datamks.categories.length; i++) {
+            const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
+            console.log('Category Week:', datamks.categories[i], 'Week Number:', categoryWeekNum);
+
+            // Compare week number with start and end week
+            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
+                filteredCategories.push(datamks.categories[i]);
+
+                // Add filtered data for each series
+                combinedSeries.forEach(series => {
+                    const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+                    filteredData[dataKey].push(datamks[dataKey][i]);
+                });
+            }
+        }
+
+        return {
+            categories: filteredCategories,
+            ...filteredData
+        };
+    }
+
+    // Function to extract the week number from a string like "Week 1", "Week 2", etc.
+    function extractWeekNumber(weekLabel) {
+        const match = weekLabel.match(/Week (\d+)/);
+        return match ? parseInt(match[1]) : -1;  // Return -1 if no valid week number found
+    }
+
     // Chart options
     const optionsCombined = {
         series: combinedSeries,
