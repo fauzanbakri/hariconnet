@@ -822,13 +822,13 @@
         console.log('End Week:', endWeek2);
 
         // Filter data based on the week range
-        const filteredData = filterDataByWeek(startWeek2, endWeek2);
+        const filteredData2 = filterDataByWeek(startWeek2, endWeek2);
 
         // Log filtered data to console for debugging
         console.log('Filtered Data:', filteredData2);
 
         // If no data is found, alert the user
-        if (filteredData.categories.length === 0) {
+        if (filteredData2.categories.length === 0) {
             alert("No data found for the selected week range.");
             return;
         }
@@ -838,15 +838,15 @@
             series: [
                 {
                     name: "Less than 1 Day (%)",
-                    data: filteredData.percent_more_than_1_day
+                    data: filteredData2.percent_more_than_1_day
                 },
                 {
                     name: "More than 3 Days (%)",
-                    data: filteredData.percent_more_than_3_days
+                    data: filteredData2.percent_more_than_3_days
                 }
             ],
             xaxis: {
-                categories: filteredData.categories
+                categories: filteredData2.categories
             }
         });
     }
@@ -867,18 +867,18 @@
         const filteredMoreThan3Days = [];
 
         // Extract the numeric week number from the week label
-        const startWeekNum = extractWeekNumber(startWeek);
-        const endWeekNum = extractWeekNumber(endWeek);
+        const startWeekNum2 = extractWeekNumber(startWeek2);
+        const endWeekNum2 = extractWeekNumber(endWeek2);
 
-        console.log('Start Week Number:', startWeekNum);
-        console.log('End Week Number:', endWeekNum);
+        console.log('Start Week Number:', startWeekNum2);
+        console.log('End Week Number:', endWeekNum2);
 
         for (let i = 0; i < data2.categories.length; i++) {
-            const categoryWeekNum = extractWeekNumber(data2.categories[i]);
-            console.log('Category Week:', data2.categories[i], 'Week Number:', categoryWeekNum);
+            const categoryWeekNum2 = extractWeekNumber(data2.categories[i]);
+            console.log('Category Week:', data2.categories[i], 'Week Number:', categoryWeekNum2);
 
             // Compare week number with start and end week
-            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
+            if (categoryWeekNum2 >= startWeekNum2 && categoryWeekNum2 <= endWeekNum2) {
                 filteredCategories.push(data2.categories[i]);
                 filteredMoreThan1Day.push(data2.percent_more_than_1_day[i]);
                 filteredMoreThan3Days.push(data2.percent_more_than_3_days[i]);
