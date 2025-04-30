@@ -882,8 +882,8 @@
 
     // Function to normalize a Date object by stripping the time portion
     function normalizeDate(date) {
-        // Set time to 00:00:00 for start date and 23:59:59 for end date
-        date.setHours(0, 0, 0, 0); // Normalize to 00:00:00
+        // Set the time to 00:00:00 for start date and 23:59:59 for end date
+        date.setHours(0, 0, 0, 0); // Normalize to 00:00:00 (midnight)
         return date;
     }
 
