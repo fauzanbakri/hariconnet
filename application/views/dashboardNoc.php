@@ -803,7 +803,7 @@
 <script>
     const data2 = <?php echo $datapercent; ?>;
 
-    // Function to apply the week filter and update the chart
+    // Function to apply the date filter and update the chart
     function applyDateFilter() {
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
@@ -813,12 +813,16 @@
             return;
         }
 
-        // Log start and end date values for debugging
-        console.log('Selected Start Week:', startDate);
-        console.log('Selected End Week:', endDate);
+        // Convert the start and end dates to week numbers
+        const startWeek = convertDateToWeek(startDate);
+        const endWeek = convertDateToWeek(endDate);
 
-        // Filter data based on week range
-        const filteredData = filterDataByWeek(startDate, endDate);
+        // Log the start and end week numbers for debugging
+        console.log('Start Week:', startWeek);
+        console.log('End Week:', endWeek);
+
+        // Filter data based on the week range
+        const filteredData = filterDataByWeek(startWeek, endWeek);
 
         // Log filtered data to console for debugging
         console.log('Filtered Data:', filteredData);
@@ -847,13 +851,22 @@
         });
     }
 
+    // Convert a date (yyyy-mm-dd) to a week number
+    function convertDateToWeek(dateStr) {
+        const date = new Date(dateStr);
+        const startOfYear = new Date(date.getFullYear(), 0, 1);
+        const daysPassed = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
+        const weekNumber = Math.ceil((daysPassed + 1) / 7); // Week starts from 1
+        return `Week ${weekNumber}`;
+    }
+
     // Function to filter data based on the selected week range
     function filterDataByWeek(startWeek, endWeek) {
         const filteredCategories = [];
         const filteredMoreThan1Day = [];
         const filteredMoreThan3Days = [];
 
-        // Convert startWeek and endWeek to integers for easy comparison
+        // Extract the numeric week number from the week label
         const startWeekNum = extractWeekNumber(startWeek);
         const endWeekNum = extractWeekNumber(endWeek);
 
