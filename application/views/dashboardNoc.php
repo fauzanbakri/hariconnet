@@ -809,6 +809,8 @@
     const datakdi = <?php echo $datapercent_kendari; ?>;
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
+    console.log("Makassar Data for Week 13:", datamks.percent_more_than_1_day[12]); // Assuming Week 13 is index 12
+    console.log("Makassar Data for Week 14:", datamks.percent_more_than_1_day[13]); // Assuming Week 14 is index 13
 
     // Combined series
     const combinedSeries = [
