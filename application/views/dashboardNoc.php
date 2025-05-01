@@ -834,6 +834,7 @@ const data2gto = <?php echo $monthlygto; ?>;
 const data2mnd = <?php echo $monthlymnd; ?>;
 
 const fullCategories = data2sibt.categories; // format ["2025-01", "2025-02", ...]
+console.log("Categories:", fullCategories);
 
 const chartAllData = {
   series: [
