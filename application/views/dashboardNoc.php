@@ -897,10 +897,9 @@
         const filteredData = filterDataByWeek(startWeek, endWeek);
 
         // Log the filtered data for debugging
-        console.log('Filtered Data:', filteredData);
-        console.log('Categories:', filteredData.categories);  // Check the filtered categories
-        console.log('Makassar Data:', filteredData['makassar_-_less_than_1_day_%']);
-        console.log('Mamuju Data:', filteredData['mamuju_-_less_than_1_day_%']);
+        console.log('Filtered Categories:', filteredData.categories);
+        console.log('Filtered Makassar Data:', filteredData['makassar_-_less_than_1_day_%']);
+
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
