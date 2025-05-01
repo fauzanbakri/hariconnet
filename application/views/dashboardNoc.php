@@ -915,62 +915,62 @@
         const updatedSeries = [
             {
                 name: "Makassar - Less than 1 Day (%)",
-                data: filteredData['makassar_-_less_than_1_day_%'],
+                data: filteredData['makassar_-_less_than_1_day_%'] || [],
                 color: '#347892'
             },
             {
                 name: "Makassar - More than 3 Days (%)",
-                data: filteredData['makassar_-_more_than_3_days_%'],
+                data: filteredData['makassar_-_more_than_3_days_%'] || [],
                 color: '#ffc107'
             },
             {
                 name: "Mamuju - Less than 1 Day (%)",
-                data: filteredData['mamuju_-_less_than_1_day_%'],
+                data: filteredData['mamuju_-_less_than_1_day_%'] || [],
                 color: '#28a745'
             },
             {
                 name: "Mamuju - More than 3 Days (%)",
-                data: filteredData['mamuju_-_more_than_3_days_%'],
+                data: filteredData['mamuju_-_more_than_3_days_%'] || [],
                 color: '#dc3545'
             },
             {
                 name: "Palu - Less than 1 Day (%)",
-                data: filteredData['palu_-_less_than_1_day_%'],
+                data: filteredData['palu_-_less_than_1_day_%'] || [],
                 color: '#007bff'
             },
             {
                 name: "Palu - More than 3 Days (%)",
-                data: filteredData['palu_-_more_than_3_days_%'],
+                data: filteredData['palu_-_more_than_3_days_%'] || [],
                 color: '#ffc107'
             },
             {
                 name: "Kendari - Less than 1 Day (%)",
-                data: filteredData['kendari_-_less_than_1_day_%'],
+                data: filteredData['kendari_-_less_than_1_day_%'] || [],
                 color: '#6f42c1'
             },
             {
                 name: "Kendari - More than 3 Days (%)",
-                data: filteredData['kendari_-_more_than_3_days_%'],
+                data: filteredData['kendari_-_more_than_3_days_%'] || [],
                 color: '#fd7e14'
             },
             {
                 name: "Gorontalo - Less than 1 Day (%)",
-                data: filteredData['gorontalo_-_less_than_1_day_%'],
+                data: filteredData['gorontalo_-_less_than_1_day_%'] || [],
                 color: '#6610f2'
             },
             {
                 name: "Gorontalo - More than 3 Days (%)",
-                data: filteredData['gorontalo_-_more_than_3_days_%'],
+                data: filteredData['gorontalo_-_more_than_3_days_%'] || [],
                 color: '#e83e8c'
             },
             {
                 name: "Manado - Less than 1 Day (%)",
-                data: filteredData['manado_-_less_than_1_day_%'],
+                data: filteredData['manado_-_less_than_1_day_%'] || [],
                 color: '#20c997'
             },
             {
                 name: "Manado - More than 3 Days (%)",
-                data: filteredData['manado_-_more_than_3_days_%'],
+                data: filteredData['manado_-_more_than_3_days_%'] || [],
                 color: '#fd3f43'
             },
             {
