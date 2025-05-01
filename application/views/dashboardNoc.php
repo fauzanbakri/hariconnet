@@ -947,6 +947,7 @@
 
     // Create the updated series for the chart
     function createUpdatedSeries(filteredData, sibtData) {
+      console.log(filteredData);
         return [
             {
                 name: "Makassar - Less than 1 Day (%)",
