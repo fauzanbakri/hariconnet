@@ -809,13 +809,8 @@
     const datakdi = <?php echo $datapercent_kendari; ?>;
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
-    console.log(datamks);
-    console.log(datammj);
-    console.log(datapal);
-    console.log(datakdi);
-    console.log(datagto);
-    console.log(datamnd);
-    // Combined series
+
+    // Combined series without SIBT data
     const combinedSeries = [
         {
             name: "Makassar - Less than 1 Day (%)",
@@ -911,11 +906,8 @@
             return;
         }
 
-        // Calculate the average data for SIBT
-        const sibtData = calculateSIBT(filteredData);
-
         // Create the updated series for the chart
-        const updatedSeries = createUpdatedSeries(filteredData, sibtData);
+        const updatedSeries = createUpdatedSeries(filteredData);
 
         // Update chart options and data
         chartCombined.updateOptions({
@@ -926,34 +918,9 @@
         });
     }
 
-    // Calculate the average data for each week
-    function calculateSIBT(filteredData) {
-        const sibtData = [];
-        const weeks = filteredData.categories;
-
-        for (let i = 0; i < weeks.length; i++) {
-            let sum = 0;
-            let count = 0;
-
-            // Sum up data for "Less than 1 Day (%)" and "More than 3 Days (%)" across all cities
-            combinedSeries.forEach(series => {
-                const dataKey = series.name.toLowerCase().replace(/ /g, "_");
-                if (filteredData[dataKey] && filteredData[dataKey][i] !== undefined) {
-                    sum += filteredData[dataKey][i];
-                    count++;
-                }
-            });
-
-            // Calculate average
-            sibtData.push(sum / count);
-        }
-
-        return sibtData;
-    }
-
-    // Create the updated series for the chart
-    function createUpdatedSeries(filteredData, sibtData) {
-      console.log(filteredData);
+    // Create the updated series for the chart (without SIBT)
+    function createUpdatedSeries(filteredData) {
+        console.log(filteredData);
         return [
             {
                 name: "Makassar - Less than 1 Day (%)",
@@ -1014,11 +981,6 @@
                 name: "Manado - More than 3 Days (%)",
                 data: filteredData['manado_-_more_than_3_days_%'] || [],
                 color: '#fd3f43'
-            },
-            {
-                name: "SIBT - Average (%)",
-                data: sibtData,
-                color: '#17a2b8'
             }
         ];
     }
@@ -1032,59 +994,58 @@
         return `Week ${weekNumber}`;
     }
 
+    // Function to filter data based on the selected week range
     function filterDataByWeek(startWeek, endWeek) {
-    const filteredCategories = [];
-    const filteredData = {};
+        const filteredCategories = [];
+        const filteredData = {};
 
-    // Inisialisasi filtered data untuk setiap kategori
-    combinedSeries.forEach(series => {
-        filteredData[series.name.toLowerCase().replace(/ /g, "_")] = [];
-    });
+        // Inisialisasi filtered data untuk setiap kategori
+        combinedSeries.forEach(series => {
+            filteredData[series.name.toLowerCase().replace(/ /g, "_")] = [];
+        });
 
-    // Ekstrak nomor minggu dari kategori
-    const startWeekNum = extractWeekNumber(startWeek);
-    const endWeekNum = extractWeekNumber(endWeek);
+        // Ekstrak nomor minggu dari kategori
+        const startWeekNum = extractWeekNumber(startWeek);
+        const endWeekNum = extractWeekNumber(endWeek);
 
-    console.log("Start Week Num:", startWeekNum, "End Week Num:", endWeekNum);
+        console.log("Start Week Num:", startWeekNum, "End Week Num:", endWeekNum);
 
-    // Log seluruh kategori untuk memeriksa data sebelum filter
-    console.log("Categories Before Filtering:", datamks.categories);
+        // Log seluruh kategori untuk memeriksa data sebelum filter
+        console.log("Categories Before Filtering:", datamks.categories);
 
-    for (let i = 0; i < datamks.categories.length; i++) {
-        const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
+        for (let i = 0; i < datamks.categories.length; i++) {
+            const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
 
-        console.log('Checking Category:', datamks.categories[i], 'Week Number:', categoryWeekNum);
+            console.log('Checking Category:', datamks.categories[i], 'Week Number:', categoryWeekNum);
 
-        // Bandingkan minggu yang dipilih dengan minggu data
-        if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
-            filteredCategories.push(datamks.categories[i]);
+            // Bandingkan minggu yang dipilih dengan minggu data
+            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
+                filteredCategories.push(datamks.categories[i]);
 
-            console.log('Adding data for week:', datamks.categories[i]);
-            
-            // Menambahkan data untuk setiap kategori
-            combinedSeries.forEach(series => {
-                const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+                console.log('Adding data for week:', datamks.categories[i]);
+                
+                // Menambahkan data untuk setiap kategori
+                combinedSeries.forEach(series => {
+                    const dataKey = series.name.toLowerCase().replace(/ /g, "_");
 
-                // Periksa apakah data ada, jika tidak, tambahkan 0
-                if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
-                    console.log(`Data for ${series.name} on Week ${datamks.categories[i]}:`, datamks[dataKey][i]);
-                    filteredData[dataKey].push(datamks[dataKey][i]);
-                } else {
-                    console.log(`No data for ${series.name} on Week ${datamks.categories[i]}`);
-                    filteredData[dataKey].push(0);  // Masukkan nilai 0 jika data tidak ada
-                }
-            });
+                    // Periksa apakah data ada, jika tidak, tambahkan 0
+                    if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
+                        console.log(`Data for ${series.name} on Week ${datamks.categories[i]}:`, datamks[dataKey][i]);
+                        filteredData[dataKey].push(datamks[dataKey][i]);
+                    } else {
+                        console.log(`No data for ${series.name} on Week ${datamks.categories[i]}`);
+                        filteredData[dataKey].push(0);  // Masukkan nilai 0 jika data tidak ada
+                    }
+                });
+            }
         }
+
+        // Kembalikan data yang sudah difilter
+        return {
+            categories: filteredCategories,
+            ...filteredData
+        };
     }
-
-    // Kembalikan data yang sudah difilter
-    return {
-        categories: filteredCategories,
-        ...filteredData
-    };
-}
-
-
 
     // Function to extract the week number from a string like "Week 1", "Week 2", etc.
     function extractWeekNumber(weekLabel) {
@@ -1156,6 +1117,7 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
+
 
 <!-- =================================MONTHLY================================== -->
 
