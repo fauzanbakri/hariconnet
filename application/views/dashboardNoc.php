@@ -832,7 +832,48 @@ const data2kdi = <?php echo $monthlykdi; ?>;
 const data2gto = <?php echo $monthlygto; ?>;
 const data2mnd = <?php echo $monthlymnd; ?>;
 
-const optionsChartAll = {
+// Simpan semua kategori bulan (diasumsikan semua sama)
+const fullCategories = data2sibt.categories;
+
+// Fungsi untuk memfilter berdasarkan bulan
+function applyMonthFilter() {
+  const start = document.getElementById("startMonth").value;
+  const end = document.getElementById("endMonth").value;
+
+  if (!start || !end) {
+    alert("Please select both start and end month.");
+    return;
+  }
+
+  // Format: yyyy-mm
+  const startDate = new Date(start + "-01");
+  const endDate = new Date(end + "-01");
+
+  // Ambil index kategori yang sesuai range
+  const filteredIndexes = fullCategories.map((label, i) => {
+    const date = new Date(label + "-01"); // label format "2024-01", "2024-02", ...
+    return (date >= startDate && date <= endDate) ? i : -1;
+  }).filter(i => i !== -1);
+
+  // Filter setiap data series
+  const filteredSeries = chartAllData.series.map(series => {
+    return {
+      name: series.name,
+      data: filteredIndexes.map(i => series.data[i])
+    };
+  });
+
+  const filteredCategories = filteredIndexes.map(i => fullCategories[i]);
+
+  // Update chart
+  chartAll.updateOptions({
+    series: filteredSeries,
+    xaxis: { categories: filteredCategories }
+  });
+}
+
+// Data awal (full)
+const chartAllData = {
   series: [
     { name: "SIBT - < 1 Day (%)", data: data2sibt.percent_more_than_1_day },
     { name: "SIBT - > 3 Days (%)", data: data2sibt.percent_more_than_3_days },
@@ -848,11 +889,12 @@ const optionsChartAll = {
     { name: "Gorontalo - > 3 Days (%)", data: data2gto.percent_more_than_3_days },
     { name: "Manado - < 1 Day (%)", data: data2mnd.percent_more_than_1_day },
     { name: "Manado - > 3 Days (%)", data: data2mnd.percent_more_than_3_days }
-  ],
-  chart: {
-    type: 'bar',
-    height: 450
-  },
+  ]
+};
+
+const optionsChartAll = {
+  series: chartAllData.series,
+  chart: { type: 'bar', height: 450 },
   plotOptions: {
     bar: {
       horizontal: false,
@@ -860,42 +902,27 @@ const optionsChartAll = {
       endingShape: 'rounded'
     }
   },
-  dataLabels: {
-    enabled: true
-  },
-  stroke: {
-    show: true,
-    width: 2,
-    colors: ['transparent']
-  },
+  dataLabels: { enabled: true },
+  stroke: { show: true, width: 2, colors: ['transparent'] },
   xaxis: {
-    categories: data2sibt.categories
+    categories: fullCategories
   },
   yaxis: {
-    title: {
-      text: 'Persentase (%)'
-    },
+    title: { text: 'Persentase (%)' },
     min: 0,
     max: 100
   },
-  fill: {
-    opacity: 1
-  },
+  fill: { opacity: 1 },
   annotations: {
-    yaxis: [
-      {
-        y: target,
+    yaxis: [{
+      y: target,
+      borderColor: '#f44336',
+      label: {
         borderColor: '#f44336',
-        label: {
-          borderColor: '#f44336',
-          style: {
-            color: '#fff',
-            background: '#f44336'
-          },
-          text: `Target: ${target}%`
-        }
+        style: { color: '#fff', background: '#f44336' },
+        text: `Target: ${target}%`
       }
-    ]
+    }]
   },
   tooltip: {
     y: {
@@ -909,6 +936,7 @@ const optionsChartAll = {
 const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
 chartAll.render();
 </script>
+
 
 </body>
 </html>
