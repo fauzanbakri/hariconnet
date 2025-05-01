@@ -888,8 +888,15 @@
         const startWeek = convertDateToWeek(startDate);
         const endWeek = convertDateToWeek(endDate);
 
+        // Log to verify the start and end weeks
+        console.log('Start Week:', startWeek);
+        console.log('End Week:', endWeek);
+
         // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
+
+        // Log the filtered data
+        console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
