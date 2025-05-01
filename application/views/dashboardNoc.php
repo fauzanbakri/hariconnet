@@ -800,6 +800,7 @@
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
 </script>
+
 <script>
     // Combine all data
     const datamks = <?php echo $datapercent_makassar; ?>;
@@ -887,20 +888,8 @@
         const startWeek = convertDateToWeek(startDate);
         const endWeek = convertDateToWeek(endDate);
 
-        // Log the available categories and data before filtering
-        console.log('Categories Before Filtering:', datamks.categories);
-        console.log('Makassar Data Before Filtering:', datamks.percent_more_than_1_day);
-        console.log('Makassar Data Before Filtering:', datamks.percent_more_than_3_days);
-
-        // Log the start and end weeks to verify matching
-        console.log('Start Week:', startWeek); 
-        console.log('End Week:', endWeek); 
-
         // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
-
-        // Log the filtered data to console for debugging
-        console.log('Filtered Data:', filteredData);
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
@@ -1037,9 +1026,6 @@
         const startWeekNum = extractWeekNumber(startWeek);
         const endWeekNum = extractWeekNumber(endWeek);
 
-        // Log categories before filtering
-        console.log('Categories Before Filtering:', datamks.categories);
-
         for (let i = 0; i < datamks.categories.length; i++) {
             const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
 
@@ -1133,7 +1119,6 @@
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
-
 
 <!-- =================================MONTHLY================================== -->
 
