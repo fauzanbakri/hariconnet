@@ -809,6 +809,12 @@
     const datakdi = <?php echo $datapercent_kendari; ?>;
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
+    console.log(datamks);
+    console.log(datammj);
+    console.log(datapal);
+    console.log(datakdi);
+    console.log(datagto);
+    console.log(datamnd);
     // Combined series
     const combinedSeries = [
         {
