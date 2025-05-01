@@ -809,6 +809,8 @@
     const datakdi = <?php echo $datapercent_kendari; ?>;
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
+    console.log("dhasjkdhasjhdasjkhdasjhdkajshdaasd");
+    console.log(datamks);
 
     // Combined series without SIBT data
     const combinedSeries = [
