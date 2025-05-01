@@ -847,7 +847,7 @@ const chartAllData = {
   ]
 };
 
-const target = 62; // target garis horizontal
+// const target = 62; // target garis horizontal
 
 const optionsChartAll = {
   series: chartAllData.series,
