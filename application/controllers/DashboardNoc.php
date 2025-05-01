@@ -280,7 +280,9 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
                 "percent_more_than_3_days" => array_map('floatval', array_column($result1, 'percent_more_than_3_days'))
             ];
             
-            $q['datapercent_makassar'] = json_encode($data1);
+            // $q['datapercent_makassar'] = json_encode($data1);
+            echo json_encode($data1); die();
+
             //------------------------------------------------------------------
             $query = $this->db->query("
                 SELECT 
