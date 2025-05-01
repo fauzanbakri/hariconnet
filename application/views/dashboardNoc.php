@@ -319,6 +319,9 @@
                             </div><!-- end card header -->
                             <div class="card-body p-0 pb-2">
                                 <div class="w-100">
+                                    <label>Start Month: <input type="month" id="startMonth"></label>
+                                    <label>End Month: <input type="month" id="endMonth"></label>
+                                    <button class="btn btn-sm btn-primary" onclick="applyMonthFilter()">Apply Filter</button>
                                     <div id="chartaging_all_combined" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
                             </div><!-- end card body -->
@@ -341,150 +344,6 @@
                                         <button class="btn btn-sm btn-primary" onclick="applyDateFilter()">Apply Filter</button>
                                     </div>
                                     <div id="chartaging_combined" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Monthly Total Penangangan Gangguan Makassar </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_makassar_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Makassar </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_makassar" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Monthly Total Penangangan Gangguan Mamuju </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_mamuju_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Mamuju </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_mamuju" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Monthly Total Penangangan Gangguan Palu </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_palu_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Palu </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_palu" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Monthly Total Penangangan Gangguan Kendari </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_kendari_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Kendari </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_kendari" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Monthly Total Penangangan Gangguan Gorontalo </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_gorontalo_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Gorontalo </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_gorontalo" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Monthly Total Penangangan Gangguan Manado </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_manado_" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <div class="row">
-                        <div class="card card-height-100">
-                            <div class="card-header border-0 align-items-center d-flex">
-                                <h4 class="card-title mb-0 flex-grow-1">Weekly Total Penangangan Gangguan Manado </h4>
-                            </div><!-- end card header -->
-                            <div class="card-body p-0 pb-2">
-                                <div class="w-100">
-                                    <div id="chartaging_manado" data-colors='["--vz-success", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr"></div>
                                 </div>
                             </div><!-- end card body -->
                         </div><!-- end card -->
