@@ -973,64 +973,22 @@ const data2kdi = <?php echo $monthlykdi; ?>;
 const data2gto = <?php echo $monthlygto; ?>;
 const data2mnd = <?php echo $monthlymnd; ?>;
 
-const optionsCombined = {
+const optionsChartAll = {
   series: [
-    {
-      name: "SIBT - < 1 Day (%)",
-      data: data2sibt.percent_more_than_1_day
-    },
-    {
-      name: "SIBT - > 3 Days (%)",
-      data: data2sibt.percent_more_than_3_days
-    },
-    {
-      name: "Makassar - < 1 Day (%)",
-      data: data2mks.percent_more_than_1_day
-    },
-    {
-      name: "Makassar - > 3 Days (%)",
-      data: data2mks.percent_more_than_3_days
-    },
-    {
-      name: "Mamuju - < 1 Day (%)",
-      data: data2mmj.percent_more_than_1_day
-    },
-    {
-      name: "Mamuju - > 3 Days (%)",
-      data: data2mmj.percent_more_than_3_days
-    },
-    {
-      name: "Palu - < 1 Day (%)",
-      data: data2pal.percent_more_than_1_day
-    },
-    {
-      name: "Palu - > 3 Days (%)",
-      data: data2pal.percent_more_than_3_days
-    },
-    {
-      name: "Kendari - < 1 Day (%)",
-      data: data2kdi.percent_more_than_1_day
-    },
-    {
-      name: "Kendari - > 3 Days (%)",
-      data: data2kdi.percent_more_than_3_days
-    },
-    {
-      name: "Gorontalo - < 1 Day (%)",
-      data: data2gto.percent_more_than_1_day
-    },
-    {
-      name: "Gorontalo - > 3 Days (%)",
-      data: data2gto.percent_more_than_3_days
-    },
-    {
-      name: "Manado - < 1 Day (%)",
-      data: data2mnd.percent_more_than_1_day
-    },
-    {
-      name: "Manado - > 3 Days (%)",
-      data: data2mnd.percent_more_than_3_days
-    }
+    { name: "SIBT - < 1 Day (%)", data: data2sibt.percent_more_than_1_day },
+    { name: "SIBT - > 3 Days (%)", data: data2sibt.percent_more_than_3_days },
+    { name: "Makassar - < 1 Day (%)", data: data2mks.percent_more_than_1_day },
+    { name: "Makassar - > 3 Days (%)", data: data2mks.percent_more_than_3_days },
+    { name: "Mamuju - < 1 Day (%)", data: data2mmj.percent_more_than_1_day },
+    { name: "Mamuju - > 3 Days (%)", data: data2mmj.percent_more_than_3_days },
+    { name: "Palu - < 1 Day (%)", data: data2pal.percent_more_than_1_day },
+    { name: "Palu - > 3 Days (%)", data: data2pal.percent_more_than_3_days },
+    { name: "Kendari - < 1 Day (%)", data: data2kdi.percent_more_than_1_day },
+    { name: "Kendari - > 3 Days (%)", data: data2kdi.percent_more_than_3_days },
+    { name: "Gorontalo - < 1 Day (%)", data: data2gto.percent_more_than_1_day },
+    { name: "Gorontalo - > 3 Days (%)", data: data2gto.percent_more_than_3_days },
+    { name: "Manado - < 1 Day (%)", data: data2mnd.percent_more_than_1_day },
+    { name: "Manado - > 3 Days (%)", data: data2mnd.percent_more_than_3_days }
   ],
   chart: {
     type: 'bar',
@@ -1089,8 +1047,8 @@ const optionsCombined = {
   }
 };
 
-const chartCombined = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsCombined);
-chartCombined.render();
+const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
+chartAll.render();
 </script>
 
 </body>
