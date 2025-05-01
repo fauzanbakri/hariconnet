@@ -810,7 +810,8 @@
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
     console.log("dhasjkdhasjhdasjkhdasjhdkajshdaasd");
-    console.log(datamks);
+    console.log('Makassar data before filtering:', datamks.percent_more_than_1_day);
+    console.log('Mamuju data before filtering:', datammj.percent_more_than_1_day);
 
     // Combined series without SIBT data
     const combinedSeries = [
