@@ -1048,9 +1048,9 @@ const optionsChartAll = {
 };
 
 const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
-console.log("Kategorinya:", datasibt.categories);
-console.log("Data SIBT < 1 Day:", datasibt.percent_more_than_1_day);
-console.log("Data SIBT > 3 Days:", datasibt.percent_more_than_3_days);
+console.log("Kategorinya:", data2sibt.categories);
+console.log("Data SIBT < 1 Day:", data2sibt.percent_more_than_1_day);
+console.log("Data SIBT > 3 Days:", data2sibt.percent_more_than_3_days);
 chartAll.render();
 </script>
 
