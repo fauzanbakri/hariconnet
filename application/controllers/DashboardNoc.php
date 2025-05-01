@@ -562,7 +562,7 @@ ORDER BY tahun, CAST(minggu AS UNSIGNED);
     $ytd_percent_more_than_3_days = round($sum_percent_more_than_3_days / $total_days_ytd, 2);
 
     // Tambahkan ke data grafik sebagai bulan "YTD"
-    $data7['categories'][] = 'YTD';
+    $data7['categories'][] = 'SIBT';
     $data7['percent_more_than_1_day'][] = $ytd_percent_more_than_1_day;
     $data7['percent_more_than_3_days'][] = $ytd_percent_more_than_3_days;
     $data7['more_than_1_day'][] = null; // placeholder jika tidak ditampilkan
