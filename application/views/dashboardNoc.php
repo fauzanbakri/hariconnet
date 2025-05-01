@@ -833,8 +833,7 @@ const data2kdi = <?php echo $monthlykdi; ?>;
 const data2gto = <?php echo $monthlygto; ?>;
 const data2mnd = <?php echo $monthlymnd; ?>;
 
-const fullCategories = data2sibt.categories; // format ["2025-01", "2025-02", ...]
-console.log("Categories:", fullCategories);
+const fullCategories = data2sibt.categories; // format seperti ["Jan", "Feb", "Mar", ...]
 
 const chartAllData = {
   series: [
@@ -848,7 +847,7 @@ const chartAllData = {
   ]
 };
 
-// const target = 62; // target garis horizontal
+// const target = 62;
 
 const optionsChartAll = {
   series: chartAllData.series,
@@ -859,7 +858,7 @@ const optionsChartAll = {
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: '60%', // jarak antar bar
+      columnWidth: '60%',
       endingShape: 'rounded'
     }
   },
@@ -908,7 +907,12 @@ const optionsChartAll = {
 const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
 chartAll.render();
 
-// Fungsi filter bulan
+function formatMonthLabel(dateStr) {
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const date = new Date(dateStr + "-01");
+  return monthNames[date.getMonth()];
+}
+
 function applyMonthFilter() {
   const start = document.getElementById("startMonth").value;
   const end = document.getElementById("endMonth").value;
@@ -918,14 +922,18 @@ function applyMonthFilter() {
     return;
   }
 
-  const filteredIndexes = fullCategories.map((label, i) => {
-    return (label >= start && label <= end) ? i : -1;
-  }).filter(i => i !== -1);
+  const startLabel = formatMonthLabel(start);
+  const endLabel = formatMonthLabel(end);
 
-  if (filteredIndexes.length === 0) {
-    alert("No data available in selected month range.");
+  const startIndex = fullCategories.indexOf(startLabel);
+  const endIndex = fullCategories.indexOf(endLabel);
+
+  if (startIndex === -1 || endIndex === -1) {
+    alert("Selected month is not available in data.");
     return;
   }
+
+  const filteredIndexes = fullCategories.map((_, i) => (i >= startIndex && i <= endIndex ? i : -1)).filter(i => i !== -1);
 
   const filteredSeries = chartAllData.series.map(series => ({
     name: series.name,
@@ -940,7 +948,5 @@ function applyMonthFilter() {
   });
 }
 </script>
-
-
 </body>
 </html>
