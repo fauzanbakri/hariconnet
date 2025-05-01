@@ -775,7 +775,7 @@
         plotOptions: {
             bar: {
                 horizontal: false,
-                columnWidth: '100%',
+                columnWidth: '80%',
                 endingShape: 'rounded'
             }
         },
