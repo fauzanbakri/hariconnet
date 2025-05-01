@@ -887,7 +887,7 @@ const optionsChartAll = {
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: '40%',
+      columnWidth: '80%',
       endingShape: 'rounded'
     }
   },
