@@ -809,8 +809,6 @@
     const datakdi = <?php echo $datapercent_kendari; ?>;
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
-    console.log(datamks); // Assuming Week 13 is index 12
-    console.log("Makassar Data for Week 14:", datamks.percent_more_than_1_day[13]); // Assuming Week 14 is index 13
 
     // Combined series
     const combinedSeries = [
@@ -890,15 +888,15 @@
         const startWeek = convertDateToWeek(startDate);
         const endWeek = convertDateToWeek(endDate);
 
-        // Log to verify the start and end weeks
         console.log('Start Week:', startWeek);
         console.log('End Week:', endWeek);
 
         // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
 
-        // Log the filtered data
+        // Log the filtered data for debugging
         console.log('Filtered Data:', filteredData);
+        console.log('Categories:', filteredData.categories);  // Check the filtered categories
 
         // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
@@ -909,8 +907,46 @@
         // Calculate the average data for SIBT
         const sibtData = calculateSIBT(filteredData);
 
-        // Create the updated series for the chart, including the SIBT average data
-        const updatedSeries = [
+        // Create the updated series for the chart
+        const updatedSeries = createUpdatedSeries(filteredData, sibtData);
+
+        // Update chart options and data
+        chartCombined.updateOptions({
+            series: updatedSeries,
+            xaxis: {
+                categories: filteredData.categories
+            }
+        });
+    }
+
+    // Calculate the average data for each week
+    function calculateSIBT(filteredData) {
+        const sibtData = [];
+        const weeks = filteredData.categories;
+
+        for (let i = 0; i < weeks.length; i++) {
+            let sum = 0;
+            let count = 0;
+
+            // Sum up data for "Less than 1 Day (%)" and "More than 3 Days (%)" across all cities
+            combinedSeries.forEach(series => {
+                const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+                if (filteredData[dataKey] && filteredData[dataKey][i] !== undefined) {
+                    sum += filteredData[dataKey][i];
+                    count++;
+                }
+            });
+
+            // Calculate average
+            sibtData.push(sum / count);
+        }
+
+        return sibtData;
+    }
+
+    // Create the updated series for the chart
+    function createUpdatedSeries(filteredData, sibtData) {
+        return [
             {
                 name: "Makassar - Less than 1 Day (%)",
                 data: filteredData['makassar_-_less_than_1_day_%'] || [],
@@ -977,39 +1013,6 @@
                 color: '#17a2b8'
             }
         ];
-
-        // Update chart options and data
-        chartCombined.updateOptions({
-            series: updatedSeries,
-            xaxis: {
-                categories: filteredData.categories
-            }
-        });
-    }
-
-    // Calculate the average data for each week
-    function calculateSIBT(filteredData) {
-        const sibtData = [];
-        const weeks = filteredData.categories;
-
-        for (let i = 0; i < weeks.length; i++) {
-            let sum = 0;
-            let count = 0;
-
-            // Sum up data for "Less than 1 Day (%)" and "More than 3 Days (%)" across all cities
-            combinedSeries.forEach(series => {
-                const dataKey = series.name.toLowerCase().replace(/ /g, "_");
-                if (filteredData[dataKey] && filteredData[dataKey][i] !== undefined) {
-                    sum += filteredData[dataKey][i];
-                    count++;
-                }
-            });
-
-            // Calculate average
-            sibtData.push(sum / count);
-        }
-
-        return sibtData;
     }
 
     // Convert a date (yyyy-mm-dd) to a week number
@@ -1035,8 +1038,12 @@
         const startWeekNum = extractWeekNumber(startWeek);
         const endWeekNum = extractWeekNumber(endWeek);
 
+        console.log("Start Week Num:", startWeekNum, "End Week Num:", endWeekNum);
+
         for (let i = 0; i < datamks.categories.length; i++) {
             const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
+
+            console.log('Checking Category:', datamks.categories[i], 'Week Number:', categoryWeekNum);
 
             // Compare week number with start and end week
             if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
