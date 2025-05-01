@@ -800,84 +800,39 @@
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
 </script>
-
 <script>
-    // Combine all data
+    // Ambil data dari backend PHP
     const datamks = <?php echo $datapercent_makassar; ?>;
     const datammj = <?php echo $datapercent_mamuju; ?>;
     const datapal = <?php echo $datapercent_palu; ?>;
     const datakdi = <?php echo $datapercent_kendari; ?>;
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
-    console.log("dhasjkdhasjhdasjkhdasjhdkajshdaasd");
-    console.log('Makassar data before filtering:', datamks.percent_more_than_1_day);
-    console.log('Mamuju data before filtering:', datammj.percent_more_than_1_day);
 
-    // Combined series without SIBT data
+    const dataSources = {
+        "makassar": datamks,
+        "mamuju": datammj,
+        "palu": datapal,
+        "kendari": datakdi,
+        "gorontalo": datagto,
+        "manado": datamnd
+    };
+
     const combinedSeries = [
-        {
-            name: "Makassar - Less than 1 Day (%)",
-            data: datamks.percent_more_than_1_day,
-            color: '#347892'
-        },
-        {
-            name: "Makassar - More than 3 Days (%)",
-            data: datamks.percent_more_than_3_days,
-            color: '#ffc107'
-        },
-        {
-            name: "Mamuju - Less than 1 Day (%)",
-            data: datammj.percent_more_than_1_day,
-            color: '#28a745'
-        },
-        {
-            name: "Mamuju - More than 3 Days (%)",
-            data: datammj.percent_more_than_3_days,
-            color: '#dc3545'
-        },
-        {
-            name: "Palu - Less than 1 Day (%)",
-            data: datapal.percent_more_than_1_day,
-            color: '#007bff'
-        },
-        {
-            name: "Palu - More than 3 Days (%)",
-            data: datapal.percent_more_than_3_days,
-            color: '#ffc107'
-        },
-        {
-            name: "Kendari - Less than 1 Day (%)",
-            data: datakdi.percent_more_than_1_day,
-            color: '#6f42c1'
-        },
-        {
-            name: "Kendari - More than 3 Days (%)",
-            data: datakdi.percent_more_than_3_days,
-            color: '#fd7e14'
-        },
-        {
-            name: "Gorontalo - Less than 1 Day (%)",
-            data: datagto.percent_more_than_1_day,
-            color: '#6610f2'
-        },
-        {
-            name: "Gorontalo - More than 3 Days (%)",
-            data: datagto.percent_more_than_3_days,
-            color: '#e83e8c'
-        },
-        {
-            name: "Manado - Less than 1 Day (%)",
-            data: datamnd.percent_more_than_1_day,
-            color: '#20c997'
-        },
-        {
-            name: "Manado - More than 3 Days (%)",
-            data: datamnd.percent_more_than_3_days,
-            color: '#fd3f43'
-        }
+        { name: "Makassar - Less than 1 Day (%)", key: "makassar", prop: "percent_more_than_1_day", color: '#347892' },
+        { name: "Makassar - More than 3 Days (%)", key: "makassar", prop: "percent_more_than_3_days", color: '#ffc107' },
+        { name: "Mamuju - Less than 1 Day (%)", key: "mamuju", prop: "percent_more_than_1_day", color: '#28a745' },
+        { name: "Mamuju - More than 3 Days (%)", key: "mamuju", prop: "percent_more_than_3_days", color: '#dc3545' },
+        { name: "Palu - Less than 1 Day (%)", key: "palu", prop: "percent_more_than_1_day", color: '#007bff' },
+        { name: "Palu - More than 3 Days (%)", key: "palu", prop: "percent_more_than_3_days", color: '#ffc107' },
+        { name: "Kendari - Less than 1 Day (%)", key: "kendari", prop: "percent_more_than_1_day", color: '#6f42c1' },
+        { name: "Kendari - More than 3 Days (%)", key: "kendari", prop: "percent_more_than_3_days", color: '#fd7e14' },
+        { name: "Gorontalo - Less than 1 Day (%)", key: "gorontalo", prop: "percent_more_than_1_day", color: '#6610f2' },
+        { name: "Gorontalo - More than 3 Days (%)", key: "gorontalo", prop: "percent_more_than_3_days", color: '#e83e8c' },
+        { name: "Manado - Less than 1 Day (%)", key: "manado", prop: "percent_more_than_1_day", color: '#20c997' },
+        { name: "Manado - More than 3 Days (%)", key: "manado", prop: "percent_more_than_3_days", color: '#fd3f43' }
     ];
 
-    // Function to apply the date filter and update the chart
     function applyDateFilter() {
         const startDate = document.getElementById("startDate").value;
         const endDate = document.getElementById("endDate").value;
@@ -887,31 +842,21 @@
             return;
         }
 
-        // Convert the start and end dates to week numbers
         const startWeek = convertDateToWeek(startDate);
         const endWeek = convertDateToWeek(endDate);
 
-        console.log('Start Week:', startWeek);
-        console.log('End Week:', endWeek);
-
-        // Filter data based on the week range
         const filteredData = filterDataByWeek(startWeek, endWeek);
-
-        // Log the filtered data for debugging
-        console.log('Filtered Categories:', filteredData.categories);
-        console.log('Filtered Makassar Data:', filteredData['makassar_-_less_than_1_day_%']);
-
-
-        // If no data is found, alert the user
         if (filteredData.categories.length === 0) {
             alert("No data found for the selected week range.");
             return;
         }
 
-        // Create the updated series for the chart
-        const updatedSeries = createUpdatedSeries(filteredData);
+        const updatedSeries = combinedSeries.map(series => ({
+            name: series.name,
+            data: filteredData[`${series.key}_${series.prop}`] || [],
+            color: series.color
+        }));
 
-        // Update chart options and data
         chartCombined.updateOptions({
             series: updatedSeries,
             xaxis: {
@@ -920,144 +865,50 @@
         });
     }
 
-    // Create the updated series for the chart (without SIBT)
-    function createUpdatedSeries(filteredData) {
-        console.log(filteredData);
-        return [
-            {
-                name: "Makassar - Less than 1 Day (%)",
-                data: filteredData['makassar_-_less_than_1_day_%'] || [],
-                color: '#347892'
-            },
-            {
-                name: "Makassar - More than 3 Days (%)",
-                data: filteredData['makassar_-_more_than_3_days_%'] || [],
-                color: '#ffc107'
-            },
-            {
-                name: "Mamuju - Less than 1 Day (%)",
-                data: filteredData['mamuju_-_less_than_1_day_%'] || [],
-                color: '#28a745'
-            },
-            {
-                name: "Mamuju - More than 3 Days (%)",
-                data: filteredData['mamuju_-_more_than_3_days_%'] || [],
-                color: '#dc3545'
-            },
-            {
-                name: "Palu - Less than 1 Day (%)",
-                data: filteredData['palu_-_less_than_1_day_%'] || [],
-                color: '#007bff'
-            },
-            {
-                name: "Palu - More than 3 Days (%)",
-                data: filteredData['palu_-_more_than_3_days_%'] || [],
-                color: '#ffc107'
-            },
-            {
-                name: "Kendari - Less than 1 Day (%)",
-                data: filteredData['kendari_-_less_than_1_day_%'] || [],
-                color: '#6f42c1'
-            },
-            {
-                name: "Kendari - More than 3 Days (%)",
-                data: filteredData['kendari_-_more_than_3_days_%'] || [],
-                color: '#fd7e14'
-            },
-            {
-                name: "Gorontalo - Less than 1 Day (%)",
-                data: filteredData['gorontalo_-_less_than_1_day_%'] || [],
-                color: '#6610f2'
-            },
-            {
-                name: "Gorontalo - More than 3 Days (%)",
-                data: filteredData['gorontalo_-_more_than_3_days_%'] || [],
-                color: '#e83e8c'
-            },
-            {
-                name: "Manado - Less than 1 Day (%)",
-                data: filteredData['manado_-_less_than_1_day_%'] || [],
-                color: '#20c997'
-            },
-            {
-                name: "Manado - More than 3 Days (%)",
-                data: filteredData['manado_-_more_than_3_days_%'] || [],
-                color: '#fd3f43'
-            }
-        ];
-    }
-
-    // Convert a date (yyyy-mm-dd) to a week number
-    function convertDateToWeek(dateStr) {
-        const date = new Date(dateStr);
-        const startOfYear = new Date(date.getFullYear(), 0, 1);
-        const daysPassed = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
-        const weekNumber = Math.ceil((daysPassed + 1) / 7); // Week starts from 1
-        return `Week ${weekNumber}`;
-    }
-
-    // Function to filter data based on the selected week range
     function filterDataByWeek(startWeek, endWeek) {
-        const filteredCategories = [];
-        const filteredData = {};
+        const result = { categories: [] };
 
-        // Inisialisasi filtered data untuk setiap kategori
-        combinedSeries.forEach(series => {
-            filteredData[series.name.toLowerCase().replace(/ /g, "_")] = [];
-        });
-
-        // Ekstrak nomor minggu dari kategori
         const startWeekNum = extractWeekNumber(startWeek);
         const endWeekNum = extractWeekNumber(endWeek);
 
-        console.log("Start Week Num:", startWeekNum, "End Week Num:", endWeekNum);
+        const referenceWeeks = datamks.categories;
 
-        // Log seluruh kategori untuk memeriksa data sebelum filter
-        console.log("Categories Before Filtering:", datamks.categories);
+        for (let i = 0; i < referenceWeeks.length; i++) {
+            const weekNum = extractWeekNumber(referenceWeeks[i]);
+            if (weekNum >= startWeekNum && weekNum <= endWeekNum) {
+                result.categories.push(referenceWeeks[i]);
 
-        for (let i = 0; i < datamks.categories.length; i++) {
-            const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
-
-            console.log('Checking Category:', datamks.categories[i], 'Week Number:', categoryWeekNum);
-
-            // Bandingkan minggu yang dipilih dengan minggu data
-            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
-                filteredCategories.push(datamks.categories[i]);
-
-                console.log('Adding data for week:', datamks.categories[i]);
-                
-                // Menambahkan data untuk setiap kategori
                 combinedSeries.forEach(series => {
-                    const dataKey = series.name.toLowerCase().replace(/ /g, "_");
-
-                    // Periksa apakah data ada, jika tidak, tambahkan 0
-                    if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
-                        console.log(`Data for ${series.name} on Week ${datamks.categories[i]}:`, datamks[dataKey][i]);
-                        filteredData[dataKey].push(datamks[dataKey][i]);
-                    } else {
-                        console.log(`No data for ${series.name} on Week ${datamks.categories[i]}`);
-                        filteredData[dataKey].push(0);  // Masukkan nilai 0 jika data tidak ada
-                    }
+                    const key = `${series.key}_${series.prop}`;
+                    const source = dataSources[series.key];
+                    if (!result[key]) result[key] = [];
+                    const value = source[series.prop][i];
+                    result[key].push(value !== undefined ? value : 0);
                 });
             }
         }
 
-        // Kembalikan data yang sudah difilter
-        return {
-            categories: filteredCategories,
-            ...filteredData
-        };
+        return result;
     }
 
-    // Function to extract the week number from a string like "Week 1", "Week 2", etc.
-    function extractWeekNumber(weekLabel) {
-        const match = weekLabel.match(/Week (\d+)/);
-        return match ? parseInt(match[1]) : -1;  // Return -1 if no valid week number found
+    function convertDateToWeek(dateStr) {
+        const date = new Date(dateStr);
+        const startOfYear = new Date(date.getFullYear(), 0, 1);
+        const days = Math.floor((date - startOfYear) / (1000 * 60 * 60 * 24));
+        return `Week ${Math.ceil((days + 1) / 7)}`;
     }
 
-    // Chart options
+    function extractWeekNumber(label) {
+        const match = label.match(/Week (\d+)/);
+        return match ? parseInt(match[1]) : -1;
+    }
+
     const optionsCombined = {
-        series: combinedSeries,
+        series: combinedSeries.map(series => ({
+            name: series.name,
+            data: dataSources[series.key][series.prop],
+            color: series.color
+        })),
         chart: {
             type: 'bar',
             height: 350
@@ -1069,27 +920,21 @@
                 endingShape: 'rounded'
             }
         },
-        dataLabels: {
-            enabled: true
-        },
+        dataLabels: { enabled: true },
         stroke: {
             show: true,
             width: 2,
             colors: ['transparent']
         },
         xaxis: {
-            categories: datamks.categories // Assuming all categories are the same across datasets
+            categories: datamks.categories
         },
         yaxis: {
-            title: {
-                text: 'Persentase (%)'
-            },
+            title: { text: 'Persentase (%)' },
             min: 0,
-            max: 100,
+            max: 100
         },
-        fill: {
-            opacity: 1
-        },
+        fill: { opacity: 1 },
         annotations: {
             yaxis: [
                 {
@@ -1108,14 +953,11 @@
         },
         tooltip: {
             y: {
-                formatter: function (val) {
-                    return val + "%";
-                }
+                formatter: val => val + "%"
             }
         }
     };
 
-    // Initialize the chart
     const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
     chartCombined.render();
 </script>
