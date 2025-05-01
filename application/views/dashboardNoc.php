@@ -876,89 +876,196 @@
 
     // Function to apply the date filter and update the chart
     function applyDateFilter() {
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
 
-    if (!startDate || !endDate) {
-        alert('Please select both start date and end date.');
-        return;
-    }
-
-    // Konversi tanggal ke minggu
-    const startWeek = convertDateToWeek(startDate);
-    const endWeek = convertDateToWeek(endDate);
-
-    console.log('Start Week:', startWeek);
-    console.log('End Week:', endWeek);
-
-    // Filter data berdasarkan rentang minggu
-    const filteredData = filterDataByWeek(startWeek, endWeek);
-
-    console.log('Filtered Data:', filteredData);
-    console.log('Categories:', filteredData.categories);  // Periksa kategori yang difilter
-
-    // Jika tidak ada data, tampilkan pesan
-    if (filteredData.categories.length === 0) {
-        alert("No data found for the selected week range.");
-        return;
-    }
-
-    // Hitung rata-rata SIBT
-    const sibtData = calculateSIBT(filteredData);
-
-    // Update data grafik
-    const updatedSeries = createUpdatedSeries(filteredData, sibtData);
-
-    // Update chart
-    chartCombined.updateOptions({
-        series: updatedSeries,
-        xaxis: {
-            categories: filteredData.categories
+        if (!startDate || !endDate) {
+            alert('Please select both start date and end date.');
+            return;
         }
-    });
-}
 
-// Fungsi untuk memfilter data berdasarkan minggu yang dipilih
-function filterDataByWeek(startWeek, endWeek) {
-    const filteredCategories = [];
-    const filteredData = {};
+        // Convert the start and end dates to week numbers
+        const startWeek = convertDateToWeek(startDate);
+        const endWeek = convertDateToWeek(endDate);
 
-    // Inisialisasi filtered data untuk setiap kategori
-    combinedSeries.forEach(series => {
-        filteredData[series.name.toLowerCase().replace(/ /g, "_")] = [];
-    });
+        console.log('Start Week:', startWeek);
+        console.log('End Week:', endWeek);
 
-    // Ekstrak nomor minggu dari kategori
-    const startWeekNum = extractWeekNumber(startWeek);
-    const endWeekNum = extractWeekNumber(endWeek);
+        // Filter data based on the week range
+        const filteredData = filterDataByWeek(startWeek, endWeek);
 
-    console.log("Start Week Num:", startWeekNum, "End Week Num:", endWeekNum);
+        // Log the filtered data for debugging
+        console.log('Filtered Data:', filteredData);
+        console.log('Categories:', filteredData.categories);  // Check the filtered categories
+        console.log('Makassar Data:', filteredData['makassar_-_less_than_1_day_%']);
+        console.log('Mamuju Data:', filteredData['mamuju_-_less_than_1_day_%']);
 
-    for (let i = 0; i < datamks.categories.length; i++) {
-        const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
+        // If no data is found, alert the user
+        if (filteredData.categories.length === 0) {
+            alert("No data found for the selected week range.");
+            return;
+        }
 
-        console.log('Checking Category:', datamks.categories[i], 'Week Number:', categoryWeekNum);
+        // Calculate the average data for SIBT
+        const sibtData = calculateSIBT(filteredData);
 
-        // Bandingkan minggu yang difilter dengan minggu data
-        if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
-            filteredCategories.push(datamks.categories[i]);
+        // Create the updated series for the chart
+        const updatedSeries = createUpdatedSeries(filteredData, sibtData);
 
-            // Tambahkan data untuk setiap seri
+        // Update chart options and data
+        chartCombined.updateOptions({
+            series: updatedSeries,
+            xaxis: {
+                categories: filteredData.categories
+            }
+        });
+    }
+
+    // Calculate the average data for each week
+    function calculateSIBT(filteredData) {
+        const sibtData = [];
+        const weeks = filteredData.categories;
+
+        for (let i = 0; i < weeks.length; i++) {
+            let sum = 0;
+            let count = 0;
+
+            // Sum up data for "Less than 1 Day (%)" and "More than 3 Days (%)" across all cities
             combinedSeries.forEach(series => {
                 const dataKey = series.name.toLowerCase().replace(/ /g, "_");
-                if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
-                    filteredData[dataKey].push(datamks[dataKey][i]);
+                if (filteredData[dataKey] && filteredData[dataKey][i] !== undefined) {
+                    sum += filteredData[dataKey][i];
+                    count++;
                 }
             });
+
+            // Calculate average
+            sibtData.push(sum / count);
         }
+
+        return sibtData;
     }
 
-    return {
-        categories: filteredCategories,
-        ...filteredData
-    };
-}
+    // Create the updated series for the chart
+    function createUpdatedSeries(filteredData, sibtData) {
+        return [
+            {
+                name: "Makassar - Less than 1 Day (%)",
+                data: filteredData['makassar_-_less_than_1_day_%'] || [],
+                color: '#347892'
+            },
+            {
+                name: "Makassar - More than 3 Days (%)",
+                data: filteredData['makassar_-_more_than_3_days_%'] || [],
+                color: '#ffc107'
+            },
+            {
+                name: "Mamuju - Less than 1 Day (%)",
+                data: filteredData['mamuju_-_less_than_1_day_%'] || [],
+                color: '#28a745'
+            },
+            {
+                name: "Mamuju - More than 3 Days (%)",
+                data: filteredData['mamuju_-_more_than_3_days_%'] || [],
+                color: '#dc3545'
+            },
+            {
+                name: "Palu - Less than 1 Day (%)",
+                data: filteredData['palu_-_less_than_1_day_%'] || [],
+                color: '#007bff'
+            },
+            {
+                name: "Palu - More than 3 Days (%)",
+                data: filteredData['palu_-_more_than_3_days_%'] || [],
+                color: '#ffc107'
+            },
+            {
+                name: "Kendari - Less than 1 Day (%)",
+                data: filteredData['kendari_-_less_than_1_day_%'] || [],
+                color: '#6f42c1'
+            },
+            {
+                name: "Kendari - More than 3 Days (%)",
+                data: filteredData['kendari_-_more_than_3_days_%'] || [],
+                color: '#fd7e14'
+            },
+            {
+                name: "Gorontalo - Less than 1 Day (%)",
+                data: filteredData['gorontalo_-_less_than_1_day_%'] || [],
+                color: '#6610f2'
+            },
+            {
+                name: "Gorontalo - More than 3 Days (%)",
+                data: filteredData['gorontalo_-_more_than_3_days_%'] || [],
+                color: '#e83e8c'
+            },
+            {
+                name: "Manado - Less than 1 Day (%)",
+                data: filteredData['manado_-_less_than_1_day_%'] || [],
+                color: '#20c997'
+            },
+            {
+                name: "Manado - More than 3 Days (%)",
+                data: filteredData['manado_-_more_than_3_days_%'] || [],
+                color: '#fd3f43'
+            },
+            {
+                name: "SIBT - Average (%)",
+                data: sibtData,
+                color: '#17a2b8'
+            }
+        ];
+    }
 
+    // Convert a date (yyyy-mm-dd) to a week number
+    function convertDateToWeek(dateStr) {
+        const date = new Date(dateStr);
+        const startOfYear = new Date(date.getFullYear(), 0, 1);
+        const daysPassed = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
+        const weekNumber = Math.ceil((daysPassed + 1) / 7); // Week starts from 1
+        return `Week ${weekNumber}`;
+    }
+
+    // Function to filter data based on the selected week range
+    function filterDataByWeek(startWeek, endWeek) {
+        const filteredCategories = [];
+        const filteredData = {};
+
+        // Inisialisasi filtered data untuk setiap kategori
+        combinedSeries.forEach(series => {
+            filteredData[series.name.toLowerCase().replace(/ /g, "_")] = [];
+        });
+
+        // Ekstrak nomor minggu dari kategori
+        const startWeekNum = extractWeekNumber(startWeek);
+        const endWeekNum = extractWeekNumber(endWeek);
+
+        console.log("Start Week Num:", startWeekNum, "End Week Num:", endWeekNum);
+
+        for (let i = 0; i < datamks.categories.length; i++) {
+            const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
+
+            console.log('Checking Category:', datamks.categories[i], 'Week Number:', categoryWeekNum);
+
+            // Bandingkan minggu yang difilter dengan minggu data
+            if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
+                filteredCategories.push(datamks.categories[i]);
+
+                // Tambahkan data untuk setiap seri
+                combinedSeries.forEach(series => {
+                    const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+                    if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
+                        filteredData[dataKey].push(datamks[dataKey][i]);
+                    }
+                });
+            }
+        }
+
+        return {
+            categories: filteredCategories,
+            ...filteredData
+        };
+    }
 
     // Function to extract the week number from a string like "Week 1", "Week 2", etc.
     function extractWeekNumber(weekLabel) {
