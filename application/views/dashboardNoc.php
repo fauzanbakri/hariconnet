@@ -965,71 +965,71 @@
 
 <!-- =================================MONTHLY================================== -->
 <script>
-const datasibt = <?php echo $monthlyall; ?>;
-const datamks = <?php echo $monthlymks; ?>;
-const datammj = <?php echo $monthlymmj; ?>;
-const datapal = <?php echo $monthlypal; ?>;
-const datakdi = <?php echo $monthlykdi; ?>;
-const datagto = <?php echo $monthlygto; ?>;
-const datamnd = <?php echo $monthlymnd; ?>;
+const data2sibt = <?php echo $monthlyall; ?>;
+const data2mks = <?php echo $monthlymks; ?>;
+const data2mmj = <?php echo $monthlymmj; ?>;
+const data2pal = <?php echo $monthlypal; ?>;
+const data2kdi = <?php echo $monthlykdi; ?>;
+const data2gto = <?php echo $monthlygto; ?>;
+const data2mnd = <?php echo $monthlymnd; ?>;
 
 const optionsCombined = {
   series: [
     {
       name: "SIBT - < 1 Day (%)",
-      data: datasibt.percent_more_than_1_day
+      data: data2sibt.percent_more_than_1_day
     },
     {
       name: "SIBT - > 3 Days (%)",
-      data: datasibt.percent_more_than_3_days
+      data: data2sibt.percent_more_than_3_days
     },
     {
       name: "Makassar - < 1 Day (%)",
-      data: datamks.percent_more_than_1_day
+      data: data2mks.percent_more_than_1_day
     },
     {
       name: "Makassar - > 3 Days (%)",
-      data: datamks.percent_more_than_3_days
+      data: data2mks.percent_more_than_3_days
     },
     {
       name: "Mamuju - < 1 Day (%)",
-      data: datammj.percent_more_than_1_day
+      data: data2mmj.percent_more_than_1_day
     },
     {
       name: "Mamuju - > 3 Days (%)",
-      data: datammj.percent_more_than_3_days
+      data: data2mmj.percent_more_than_3_days
     },
     {
       name: "Palu - < 1 Day (%)",
-      data: datapal.percent_more_than_1_day
+      data: data2pal.percent_more_than_1_day
     },
     {
       name: "Palu - > 3 Days (%)",
-      data: datapal.percent_more_than_3_days
+      data: data2pal.percent_more_than_3_days
     },
     {
       name: "Kendari - < 1 Day (%)",
-      data: datakdi.percent_more_than_1_day
+      data: data2kdi.percent_more_than_1_day
     },
     {
       name: "Kendari - > 3 Days (%)",
-      data: datakdi.percent_more_than_3_days
+      data: data2kdi.percent_more_than_3_days
     },
     {
       name: "Gorontalo - < 1 Day (%)",
-      data: datagto.percent_more_than_1_day
+      data: data2gto.percent_more_than_1_day
     },
     {
       name: "Gorontalo - > 3 Days (%)",
-      data: datagto.percent_more_than_3_days
+      data: data2gto.percent_more_than_3_days
     },
     {
       name: "Manado - < 1 Day (%)",
-      data: datamnd.percent_more_than_1_day
+      data: data2mnd.percent_more_than_1_day
     },
     {
       name: "Manado - > 3 Days (%)",
-      data: datamnd.percent_more_than_3_days
+      data: data2mnd.percent_more_than_3_days
     }
   ],
   chart: {
@@ -1052,7 +1052,7 @@ const optionsCombined = {
     colors: ['transparent']
   },
   xaxis: {
-    categories: datasibt.categories
+    categories: data2sibt.categories
   },
   yaxis: {
     title: {
