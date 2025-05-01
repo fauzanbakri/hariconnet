@@ -916,7 +916,7 @@
         plotOptions: {
             bar: {
                 horizontal: false,
-                columnWidth: '90%',
+                columnWidth: '100%',
                 endingShape: 'rounded'
             }
         },
@@ -997,7 +997,7 @@ const optionsChartAll = {
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: '90%',
+      columnWidth: '100%',
       endingShape: 'rounded'
     }
   },
@@ -1048,9 +1048,6 @@ const optionsChartAll = {
 };
 
 const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
-console.log("Kategorinya:", data2sibt.categories);
-console.log("Data SIBT < 1 Day:", data2sibt.percent_more_than_1_day);
-console.log("Data SIBT > 3 Days:", data2sibt.percent_more_than_3_days);
 chartAll.render();
 </script>
 
