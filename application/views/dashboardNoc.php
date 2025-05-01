@@ -823,6 +823,7 @@
 
 
 <!-- =================================MONTHLY================================== -->
+
 <script>
 const data2sibt = <?php echo $monthlyall; ?>;
 const data2mks = <?php echo $monthlymks; ?>;
@@ -832,43 +833,8 @@ const data2kdi = <?php echo $monthlykdi; ?>;
 const data2gto = <?php echo $monthlygto; ?>;
 const data2mnd = <?php echo $monthlymnd; ?>;
 
-// Simpan semua kategori bulan
-const fullCategories = data2sibt.categories;
+const fullCategories = data2sibt.categories; // format ["2025-01", "2025-02", ...]
 
-// Fungsi untuk memfilter berdasarkan bulan
-function applyMonthFilter() {
-  const start = document.getElementById("startMonth").value;
-  const end = document.getElementById("endMonth").value;
-
-  if (!start || !end) {
-    alert("Please select both start and end month.");
-    return;
-  }
-
-  const startDate = new Date(start + "-01");
-  const endDate = new Date(end + "-01");
-
-  const filteredIndexes = fullCategories.map((label, i) => {
-    const date = new Date(label + "-01");
-    return (date >= startDate && date <= endDate) ? i : -1;
-  }).filter(i => i !== -1);
-
-  const filteredSeries = chartAllData.series.map(series => {
-    return {
-      name: series.name,
-      data: filteredIndexes.map(i => series.data[i])
-    };
-  });
-
-  const filteredCategories = filteredIndexes.map(i => fullCategories[i]);
-
-  chartAll.updateOptions({
-    series: filteredSeries,
-    xaxis: { categories: filteredCategories }
-  });
-}
-
-// Data hanya "< 1 Day (%)"
 const chartAllData = {
   series: [
     { name: "SIBT - < 1 Day (%)", data: data2sibt.percent_more_than_1_day },
@@ -881,18 +847,29 @@ const chartAllData = {
   ]
 };
 
+const target = 62; // target garis horizontal
+
 const optionsChartAll = {
   series: chartAllData.series,
-  chart: { type: 'bar', height: 450 },
+  chart: {
+    type: 'bar',
+    height: 450
+  },
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: '80%',
+      columnWidth: '60%', // jarak antar bar
       endingShape: 'rounded'
     }
   },
-  dataLabels: { enabled: true },
-  stroke: { show: true, width: 2, colors: ['transparent'] },
+  dataLabels: {
+    enabled: true
+  },
+  stroke: {
+    show: true,
+    width: 2,
+    colors: ['transparent']
+  },
   xaxis: {
     categories: fullCategories
   },
@@ -901,14 +878,19 @@ const optionsChartAll = {
     min: 0,
     max: 100
   },
-  fill: { opacity: 1 },
+  fill: {
+    opacity: 1
+  },
   annotations: {
     yaxis: [{
       y: target,
       borderColor: '#f44336',
       label: {
         borderColor: '#f44336',
-        style: { color: '#fff', background: '#f44336' },
+        style: {
+          color: '#fff',
+          background: '#f44336'
+        },
         text: `Target: ${target}%`
       }
     }]
@@ -924,6 +906,38 @@ const optionsChartAll = {
 
 const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
 chartAll.render();
+
+// Fungsi filter bulan
+function applyMonthFilter() {
+  const start = document.getElementById("startMonth").value;
+  const end = document.getElementById("endMonth").value;
+
+  if (!start || !end) {
+    alert("Please select both start and end month.");
+    return;
+  }
+
+  const filteredIndexes = fullCategories.map((label, i) => {
+    return (label >= start && label <= end) ? i : -1;
+  }).filter(i => i !== -1);
+
+  if (filteredIndexes.length === 0) {
+    alert("No data available in selected month range.");
+    return;
+  }
+
+  const filteredSeries = chartAllData.series.map(series => ({
+    name: series.name,
+    data: filteredIndexes.map(i => series.data[i])
+  }));
+
+  const filteredCategories = filteredIndexes.map(i => fullCategories[i]);
+
+  chartAll.updateOptions({
+    series: filteredSeries,
+    xaxis: { categories: filteredCategories }
+  });
+}
 </script>
 
 
