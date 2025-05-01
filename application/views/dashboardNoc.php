@@ -809,7 +809,7 @@
     const datakdi = <?php echo $datapercent_kendari; ?>;
     const datagto = <?php echo $datapercent_gorontalo; ?>;
     const datamnd = <?php echo $datapercent_manado; ?>;
-    console.log(<?php vardump($datapercent_makassar); ?>)
+    console.log(<?php vardump($datapercent_makassar); ?>);
     // Combined series
     const combinedSeries = [
         {
