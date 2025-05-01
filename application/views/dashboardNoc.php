@@ -824,57 +824,17 @@
 
 <!-- =================================MONTHLY================================== -->
 <script>
-const data2sibt = <?php echo $monthlyall; ?>;
-const data2mks = <?php echo $monthlymks; ?>;
-const data2mmj = <?php echo $monthlymmj; ?>;
-const data2pal = <?php echo $monthlypal; ?>;
-const data2kdi = <?php echo $monthlykdi; ?>;
-const data2gto = <?php echo $monthlygto; ?>;
-const data2mnd = <?php echo $monthlymnd; ?>;
+  const data2sibt = <?php echo $monthlyall; ?>;
+  const data2mks = <?php echo $monthlymks; ?>;
+  const data2mmj = <?php echo $monthlymmj; ?>;
+  const data2pal = <?php echo $monthlypal; ?>;
+  const data2kdi = <?php echo $monthlykdi; ?>;
+  const data2gto = <?php echo $monthlygto; ?>;
+  const data2mnd = <?php echo $monthlymnd; ?>;
 
-// Simpan semua kategori bulan (diasumsikan semua sama)
-const fullCategories = data2sibt.categories;
+  const fullCategories = data2sibt.categories; // format: ["2025-01", "2025-02", ...]
 
-// Fungsi untuk memfilter berdasarkan bulan
-function applyMonthFilter() {
-  const start = document.getElementById("startMonth").value;
-  const end = document.getElementById("endMonth").value;
-
-  if (!start || !end) {
-    alert("Please select both start and end month.");
-    return;
-  }
-
-  // Format: yyyy-mm
-  const startDate = new Date(start + "-01");
-  const endDate = new Date(end + "-01");
-
-  // Ambil index kategori yang sesuai range
-  const filteredIndexes = fullCategories.map((label, i) => {
-    const date = new Date(label + "-01"); // label format "2024-01", "2024-02", ...
-    return (date >= startDate && date <= endDate) ? i : -1;
-  }).filter(i => i !== -1);
-
-  // Filter setiap data series
-  const filteredSeries = chartAllData.series.map(series => {
-    return {
-      name: series.name,
-      data: filteredIndexes.map(i => series.data[i])
-    };
-  });
-
-  const filteredCategories = filteredIndexes.map(i => fullCategories[i]);
-
-  // Update chart
-  chartAll.updateOptions({
-    series: filteredSeries,
-    xaxis: { categories: filteredCategories }
-  });
-}
-
-// Data awal (full)
-const chartAllData = {
-  series: [
+  const allSeriesRaw = [
     { name: "SIBT - < 1 Day (%)", data: data2sibt.percent_more_than_1_day },
     { name: "SIBT - > 3 Days (%)", data: data2sibt.percent_more_than_3_days },
     { name: "Makassar - < 1 Day (%)", data: data2mks.percent_more_than_1_day },
@@ -889,52 +849,112 @@ const chartAllData = {
     { name: "Gorontalo - > 3 Days (%)", data: data2gto.percent_more_than_3_days },
     { name: "Manado - < 1 Day (%)", data: data2mnd.percent_more_than_1_day },
     { name: "Manado - > 3 Days (%)", data: data2mnd.percent_more_than_3_days }
-  ]
-};
+  ];
 
-const optionsChartAll = {
-  series: chartAllData.series,
-  chart: { type: 'bar', height: 450 },
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      columnWidth: '100%',
-      endingShape: 'rounded'
-    }
-  },
-  dataLabels: { enabled: true },
-  stroke: { show: true, width: 2, colors: ['transparent'] },
-  xaxis: {
-    categories: fullCategories
-  },
-  yaxis: {
-    title: { text: 'Persentase (%)' },
-    min: 0,
-    max: 100
-  },
-  fill: { opacity: 1 },
-  annotations: {
-    yaxis: [{
-      y: target,
-      borderColor: '#f44336',
-      label: {
-        borderColor: '#f44336',
-        style: { color: '#fff', background: '#f44336' },
-        text: `Target: ${target}%`
+  const target = 62;
+
+  const optionsChartAll = {
+    series: JSON.parse(JSON.stringify(allSeriesRaw)), // Deep copy for initial
+    chart: {
+      type: 'bar',
+      height: 450
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '100%',
+        endingShape: 'rounded'
       }
-    }]
-  },
-  tooltip: {
-    y: {
-      formatter: function (val) {
-        return val + "%";
+    },
+    dataLabels: {
+      enabled: true
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: fullCategories
+    },
+    yaxis: {
+      title: {
+        text: 'Persentase (%)'
+      },
+      min: 0,
+      max: 100
+    },
+    fill: {
+      opacity: 1
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: target,
+          borderColor: '#f44336',
+          label: {
+            borderColor: '#f44336',
+            style: {
+              color: '#fff',
+              background: '#f44336'
+            },
+            text: `Target: ${target}%`
+          }
+        }
+      ]
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return val + "%";
+        }
       }
     }
+  };
+
+  const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
+  chartAll.render();
+
+  function applyMonthFilter() {
+    const start = document.getElementById("startMonth").value; // format: YYYY-MM
+    const end = document.getElementById("endMonth").value;
+
+    if (!start || !end) {
+      alert("Pilih rentang bulan terlebih dahulu");
+      return;
+    }
+
+    const startDate = new Date(start + "-01");
+    const endDate = new Date(end + "-01");
+
+    // Filter indexes based on date range
+    const filteredIndexes = fullCategories.map((label, i) => {
+      const date = new Date(label + "-01");
+      return (date >= startDate && date <= endDate) ? i : -1;
+    }).filter(i => i !== -1);
+
+    if (filteredIndexes.length === 0) {
+      alert("Tidak ada data dalam rentang bulan yang dipilih.");
+      return;
+    }
+
+    // Filter each series data
+    const filteredSeries = allSeriesRaw.map(series => {
+      return {
+        name: series.name,
+        data: filteredIndexes.map(i => series.data[i])
+      };
+    });
+
+    const filteredCategories = filteredIndexes.map(i => fullCategories[i]);
+
+    chartAll.updateOptions({
+      series: filteredSeries,
+      xaxis: {
+        categories: filteredCategories
+      }
+    });
   }
-};
-
-const chartAll = new ApexCharts(document.querySelector("#chartaging_all_combined"), optionsChartAll);
-chartAll.render();
 </script>
 
 
