@@ -911,7 +911,7 @@
         // Calculate the average data for SIBT
         const sibtData = calculateSIBT(filteredData);
 
-        // Add SIBT to the chart
+        // Create the updated series for the chart, including the SIBT average data
         const updatedSeries = [
             ...combinedSeries,
             {
@@ -921,6 +921,7 @@
             }
         ];
 
+        // Clear the chart before updating
         chartCombined.updateOptions({
             series: updatedSeries,
             xaxis: {
