@@ -1030,47 +1030,54 @@
     const filteredCategories = [];
     const filteredData = {};
 
-    // Initialize filtered data for each city
+    // Inisialisasi filtered data untuk setiap kategori
     combinedSeries.forEach(series => {
         filteredData[series.name.toLowerCase().replace(/ /g, "_")] = [];
     });
 
-    // Extract the numeric week number from the week label
+    // Ekstrak nomor minggu dari kategori
     const startWeekNum = extractWeekNumber(startWeek);
     const endWeekNum = extractWeekNumber(endWeek);
 
     console.log("Start Week Num:", startWeekNum, "End Week Num:", endWeekNum);
+
+    // Log seluruh kategori untuk memeriksa data sebelum filter
+    console.log("Categories Before Filtering:", datamks.categories);
 
     for (let i = 0; i < datamks.categories.length; i++) {
         const categoryWeekNum = extractWeekNumber(datamks.categories[i]);
 
         console.log('Checking Category:', datamks.categories[i], 'Week Number:', categoryWeekNum);
 
-        // Compare week number with start and end week
+        // Bandingkan minggu yang dipilih dengan minggu data
         if (categoryWeekNum >= startWeekNum && categoryWeekNum <= endWeekNum) {
             filteredCategories.push(datamks.categories[i]);
 
-            // Log data before adding
             console.log('Adding data for week:', datamks.categories[i]);
             
-            // Add filtered data for each series
+            // Menambahkan data untuk setiap kategori
             combinedSeries.forEach(series => {
                 const dataKey = series.name.toLowerCase().replace(/ /g, "_");
+
+                // Periksa apakah data ada, jika tidak, tambahkan 0
                 if (datamks[dataKey] && datamks[dataKey][i] !== undefined) {
-                    console.log(`Data for ${series.name}:`, datamks[dataKey][i]);
+                    console.log(`Data for ${series.name} on Week ${datamks.categories[i]}:`, datamks[dataKey][i]);
                     filteredData[dataKey].push(datamks[dataKey][i]);
                 } else {
-                    console.log(`No data for ${series.name} on week ${datamks.categories[i]}`);
+                    console.log(`No data for ${series.name} on Week ${datamks.categories[i]}`);
+                    filteredData[dataKey].push(0);  // Masukkan nilai 0 jika data tidak ada
                 }
             });
         }
     }
 
+    // Kembalikan data yang sudah difilter
     return {
         categories: filteredCategories,
         ...filteredData
     };
 }
+
 
 
     // Function to extract the week number from a string like "Week 1", "Week 2", etc.
