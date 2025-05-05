@@ -659,166 +659,198 @@
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
 </script>
+<!-- Chart for Combined Area -->
+<div id="chartaging_combined"></div>
+<!-- Chart for Average (SIBT) -->
+<div id="chartaging_average"></div>
+
 <script>
-    // Ambil data dari backend PHP
-    const datamks = <?php echo $datapercent_makassar; ?>;
-    const datammj = <?php echo $datapercent_mamuju; ?>;
-    const datapal = <?php echo $datapercent_palu; ?>;
-    const datakdi = <?php echo $datapercent_kendari; ?>;
-    const datagto = <?php echo $datapercent_gorontalo; ?>;
-    const datamnd = <?php echo $datapercent_manado; ?>;
+const datamks = <?php echo $datapercent_makassar; ?>;
+const datammj = <?php echo $datapercent_mamuju; ?>;
+const datapal = <?php echo $datapercent_palu; ?>;
+const datakdi = <?php echo $datapercent_kendari; ?>;
+const datagto = <?php echo $datapercent_gorontalo; ?>;
+const datamnd = <?php echo $datapercent_manado; ?>;
+const target = 62;
 
-    const dataSources = {
-        "makassar": datamks,
-        "mamuju": datammj,
-        "palu": datapal,
-        "kendari": datakdi,
-        "gorontalo": datagto,
-        "manado": datamnd
-    };
+const dataSources = {
+    "makassar": datamks,
+    "mamuju": datammj,
+    "palu": datapal,
+    "kendari": datakdi,
+    "gorontalo": datagto,
+    "manado": datamnd
+};
 
-    const combinedSeries = [
-        { name: "Makassar - Less than 1 Day (%)", key: "makassar", prop: "percent_more_than_1_day", color: '#347892' },
-        { name: "Makassar - More than 3 Days (%)", key: "makassar", prop: "percent_more_than_3_days", color: '#ffc107' },
-        { name: "Mamuju - Less than 1 Day (%)", key: "mamuju", prop: "percent_more_than_1_day", color: '#28a745' },
-        { name: "Mamuju - More than 3 Days (%)", key: "mamuju", prop: "percent_more_than_3_days", color: '#dc3545' },
-        { name: "Palu - Less than 1 Day (%)", key: "palu", prop: "percent_more_than_1_day", color: '#007bff' },
-        { name: "Palu - More than 3 Days (%)", key: "palu", prop: "percent_more_than_3_days", color: '#ffc107' },
-        { name: "Kendari - Less than 1 Day (%)", key: "kendari", prop: "percent_more_than_1_day", color: '#6f42c1' },
-        { name: "Kendari - More than 3 Days (%)", key: "kendari", prop: "percent_more_than_3_days", color: '#fd7e14' },
-        { name: "Gorontalo - Less than 1 Day (%)", key: "gorontalo", prop: "percent_more_than_1_day", color: '#6610f2' },
-        { name: "Gorontalo - More than 3 Days (%)", key: "gorontalo", prop: "percent_more_than_3_days", color: '#e83e8c' },
-        { name: "Manado - Less than 1 Day (%)", key: "manado", prop: "percent_more_than_1_day", color: '#20c997' },
-        { name: "Manado - More than 3 Days (%)", key: "manado", prop: "percent_more_than_3_days", color: '#fd3f43' }
-    ];
+const combinedSeries = [
+    { name: "Makassar - Less than 1 Day (%)", key: "makassar", prop: "percent_more_than_1_day", color: '#347892' },
+    { name: "Makassar - More than 3 Days (%)", key: "makassar", prop: "percent_more_than_3_days", color: '#ffc107' },
+    { name: "Mamuju - Less than 1 Day (%)", key: "mamuju", prop: "percent_more_than_1_day", color: '#28a745' },
+    { name: "Mamuju - More than 3 Days (%)", key: "mamuju", prop: "percent_more_than_3_days", color: '#dc3545' },
+    { name: "Palu - Less than 1 Day (%)", key: "palu", prop: "percent_more_than_1_day", color: '#007bff' },
+    { name: "Palu - More than 3 Days (%)", key: "palu", prop: "percent_more_than_3_days", color: '#ffc107' },
+    { name: "Kendari - Less than 1 Day (%)", key: "kendari", prop: "percent_more_than_1_day", color: '#6f42c1' },
+    { name: "Kendari - More than 3 Days (%)", key: "kendari", prop: "percent_more_than_3_days", color: '#fd7e14' },
+    { name: "Gorontalo - Less than 1 Day (%)", key: "gorontalo", prop: "percent_more_than_1_day", color: '#6610f2' },
+    { name: "Gorontalo - More than 3 Days (%)", key: "gorontalo", prop: "percent_more_than_3_days", color: '#e83e8c' },
+    { name: "Manado - Less than 1 Day (%)", key: "manado", prop: "percent_more_than_1_day", color: '#20c997' },
+    { name: "Manado - More than 3 Days (%)", key: "manado", prop: "percent_more_than_3_days", color: '#fd3f43' }
+];
 
-    function applyDateFilter() {
-        const startDate = document.getElementById("startDate").value;
-        const endDate = document.getElementById("endDate").value;
+function extractWeekNumber(label) {
+    const match = label.match(/Week (\d+)/);
+    return match ? parseInt(match[1]) : -1;
+}
 
-        if (!startDate || !endDate) {
-            alert('Please select both start date and end date.');
-            return;
+function convertDateToWeek(dateStr) {
+    const date = new Date(dateStr);
+    const startOfYear = new Date(date.getFullYear(), 0, 1);
+    const days = Math.floor((date - startOfYear) / (1000 * 60 * 60 * 24));
+    return `Week ${Math.ceil((days + 1) / 7)}`;
+}
+
+function filterDataByWeek(startWeek, endWeek) {
+    const result = { categories: [] };
+    const startWeekNum = extractWeekNumber(startWeek);
+    const endWeekNum = extractWeekNumber(endWeek);
+    const referenceWeeks = datamks.categories;
+
+    for (let i = 0; i < referenceWeeks.length; i++) {
+        const weekNum = extractWeekNumber(referenceWeeks[i]);
+        if (weekNum >= startWeekNum && weekNum <= endWeekNum) {
+            result.categories.push(referenceWeeks[i]);
+
+            combinedSeries.forEach(series => {
+                const key = `${series.key}_${series.prop}`;
+                const source = dataSources[series.key];
+                if (!result[key]) result[key] = [];
+                const value = source[series.prop][i];
+                result[key].push(value !== undefined ? value : 0);
+            });
         }
+    }
 
-        const startWeek = convertDateToWeek(startDate);
-        const endWeek = convertDateToWeek(endDate);
+    return result;
+}
 
-        const filteredData = filterDataByWeek(startWeek, endWeek);
-        if (filteredData.categories.length === 0) {
-            alert("No data found for the selected week range.");
-            return;
-        }
+function applyDateFilter() {
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
 
-        const updatedSeries = combinedSeries.map(series => ({
-            name: series.name,
-            data: filteredData[`${series.key}_${series.prop}`] || [],
-            color: series.color
-        }));
+    if (!startDate || !endDate) {
+        alert('Please select both start date and end date.');
+        return;
+    }
 
-        chartCombined.updateOptions({
-            series: updatedSeries,
-            xaxis: {
-                categories: filteredData.categories
+    const startWeek = convertDateToWeek(startDate);
+    const endWeek = convertDateToWeek(endDate);
+
+    const filteredData = filterDataByWeek(startWeek, endWeek);
+    if (filteredData.categories.length === 0) {
+        alert("No data found for the selected week range.");
+        return;
+    }
+
+    const updatedSeries = combinedSeries.map(series => ({
+        name: series.name,
+        data: filteredData[`${series.key}_${series.prop}`] || [],
+        color: series.color
+    }));
+
+    chartCombined.updateOptions({
+        series: updatedSeries,
+        xaxis: { categories: filteredData.categories }
+    });
+
+    // RATA-RATA BARU
+    const totalWeeks = filteredData.categories.length;
+    const avgLess1Day = [];
+    const avgMore3Days = [];
+
+    for (let i = 0; i < totalWeeks; i++) {
+        let sumLess1Day = 0, sumMore3Days = 0, count = 0;
+        Object.keys(dataSources).forEach(loc => {
+            const d1 = dataSources[loc].percent_more_than_1_day[i];
+            const d3 = dataSources[loc].percent_more_than_3_days[i];
+            if (d1 !== undefined && d3 !== undefined) {
+                sumLess1Day += d1;
+                sumMore3Days += d3;
+                count++;
             }
         });
+        avgLess1Day.push((sumLess1Day / count).toFixed(2));
+        avgMore3Days.push((sumMore3Days / count).toFixed(2));
     }
 
-    function filterDataByWeek(startWeek, endWeek) {
-        const result = { categories: [] };
+    chartAverage.updateOptions({
+        series: [
+            { name: "SIBT less than 1 day", data: avgLess1Day },
+            { name: "SIBT more than 3 days", data: avgMore3Days }
+        ],
+        xaxis: { categories: filteredData.categories }
+    });
+}
 
-        const startWeekNum = extractWeekNumber(startWeek);
-        const endWeekNum = extractWeekNumber(endWeek);
-
-        const referenceWeeks = datamks.categories;
-
-        for (let i = 0; i < referenceWeeks.length; i++) {
-            const weekNum = extractWeekNumber(referenceWeeks[i]);
-            if (weekNum >= startWeekNum && weekNum <= endWeekNum) {
-                result.categories.push(referenceWeeks[i]);
-
-                combinedSeries.forEach(series => {
-                    const key = `${series.key}_${series.prop}`;
-                    const source = dataSources[series.key];
-                    if (!result[key]) result[key] = [];
-                    const value = source[series.prop][i];
-                    result[key].push(value !== undefined ? value : 0);
-                });
+const optionsCombined = {
+    series: combinedSeries.map(series => ({
+        name: series.name,
+        data: dataSources[series.key][series.prop],
+        color: series.color
+    })),
+    chart: { type: 'bar', height: 350 },
+    plotOptions: {
+        bar: { horizontal: false, columnWidth: '80%', endingShape: 'rounded' }
+    },
+    dataLabels: { enabled: true },
+    stroke: { show: true, width: 2, colors: ['transparent'] },
+    xaxis: { categories: datamks.categories },
+    yaxis: {
+        title: { text: 'Persentase (%)' },
+        min: 0,
+        max: 100
+    },
+    fill: { opacity: 1 },
+    annotations: {
+        yaxis: [{
+            y: target,
+            borderColor: '#f44336',
+            label: {
+                borderColor: '#f44336',
+                style: { color: '#fff', background: '#f44336' },
+                text: `Target: ${target}%`
             }
-        }
-
-        return result;
+        }]
+    },
+    tooltip: {
+        y: { formatter: val => val + "%" }
     }
+};
 
-    function convertDateToWeek(dateStr) {
-        const date = new Date(dateStr);
-        const startOfYear = new Date(date.getFullYear(), 0, 1);
-        const days = Math.floor((date - startOfYear) / (1000 * 60 * 60 * 24));
-        return `Week ${Math.ceil((days + 1) / 7)}`;
+const optionsAverage = {
+    series: [],
+    chart: { type: 'bar', height: 300 },
+    plotOptions: {
+        bar: { horizontal: false, columnWidth: '40%', endingShape: 'rounded' }
+    },
+    dataLabels: { enabled: true },
+    stroke: { show: true, width: 2, colors: ['transparent'] },
+    xaxis: { categories: [] },
+    yaxis: {
+        title: { text: 'Average (%)' },
+        min: 0,
+        max: 100
+    },
+    fill: { opacity: 1 },
+    tooltip: {
+        y: { formatter: val => val + "%" }
     }
+};
 
-    function extractWeekNumber(label) {
-        const match = label.match(/Week (\d+)/);
-        return match ? parseInt(match[1]) : -1;
-    }
+const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
+chartCombined.render();
 
-    const optionsCombined = {
-        series: combinedSeries.map(series => ({
-            name: series.name,
-            data: dataSources[series.key][series.prop],
-            color: series.color
-        })),
-        chart: {
-            type: 'bar',
-            height: 350
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '80%',
-                endingShape: 'rounded'
-            }
-        },
-        dataLabels: { enabled: true },
-        stroke: {
-            show: true,
-            width: 2,
-            colors: ['transparent']
-        },
-        xaxis: {
-            categories: datamks.categories
-        },
-        yaxis: {
-            title: { text: 'Persentase (%)' },
-            min: 0,
-            max: 100
-        },
-        fill: { opacity: 1 },
-        annotations: {
-            yaxis: [
-                {
-                    y: target,
-                    borderColor: '#f44336',
-                    label: {
-                        borderColor: '#f44336',
-                        style: {
-                            color: '#fff',
-                            background: '#f44336'
-                        },
-                        text: `Target: ${target}%`
-                    }
-                }
-            ]
-        },
-        tooltip: {
-            y: {
-                formatter: val => val + "%"
-            }
-        }
-    };
-
-    const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
-    chartCombined.render();
+const chartAverage = new ApexCharts(document.querySelector("#chartaging_average"), optionsAverage);
+chartAverage.render();
 </script>
 
 
