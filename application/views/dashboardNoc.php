@@ -657,7 +657,9 @@
 
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
-</script><!-- Chart for Combined Area -->
+</script><!-- Chart for Combined Area --><!-- Chart for Combined Area -->
+<div id="chartaging_combined"></div>
+
 <script>
 const datamks = <?php echo $datapercent_makassar; ?>;
 const datammj = <?php echo $datapercent_mamuju; ?>;
@@ -751,22 +753,30 @@ function applyDateFilter() {
         color: series.color
     }));
 
-    // Calculate SIBT average series
+    // ✅ Calculate SIBT average from filteredData
     const avgLess1Day = [];
     const avgMore3Days = [];
+
     for (let i = 0; i < filteredData.categories.length; i++) {
-        let sum1 = 0, sum3 = 0, count = 0;
-        Object.keys(dataSources).forEach(loc => {
-            const val1 = dataSources[loc].percent_more_than_1_day[i];
-            const val3 = dataSources[loc].percent_more_than_3_days[i];
-            if (val1 !== undefined && val3 !== undefined) {
-                sum1 += val1;
-                sum3 += val3;
-                count++;
+        let sum1 = 0, sum3 = 0, count1 = 0, count3 = 0;
+
+        combinedSeries.forEach(series => {
+            const key = `${series.key}_${series.prop}`;
+            const value = filteredData[key]?.[i];
+
+            if (value !== undefined) {
+                if (series.prop === "percent_more_than_1_day") {
+                    sum1 += parseFloat(value);
+                    count1++;
+                } else if (series.prop === "percent_more_than_3_days") {
+                    sum3 += parseFloat(value);
+                    count3++;
+                }
             }
         });
-        avgLess1Day.push((sum1 / count).toFixed(2));
-        avgMore3Days.push((sum3 / count).toFixed(2));
+
+        avgLess1Day.push(count1 > 0 ? (sum1 / count1).toFixed(2) : 0);
+        avgMore3Days.push(count3 > 0 ? (sum3 / count3).toFixed(2) : 0);
     }
 
     updatedSeries.push({ name: "SIBT less than 1 day", data: avgLess1Day, color: '#000000' });
@@ -816,7 +826,6 @@ const optionsCombined = {
 const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
 chartCombined.render();
 </script>
-
 
 <!-- =================================MONTHLY================================== -->
 
