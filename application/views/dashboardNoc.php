@@ -657,12 +657,7 @@
 
     // const chart2 = new ApexCharts(document.querySelector("#chartaging"), options2);
     // chart2.render();
-</script>
-<!-- Chart for Combined Area -->
-<div id="chartaging_combined"></div>
-<!-- Chart for Average (SIBT) -->
-<div id="chartaging_average"></div>
-
+</script><!-- Chart for Combined Area -->
 <script>
 const datamks = <?php echo $datapercent_makassar; ?>;
 const datammj = <?php echo $datapercent_mamuju; ?>;
@@ -756,36 +751,29 @@ function applyDateFilter() {
         color: series.color
     }));
 
-    chartCombined.updateOptions({
-        series: updatedSeries,
-        xaxis: { categories: filteredData.categories }
-    });
-
-    // RATA-RATA BARU
-    const totalWeeks = filteredData.categories.length;
+    // Calculate SIBT average series
     const avgLess1Day = [];
     const avgMore3Days = [];
-
-    for (let i = 0; i < totalWeeks; i++) {
-        let sumLess1Day = 0, sumMore3Days = 0, count = 0;
+    for (let i = 0; i < filteredData.categories.length; i++) {
+        let sum1 = 0, sum3 = 0, count = 0;
         Object.keys(dataSources).forEach(loc => {
-            const d1 = dataSources[loc].percent_more_than_1_day[i];
-            const d3 = dataSources[loc].percent_more_than_3_days[i];
-            if (d1 !== undefined && d3 !== undefined) {
-                sumLess1Day += d1;
-                sumMore3Days += d3;
+            const val1 = dataSources[loc].percent_more_than_1_day[i];
+            const val3 = dataSources[loc].percent_more_than_3_days[i];
+            if (val1 !== undefined && val3 !== undefined) {
+                sum1 += val1;
+                sum3 += val3;
                 count++;
             }
         });
-        avgLess1Day.push((sumLess1Day / count).toFixed(2));
-        avgMore3Days.push((sumMore3Days / count).toFixed(2));
+        avgLess1Day.push((sum1 / count).toFixed(2));
+        avgMore3Days.push((sum3 / count).toFixed(2));
     }
 
-    chartAverage.updateOptions({
-        series: [
-            { name: "SIBT less than 1 day", data: avgLess1Day },
-            { name: "SIBT more than 3 days", data: avgMore3Days }
-        ],
+    updatedSeries.push({ name: "SIBT less than 1 day", data: avgLess1Day, color: '#000000' });
+    updatedSeries.push({ name: "SIBT more than 3 days", data: avgMore3Days, color: '#999999' });
+
+    chartCombined.updateOptions({
+        series: updatedSeries,
         xaxis: { categories: filteredData.categories }
     });
 }
@@ -796,7 +784,7 @@ const optionsCombined = {
         data: dataSources[series.key][series.prop],
         color: series.color
     })),
-    chart: { type: 'bar', height: 350 },
+    chart: { type: 'bar', height: 450 },
     plotOptions: {
         bar: { horizontal: false, columnWidth: '80%', endingShape: 'rounded' }
     },
@@ -825,31 +813,8 @@ const optionsCombined = {
     }
 };
 
-const optionsAverage = {
-    series: [],
-    chart: { type: 'bar', height: 300 },
-    plotOptions: {
-        bar: { horizontal: false, columnWidth: '40%', endingShape: 'rounded' }
-    },
-    dataLabels: { enabled: true },
-    stroke: { show: true, width: 2, colors: ['transparent'] },
-    xaxis: { categories: [] },
-    yaxis: {
-        title: { text: 'Average (%)' },
-        min: 0,
-        max: 100
-    },
-    fill: { opacity: 1 },
-    tooltip: {
-        y: { formatter: val => val + "%" }
-    }
-};
-
 const chartCombined = new ApexCharts(document.querySelector("#chartaging_combined"), optionsCombined);
 chartCombined.render();
-
-const chartAverage = new ApexCharts(document.querySelector("#chartaging_average"), optionsAverage);
-chartAverage.render();
 </script>
 
 
