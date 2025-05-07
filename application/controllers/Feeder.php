@@ -58,70 +58,51 @@ class Feeder extends CI_Controller {
 	public function insertData(){
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
-		$idInsiden = $this->input->post('incident');
+	
+		// Fungsi untuk membersihkan input dari simbol ' dan "
+		function cleanInput($input) {
+			return str_replace(['"', "'"], '', $input);
+		}
+	
+		$idInsiden = cleanInput($this->input->post('incident'));
 		$rawtanggal = $this->input->post('downtime');
 		$timestamps = strtotime(str_replace('/', '-', $rawtanggal));
 		$downtime = date('Y-m-d H:i', $timestamps);
-		$tipe = $this->input->post('tipe');
-		$kp = $this->input->post('kp');
-		$olt = $this->input->post('olt');
-		$area = $this->input->post('area');
-		$deskripsi = $this->input->post('deskripsi');
-		$tim = $this->input->post('tim');
-		// $gangguan = $this->input->post('status');
-		$jumlahtiket = $this->input->post('jumlahtiket');
-		$tipePenyebab = $this->input->post('tipePenyebab');
-		$keterangan = $this->input->post('keterangan');
-		$status = $this->input->post('status');
-		$createby = $_SESSION['nama'];
+		$tipe = cleanInput($this->input->post('tipe'));
+		$kp = cleanInput($this->input->post('kp'));
+		$olt = cleanInput($this->input->post('olt'));
+		$area = cleanInput($this->input->post('area'));
+		$deskripsi = cleanInput($this->input->post('deskripsi'));
+		$tim = cleanInput($this->input->post('tim'));
+		$jumlahtiket = cleanInput($this->input->post('jumlahtiket'));
+		$tipePenyebab = cleanInput($this->input->post('tipePenyebab'));
+		$keterangan = cleanInput($this->input->post('keterangan'));
+		$status = cleanInput($this->input->post('status'));
+		$createby = cleanInput($_SESSION['nama']);
 		$timestamp = date("Y-m-d H:i:s");
-		// die();
-		if($deskripsi!=''){
-			$q = $this->db->query("INSERT INTO 
-			feeder(
-			idInsiden,
-			downtime,
-			tipe,
-			kp,
-			kode,
-			idOlt,
-			gangguan,
-			tim,
-			status,
-			keterangan,
-			jumlahTiket,
-			tipePenyebab,
-			createby,
-			timestamp
-			) 
-			VALUES(
-				'$idInsiden',
-				'$downtime',
-				'$tipe',
-				'$kp',
-				'$area',
-				'$olt',
-				'$deskripsi',
-				'$tim',
-				'$status',
-				'$keterangan',
-				'$jumlahtiket',
-				'$tipePenyebab',
-				'$createby',
-				'$timestamp'
-				)");
-			if($q){
+	
+		if($deskripsi != ''){
+			// Gunakan prepared statement untuk keamanan yang lebih baik
+			$sql = "INSERT INTO feeder 
+				(idInsiden, downtime, tipe, kp, kode, idOlt, gangguan, tim, status, keterangan, jumlahTiket, tipePenyebab, createby, timestamp) 
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			$result = $this->db->query($sql, [
+				$idInsiden, $downtime, $tipe, $kp, $area, $olt, $deskripsi, 
+				$tim, $status, $keterangan, $jumlahtiket, $tipePenyebab, $createby, $timestamp
+			]);
+	
+			if($result){
 				echo 'success';
-			}else{
+			} else {
 				$error = $this->db->error();
 				echo $error['message'];
-			}	
-		}else{
-			echo 'Deskripsi Cannot Empty';
+			}
+		} else {
+			echo 'Deskripsi Cannot Be Empty';
 		}
-	
 	}
-
+	
 	public function editData(){
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
