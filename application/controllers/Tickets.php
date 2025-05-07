@@ -74,55 +74,53 @@ class Tickets extends CI_Controller {
 	public function insertData(){
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
-		$idTiket = $this->input->post('tiket');
-		$idInsiden = $this->input->post('incident');
+	
+		// Fungsi untuk membersihkan input dari simbol ' dan "
+		function cleanInput($input) {
+			return str_replace(['"', "'"], '', $input);
+		}
+	
+		$idTiket = cleanInput($this->input->post('tiket'));
+		$idInsiden = cleanInput($this->input->post('incident'));
 		$rawtanggal = $this->input->post('tanggal');
 		$timestamps = strtotime(str_replace('/', '-', $rawtanggal));
 		$tanggal = date('Y-m-d H:i', $timestamps);
-		$sid = $this->input->post('sid');
-		$telepon = $this->input->post('telepon');
-		$nama = $this->input->post('nama');
-		$keluhan = $this->input->post('keluhan');
-		$alamat = $this->input->post('alamat');
-		$idOlt = $this->input->post('olt');
-		$sn = $this->input->post('sn');
-		$tim = $this->input->post('tim');
-		$keterangan = $this->input->post('keterangan');
-		$status = 'NEW';
-		$prioritas = $this->input->post('prioritas');
-		$createby = $_SESSION['nama'];
+		$sid = cleanInput($this->input->post('sid'));
+		$telepon = cleanInput($this->input->post('telepon'));
+		$nama = cleanInput($this->input->post('nama'));
+		$keluhan = cleanInput($this->input->post('keluhan'));
+		$alamat = cleanInput($this->input->post('alamat'));
+		$idOlt = cleanInput($this->input->post('olt'));
+		$sn = cleanInput($this->input->post('sn'));
+		$tim = cleanInput($this->input->post('tim'));
+		$keterangan = cleanInput($this->input->post('keterangan'));
+		$prioritas = cleanInput($this->input->post('prioritas'));
+		$createby = cleanInput($_SESSION['nama']);
 		$timestamp = date("Y-m-d H:i:s");
-		// die();
-		if($idTiket!=''){
-			$q = $this->db->query("INSERT INTO tiket VALUES(
-				'$idTiket',
-				'$idInsiden',
-				'$tanggal',
-				'$sid',
-				'$telepon',
-				'$nama',
-				'$keluhan',
-				'$alamat',
-				'$idOlt',
-				'$sn',
-				'$tim',
-				'$keterangan',
-				'$status',
-				'$prioritas',
-				'$createby',
-				'$timestamp'
-				)");
-			if($q){
+		$status = 'NEW';
+	
+		if($idTiket != ''){
+			// Gunakan prepared statement untuk keamanan yang lebih baik
+			$sql = "INSERT INTO tiket 
+				(idTiket, idInsiden, tanggal, sid, telepon, nama, keluhan, alamat, idOlt, sn, tim, keterangan, status, prioritas, createby, timestamp) 
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			$result = $this->db->query($sql, [
+				$idTiket, $idInsiden, $tanggal, $sid, $telepon, $nama, $keluhan, $alamat, 
+				$idOlt, $sn, $tim, $keterangan, $status, $prioritas, $createby, $timestamp
+			]);
+	
+			if($result){
 				echo 'success';
 			}else{
 				$error = $this->db->error();
 				echo $error['message'];
-			}	
-		}else{
-			echo 'Tiket Cannot Empty';
+			}
+		} else {
+			echo 'Tiket Cannot Be Empty';
 		}
-			
 	}
+	
 	public function editData(){
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
