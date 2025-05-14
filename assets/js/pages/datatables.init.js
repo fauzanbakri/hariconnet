@@ -28,7 +28,7 @@ function initializeTables() {
         ],
         columnDefs: [
             {
-                targets: 24,
+                targets: 23,
                 className: 'priority-column',
                 responsivePriority: 1
             }
