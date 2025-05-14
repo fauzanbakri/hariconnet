@@ -112,7 +112,7 @@ class Feeder extends CI_Controller {
 		$timestamp = strtotime(str_replace('/', '-', $rawtanggal));
 		$downtime = date('Y-m-d H:i', $timestamp);
 		$tipe = $this->input->post('tipe');
-		$kp = $this->input->post('kp');
+		$kp = $this->input->post('kp');	
 		$olt = $this->input->post('olt');
 		$area = $this->input->post('area');
 		$deskripsi = $this->input->post('deskripsi');
