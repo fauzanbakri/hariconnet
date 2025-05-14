@@ -335,7 +335,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li><a href='/ListPermohonanAll/edit/{$row->id_permohonan}' class='dropdown-item'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>
-                                                                <li><a href='/ListPermohonanAll/delete/{$row->id_permohonan}' class='dropdown-item' onclick='return confirm(\"Apakah Anda yakin ingin menghapus permohonan ini?\");'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
+                                                                <li><a href='/ListPermohonanAll/delete/{$row->id_permohonan}' class='dropdown-item' onclick='return confirm(Apakah Anda yakin ingin menghapus permohonan ini?);'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
