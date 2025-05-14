@@ -26,6 +26,13 @@ function initializeTables() {
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
+        columnDefs: [
+            {
+                targets: 24,
+                className: 'priority-column',
+                responsivePriority: 1
+            }
+        ],
         responsive: true 
     });
     new DataTable('#feederclosetable', {
