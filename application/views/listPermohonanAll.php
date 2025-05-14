@@ -309,7 +309,7 @@
                                                     <td>{$row->tgl_permohonan}</td>
                                                     <td>{$row->nama_pemohon}</td>
                                                     <td>{$row->aging}</td>
-                                                    <td>{$row->status}</td>
+                                                    <td><span class='badge bg-" . ($row->status == 'CLOSED' ? 'success' : ($row->status == 'ON PROGRESS' ? 'info' : ($row->status == 'NEW' ? 'primary' : 'secondary'))) . "'>{$row->status}</span></td>
                                                     <td>{$row->no_telepon}</td>
                                                     <td>{$row->alamat}</td>
                                                     <td>{$row->daerah}</td>
