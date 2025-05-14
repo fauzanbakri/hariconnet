@@ -21,13 +21,7 @@ function initializeTables() {
         ],
         responsive: true 
     });
-    new DataTable('#tabelpermohonan', {
-        lengthMenu: [
-            [-1, 10, 25, 50],
-            ['All', 10, 25, 50]
-        ],
-        responsive: true 
-    });
+    new DataTable('#tabelpermohonan');
     new DataTable('#feederclosetable', {
         lengthMenu: [
             [-1, 10, 25, 50],
