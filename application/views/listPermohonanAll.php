@@ -429,50 +429,6 @@
 
 
     <script>
-        var multiSelectBasic = document.getElementById("multiselect-basic"),
-        multiSelectHeader = (multiSelectBasic && multi(multiSelectBasic, {
-            enable_search: !1
-        }), document.getElementById("multiselect-header")),
-        multiSelectOptGroup = (multiSelectHeader && multi(multiSelectHeader, {
-            non_selected_header: "Cars",
-            selected_header: "Favorite Cars"
-        }), document.getElementById("multiselect-optiongroup")),
-        autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
-            enable_search: !0
-        }), new autoComplete({
-            selector: "#olt",
-            placeHolder: "Search for OLT...",
-            data: {
-                src: [
-                    <?php 
-                        foreach ($olt as $row){
-                            echo "'".$row->idOlt."',";
-                        }
-                    ?>
-                ],
-                cache: !0
-            },
-            resultsList: {
-                element: function(e, t) {
-                    var l;
-                    t.results.length || ((l = document.createElement("div")).setAttribute("class", "no_result"), l.innerHTML = '<span>Found No Results for "' + t.query + '"</span>', e.prepend(l))
-                },
-                noResults: !0
-            },
-            resultItem: {
-                highlight: !0
-            },
-            events: {
-                input: {
-                    selection: function(e) {
-                        e = e.detail.selection.value;
-                        autoCompleteFruit.input.value = e
-                    }
-                }
-            }
-        }));
-    </script>
-    <script>
         document.getElementById("sa-warning") && document.getElementById("sa-warning").addEventListener("click", function() {
             Swal.fire({
                 title: "Are you sure?",
