@@ -271,8 +271,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 </div>
                                 <div class="card-body">
                                     <table id="tabelpermohonan" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
@@ -289,90 +287,69 @@
                                                 <th>Koordinat Pemohon</th>
                                                 <th>ID PA</th>
                                                 <th>Produk</th>
-                                                <th>PTL</th>
-                                                <th>KP</th>
-                                                <th>Last Update By</th>
-                                                <th>timestamp</th>
+                                                <th>Nama PTL</th>
+                                                <th>Mitra Agen</th>
+                                                <th>Nama Agen</th>
+                                                <th>Posisi Agen</th>
+                                                <th>Mitra Aktivasi</th>
+                                                <th>Petugas Lapangan</th>
+                                                <th>Koordinat Splitter</th>
+                                                <th>Tanggal Pembayaran</th>
+                                                <th>Tanggal Disposisi</th>
+                                                <th>OLT</th>
+                                                <th>Regional</th>
+                                                <th>Kantor Perwakilan</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             date_default_timezone_set('Asia/Makassar');
-                                            foreach ($data as $row){
-                                                if($row->status=="CLOSED"){
-                                                    $a = '<span class="badge bg-success">CLOSED</span>';
-                                                }elseif($row->status=="ON PROGRESS"){
-                                                    $a = '<span class="badge border border-info text-info">ON PROGRESS</span>';
-                                                }elseif($row->status=="NEW"){
-                                                    $a = '<span class="badge border border-primary text-primary">NEW</span>';
-                                                }elseif($row->status=="SOLVED (ICRM OPEN)"){
-                                                    $a = '<span class="badge border border-success text-success">SOLVED (ICRM OPEN)</span>';
-                                                }elseif($row->status=="EARLY"){
-                                                    $a = '<span class="badge bg-danger">EARLY</span>';
-                                                }else{
-                                                    $a = '<span class="badge border border-dark text-body">OPEN</span>';
-                                                }
-                                                $tanggalSekarang = new DateTime();
-                                                $durasi1 = new DateTime($row->tanggal);;
-                                                $selisih = $durasi1->diff($tanggalSekarang);
-                                                $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
-                                                if($row->prioritas=="High"){
-                                                    $p = '<span class="badge border border-danger text-danger">High</span>';
-                                                }elseif($row->prioritas=="Low"){
-                                                    $p = '<span class="badge border border-info text-success">Low</span>';
-                                                }else{
-                                                    $p = '<span class="badge border border-primary text-primary">Normal</span>';
-                                                }
+                                            foreach ($permohonan as $row) {
                                                 echo "
-                                                <tr> 
-                                                    <td>".$p."</td>
-                                                    <td>".$row->idInsiden."</td>
-                                                    <td>".$row->idTiket."</td>
-                                                    <td>".$row->tanggal."</td>
-                                                    <td>".$durasi."</td>
-                                                    <td>".$row->sid."</td>
-                                                    <td>".$row->nama."</td>
-                                                    <td>".$a."</td>
-                                                    <td>".$row->idOlt."</td>
-                                                    <td>".$row->keterangan."</td>
-                                                    <td>".$row->keluhan."</td>
-                                                    <td>".$row->kabupaten."</td>
-                                                    <td>".$row->sn."</td>  
-                                                    <td>".$row->tim."</td>
-                                                    <td>".$row->urutan."</td>  
-                                                    <td>".$row->provinsi."</td>
-                                                    <td>".$row->telepon."</td> 
-                                                    <td>".$row->alamat."</td>
-                                                    <td>".$row->createby."</td>  
-                                                    <td>".$row->timestamp."</td>  
+                                                <tr>
+                                                    <td>{$row->id_permohonan}</td>
+                                                    <td>{$row->tgl_permohonan}</td>
+                                                    <td>{$row->nama_pemohon}</td>
+                                                    <td>{$row->aging}</td>
+                                                    <td><span class='badge bg-" . ($row->status == 'CLOSED' ? 'success' : ($row->status == 'ON PROGRESS' ? 'info' : ($row->status == 'NEW' ? 'primary' : 'secondary'))) . "'>{$row->status}</span></td>
+                                                    <td>{$row->no_telepon}</td>
+                                                    <td>{$row->alamat}</td>
+                                                    <td>{$row->daerah}</td>
+                                                    <td>{$row->lat_pemohon}, {$row->long_pemohon}</td>
+                                                    <td>{$row->id_pa}</td>
+                                                    <td>{$row->produk}</td>
+                                                    <td>{$row->nama_ptl}</td>
+                                                    <td>{$row->mitra_agen}</td>
+                                                    <td>{$row->nama_agen}</td>
+                                                    <td>{$row->posisi_agen}</td>
+                                                    <td>{$row->mitra_aktivasi}</td>
+                                                    <td>{$row->petugas_lapangan}</td>
+                                                    <td>{$row->lat_splitter}, {$row->long_splitter}</td>
+                                                    <td>{$row->tgl_pembayaran}</td>
+                                                    <td>{$row->tgl_disposisi}</td>
+                                                    <td>{$row->olt}</td>
+                                                    <td>{$row->regional}</td>
+                                                    <td>{$row->kantor_perwakilan}</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
-                                                                <li><a href='#' class='dropdown-item copy-btn' data-row='".htmlspecialchars(json_encode($row))."'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
-                                                                <li><a href='#' class='dropdown-item telegram-btn' data-id='".htmlspecialchars(json_encode($row))."'><i class='ri-send-plane-fill align-bottom me-2 text-muted'></i> Telegram</a></li>
-                                                                <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-editincident='".$row->idInsiden."' data-edittiket='".$row->idTiket."' data-edittanggal='".$row->tanggal."' data-editsid='".$row->sid."' data-edittelepon='".$row->telepon."' data-editnama='".$row->nama."' data-editkeluhan='".$row->keluhan."' data-editalamat='".$row->alamat."' data-editOlt='".$row->idOlt."' data-editsn='".$row->sn."' data-editketerangan='".$row->keterangan."' data-editprioritas='".$row->prioritas."' data-edittim='".$row->tim."' data-editcreateby='".$row->createby."' data-editkabupaten='".$row->kabupaten."' data-editprovinsi='".$row->provinsi."' data-urutan='".$row->urutan."' data-timestamp='".$row->timestamp."' data-editstatus='".$row->status."'>
-                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
-                                                                    </a>
-                                                                </li>
-                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idTiket.">
-                                                                        <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
-                                                                    </a>
-                                                                </li>
+                                                                <li><a href='/ListPermohonanAll/edit/{$row->id_permohonan}' class='dropdown-item'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>
+                                                                <li><a href='/ListPermohonanAll/delete/{$row->id_permohonan}' class='dropdown-item' onclick='return confirm('Apakah Anda yakin ingin menghapus permohonan ini?');'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
                                                             </ul>
                                                         </div>
-                                                    </td> 
-                                                </tr>                                              
+                                                    </td>
+                                                </tr>
                                                 ";
                                             }
                                             ?>
                                         </tbody>
                                     </table>
                                 </div>
+
                             </div>
                         </div><!--end col-->
                     </div><!--end row-->

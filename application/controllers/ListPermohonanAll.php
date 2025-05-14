@@ -1,74 +1,72 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ListPermohonanAll extends CI_Controller {
-	public function index()
-	{
-		$title['title']="List Permohonan All";
-		$data['data'] = $this->db->query("SELECT * FROM dismantle")->result();
-		$this->load->view('navbar',$title);
-		$this->load->view('listPermohonanAll', $data);
-	}
 
-	public function deleteRow()
-	{
-		$idTiket = $this->input->get('id');
-		if ($this->db->delete('tiket', ['idTiket' => $idTiket])) {
-			echo true;
-		} else {
-			echo false;
-		}
-	}
-	public function insertData(){
-		date_default_timezone_set('Asia/Makassar');
-		session_start();
-		$idTiket = $this->input->post('tiket');
-		$idInsiden = $this->input->post('incident');
-		$rawtanggal = $this->input->post('tanggal');
-		$timestamps = strtotime(str_replace('/', '-', $rawtanggal));
-		$tanggal = date('Y-m-d H:i', $timestamps);
-		$sid = $this->input->post('sid');
-		$telepon = $this->input->post('telepon');
-		$nama = $this->input->post('nama');
-		$keluhan = $this->input->post('keluhan');
-		$alamat = $this->input->post('alamat');
-		$idOlt = $this->input->post('olt');
-		$sn = $this->input->post('sn');
-		$tim = $this->input->post('tim');
-		$keterangan = $this->input->post('keterangan');
-		$status = 'NEW';
-		$prioritas = $this->input->post('prioritas');
-		$createby = $_SESSION['nama'];
-		$timestamp = date("Y-m-d H:i:s");
-		// die();
-		if($idTiket!=''){
-			$q = $this->db->query("INSERT INTO tiket VALUES(
-				'$idTiket',
-				'$idInsiden',
-				'$tanggal',
-				'$sid',
-				'$telepon',
-				'$nama',
-				'$keluhan',
-				'$alamat',
-				'$idOlt',
-				'$sn',
-				'$tim',
-				'$keterangan',
-				'$status',
-				'$prioritas',
-				'$createby',
-				'$timestamp'
-				)");
-			if($q){
-				echo 'success';
-			}else{
-				$error = $this->db->error();
-				echo $error['message'];
-			}	
-		}else{
-			echo 'Tiket Cannot Empty';
-		}
-			
-	}
+    public function index() {
+        $title['title'] = "List Permohonan";
+
+        // Fetch all records from cusex
+        $data['permohonan'] = $this->db->query("
+            SELECT 
+                id_permohonan,
+                nama_pemohon,
+                jenis_permohonan,
+                no_telepon,
+                id_pa,
+                layanan,
+                produk,
+                nama_ptl,
+                mitra_agen,
+                nama_agen,
+                posisi_agen,
+                mitra_aktivasi,
+                petugas_lapangan,
+                lat_pemohon,
+                long_pemohon,
+                id_splitter,
+                lat_splitter,
+                long_splitter,
+                tgl_permohonan,
+                tgl_pembayaran,
+                tgl_disposisi,
+                aging,
+                status,
+                olt,
+                alamat,
+                daerah,
+                regional,
+                kantor_perwakilan
+            FROM cusex
+            ORDER BY tgl_permohonan DESC
+        ")->result();
+
+        session_start();
+        if(isset($_SESSION['role']) && in_array($_SESSION['role'], ['Superadmin', 'NOC Ritel', 'Team Leader', 'Pemeliharaan Ritel'])) {
+            $this->load->view('navbar', $title);
+            $this->load->view('listPermohonanAll', $data);
+        } else {
+            header('location: ./DashboardNoc');
+            exit();
+        }
+    }
+
+    public function delete($id) {
+        if ($this->db->delete('cusex', ['id_permohonan' => $id])) {
+            redirect('/ListPermohonanAll');
+        } else {
+            echo "Error: Gagal menghapus permohonan.";
+        }
+    }
+
+    public function edit($id) {
+        // Fetch the current data for the selected record
+        $data['permohonan'] = $this->db->get_where('cusex', ['id_permohonan' => $id])->row();
+        $title['title'] = "Edit Permohonan";
+
+        // Load the edit form view
+        $this->load->view('navbar', $title);
+        $this->load->view('editPermohonan', $data);
+    }
 }
