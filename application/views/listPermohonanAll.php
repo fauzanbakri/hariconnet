@@ -39,9 +39,6 @@
                                         </button>
                                     </div>
                                     <div class="col-md-9 d-flex flex-row-reverse">
-                                    <button type="button" class="btn btn-danger flex-row-reverse" id="sa-warning">
-                                        Change Shift
-                                    </button>
                                         <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                 </div>
                                  </div>
