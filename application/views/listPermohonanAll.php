@@ -309,7 +309,7 @@
                                                     <td>{$row->tgl_permohonan}</td>
                                                     <td>{$row->nama_pemohon}</td>
                                                     <td>{$row->aging}</td>
-                                                    <td><span class='badge bg-" . ($row->status == 'CLOSED' ? 'success' : ($row->status == 'ON PROGRESS' ? 'info' : ($row->status == 'NEW' ? 'primary' : 'secondary'))) . "'>{$row->status}</span></td>
+                                                    <td>{$row->status}</td>
                                                     <td>{$row->no_telepon}</td>
                                                     <td>{$row->alamat}</td>
                                                     <td>{$row->daerah}</td>
@@ -335,7 +335,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li><a href='/ListPermohonanAll/edit/{$row->id_permohonan}' class='dropdown-item'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>
-                                                                <li><a href='/ListPermohonanAll/delete/{$row->id_permohonan}' class='dropdown-item' onclick='return confirm(Apakah Anda yakin ingin menghapus permohonan ini?);'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
+                                                                <li><a href='/ListPermohonanAll/delete/{$row->id_permohonan}' class='dropdown-item' onclick='return confirm(\"Apakah Anda yakin ingin menghapus permohonan ini?\");'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
