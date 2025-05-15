@@ -44,7 +44,7 @@ class ListPermohonanTaken extends CI_Controller {
         ")->result();
         if(isset($_SESSION['role']) && in_array($_SESSION['role'], ['Superadmin', 'NOC Ritel', 'Team Leader', 'Pemeliharaan Ritel'])) {
             $this->load->view('navbar', $title);
-            $this->load->view('listPermohonanBursa', $data);
+            $this->load->view('listPermohonanTaken', $data);
         } else {
             header('location: ./DashboardNoc');
             exit();
