@@ -39,7 +39,7 @@ class ListPermohonanTaken extends CI_Controller {
                 daerah,
                 regional,
                 kantor_perwakilan
-            FROM cusex WHERE pic='$nama'
+            FROM cusex WHERE pic='$name'
             ORDER BY tgl_permohonan DESC
         ")->result();
         if(isset($_SESSION['role']) && in_array($_SESSION['role'], ['Superadmin', 'NOC Ritel', 'Team Leader', 'Pemeliharaan Ritel'])) {
