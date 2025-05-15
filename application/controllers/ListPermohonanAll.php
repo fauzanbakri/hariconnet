@@ -37,7 +37,8 @@ class ListPermohonanAll extends CI_Controller {
                 alamat,
                 daerah,
                 regional,
-                kantor_perwakilan
+                kantor_perwakilan,
+				pic
             FROM cusex
             ORDER BY tgl_permohonan DESC
         ")->result();
