@@ -338,7 +338,7 @@
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
-                                                                <li><a href='/ListPermohonanAll/take/{$row->id_permohonan}' class='dropdown-item'><i class='ri-hand-coin-fill align-bottom me-2 text-muted'></i> Take</a></li>li><a href='/ListPermohonanAll/edit/{$row->id_permohonan}' class='dropdown-item'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>
+                                                                <li><a href='/ListPermohonanAll/take/{$row->id_permohonan}' class='dropdown-item'><i class='ri-hand-coin-fill align-bottom me-2 text-muted'></i> Take</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
