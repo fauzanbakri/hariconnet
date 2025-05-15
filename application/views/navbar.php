@@ -635,7 +635,7 @@
                         <!-- start Dashboard cusex -->
                          <li class="menu-title"><span data-key="t-menu">Customer Exp</span></li>
                          <li class="nav-item">
-                            <a class="nav-link menu-link" href="DashboardCusex" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-layouts">Dashboard CusEx</span>
                             </a>
                         </li> 
@@ -645,17 +645,17 @@
                             </a>
                         </li> 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="DashboardCusex" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link menu-link" href="ListPermohonanBursa" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-account-multiple-plus-outline"></i> <span data-key="t-layouts">List Permohonan Bursa</span>
                             </a>
                         </li> 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="DashboardCusex" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-account-lock-outline"></i> <span data-key="t-layouts">List Permohonan Taken</span>
                             </a>
                         </li> 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="DashboardCusex" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-account-multiple-check-outline"></i> <span data-key="t-layouts">List Permohonan Done</span>
                             </a>
                         </li> 
