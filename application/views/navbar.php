@@ -1,14 +1,14 @@
 
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
-<!-- Mirrored from Srisyaha.com/velzon/html/default/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 05:17:42 GMT -->
+<!-- Mirrored from themesbrand.com/velzon/html/default/dashboard-analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 05:17:42 GMT -->
 <head>
 
     <meta charset="utf-8" />
     <title><?= $title ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Srisyaha" name="author" />
+    <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
@@ -650,7 +650,7 @@
                             </a>
                         </li> 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link menu-link" href="ListPermohonanTaken" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-account-lock-outline"></i> <span data-key="t-layouts">List Permohonan Taken</span>
                             </a>
                         </li> 
