@@ -38,7 +38,7 @@ class ListPermohonanBursa extends CI_Controller {
                 daerah,
                 regional,
                 kantor_perwakilan
-            FROM cusex
+            FROM cusex WHERE pic=''
             ORDER BY tgl_permohonan DESC
         ")->result();
 
