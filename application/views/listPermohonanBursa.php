@@ -33,11 +33,11 @@
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
                                  <div class="row">
-                                    <div class="col-md-3">
+                                    <!-- <div class="col-md-3">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
                                             Add New
                                         </button>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-9 d-flex flex-row-reverse">
                                         <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                 </div>
@@ -303,12 +303,16 @@
                                             <?php
                                             date_default_timezone_set('Asia/Makassar');
                                             foreach ($permohonan as $row) {
+                                                $tanggalSekarang = new DateTime();
+                                                $durasi1 = new DateTime($row->tgl_permohonan);;
+                                                $selisih = $durasi1->diff($tanggalSekarang);
+                                                $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
                                                 echo "
                                                 <tr>
                                                     <td>{$row->id_permohonan}</td>
                                                     <td>{$row->tgl_permohonan}</td>
                                                     <td>{$row->nama_pemohon}</td>
-                                                    <td>{$row->aging}</td>
+                                                    <td>{$durasi}</td>
                                                     <td><span class='badge bg-" . ($row->status == 'CLOSED' ? 'success' : ($row->status == 'ON PROGRESS' ? 'info' : ($row->status == 'NEW' ? 'primary' : 'secondary'))) . "'>{$row->status}</span></td>
                                                     <td>{$row->no_telepon}</td>
                                                     <td>{$row->alamat}</td>

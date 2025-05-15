@@ -12,11 +12,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">List Permohonan All</h4>
+                                <h4 class="mb-sm-0">List Permohonan Taken</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Permohonan</a></li>
-                                        <li class="breadcrumb-item active">List Permohonan All</li>
+                                        <li class="breadcrumb-item active">List Permohonan Taken</li>
                                     </ol>
                                 </div>
 
@@ -28,16 +28,16 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">List Permohonan All</h5><br>
+                                    <h5 class="card-title mb-0">List Permohonan Taken</h5><br>
                                     <!-- Base Buttons -->
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
                                  <div class="row">
-                                    <div class="col-md-3">
+                                    <!-- <div class="col-md-3">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
                                             Add New
                                         </button>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-9 d-flex flex-row-reverse">
                                         <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                 </div>
@@ -270,7 +270,7 @@
                                 </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="tabelpermohonan" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                    <table id="tabelbursa" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>ID Permohonan</th>
@@ -281,7 +281,6 @@
                                                 <th>No Telepon</th>
                                                 <th>Alamat</th>
                                                 <th>Daerah</th>
-                                                <th>PIC</th>
                                                 <th>Koordinat Pemohon</th>
                                                 <th>ID PA</th>
                                                 <th>Produk</th>
@@ -303,7 +302,6 @@
                                         <tbody>
                                             <?php
                                             date_default_timezone_set('Asia/Makassar');
-                                            
                                             foreach ($permohonan as $row) {
                                                 $tanggalSekarang = new DateTime();
                                                 $durasi1 = new DateTime($row->tgl_permohonan);;
@@ -319,7 +317,6 @@
                                                     <td>{$row->no_telepon}</td>
                                                     <td>{$row->alamat}</td>
                                                     <td>{$row->daerah}</td>
-                                                    <td>{$row->pic}</td>
                                                     <td>{$row->lat_pemohon}, {$row->long_pemohon}</td>
                                                     <td>{$row->id_pa}</td>
                                                     <td>{$row->produk}</td>
@@ -341,6 +338,7 @@
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
+                                                                <li><a href='/ListPermohonanAll/take/{$row->id_permohonan}' class='dropdown-item'><i class='ri-hand-coin-fill align-bottom me-2 text-muted'></i> Take</a></li>
                                                                 <li><a href='/ListPermohonanAll/edit/{$row->id_permohonan}' class='dropdown-item'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>
                                                                 <li><a href='/ListPermohonanAll/delete/{$row->id_permohonan}' class='dropdown-item' onclick='return confirm(\"Apakah Anda yakin ingin menghapus permohonan ini?\");'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
                                                             </ul>
