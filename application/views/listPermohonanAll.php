@@ -313,8 +313,8 @@
                                                     <td><span class='badge bg-" . ($row->status == 'CLOSED' ? 'success' : ($row->status == 'ON PROGRESS' ? 'info' : ($row->status == 'NEW' ? 'primary' : 'secondary'))) . "'>{$row->status}</span></td>
                                                     <td>{$row->no_telepon}</td>
                                                     <td>{$row->alamat}</td>
-                                                    <td>{$row->pic}</td>
                                                     <td>{$row->daerah}</td>
+                                                    <td>{$row->pic}</td>
                                                     <td>{$row->lat_pemohon}, {$row->long_pemohon}</td>
                                                     <td>{$row->id_pa}</td>
                                                     <td>{$row->produk}</td>
