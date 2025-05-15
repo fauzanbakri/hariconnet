@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ListPermohonanTaken extends CI_Controller {
 
     public function index() {
+        session_start();
         $title['title'] = "List Permohonan";
         $name = $_SESSION['nama'];
         // Fetch all records from cusex
@@ -41,8 +42,6 @@ class ListPermohonanTaken extends CI_Controller {
             FROM cusex WHERE pic='$nama'
             ORDER BY tgl_permohonan DESC
         ")->result();
-
-        session_start();
         if(isset($_SESSION['role']) && in_array($_SESSION['role'], ['Superadmin', 'NOC Ritel', 'Team Leader', 'Pemeliharaan Ritel'])) {
             $this->load->view('navbar', $title);
             $this->load->view('listPermohonanBursa', $data);
