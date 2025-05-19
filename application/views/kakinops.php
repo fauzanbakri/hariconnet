@@ -90,6 +90,12 @@
                                                                 <textarea type="text" class="form-control" name="idname" id="idname" autocomplete="off" placeholder="ID Name"></textarea>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary" id="submitBtn">Submit</button>
+                                                            </div>
+                                                        </div><!--end col-->
                                                     </div><!--end row-->
                                                 <!-- </form> -->
                                             </div>
@@ -146,6 +152,12 @@
                                                                 <textarea type="text" class="form-control" name="editidname" id="editidname" autocomplete="off" placeholder="ID Name"></textarea>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
+                                                            </div>
+                                                        </div><!--end col-->
                                                     </div><!--end row-->
                                     </div>
                                 </div>
