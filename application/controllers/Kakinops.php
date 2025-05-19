@@ -31,9 +31,6 @@ class Kakinops extends CI_Controller {
 			echo false;
 		}
 	}
-	function cleanInput($input) {
-		return str_replace(['"', "'"], '', $input);
-	}
 	public function insertData(){
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
@@ -74,6 +71,9 @@ class Kakinops extends CI_Controller {
 	}
 	
 	public function editData(){
+		function cleanInput($input) {
+			return str_replace(['"', "'"], '', $input);
+		}
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
 		$id = cleanInput($this->input->post('id'));
