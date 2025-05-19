@@ -200,9 +200,7 @@
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
-                                                                <li><a href='#' class='dropdown-item copy-btn' data-row='".htmlspecialchars(json_encode($row))."'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
-                                                                <li><a href='#' class='dropdown-item telegram-btn' data-id='".htmlspecialchars(json_encode($row))."'><i class='ri-send-plane-fill align-bottom me-2 text-muted'></i> Telegram</a></li>
-                                                                <li>
+                                                               <li>
                                                                     <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->id."' data-edittgl='".$row->tanggal."' data-editnama='".$row->nama."' data-editjabatan='".$row->jabatan."' data-editprogress='".$row->progress."' data-editarea='".$row->area."' data-editolt='".$row->olt."' data-editidname='".$row->idName."' data-editstatus='".$row->status."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
