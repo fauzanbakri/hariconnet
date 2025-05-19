@@ -155,7 +155,7 @@
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                <button class="btn btn-primary" id="submitBtn">Submit</button>
+                                                                <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
                                                             </div>
                                                         </div><!--end col-->
                                                        </div> 
