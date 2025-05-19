@@ -87,7 +87,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">ID Name</label>
-                                                                <textarea type="text" class="form-control" name="idname" id="idname" autocomplete="off" placeholder="ID Name">
+                                                                <textarea type="text" class="form-control" name="idname" id="idname" autocomplete="off" placeholder="ID Name"></textarea>
                                                             </div>
                                                         </div>
                                                     </div><!--end row-->
@@ -540,7 +540,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-    new DataTable('#kakintable');
     </script>
 </body>
 
