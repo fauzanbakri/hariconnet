@@ -171,7 +171,44 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          
+                                            <?php
+                                            date_default_timezone_set('Asia/Makassar');
+                                            foreach ($data as $row){
+                                                echo "
+                                                <tr> 
+                                                    <td>".$row->id."</td>
+                                                    <td>".$row->progress."</td>
+                                                    <td>".$row->tanggal."</td>
+                                                    <td>".$row->nama."</td>
+                                                    <td>".$row->area."</td>
+                                                    <td>".$row->olt."</td>
+                                                    <td>".$row->idName."</td>
+                                                    <td>".$row->status."</td>
+                                                    <td>".$row->timestamp."</td>
+                                                    <td>
+                                                        <div class='dropdown d-inline-block'>
+                                                            <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                                <i class='ri-more-fill align-middle'></i>
+                                                            </button>
+                                                            <ul class='dropdown-menu dropdown-menu-end'>
+                                                                <li><a href='#' class='dropdown-item copy-btn' data-row='".htmlspecialchars(json_encode($row))."'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
+                                                                <li><a href='#' class='dropdown-item telegram-btn' data-id='".htmlspecialchars(json_encode($row))."'><i class='ri-send-plane-fill align-bottom me-2 text-muted'></i> Telegram</a></li>
+                                                                <li>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->id."' data-edittgl='".$row->tanggal."' data-editnama='".$row->nama."' data-editjabatan='".$row->jabatan."' data-editprogress='".$row->progress."' data-editarea='".$row->area."' data-editolt='".$row->olt."' data-editidname='".$row->idName."' data-editstatus='".$row->status."'>
+                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
+                                                                    </a>
+                                                                </li>
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->id.">
+                                                                        <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td> 
+                                                </tr>                                              
+                                                ";
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -503,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
+    new DataTable('#kakintable');
     </script>
 </body>
 
