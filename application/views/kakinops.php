@@ -201,7 +201,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->id."' data-edittgl='".$row->tanggal."' data-editnama='".$row->nama."' data-editjabatan='".$row->jabatan."' data-editprogress='".$row->progress."' data-editarea='".$row->area."' data-editolt='".$row->olt."' data-editidname='".$row->idName."' data-editstatus='".$row->status."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-editid='".$row->id."' data-edittgl='".$row->tanggal."' data-editnama='".$row->nama."' data-editjabatan='".$row->jabatan."' data-editprogress='".$row->progress."' data-editarea='".$row->area."' data-editolt='".$row->olt."' data-editidname='".$row->idName."' data-editstatus='".$row->status."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
@@ -412,7 +412,7 @@
 
                 e.preventDefault();
                 const formData = {
-                    id: $('[name="id"]').val(),
+                    id: $('[name="editid"]').val(),
                     tanggal: $('[name="edittgl"]').val(),
                     nama: $('[name="editnama"]').val(),
                     progress: $('[name="editprogress"]').val(),
