@@ -87,7 +87,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">ID Name</label>
-                                                                <input type="text" class="form-control" name="idname" id="idname" autocomplete="off" placeholder="ID Name">
+                                                                <textarea type="text" class="form-control" name="idname" id="idname" autocomplete="off" placeholder="ID Name"></textarea>
                                                             </div>
                                                         </div>
                                                     </div><!--end row-->
@@ -143,7 +143,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">ID Name</label>
-                                                                <textarea type="text" class="form-control" name="editidname" id="editidname" autocomplete="off" placeholder="ID Name">
+                                                                <textarea type="text" class="form-control" name="editidname" id="editidname" autocomplete="off" placeholder="ID Name"></textarea>
                                                             </div>
                                                         </div>
                                                     </div><!--end row-->
