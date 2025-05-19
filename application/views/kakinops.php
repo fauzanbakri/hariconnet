@@ -536,7 +536,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const ticketData = this.dataset;
             console.log(ticketData);
             const fields = [
-                'editid', 'edittgl', 'editnama', 'editjabatan', 'editprogress', 'editarea', 'editolt', 'editidname', 'editstatus'];
+                'id', 'edittgl', 'editnama', 'editjabatan', 'editprogress', 'editarea', 'editolt', 'editidname', 'editstatus'];
             fields.forEach(field => {
                 const inputElement = document.getElementById(field);
                 if (inputElement) {
