@@ -123,7 +123,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Nama</label>
-                                                                <input type="disable" class="form-control" name="editnama" id="editnama" autocomplete="off" placeholder="Tiket" value="<?php echo $_SESSOIN['nama'];?>">
+                                                                <input type="disable" class="form-control" name="editnama" id="editnama" autocomplete="off" placeholder="Tiket" value="<?php echo $_SESSION['nama'];?>">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -157,7 +157,6 @@
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                                                 <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
                                                             </div>
-                                                        </div><!--end col-->
                                                     </div><!--end row-->
                                     </div>
                                 </div>
