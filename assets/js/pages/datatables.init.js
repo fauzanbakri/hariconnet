@@ -56,9 +56,9 @@ function initializeTables() {
         ],
         columnDefs: [
             {
-                // targets: 23,
-                // className: 'priority-column',
-                // responsivePriority: 1
+                targets: 9,
+                className: 'priority-column',
+                responsivePriority: 1
             }
         ],
         responsive: true 
@@ -81,7 +81,12 @@ function initializeTables() {
                 targets: 20,
                 className: 'priority-column',
                 responsivePriority: 1
-            }
+            },
+            {
+                targets: 0,
+                visible: false
+                
+            },
         ],
         responsive: true 
     });
