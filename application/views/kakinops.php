@@ -61,7 +61,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Nama</label>
-                                                                <input type="disable" class="form-control" name="nama" id="nama" autocomplete="off" placeholder="Tiket" value="<?php echo $_SESSOIN['nama'];?>">
+                                                                <input type="disable" class="form-control" name="nama" id="nama" autocomplete="off" placeholder="Tiket" value="<?php session_start();echo $_SESSOIN['nama'];?>">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
