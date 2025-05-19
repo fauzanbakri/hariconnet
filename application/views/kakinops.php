@@ -412,7 +412,7 @@
 
                 e.preventDefault();
                 const formData = {
-                    id: $('[name="editid"]').val(),
+                    id: $('[name="id"]').val(),
                     tanggal: $('[name="edittgl"]').val(),
                     nama: $('[name="editnama"]').val(),
                     progress: $('[name="editprogress"]').val(),
