@@ -640,6 +640,11 @@
                             </a>
                         </li> 
                         <li class="nav-item">
+                            <a class="nav-link menu-link" href="Kakinops" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                <i class="mdi mdi-file-replace-outline"></i> <span data-key="t-layouts">Kakin Ops</span>
+                            </a>
+                        </li> 
+                        <li class="nav-item">
                             <a class="nav-link menu-link" href="ListPermohonanAll" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-account-multiple-outline"></i> <span data-key="t-layouts">List Permohonan All</span>
                             </a>

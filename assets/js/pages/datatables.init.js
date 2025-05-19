@@ -49,6 +49,20 @@ function initializeTables() {
         ],
         responsive: true 
     });
+    new DataTable('#kakintable', {
+        lengthMenu: [
+            [-1, 10, 25, 50],
+            ['All', 10, 25, 50]
+        ],
+        columnDefs: [
+            {
+                targets: 23,
+                className: 'priority-column',
+                responsivePriority: 1
+            }
+        ],
+        responsive: true 
+    });
     new DataTable('#feederclosetable', {
         lengthMenu: [
             [-1, 10, 25, 50],
