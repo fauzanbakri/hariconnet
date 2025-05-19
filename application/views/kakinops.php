@@ -152,7 +152,7 @@
                                                                 <textarea type="text" class="form-control" name="editidname" id="editidname" autocomplete="off" placeholder="ID Name"></textarea>
                                                             </div>
                                                         </div>
-                                                        
+                                                       </div> 
                                                     </div><!--end row-->
                                     </div>
                                 </div>
