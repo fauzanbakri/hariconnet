@@ -85,8 +85,6 @@ class Kakinops extends CI_Controller {
 		$olt = cleanInput($this->input->post('olt'));
 		$idname = cleanInput($this->input->post('idname'));
 		$status = cleanInput($this->input->post('status'));
-		echo $id;
-		die();
 		if($nama!=''){
 			$q = $this->db->query("UPDATE kakin SET
 				tanggal ='$tanggal',
