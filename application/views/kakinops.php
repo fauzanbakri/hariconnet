@@ -147,12 +147,9 @@
                                                             </div>
                                                         </div>
                                                     </div><!--end row-->
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-
                                 </div>
                                 <div class="card-body">
                                     <table id="kakintable" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
