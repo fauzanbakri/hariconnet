@@ -116,7 +116,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label class="form-label">Tanggal</label>
-                                                                <input type="hidden" class="form-control" name="editid" autocomplete="off">
+                                                                <input type="text" class="form-control" name="editid" autocomplete="off">
                                                                 <input type="date" class="form-control" name="edittgl" autocomplete="off" placeholder="----/--/--">
                                                             </div>
                                                         </div>
