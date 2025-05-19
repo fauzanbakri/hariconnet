@@ -123,7 +123,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Nama</label>
-                                                                <input type="disable" class="form-control" name="editnama" id="editnama" autocomplete="off" placeholder="Tiket" value="<?php echo $_SESSION['nama'];?>">
+                                                                <input type="disable" class="form-control" name="editnama" id="editnama" autocomplete="off" placeholder="Tiket" value="<?php echo $_SESSOIN['nama'];?>">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -152,11 +152,7 @@
                                                                 <textarea type="text" class="form-control" name="editidname" id="editidname" autocomplete="off" placeholder="ID Name"></textarea>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="hstack gap-2 justify-content-end">
-                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
-                                                            </div>
+                                                        
                                                     </div><!--end row-->
                                     </div>
                                 </div>
