@@ -87,7 +87,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">ID Name</label>
-                                                                <!-- <textarea type="text" class="form-control" name="idname" id="idname" autocomplete="off" placeholder="ID Name"></textarea> -->
+                                                                <input type="text" class="form-control" name="idname" id="idname" autocomplete="off" placeholder="ID Name">
                                                             </div>
                                                         </div>
                                                     </div><!--end row-->
