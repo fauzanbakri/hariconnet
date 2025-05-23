@@ -1,10 +1,19 @@
 <?php
-// Cek apakah form disubmit
-$input_text = '';
+// Inisialisasi variabel
+$json_input = '';
+$error_msg = '';
+$data = [];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input_text = $_POST['input_code'] ?? '';
-    // Bersihkan dari XSS
-    $input_text = htmlspecialchars($input_text);
+    $json_input = $_POST['json_input'] ?? '';
+
+    // Parsing JSON
+    $data = json_decode($json_input, true);
+
+    if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+        $error_msg = "JSON tidak valid: " . json_last_error_msg();
+        $data = [];
+    }
 }
 ?>
 
@@ -12,42 +21,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <title>Convert Code to Table</title>
+    <title>JSON to Table Converter</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
+        body { font-family: Arial, sans-serif; padding: 20px; }
         textarea { width: 100%; height: 200px; font-family: monospace; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: left; }
-        th { background-color: #eee; }
+        th, td { border: 1px solid #333; padding: 8px; }
+        th { background-color: #eee; text-align: left; }
+        .error { color: red; }
     </style>
 </head>
 <body>
 
-<h2>Tempel Kode JavaScript di bawah ini</h2>
+<h2>Paste JSON data di bawah ini:</h2>
 <form method="post">
-    <textarea name="input_code" placeholder="Tempel kode JavaScript di sini..."><?= $input_text ?></textarea>
-    <br />
+    <textarea name="json_input" placeholder="Paste JSON di sini..."><?= htmlspecialchars($json_input) ?></textarea>
+    <br>
     <button type="submit">Convert ke Tabel</button>
 </form>
 
-<?php if ($input_text): ?>
-    <h3>Hasil Convert ke Tabel</h3>
+<?php if ($error_msg): ?>
+    <p class="error"><?= $error_msg ?></p>
+<?php endif; ?>
+
+<?php if ($data && is_array($data)): ?>
+    <h3>Hasil Tabel</h3>
     <table>
         <thead>
-            <tr><th>No</th><th>Baris Kode</th></tr>
+            <tr>
+                <?php
+                // Ambil header tabel dari keys array (asumsi $data adalah associative array)
+                foreach (array_keys($data) as $header) {
+                    echo "<th>" . htmlspecialchars($header) . "</th>";
+                }
+                ?>
+            </tr>
         </thead>
         <tbody>
-            <?php
-            $lines = explode("\n", $input_text);
-            foreach ($lines as $index => $line) {
-                $line = trim($line);
-                if ($line === '') continue;
-                echo '<tr>';
-                echo '<td>'.($index + 1).'</td>';
-                echo '<td><pre style="margin:0;">' . $line . '</pre></td>';
-                echo '</tr>';
-            }
-            ?>
+            <tr>
+                <?php
+                // Tampilkan nilai field per kolom
+                foreach ($data as $value) {
+                    echo "<td>" . htmlspecialchars($value) . "</td>";
+                }
+                ?>
+            </tr>
         </tbody>
     </table>
 <?php endif; ?>
