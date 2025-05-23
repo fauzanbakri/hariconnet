@@ -48,8 +48,8 @@ class Kakinops extends CI_Controller {
 		$status = cleanInput($this->input->post('status'));
 		if($tanggal != ''){
 			$sql = "INSERT INTO kakin 
-				(nama,tanggal,jabatan,progress,area,olt,idName,status) 
-				VALUES (?,?,?,?,?,?,?,?,?,?)";
+				(nama,tanggal,jabatan,progress,area,olt,idName,status,timestamp) 
+				VALUES (?,?,?,?,?,?,?,?,?)";
 			
 			$result = $this->db->query($sql, [
 				$nama, $tanggal, $jabatan, $progress, $area, $olt, $idname, $status
