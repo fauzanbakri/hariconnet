@@ -46,10 +46,7 @@ class Kakinops extends CI_Controller {
 		$olt = cleanInput($this->input->post('olt'));
 		$idname = cleanInput($this->input->post('idname'));
 		$status = cleanInput($this->input->post('status'));
-		echo $tanggal.$nama.$progress.$jabatan.$area.$olt.$idname.$status;
-		die();
 		if($tanggal != ''){
-			// Gunakan prepared statement untuk keamanan yang lebih baik
 			$sql = "INSERT INTO kakin 
 				(nama,tanggal,jabatan,progress,area,olt,idName,status) 
 				VALUES (?,?,?,?,?,?,?,?,?,?)";
