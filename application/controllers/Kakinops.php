@@ -34,8 +34,6 @@ class Kakinops extends CI_Controller {
 	public function insertData(){
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
-	
-		// Fungsi untuk membersihkan input dari simbol ' dan "
 		function cleanInput($input) {
 			return str_replace(['"', "'"], '', $input);
 		}
@@ -48,7 +46,7 @@ class Kakinops extends CI_Controller {
 		$olt = cleanInput($this->input->post('olt'));
 		$idname = cleanInput($this->input->post('idname'));
 		$status = cleanInput($this->input->post('status'));
-		
+		echo $tanggal.$nama.$progress.$jabatan.$area.$olt.$idname.$status;
 		if($tanggal != ''){
 			// Gunakan prepared statement untuk keamanan yang lebih baik
 			$sql = "INSERT INTO kakin 
@@ -56,7 +54,7 @@ class Kakinops extends CI_Controller {
 				VALUES (?,?,?,?,?,?,?,?,?,?)";
 			
 			$result = $this->db->query($sql, [
-				$nama, $tanggal, $jabatan, $progress, $area, $olt, $idName, $status
+				$nama, $tanggal, $jabatan, $progress, $area, $olt, $idname, $status
 			]);
 	
 			if($result){
