@@ -1,27 +1,37 @@
 <?php
-$json_input = '';
+session_start();
+
+$json_input = $_SESSION['json_input'] ?? '';
 $error_msg = '';
 $data_rows = [];
 $headers = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json_input = $_POST['json_input'] ?? '';
+    $_SESSION['json_input'] = $json_input;
 
-    // Decode JSON
     $decoded = json_decode($json_input, true);
 
     if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
         $error_msg = "JSON tidak valid: " . json_last_error_msg();
     } else {
-        // Pastikan struktur data sesuai, ambil array di data->data
         if (isset($decoded['data']['data']) && is_array($decoded['data']['data'])) {
             $data_rows = $decoded['data']['data'];
             if (count($data_rows) > 0) {
-                // Ambil header kolom dari keys objek pertama
                 $headers = array_keys($data_rows[0]);
             }
         } else {
             $error_msg = "Format JSON tidak sesuai, tidak ditemukan properti data->data berupa array";
+        }
+    }
+} else {
+    if ($json_input) {
+        $decoded = json_decode($json_input, true);
+        if (isset($decoded['data']['data']) && is_array($decoded['data']['data'])) {
+            $data_rows = $decoded['data']['data'];
+            if (count($data_rows) > 0) {
+                $headers = array_keys($data_rows[0]);
+            }
         }
     }
 }
@@ -31,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <title>JSON Kompleks ke Tabel</title>
+    <title>JSON ke Tabel dan Export CSV</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         textarea { width: 100%; height: 250px; font-family: monospace; }
@@ -39,6 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         th, td { border: 1px solid #444; padding: 6px 10px; }
         th { background-color: #f0f0f0; }
         .error { color: red; }
+        button, input[type="submit"] {
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -46,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h2>Paste JSON dengan struktur data -> data -> data</h2>
 
 <form method="post">
-    <textarea name="json_input" placeholder="Paste JSON di sini"><?= htmlspecialchars($json_input) ?></textarea><br>
-    <button type="submit">Convert ke Tabel</button>
+    <textarea name="json_input" placeholder="Paste JSON di sini..."><?= htmlspecialchars($json_input) ?></textarea><br>
+    <input type="submit" value="Convert ke Tabel" />
 </form>
 
 <?php if ($error_msg): ?>
@@ -56,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php if (!empty($data_rows)): ?>
     <h3>Hasil Tabel Data (<?= count($data_rows) ?> baris)</h3>
-    <table>
+    <table id="data-table">
         <thead>
             <tr>
                 <?php foreach ($headers as $header): ?>
@@ -74,6 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <!-- Tombol export CSV -->
+    <form method="post" action="Sri/esport" style="margin-top:20px;">
+        <button type="submit" name="export_csv">Download CSV</button>
+    </form>
 <?php endif; ?>
 
 </body>
