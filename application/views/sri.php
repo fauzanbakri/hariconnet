@@ -1,18 +1,28 @@
 <?php
-// Inisialisasi variabel
 $json_input = '';
 $error_msg = '';
-$data = [];
+$data_rows = [];
+$headers = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json_input = $_POST['json_input'] ?? '';
 
-    // Parsing JSON
-    $data = json_decode($json_input, true);
+    // Decode JSON
+    $decoded = json_decode($json_input, true);
 
-    if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+    if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
         $error_msg = "JSON tidak valid: " . json_last_error_msg();
-        $data = [];
+    } else {
+        // Pastikan struktur data sesuai, ambil array di data->data
+        if (isset($decoded['data']['data']) && is_array($decoded['data']['data'])) {
+            $data_rows = $decoded['data']['data'];
+            if (count($data_rows) > 0) {
+                // Ambil header kolom dari keys objek pertama
+                $headers = array_keys($data_rows[0]);
+            }
+        } else {
+            $error_msg = "Format JSON tidak sesuai, tidak ditemukan properti data->data berupa array";
+        }
     }
 }
 ?>
@@ -21,51 +31,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <title>JSON to Table Converter</title>
+    <title>JSON Kompleks ke Tabel</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        textarea { width: 100%; height: 200px; font-family: monospace; }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        textarea { width: 100%; height: 250px; font-family: monospace; }
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #333; padding: 8px; }
-        th { background-color: #eee; text-align: left; }
+        th, td { border: 1px solid #444; padding: 6px 10px; }
+        th { background-color: #f0f0f0; }
         .error { color: red; }
     </style>
 </head>
 <body>
 
-<h2>Paste JSON data di bawah ini:</h2>
+<h2>Paste JSON dengan struktur data -> data -> data</h2>
+
 <form method="post">
-    <textarea name="json_input" placeholder="Paste JSON di sini..."><?= htmlspecialchars($json_input) ?></textarea>
-    <br>
+    <textarea name="json_input" placeholder="Paste JSON di sini"><?= htmlspecialchars($json_input) ?></textarea><br>
     <button type="submit">Convert ke Tabel</button>
 </form>
 
 <?php if ($error_msg): ?>
-    <p class="error"><?= $error_msg ?></p>
+    <p class="error"><?= htmlspecialchars($error_msg) ?></p>
 <?php endif; ?>
 
-<?php if ($data && is_array($data)): ?>
-    <h3>Hasil Tabel</h3>
+<?php if (!empty($data_rows)): ?>
+    <h3>Hasil Tabel Data (<?= count($data_rows) ?> baris)</h3>
     <table>
         <thead>
             <tr>
-                <?php
-                // Ambil header tabel dari keys array (asumsi $data adalah associative array)
-                foreach (array_keys($data) as $header) {
-                    echo "<th>" . htmlspecialchars($header) . "</th>";
-                }
-                ?>
+                <?php foreach ($headers as $header): ?>
+                    <th><?= htmlspecialchars($header) ?></th>
+                <?php endforeach; ?>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <?php
-                // Tampilkan nilai field per kolom
-                foreach ($data as $value) {
-                    echo "<td>" . htmlspecialchars($value) . "</td>";
-                }
-                ?>
-            </tr>
+            <?php foreach ($data_rows as $row): ?>
+                <tr>
+                    <?php foreach ($headers as $header): ?>
+                        <td><?= isset($row[$header]) ? htmlspecialchars($row[$header]) : '' ?></td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 <?php endif; ?>
