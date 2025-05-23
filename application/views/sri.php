@@ -64,7 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <textarea name="json_input" placeholder="Paste JSON di sini..."><?= htmlspecialchars($json_input) ?></textarea><br>
     <input type="submit" value="Convert ke Tabel" />
 </form>
-
+ <form method="post" action="Sri/export" style="margin-top:20px;">
+        <button type="submit" name="export_csv">Download CSV</button>
+    </form>
 <?php if ($error_msg): ?>
     <p class="error"><?= htmlspecialchars($error_msg) ?></p>
 <?php endif; ?>
@@ -91,9 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </table>
 
     <!-- Tombol export CSV -->
-    <form method="post" action="Sri/export" style="margin-top:20px;">
-        <button type="submit" name="export_csv">Download CSV</button>
-    </form>
 <?php endif; ?>
 
 </body>
