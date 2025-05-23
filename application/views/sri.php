@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </table>
 
     <!-- Tombol export CSV -->
-    <form method="post" action="Sri/esport" style="margin-top:20px;">
+    <form method="post" action="Sri/export" style="margin-top:20px;">
         <button type="submit" name="export_csv">Download CSV</button>
     </form>
 <?php endif; ?>
