@@ -33,7 +33,8 @@
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
                                  <div class="row">
-                                    <div class="filter-section mb-3">
+                                    <div class="col-md-12">
+                                        <div class="filter-section mb-3">
                                         <div class="row g-3">
                                             <div class="col-xxl-3">
                                                 <label for="filterProvinsi" class="form-label">Provinsi</label>
@@ -75,6 +76,7 @@
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                  </div>
                                  <div class="row">
