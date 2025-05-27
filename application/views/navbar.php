@@ -468,7 +468,9 @@
                                         $_SESSION['role']=='Superadmin' || 
                                         $_SESSION['role']=='NOC Ritel' || 
                                         $_SESSION['role']=='Team Leader' || 
-                                        $_SESSION['role']=='Pemeliharaan Ritel'	
+                                        $_SESSION['role']=='Pemeliharaan Ritel'	||
+                                        $_SESSION['role']=='Guest 1'
+
                                         ){
                                             echo '
                                              <li class="nav-item">
@@ -508,7 +510,8 @@
                             $_SESSION['role']=='NOC Ritel' || 
                             $_SESSION['role']=='Team Leader' || 
                             $_SESSION['role']=='Pemeliharaan Ritel'	||
-                            $_SESSION['role']=='Resepsionis'
+                            $_SESSION['role']=='Resepsionis' ||
+                            $_SESSION['role']=='Guest 1'
                             ){
                                 echo '
                                 <li class="nav-item">
@@ -527,7 +530,8 @@
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='NOC Ritel' || 
                             $_SESSION['role']=='Team Leader' || 
-                            $_SESSION['role']=='Pemeliharaan Ritel'
+                            $_SESSION['role']=='Pemeliharaan Ritel' ||
+                            $_SESSION['role']=='Guest 1'
                             ){
                                 echo '
                                 <li class="nav-item">
