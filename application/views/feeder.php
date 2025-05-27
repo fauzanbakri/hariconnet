@@ -36,7 +36,8 @@
                                     <div class="col-md-3">
                                         <?php
                                             if(
-                                                $_SESSION['role']!='Resepsionis'
+                                                $_SESSION['role']!='Resepsionis' ||
+                                                $_SESSION['role']=='Guest 1'
                                                 ){
                                             echo '
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
