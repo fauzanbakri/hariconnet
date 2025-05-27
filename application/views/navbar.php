@@ -632,8 +632,7 @@
                         }
                         if(
                             $_SESSION['role']=='Superadmin' || 
-                            $_SESSION['role']=='Team Leader' 
-                            ){
+                            $_SESSION['role']=='Team Leader' ){
                             echo '
                          <li class="menu-title"><span data-key="t-menu">Customer Exp</span></li>
                          <li class="nav-item">
@@ -666,6 +665,7 @@
                                 <i class="mdi mdi-account-multiple-check-outline"></i> <span data-key="t-layouts">List Permohonan Done</span>
                             </a>
                         </li>';
+                            }
                         ?>
                     </ul>
                 </div>
