@@ -41,11 +41,11 @@ class Tickets extends CI_Controller {
 			tim, prioritas, tanggal ASC;
 
 		")->result();
-		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
-		$q['provinsi'] = $this->db->distinct()->select('provinsi')->get('tiket')->result();
-		$q['kabupaten'] = $this->db->distinct()->select('kabupaten')->get('tiket')->result();
-		$q['tim'] = $this->db->distinct()->select('tim')->get('tiket')->result();
-		$q['status'] = ['NEW', 'OPEN', 'ON PROGRESS', 'CLOSED', 'EARLY'];
+		$q['provinsi'] = array_unique(array_column($q['data'], 'provinsi'));
+		$q['kabupaten'] = array_unique(array_column($q['data'], 'kabupaten'));
+		$q['tim'] = array_unique(array_column($q['data'], 'tim'));
+		$q['status'] = ['NEW', 'OPEN', 'ON PROGRESS', 'CLOSED', 'EARLY'];  // Status statis
+
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		session_start();
 		if(
