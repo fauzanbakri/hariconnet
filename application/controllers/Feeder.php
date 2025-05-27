@@ -22,7 +22,7 @@ class Feeder extends CI_Controller {
 	{
 		$title['title']="Incident Feeder";
 		$q['data'] = $this->db->query("SELECT * FROM feeder")->result();
-		$q['tim'] = $this->db->query("SELECT * FROM tim WHERE segmen='Korporat'");
+		$q['tim'] = $this->db->query("SELECT * FROM tim WHERE segmen='Korporat'")->result();
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		$tipe_arr = array_unique(array_column($q['data'], 'tipe'));
 		sort($tipe_arr);

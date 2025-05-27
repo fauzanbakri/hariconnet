@@ -162,10 +162,9 @@
                                                             <select class="form-select mb-3" aria-label="Default select example" name="tim" id="tim" >
                                                                 <option value="">Select</option>
                                                                 <?php 
-                                                                    foreach ($tim as $row){
-                                                                        echo '
-                                                                            <option value="'.$row->nama.'">'.$row->nama.'</option>
-                                                                        ';
+                                                                   $timOptions = array_unique(array_column($data, 'tim'));
+                                                                    foreach ($timOptions as $tim) {
+                                                                        echo "<option value='{$tim}'>{$tim}</option>";
                                                                     }
                                                                 ?>
                                                             </select>
