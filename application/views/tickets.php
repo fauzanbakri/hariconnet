@@ -362,7 +362,7 @@
                                                 <th>Alamat</th>
                                                 <th>Last Update By</th>
                                                 <th>timestamp</th>
-                                                <th>Action</th>
+                                                <th  <?php echo $hide;?>>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
