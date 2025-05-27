@@ -48,7 +48,8 @@ class Hardcomplain extends CI_Controller {
 			$_SESSION['role']=='Superadmin' || 
 			$_SESSION['role']=='NOC Ritel' || 
 			$_SESSION['role']=='Team Leader' || 
-			$_SESSION['role']=='Pemeliharaan Ritel'
+			$_SESSION['role']=='Pemeliharaan Ritel'	||
+            $_SESSION['role']=='Guest 1'
 			){
 				$this->load->view('navbar', $title);
 				$this->load->view('hardcomplain', $q);

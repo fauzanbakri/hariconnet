@@ -31,7 +31,8 @@ class Feeder extends CI_Controller {
 			$_SESSION['role']=='NOC Ritel' || 
 			$_SESSION['role']=='Team Leader' || 
 			$_SESSION['role']=='Pemeliharaan Ritel' || 
-			$_SESSION['role']=='Resepsionis' 
+			$_SESSION['role']=='Resepsionis' ||
+            $_SESSION['role']=='Guest 1'
 			){
 				$this->load->view('navbar',$title);
 				$this->load->view('feeder', $q);
