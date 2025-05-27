@@ -32,9 +32,15 @@
                                     <!-- Base Buttons -->
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
+                                <?php if($_SESSION['role']=='Guest 1'){
+                                    $hide = 'hidden';
+                                }else{
+                                    $hide = '';
+                                }
+                                ?>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
+                                        <button <?php echo $hide;?> type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
                                             Add New
                                         </button>
                                     </div>
@@ -42,7 +48,7 @@
                                     <button type="button" class="btn btn-danger flex-row-reverse" id="sa-warning">
                                         Change Shift
                                     </button>
-                                        <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
+                                        <button <?php echo $hide;?> type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                     </div>
                                 </div>
                                 <div class="row mt-4">
