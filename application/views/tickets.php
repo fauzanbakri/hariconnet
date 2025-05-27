@@ -33,7 +33,6 @@
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
                                  <div class="row">
-                                        <div class="col-md-12">
                                             <div class="col-md-3">
                                                 <label for="filterProvinsi" class="form-label">Provinsi</label>
                                                 <select id="filterProvinsi" class="form-select form-select-sm">
@@ -72,7 +71,6 @@
                                             </div>
                                         </div>
                                             
-                                        </div>
                                     </div>
                                  </div>
                                  <div class="row">
