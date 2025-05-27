@@ -44,7 +44,7 @@ class Tickets extends CI_Controller {
 		$q['provinsi'] = array_unique(array_column($q['data'], 'provinsi'));
 		$q['kabupaten'] = array_unique(array_column($q['data'], 'kabupaten'));
 		$q['tim'] = array_unique(array_column($q['data'], 'tim'));
-		$q['status'] = ['NEW', 'OPEN', 'ON PROGRESS', 'CLOSED', 'EARLY'];  // Status statis
+		$q['status'] = ['NEW', 'OPEN', 'ON PROGRESS', 'SOLVED (ICRM OPEN)', 'CLOSED', 'EARLY'];
 
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		session_start();
