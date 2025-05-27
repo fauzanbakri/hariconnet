@@ -415,7 +415,7 @@
                                                     <td>".$row->alamat."</td>
                                                     <td>".$row->createby."</td>  
                                                     <td>".$row->timestamp."</td>  
-                                                    <td>
+                                                    <td  ".$hide.">
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                 <i class='ri-more-fill align-middle'></i>
