@@ -33,6 +33,51 @@
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
                                  <div class="row">
+                                    <div class="filter-section mb-3">
+                                        <div class="row g-3">
+                                            <div class="col-xxl-3">
+                                                <label for="filterProvinsi" class="form-label">Provinsi</label>
+                                                <select id="filterProvinsi" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <?php foreach ($provinsi as $item): ?>
+                                                        <option value="<?= $item->provinsi ?>"><?= $item->provinsi ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xxl-3">
+                                                <label for="filterKabupaten" class="form-label">Kabupaten</label>
+                                                <select id="filterKabupaten" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <?php foreach ($kabupaten as $item): ?>
+                                                        <option value="<?= $item->kabupaten ?>"><?= $item->kabupaten ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xxl-3">
+                                                <label for="filterTim" class="form-label">Tim</label>
+                                                <select id="filterTim" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <?php foreach ($tim as $item): ?>
+                                                        <option value="<?= $item->tim ?>"><?= $item->tim ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xxl-3">
+                                                <label for="filterStatus" class="form-label">Status</label>
+                                                <select id="filterStatus" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <?php foreach ($status as $item): ?>
+                                                        <option value="<?= $item ?>"><?= $item ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
                                     <div class="col-md-3">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
                                             Add New

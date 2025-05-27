@@ -42,6 +42,11 @@ class Tickets extends CI_Controller {
 
 		")->result();
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
+		$q['provinsi'] = $this->db->distinct()->select('provinsi')->get('tiket')->result();
+		$q['kabupaten'] = $this->db->distinct()->select('kabupaten')->get('tiket')->result();
+		$q['tim'] = $this->db->distinct()->select('tim')->get('tiket')->result();
+		$q['status'] = ['NEW', 'OPEN', 'ON PROGRESS', 'CLOSED', 'EARLY'];
+		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		session_start();
 		if(
 			$_SESSION['role']=='Superadmin' || 
