@@ -36,13 +36,15 @@
                                     <div class="col-md-3">
                                         <?php
                                             if(
-                                                $_SESSION['role']!='Resepsionis' ||
-                                                $_SESSION['role']!='Guest 1'
+                                                $_SESSION['role']=='Resepsionis' ||
+                                                $_SESSION['role']=='Guest 1'
                                                 ){
-                                            echo '
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
-                                            Add New Incident
-                                            </button>';
+                                                    echo '';
+                                                }else{
+                                                    echo '
+                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
+                                                        Add New Incident
+                                                        </button>';
                                                 }
                                         ?>
                                         <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
