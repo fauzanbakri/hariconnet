@@ -957,6 +957,38 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const table = new DataTable('#example', {
+        lengthMenu: [
+            [-1, 10, 25, 50],
+            ['All', 10, 25, 50]
+        ],
+        order: [[19, 'desc']],
+        columnDefs: [
+            {
+                targets: 20,
+                className: 'priority-column',
+                responsivePriority: 1
+            },
+            {
+                targets: 0,
+                visible: false
+            },
+        ],
+        responsive: true
+    });
+
+    // Event filtering
+    $('#filterProvinsi, #filterKabupaten, #filterTim, #filterStatus').on('change', function () {
+        table.column(15).search($('#filterProvinsi').val(), false, false);
+        table.column(11).search($('#filterKabupaten').val(), false, false);
+        table.column(13).search($('#filterTim').val(), false, false);
+        table.column(7).search($('#filterStatus').val(), false, false);
+        table.draw();
+    });
+});
+</script>
 </body>
 
 

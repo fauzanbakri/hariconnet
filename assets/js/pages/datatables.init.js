@@ -70,26 +70,26 @@ function initializeTables() {
         ],
         responsive: true 
     });
-    new DataTable('#example', {
-        lengthMenu: [
-            [-1, 10, 25, 50],
-            ['All', 10, 25, 50]
-        ],
-        order: [[19, 'desc']],
-        columnDefs: [
-            {
-                targets: 20,
-                className: 'priority-column',
-                responsivePriority: 1
-            },
-            {
-                targets: 0,
-                visible: false
+    // new DataTable('#example', {
+    //     lengthMenu: [
+    //         [-1, 10, 25, 50],
+    //         ['All', 10, 25, 50]
+    //     ],
+    //     order: [[19, 'desc']],
+    //     columnDefs: [
+    //         {
+    //             targets: 20,
+    //             className: 'priority-column',
+    //             responsivePriority: 1
+    //         },
+    //         {
+    //             targets: 0,
+    //             visible: false
                 
-            },
-        ],
-        responsive: true 
-    });
+    //         },
+    //     ],
+    //     responsive: true 
+    // });
     new DataTable('#example1', {
         lengthMenu: [
             [-1, 10, 25, 50],
