@@ -90,26 +90,26 @@ function initializeTables() {
     //     ],
     //     responsive: true 
     // });
-    new DataTable('#example1', {
-        lengthMenu: [
-            [-1, 10, 25, 50],
-            ['All', 10, 25, 50]
-        ],
-        order: [[0, 'asc']],
-        columnDefs: [
-            {
-                targets: 14,
-                visible: false
-            },
-            {
-                targets: 18,
-                className: 'priority-column',
-                responsivePriority: 1,
-                visible: true
-            }
-        ],
-        responsive: true 
-    });
+    // new DataTable('#example1', {
+    //     lengthMenu: [
+    //         [-1, 10, 25, 50],
+    //         ['All', 10, 25, 50]
+    //     ],
+    //     order: [[0, 'asc']],
+    //     columnDefs: [
+    //         {
+    //             targets: 14,
+    //             visible: false
+    //         },
+    //         {
+    //             targets: 18,
+    //             className: 'priority-column',
+    //             responsivePriority: 1,
+    //             visible: true
+    //         }
+    //     ],
+    //     responsive: true 
+    // });
     new DataTable('#datatim', {
         lengthMenu: [
             [-1, 10, 25, 50],

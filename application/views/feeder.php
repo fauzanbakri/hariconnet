@@ -57,6 +57,58 @@
                                                 <h5 class="modal-title" id="exampleModalgridLabel">New Feeder</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
+                                            <div class="row">
+                                                <div class="row g-3 mb-3">
+                                                    <div class="col-md-3">
+                                                        <label for="filterTipe" class="form-label">Tipe</label>
+                                                        <select id="filterTipe" class="form-select form-select-sm">
+                                                            <option value="">Semua</option>
+                                                            <?php
+                                                                $tipeOptions = array_unique(array_column($data, 'tipe'));
+                                                                foreach ($tipeOptions as $tipe) {
+                                                                    echo "<option value='{$tipe}'>{$tipe}</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="filterKP" class="form-label">KP</label>
+                                                        <select id="filterKP" class="form-select form-select-sm">
+                                                            <option value="">Semua</option>
+                                                            <?php
+                                                                $kpOptions = array_unique(array_column($data, 'kp'));
+                                                                foreach ($kpOptions as $kp) {
+                                                                    echo "<option value='{$kp}'>{$kp}</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="filterTim" class="form-label">Tim</label>
+                                                        <select id="filterTim" class="form-select form-select-sm">
+                                                            <option value="">Semua</option>
+                                                            <?php
+                                                                $timOptions = array_unique(array_column($data, 'tim'));
+                                                                foreach ($timOptions as $tim) {
+                                                                    echo "<option value='{$tim}'>{$tim}</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label for="filterStatus" class="form-label">Status</label>
+                                                        <select id="filterStatus" class="form-select form-select-sm">
+                                                            <option value="">Semua</option>
+                                                            <?php
+                                                                $statusOptions = array_unique(array_column($data, 'status'));
+                                                                foreach ($statusOptions as $status) {
+                                                                    echo "<option value='{$status}'>{$status}</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="modal-body">
                                                     <div class="row g-3">
                                                         <div class="col-xxl-6">
@@ -784,7 +836,7 @@
                     const inputElement = document.getElementById(field);
                     if (inputElement) {
                         console.log(`Setting ${field} with value:`, ticketData[field]);
-                        inputElement.value = ticketData[field] || ''; // Set value or empty if no data
+                        inputElement.value = ticketData[field] || '';
                     }
                 });
                 modal.show();
@@ -792,6 +844,32 @@
         });
     });
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const table = new DataTable('#example1', {
+        lengthMenu: [
+            [-1, 10, 25, 50],
+            ['All', 10, 25, 50]
+        ],
+        responsive: true,
+        order: [],
+    });
+    const kolomTipe = 4;
+    const kolomKP = 5;
+    const kolomTim = 9;
+    const kolomStatus = 11;
+
+    ['#filterTipe', '#filterKP', '#filterTim', '#filterStatus'].forEach(function(selector) {
+        document.querySelector(selector).addEventListener('change', function() {
+            table.column(kolomTipe).search(document.getElementById('filterTipe').value).draw();
+            table.column(kolomKP).search(document.getElementById('filterKP').value).draw();
+            table.column(kolomTim).search(document.getElementById('filterTim').value).draw();
+            table.column(kolomStatus).search(document.getElementById('filterStatus').value).draw();
+        });
+    });
+});
+</script>
+
 </body>
 
 
