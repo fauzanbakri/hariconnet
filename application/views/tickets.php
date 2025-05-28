@@ -106,36 +106,36 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Tiket</label>
+                                                                <label  class="form-label">Tiket</label>
                                                                 <input type="text" class="form-control" name="tiket" id="lastName" autocomplete="off" placeholder="Tiket">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Tanggal</label>
+                                                                <label  class="form-label">Tanggal</label>
                                                                 <input type="text" class="form-control" name="tanggal" id="lastName" autocomplete="off" placeholder="Tanggal">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">SID</label>
+                                                                <label  class="form-label">SID</label>
                                                                 <input type="text" class="form-control" name="sid" id="lastName" autocomplete="off" placeholder="SID">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Telepon</label>
+                                                                <label  class="form-label">Telepon</label>
                                                                 <input type="text" class="form-control" name="telepon" id="lastName" autocomplete="off" placeholder="Telepon">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Nama</label>
+                                                                <label  class="form-label">Nama</label>
                                                                 <input type="text" class="form-control" name="nama" id="lastName" autocomplete="off" placeholder="Nama Pelanggan">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Keluhan</label>
+                                                            <label  class="form-label">Keluhan</label>
                                                             <select class="form-select mb-3" name="keluhan" aria-label="Default select example">
                                                                 <option value="LINK LOSS">LINK LOSS</option>
                                                                 <option value="ONT PROBLEM">ONT PROBLEM</option>
@@ -148,7 +148,7 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Alamat</label>
+                                                                <label  class="form-label">Alamat</label>
                                                                 <input type="text" class="form-control" name="alamat" id="lastName" autocomplete="off" placeholder="Alamat">
                                                             </div>
                                                         </div>
@@ -160,24 +160,24 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Serial Number</label>
+                                                                <label  class="form-label">Serial Number</label>
                                                                 <input type="text" class="form-control" id="lastName" name="sn" autocomplete="off" placeholder="Serial Number">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Tim</label>
+                                                                <label  class="form-label">Tim</label>
                                                                 <input type="text" class="form-control" id="tim" name="tim" autocomplete="off" placeholder="Tim Serpo">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Keterangan</label>
+                                                                <label  class="form-label">Keterangan</label>
                                                                 <input type="text" class="form-control" id="lastName" name="keterangan" autocomplete="off" placeholder="Keterangan">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Prioritas</label>
+                                                            <label  class="form-label">Prioritas</label>
                                                             <select class="form-select mb-3" aria-label="Default select example" name="prioritas" >
                                                                 <option value="Normal">Normal</option>
                                                                 <option value="High">High</option>
@@ -215,36 +215,36 @@
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Tiket</label>
+                                                            <label  class="form-label">Tiket</label>
                                                             <input type="text" class="form-control" name="edittiket" disabled id="edittiket" autocomplete="off" placeholder="Tiket">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Tanggal</label>
+                                                            <label  class="form-label">Tanggal</label>
                                                             <input type="text" class="form-control" name="edittanggal" id="edittanggal" autocomplete="off" placeholder="Tanggal">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">SID</label>
+                                                            <label  class="form-label">SID</label>
                                                             <input type="text" class="form-control" name="editsid" id="editsid" autocomplete="off" placeholder="SID">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Telepon</label>
+                                                            <label  class="form-label">Telepon</label>
                                                             <input type="text" class="form-control" name="edittelepon" id="edittelepon" autocomplete="off" placeholder="Telepon">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Nama</label>
+                                                            <label  class="form-label">Nama</label>
                                                             <input type="text" class="form-control" name="editnama" id="editnama" autocomplete="off" placeholder="Nama Pelanggan">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
-                                                        <label for="lastName" class="form-label">Keluhan</label>
+                                                        <label  class="form-label">Keluhan</label>
                                                         <select class="form-select mb-3" name="editkeluhan" id="editkeluhan" aria-label="Default select example">
                                                             <option value="LINK LOSS">LINK LOSS</option>
                                                             <option value="ONT PROBLEM">ONT PROBLEM</option>
@@ -257,7 +257,7 @@
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Alamat</label>
+                                                            <label  class="form-label">Alamat</label>
                                                             <input type="text" class="form-control" name="editalamat" id="editalamat" autocomplete="off" placeholder="Alamat">
                                                         </div>
                                                     </div>
@@ -269,24 +269,24 @@
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Serial Number</label>
+                                                            <label  class="form-label">Serial Number</label>
                                                             <input type="text" class="form-control" id="editsn" name="editsn" autocomplete="off" placeholder="Serial Number">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Tim</label>
+                                                            <label  class="form-label">Tim</label>
                                                             <input type="text" class="form-control" id="edittim" name="edittim" autocomplete="off" placeholder="Tim Serpo">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
                                                         <div>
-                                                            <label for="lastName" class="form-label">Keterangan</label>
+                                                            <label  class="form-label">Keterangan</label>
                                                             <input type="text" class="form-control" id="editketerangan" name="editketerangan" autocomplete="off" placeholder="Keterangan">
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-6">
-                                                        <label for="lastName" class="form-label">Prioritas</label>
+                                                        <label  class="form-label">Prioritas</label>
                                                         <select class="form-select mb-3" aria-label="Default select example" name="editprioritas" id="editprioritas">
                                                             <option value="Normal">Normal</option>
                                                             <option value="High">High</option>
@@ -294,7 +294,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Status</label>
+                                                            <label  class="form-label">Status</label>
                                                             <select class="form-select mb-3" aria-label="Default select example" id="editstatus" name="editstatus" >
                                                                 <option value="NEW">NEW</option>
                                                                 <option value="OPEN">OPEN</option>
