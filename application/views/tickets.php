@@ -107,31 +107,31 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Tiket</label>
-                                                                <input type="text" class="form-control" name="tiket" id="lastName" autocomplete="off" placeholder="Tiket">
+                                                                <input type="text" class="form-control" name="tiket" autocomplete="off" placeholder="Tiket">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control" name="tanggal" id="lastName" autocomplete="off" placeholder="Tanggal">
+                                                                <input type="text" class="form-control" name="tanggal" autocomplete="off" placeholder="Tanggal">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">SID</label>
-                                                                <input type="text" class="form-control" name="sid" id="lastName" autocomplete="off" placeholder="SID">
+                                                                <input type="text" class="form-control" name="sid" autocomplete="off" placeholder="SID">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Telepon</label>
-                                                                <input type="text" class="form-control" name="telepon" id="lastName" autocomplete="off" placeholder="Telepon">
+                                                                <input type="text" class="form-control" name="telepon" autocomplete="off" placeholder="Telepon">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Nama</label>
-                                                                <input type="text" class="form-control" name="nama" id="lastName" autocomplete="off" placeholder="Nama Pelanggan">
+                                                                <input type="text" class="form-control" name="nama" autocomplete="off" placeholder="Nama Pelanggan">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -149,7 +149,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Alamat</label>
-                                                                <input type="text" class="form-control" name="alamat" id="lastName" autocomplete="off" placeholder="Alamat">
+                                                                <input type="text" class="form-control" name="alamat" autocomplete="off" placeholder="Alamat">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -161,7 +161,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Serial Number</label>
-                                                                <input type="text" class="form-control" id="lastName" name="sn" autocomplete="off" placeholder="Serial Number">
+                                                                <input type="text" class="form-control" name="sn" autocomplete="off" placeholder="Serial Number">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -173,7 +173,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Keterangan</label>
-                                                                <input type="text" class="form-control" id="lastName" name="keterangan" autocomplete="off" placeholder="Keterangan">
+                                                                <input type="text" class="form-control" name="keterangan" autocomplete="off" placeholder="Keterangan">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
