@@ -550,7 +550,7 @@
                 src: [
                     <?php 
                         foreach ($olt as $row){
-                            echo "'".$row->nama."',";
+                            echo "'".$row->idOlt."',";
                         }
                     ?>
                 ],
