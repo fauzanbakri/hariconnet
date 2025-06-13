@@ -533,15 +533,15 @@
 
 
     <script>
-        var multiSelectBasic = document.getElementById("multiselect-basic"),
-        multiSelectHeader = (multiSelectBasic && multi(multiSelectBasic, {
+        var multiSelectBasic2 = document.getElementById("multiselect-basic2"),
+        multiSelectHeader2 = (multiSelectBasic2 && multi(multiSelectBasic2, {
             enable_search: !1
-        }), document.getElementById("multiselect-header")),
-        multiSelectOptGroup = (multiSelectHeader && multi(multiSelectHeader, {
+        }), document.getElementById("multiselect-header2")),
+        multiSelectOptGroup2 = (multiSelectHeader2 && multi(multiSelectHeader2, {
             non_selected_header: "Cars",
             selected_header: "Favorite Cars"
-        }), document.getElementById("multiselect-optiongroup")),
-        autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
+        }), document.getElementById("multiselect-optiongroup2")),
+        autoCompleteFruit2 = (multiSelectOptGroup2 && multi(multiSelectOptGroup2, {
             enable_search: !0
         }), new autoComplete({
             selector: "#olt",
@@ -570,7 +570,7 @@
                 input: {
                     selection: function(e) {
                         e = e.detail.selection.value;
-                        autoCompleteFruit.input.value = e
+                        autoCompleteFruit2.input.value = e
                     }
                 }
             }
