@@ -549,7 +549,7 @@
             data: {
                 src: [
                     <?php 
-                        foreach ($tim as $row){
+                        foreach ($olt as $row){
                             echo "'".$row->nama."',";
                         }
                     ?>
