@@ -576,6 +576,7 @@
             }
         }));
     </script>
+
     <script>
         var multiSelectBasic = document.getElementById("multiselect-basic"),
         multiSelectHeader = (multiSelectBasic && multi(multiSelectBasic, {
@@ -620,6 +621,7 @@
             }
         }));
     </script>
+
     <script>
         document.getElementById("sa-warning") && document.getElementById("sa-warning").addEventListener("click", function() {
             Swal.fire({
