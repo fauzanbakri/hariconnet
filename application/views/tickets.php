@@ -535,13 +535,13 @@
         autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
             enable_search: !0
         }), new autoComplete({
-            selector: "#tim",
-            placeHolder: "Search for Tim...",
+            selector: "#olt",
+            placeHolder: "Search for OLT...",
             data: {
                 src: [
                     <?php 
-                        foreach ($tim as $row){
-                            echo "'".$row->nama."',";
+                        foreach ($olt as $row){
+                            echo "'".$row->idOlt."',";
                         }
                     ?>
                 ],

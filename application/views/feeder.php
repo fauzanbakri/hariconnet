@@ -159,10 +159,22 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             
+                                                            <div>
                                                                 <label for="autoCompleteFruit" class="text-muted">Tim</label>
                                                                 <input id="tim" type="text" name="tim" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
+                                                            </div>
                                                             
-                                                            
+                                                            <label for="lastName" class="form-label">Tim</label>
+                                                            <select class="form-select mb-3" aria-label="Default select example" name="tim" id="tim" >
+                                                                <option value="">Select</option>
+                                                                <?php 
+                                                                    foreach ($tim as $row){
+                                                                        echo '
+                                                                            <option value="'.$row->nama.'">'.$row->nama.'</option>
+                                                                        ';
+                                                                    }
+                                                                ?>
+                                                            </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Status</label>
@@ -586,8 +598,8 @@
         autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
             enable_search: !0
         }), new autoComplete({
-            selector: "#olt",
-            placeHolder: "Search for OLT...",
+            selector: "#tim",
+            placeHolder: "Search for Tim...",
             data: {
                 src: [
                     <?php 
