@@ -164,17 +164,7 @@
                                                                 <input id="tim" type="text" name="tim" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
                                                             </div>
                                                             
-                                                            <label for="lastName" class="form-label">Tim</label>
-                                                            <select class="form-select mb-3" aria-label="Default select example" name="tim" id="tim" >
-                                                                <option value="">Select</option>
-                                                                <?php 
-                                                                    foreach ($tim as $row){
-                                                                        echo '
-                                                                            <option value="'.$row->nama.'">'.$row->nama.'</option>
-                                                                        ';
-                                                                    }
-                                                                ?>
-                                                            </select>
+                                                            <!--  -->
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Status</label>
@@ -603,8 +593,8 @@
             data: {
                 src: [
                     <?php 
-                        foreach ($olt as $row){
-                            echo "'".$row->idOlt."',";
+                        foreach ($tim as $row){
+                            echo "'".$row->nama."',";
                         }
                     ?>
                 ],
