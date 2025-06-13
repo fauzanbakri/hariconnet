@@ -544,7 +544,7 @@
         autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
             enable_search: !0
         }), new autoComplete({
-            selector: ".olt",
+            selector: "#olt",
             placeHolder: "Search for OLT...",
             data: {
                 src: [
