@@ -158,17 +158,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Tim</label>
-                                                            <select class="form-select mb-3" aria-label="Default select example" name="tim" id="tim" >
-                                                                <option value="">Select</option>
-                                                                <?php 
-                                                                    foreach ($tim as $row){
-                                                                        echo '
-                                                                            <option value="'.$row->nama.'">'.$row->nama.'</option>
-                                                                        ';
-                                                                    }
-                                                                ?>
-                                                            </select>
+                                                            
+                                                                <label for="autoCompleteFruit" class="text-muted">Tim</label>
+                                                                <input id="tim" type="text" name="tim" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
+                                                            
+                                                            
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Status</label>
@@ -550,6 +544,50 @@
         }), new autoComplete({
             selector: ".olt",
             placeHolder: "Search for OLT...",
+            data: {
+                src: [
+                    <?php 
+                        foreach ($tim as $row){
+                            echo "'".$row->nama."',";
+                        }
+                    ?>
+                ],
+                cache: !0
+            },
+            resultsList: {
+                element: function(e, t) {
+                    var l;
+                    t.results.length || ((l = document.createElement("div")).setAttribute("class", "no_result"), l.innerHTML = '<span>Found No Results for "' + t.query + '"</span>', e.prepend(l))
+                },
+                noResults: !0
+            },
+            resultItem: {
+                highlight: !0
+            },
+            events: {
+                input: {
+                    selection: function(e) {
+                        e = e.detail.selection.value;
+                        autoCompleteFruit.input.value = e
+                    }
+                }
+            }
+        }));
+    </script>
+    <script>
+        var multiSelectBasic = document.getElementById("multiselect-basic"),
+        multiSelectHeader = (multiSelectBasic && multi(multiSelectBasic, {
+            enable_search: !1
+        }), document.getElementById("multiselect-header")),
+        multiSelectOptGroup = (multiSelectHeader && multi(multiSelectHeader, {
+            non_selected_header: "Cars",
+            selected_header: "Favorite Cars"
+        }), document.getElementById("multiselect-optiongroup")),
+        autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
+            enable_search: !0
+        }), new autoComplete({
+            selector: "#tim",
+            placeHolder: "Search for Tim...",
             data: {
                 src: [
                     <?php 
