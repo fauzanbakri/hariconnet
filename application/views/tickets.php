@@ -967,7 +967,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 targets: 20,
                 className: 'priority-column',
                 responsivePriority: 1
-            }
+            },
         ],
         responsive: true
     });

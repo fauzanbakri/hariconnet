@@ -899,7 +899,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 className: 'priority-column',
                 responsivePriority: 1,
                 visible: true
-            }
+            }, 
+            {
+                targets: 14,
+                visible: false
+            },
         ],
         responsive: true,
         order: [],
