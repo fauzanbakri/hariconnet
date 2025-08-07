@@ -186,7 +186,7 @@
                                                                         Total : <?php echo $total->total + $m->total + $k->total + $n->total;?> Tiket<br>
                                                                             
                                                                         Makassar : <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
-                                                                        Tiket Non BB-FD-DT : <?php $sulselT->sulselT; ?> Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php echo $sulselT->sulselT; ?> Tiket<br>
                                                                         Tiket Impact Feeder : 0 Tiket<br>
                                                                         RIT-GI.BOLANGI-RC-OLT-03 PORT 1/2 - 1/4 DOWN: 	16 Tiket<br>
                                                                         RIT-GRIYA.KENARI-RC-OLT-01 OLT DOWN : 	51 Tiket<br>
@@ -201,7 +201,7 @@
                                                                         RIT-LAHUNDAPE-HW.MA5801-OLT-01 RIT-DAPU.DAPURA-HW.MA5801-OLT-01 RIT-MANDONGA-HW.MA5801-OLT-01 OLT DOWN: 	19 Tiket
                                                                         <br><br>
                                                                         Manado :  <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
-                                                                        Tiket Non BB-FD-DT : <?php $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php echo $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
                                                                     </div>
                                                                 </div>
                                                             </div><!-- end card body -->
