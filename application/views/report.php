@@ -194,7 +194,8 @@
                                                                                 <tr>
                                                                                 <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                                                                                 <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
-                                                                            </tr>
+                                                                                </tr>
+                                                                                <br>
                                                                             ';
                                                                         }
                                                                         ?>
@@ -208,7 +209,8 @@
                                                                                 <tr>
                                                                                 <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                                                                                 <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
-                                                                            </tr>
+                                                                                </tr>
+                                                                                <br>
                                                                             ';
                                                                         }
                                                                         ?>
@@ -222,7 +224,8 @@
                                                                                 <tr>
                                                                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                                                                                     <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
-                                                                                </tr>';
+                                                                                </tr>
+                                                                                <br>';
                                                                         }
                                                                         ?>
                                                                     </div>
