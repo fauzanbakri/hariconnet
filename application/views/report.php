@@ -155,7 +155,7 @@
                                                                     <div class="tab-pane" id="summary" role="tabpanel">
                                                                         *Laporan Gangguan Ritel Tanggal <?= date('d M Y')?>* <br>
                                                                         Update per jam <?php 
-                                                                        date_default_timezone_set('Asia/    Makassar');
+                                                                        date_default_timezone_set('Asia/Makassar');
                                                                         echo date('h.i') 
                                                                         ?> WITA <br>
                                                                         <br>
