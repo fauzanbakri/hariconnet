@@ -37,7 +37,35 @@ class Report extends CI_Controller {
         $q['fsultra'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Tenggara';")->row();
         $q['fgorontalo'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Gorontalo';")->row();
         $q['fsulut'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Utara';")->row();
+        $qm = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MAKASSAR' AND status!='CLOSED'")->result();
+        $qk = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='KENDARI' AND status!='CLOSED'")->result();
+        $qn = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MANADO' AND status!='CLOSED'")->result();
+        foreach ($qm as $row){
+            $q['fdetailm']=+ '
+                <tr>
+                <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+            </tr>
+            ';
+        }
+        foreach ($qk as $row){
+            $q['fdetailk']=+ '
+                <tr>
+                <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+            </tr>
+            ';
+        }
+        foreach ($qn as $row){
+            $q['fdetailn']=+ '
+                <tr>
+                    <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                    <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                </tr>';
+        }
+        
 
+        
         session_start();
         if(
 			$_SESSION['role']=='Superadmin' || 

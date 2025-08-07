@@ -188,21 +188,17 @@
                                                                         Makassar : <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
                                                                         Tiket Non BB-FD-DT : <?php echo $sulselT->sulselT; ?> Tiket<br>
                                                                         Tiket Impact Feeder : <?php echo $fsulsel->total;?> Tiket<br>
-                                                                        RIT-GI.BOLANGI-RC-OLT-03 PORT 1/2 - 1/4 DOWN: 	16 Tiket<br>
-                                                                        RIT-GRIYA.KENARI-RC-OLT-01 OLT DOWN : 	51 Tiket<br>
-                                                                        RIT-GI.BOLANGI-AN6000.2-OLT-01 PORT 2/1 2/14 DOWN: 	11 Tiket<br>
-                                                                        RIT-PR.NIRWANA-RC-OLT-01 OLT DOWN: 	5 Tiket<br>
-                                                                        RIT-GI.SINJAI-FH.AN6001.G16-OLT-01 ALL PORT DOWN: 	31 Tiket<br>
+                                                                        <?php echo $fdetailm; ?>
                                                                         <br>
                                                                         Kendari : <?php echo $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total + $sultraT->sultraT + $fsultra->total ;?>, Tiket<br>
                                                                         Tiket Non BB-FD-DT : <?php echo $sulbarT->sulbarT + $sultengT->sultengT;?> Tiket<br>
                                                                         Tiket Impact Feeder : <?php echo $fsulbar->total + $fsulteng->total + $fsultra->total;?> Tiket<br>
-                                                                        RIT-TALISE-AN6000.2-OLT-01 PORT 1/11 DOWN: 	7 Tiket<br>
-                                                                        RIT-LAHUNDAPE-HW.MA5801-OLT-01 RIT-DAPU.DAPURA-HW.MA5801-OLT-01 RIT-MANDONGA-HW.MA5801-OLT-01 OLT DOWN: 	19 Tiket
+                                                                        <?php echo $fdetailk; ?>
                                                                         <br><br>
                                                                         Manado :  <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
                                                                         Tiket Non BB-FD-DT : <?php echo $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
                                                                         Tiket Impact Feeder : <?php echo $fsulut->total + $fgorontalo->total; ?> Tiket<br>
+                                                                        <?php echo $fdetailn; ?>
                                                                     </div>
                                                                 </div>
                                                             </div><!-- end card body -->
