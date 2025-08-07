@@ -37,11 +37,11 @@ class Report extends CI_Controller {
         $q['fsultra'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Tenggara';")->row();
         $q['fgorontalo'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Gorontalo';")->row();
         $q['fsulut'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Utara';")->row();
-        $qm = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MAKASSAR' AND status!='CLOSED'")->result();
-        $qk = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='KENDARI' AND status!='CLOSED'")->result();
-        $qn = $this->db->query("SELECT * FROM feeder WHERE tipe!='FTTH DISTRIBUSI' AND kp='MANADO' AND status!='CLOSED'")->result();
+        $qm = $this->db->query("SELECT * FROM feeder WHERE kp='MAKASSAR' AND status!='CLOSED'")->result();
+        $qk = $this->db->query("SELECT * FROM feeder WHERE kp='KENDARI' AND status!='CLOSED'")->result();
+        $qn = $this->db->query("SELECT * FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->result();
         foreach ($qm as $row){
-            $q['fdetailm']=+ '
+            $q['fdetailm']+= '
                 <tr>
                 <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                 <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
@@ -49,7 +49,7 @@ class Report extends CI_Controller {
             ';
         }
         foreach ($qk as $row){
-            $q['fdetailk']=+ '
+            $q['fdetailk']+= '
                 <tr>
                 <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                 <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
@@ -57,7 +57,7 @@ class Report extends CI_Controller {
             ';
         }
         foreach ($qn as $row){
-            $q['fdetailn']=+ '
+            $q['fdetailn']+= '
                 <tr>
                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                     <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
