@@ -171,17 +171,20 @@
                                                                         Makassar = <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
                                                                         On progress tim : 0<br>
                                                                         Waiting : 0 <br>
-                                                                        Total Tim : 7 Tim<br>
+                                                                        Total Tim : 0 Tim<br>
+                                                                        Total Tim On Progress : 0<br>
                                                                         <br>
                                                                         Kendari = <?php echo $sultraT->sultraT + $fsultra->total + $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total;?>, Tiket<br>
                                                                         On progress tim : 0<br>
                                                                         Waiting : 0 <br>
-                                                                        Total tim : 5 Tim<br>
+                                                                        Total tim : 0 Tim<br>
+                                                                        Total Tim On Progress : 0<br>
                                                                         <br>
                                                                         Manado = <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
                                                                         On progress : 0<br>
                                                                         Waiting : 0 <br>
-                                                                        Total tim : 4 tim<br>
+                                                                        Total tim : 0 tim<br>
+                                                                        Total Tim On Progress : 0<br>
                                                                         <br>
                                                                         =========================================================<br>
                                                                         <br>
