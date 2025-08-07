@@ -31,12 +31,12 @@ class Report extends CI_Controller {
         $q['m'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MAKASSAR' AND status!='CLOSED'")->row();
         $q['k'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='KENDARI' AND status!='CLOSED'")->row();
         $q['n'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->row();  
-        $q['fsulsel'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;")->row();
-        $q['fsulbar'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Barat' GROUP BY provinsi;")->row();
-        $q['fsulteng'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Tengah' GROUP BY provinsi;")->row();
-        $q['fsultra'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Tenggara' GROUP BY provinsi;")->row();
-        $q['fgorontalo'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Gorontalo' GROUP BY provinsi;")->row();
-        $q['fsulut'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Utara' GROUP BY provinsi;")->row();
+        $q['fsulsel'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Selatan';")->row();
+        $q['fsulbar'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Barat';")->row();
+        $q['fsulteng'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Tengah';")->row();
+        $q['fsultra'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Tenggara';")->row();
+        $q['fgorontalo'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Gorontalo';")->row();
+        $q['fsulut'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Utara';")->row();
 
         session_start();
         if(

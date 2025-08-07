@@ -158,7 +158,7 @@
                                                                         <br>
                                                                         Total Open Tiket :  <?php echo $total->total + $m->total + $k->total + $n->total;?><br>
                                                                         Tiket Total : Sulsel: <?php echo $sulselT->sulselT + $fsulsel->total;?>, 
-                                                                        Sulbar: <?php echo $sulbarT->sulbarT;?>,
+                                                                        Sulbar: <?php echo $sulbarT->sulbarT + $fsulbar->total;?>,
                                                                         Sultra: <?php echo $sultraT->sultraT + $fsultra->total;?>,  
                                                                         Sulteng: <?php echo $sultengT->sultengT + $fsulteng->total;?>, 
                                                                         Gorontalo: <?php echo $gorontaloT->gorontaloT + $fgorontalo->total;?>, 
