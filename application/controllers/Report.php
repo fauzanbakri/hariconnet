@@ -49,7 +49,7 @@ class Report extends CI_Controller {
             ';
         }
         foreach ($qk as $row){
-            $q['fdetailk']+= '
+            $q['fdetailk']=+  '
                 <tr>
                 <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                 <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
@@ -57,7 +57,7 @@ class Report extends CI_Controller {
             ';
         }
         foreach ($qn as $row){
-            $q['fdetailn']+= '
+            $q['fdetailn']=+ '
                 <tr>
                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                     <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
