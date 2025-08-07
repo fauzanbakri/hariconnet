@@ -199,9 +199,8 @@
                                                                         Tiket Impact Feeder : 26 Tiket<br>
                                                                         RIT-TALISE-AN6000.2-OLT-01 PORT 1/11 DOWN: 	7 Tiket<br>
                                                                         RIT-LAHUNDAPE-HW.MA5801-OLT-01 RIT-DAPU.DAPURA-HW.MA5801-OLT-01 RIT-MANDONGA-HW.MA5801-OLT-01 OLT DOWN: 	19 Tiket
-                                                                        <br>
+                                                                        <br><br>
                                                                         Manado :  <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
-                                                                        <br>
                                                                         Tiket Non BB-FD-DT : <?php $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
                                                                     </div>
                                                                 </div>
