@@ -30,7 +30,14 @@ class Report extends CI_Controller {
 		$q['gorontaloT'] = $this->db->query("SELECT COUNT(*) AS gorontaloT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Gorontalo';")->row();
         $q['m'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MAKASSAR' AND status!='CLOSED'")->row();
         $q['k'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='KENDARI' AND status!='CLOSED'")->row();
-        $q['n'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->row();        
+        $q['n'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->row();  
+        $q['fsulsel'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;");
+        $q['fsulbar'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;");
+        $q['fsulteng'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;");
+        $q['fsultra'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;");
+        $q['fgorontalo'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;");
+        $q['fsulut'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;");
+
         session_start();
         if(
 			$_SESSION['role']=='Superadmin' || 

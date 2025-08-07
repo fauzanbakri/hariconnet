@@ -157,16 +157,16 @@
                                                                         Update per jam <?= date('h.m') ?> WITA <br>
                                                                         <br>
                                                                         Total Open Tiket :  <?php echo $total->total + $m->total + $k->total + $n->total;?><br>
-                                                                        Tiket Total : Sulsel: <?php echo $sulselT->sulselT;?>, 
-                                                                        Sulbar: <?php echo $sulbarT->sulbarT;?>,
-                                                                        Sultra: <?php echo $sultraT->sultraT;?>,  
-                                                                        Sulteng: <?php echo $sultengT->sultengT;?>, 
-                                                                        Gorontalo: <?php echo $gorontaloT->gorontaloT;?>, 
-                                                                        Sulut: <?php echo $sulutT->sulutT;?>
+                                                                        Tiket Total : Sulsel: <?php echo $sulselT->sulselT + $fsulsel;?>, 
+                                                                        Sulbar: <?php echo $sulbarT->sulbarT + $fsulbar;?>,
+                                                                        Sultra: <?php echo $sultraT->sultraT + $fsultra;?>,  
+                                                                        Sulteng: <?php echo $sultengT->sultengT + $fsulteng;?>, 
+                                                                        Gorontalo: <?php echo $gorontaloT->gorontaloT + $fgorontalo;?>, 
+                                                                        Sulut: <?php echo $sulutT->sulutT + $fsulut;?>
                                                                         <br>
                                                                         <br>
                                                                         Makassar = 331 Tiket<br>
-                                                                        On progress tim : 51<br>
+                                                                        On progress tim : 0<br>
                                                                         Waiting : 280<br>
                                                                         Total Tim : 7 Tim<br>
                                                                         <br>
@@ -183,7 +183,7 @@
                                                                         =========================================================<br>
                                                                         <br>
                                                                         *BREAKDOWN TIKET*<br>
-                                                                        Total : 	0 Tiket<br>
+                                                                        Total : <?php echo $total->total + $m->total + $k->total + $n->total;?> Tiket<br>
                                                                             
                                                                         Makassar : 	0 Tiket<br>
                                                                         Tiket Non BB-FD-DT : 	0 Tiket<br>
