@@ -156,7 +156,7 @@
                                                                         *Laporan Gangguan Ritel Tanggal <?= date('d M Y')?>* <br>
                                                                         Update per jam <?= date('h.m') ?> WITA <br>
                                                                         <br>
-                                                                        Total Open Tiket :  <?php echo $total->total;?> <br>
+                                                                        Total Open Tiket :  <?php echo $total->total + $m->total + $k->total + $n->total;?><br>
                                                                         Tiket Total : Sulsel: <?php echo $sulselT->sulselT;?>, 
                                                                         Sulbar: <?php echo $sulbarT->sulbarT;?>,
                                                                         Sultra: <?php echo $sultraT->sultraT;?>,  
