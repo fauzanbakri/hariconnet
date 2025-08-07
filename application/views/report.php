@@ -188,17 +188,43 @@
                                                                         Makassar : <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
                                                                         Tiket Non BB-FD-DT : <?php echo $sulselT->sulselT; ?> Tiket<br>
                                                                         Tiket Impact Feeder : <?php echo $fsulsel->total;?> Tiket<br>
-                                                                        <?php echo $fdetailm; ?>
+                                                                        <?php
+                                                                        foreach ($qm as $row){
+                                                                            echo '
+                                                                                <tr>
+                                                                                <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                                                                                <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                                                            </tr>
+                                                                            ';
+                                                                        }
+                                                                        ?>
                                                                         <br>
                                                                         Kendari : <?php echo $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total + $sultraT->sultraT + $fsultra->total ;?>, Tiket<br>
                                                                         Tiket Non BB-FD-DT : <?php echo $sulbarT->sulbarT + $sultengT->sultengT;?> Tiket<br>
                                                                         Tiket Impact Feeder : <?php echo $fsulbar->total + $fsulteng->total + $fsultra->total;?> Tiket<br>
-                                                                        <?php echo $fdetailk; ?>
+                                                                        <?php 
+                                                                        foreach ($qk as $row){
+                                                                            echo  '
+                                                                                <tr>
+                                                                                <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                                                                                <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                                                            </tr>
+                                                                            ';
+                                                                        }
+                                                                        ?>
                                                                         <br><br>
                                                                         Manado :  <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
                                                                         Tiket Non BB-FD-DT : <?php echo $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
                                                                         Tiket Impact Feeder : <?php echo $fsulut->total + $fgorontalo->total; ?> Tiket<br>
-                                                                        <?php echo $fdetailn; ?>
+                                                                        <?php
+                                                                        foreach ($qn as $row){
+                                                                            echo '
+                                                                                <tr>
+                                                                                    <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                                                                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                                                                </tr>';
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             </div><!-- end card body -->
