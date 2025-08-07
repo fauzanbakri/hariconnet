@@ -204,7 +204,7 @@
                                                                         ?>
                                                                         <br>
                                                                         Kendari : <?php echo $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total + $sultraT->sultraT + $fsultra->total ;?>, Tiket<br>
-                                                                        Tiket Non BB-FD-DT : <?php echo $sulbarT->sulbarT + $sultengT->sultengT;?> Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php echo $sulbarT->sulbarT + $sultengT->sultengT + $sultragT->sultraT;?> Tiket<br>
                                                                         Tiket Impact Feeder : <?php echo $fsulbar->total + $fsulteng->total + $fsultra->total;?> Tiket<br>
                                                                         <?php 
                                                                         foreach ($qk as $row){
