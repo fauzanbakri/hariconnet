@@ -41,7 +41,7 @@ class Report extends CI_Controller {
         $qk = $this->db->query("SELECT * FROM feeder WHERE kp='KENDARI' AND status!='CLOSED'")->result();
         $qn = $this->db->query("SELECT * FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->result();
         foreach ($qm as $row){
-            $q['fdetailm']+= '
+            $q['fdetailm']=+ '
                 <tr>
                 <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
                 <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
