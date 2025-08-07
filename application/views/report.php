@@ -201,6 +201,7 @@
                                                                         RIT-LAHUNDAPE-HW.MA5801-OLT-01 RIT-DAPU.DAPURA-HW.MA5801-OLT-01 RIT-MANDONGA-HW.MA5801-OLT-01 OLT DOWN: 	19 Tiket
                                                                         <br>
                                                                         Manado :  <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
+                                                                        <br>
                                                                         Tiket Non BB-FD-DT : <?php $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
                                                                     </div>
                                                                 </div>
