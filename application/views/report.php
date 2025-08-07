@@ -169,22 +169,21 @@
                                                                         <br>
                                                                         <br>
                                                                         Makassar = <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
-                                                                        On progress tim : 0<br>
+                                                                        On progress tim IKR: 0<br>
+                                                                        On progress tim Feeder: 0<br>
                                                                         Waiting : 0 <br>
-                                                                        Total Tim : 0 Tim<br>
-                                                                        Total Tim On Progress : 0<br>
-                                                                        <br>
+                                                                        Total Tim : 0 Tim<br>                                                                        <br>
                                                                         Kendari = <?php echo $sultraT->sultraT + $fsultra->total + $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total;?>, Tiket<br>
-                                                                        On progress tim : 0<br>
+                                                                        On progress tim IKR: 0<br>
+                                                                        On progress tim Feeder: 0<br>
                                                                         Waiting : 0 <br>
                                                                         Total tim : 0 Tim<br>
-                                                                        Total Tim On Progress : 0<br>
                                                                         <br>
                                                                         Manado = <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
-                                                                        On progress : 0<br>
+                                                                        On progress tim IKR: 0<br>
+                                                                        On progress tim Feeder: 0<br>
                                                                         Waiting : 0 <br>
                                                                         Total tim : 0 tim<br>
-                                                                        Total Tim On Progress : 0<br>
                                                                         <br>
                                                                         =========================================================<br>
                                                                         <br>
