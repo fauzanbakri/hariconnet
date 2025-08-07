@@ -185,8 +185,8 @@
                                                                         *BREAKDOWN TIKET*<br>
                                                                         Total : <?php echo $total->total + $m->total + $k->total + $n->total;?> Tiket<br>
                                                                             
-                                                                        Makassar : 	0 Tiket<br>
-                                                                        Tiket Non BB-FD-DT : 	0 Tiket<br>
+                                                                        Makassar : <?php echo $sulselT->sulselT + $fsulsel;?> Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php $sulselT->sulselT; ?> Tiket<br>
                                                                         Tiket Impact Feeder : 0 Tiket<br>
                                                                         RIT-GI.BOLANGI-RC-OLT-03 PORT 1/2 - 1/4 DOWN: 	16 Tiket<br>
                                                                         RIT-GRIYA.KENARI-RC-OLT-01 OLT DOWN : 	51 Tiket<br>
@@ -194,14 +194,14 @@
                                                                         RIT-PR.NIRWANA-RC-OLT-01 OLT DOWN: 	5 Tiket<br>
                                                                         RIT-GI.SINJAI-FH.AN6001.G16-OLT-01 ALL PORT DOWN: 	31 Tiket<br>
                                                                         <br>
-                                                                        Kendari : 	66 Tiket<br>
-                                                                        Tiket Non BB-FD-DT : 	40 Tiket<br>
+                                                                        Kendari : <?php echo $sulbarT->sulbarT + $fsulbar + $sultengT->sultengT + $fsulteng;?>, Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php echo $sulbarT->sulbarT + $sultengT->sultengT;?> Tiket<br>
                                                                         Tiket Impact Feeder : 26 Tiket<br>
                                                                         RIT-TALISE-AN6000.2-OLT-01 PORT 1/11 DOWN: 	7 Tiket<br>
                                                                         RIT-LAHUNDAPE-HW.MA5801-OLT-01 RIT-DAPU.DAPURA-HW.MA5801-OLT-01 RIT-MANDONGA-HW.MA5801-OLT-01 OLT DOWN: 	19 Tiket
                                                                         <br>
-                                                                        Manado :  32 Tiket<br>
-                                                                        Tiket Non BB-FD-DT : 32 Tiket<br>
+                                                                        Manado :  <?php echo $gorontaloT->gorontaloT + $fgorontalo + $sulutT->sulutT + $fsulut;?> Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
                                                                     </div>
                                                                 </div>
                                                             </div><!-- end card body -->
