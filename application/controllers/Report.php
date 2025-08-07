@@ -34,7 +34,7 @@ class Report extends CI_Controller {
         $q['fsulsel'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Selatan' GROUP BY provinsi;");
         $q['fsulbar'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Barat' GROUP BY provinsi;");
         $q['fsulteng'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Tengah' GROUP BY provinsi;");
-        $q['fsultra'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total fFROM eeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Tenggara' GROUP BY provinsi;");
+        $q['fsultra'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Tenggara' GROUP BY provinsi;");
         $q['fgorontalo'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Gorontalo' GROUP BY provinsi;");
         $q['fsulut'] = $this->db->query("SELECT provinsi, SUM(jumlahTiket) AS total FROM feeder JOIN area ON feeder.kode = area.kode WHERE provinsi = 'Sulawesi Utara' GROUP BY provinsi;");
 
