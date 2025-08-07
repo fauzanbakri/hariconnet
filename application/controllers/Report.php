@@ -28,6 +28,9 @@ class Report extends CI_Controller {
 		$q['sultengT'] = $this->db->query("SELECT COUNT(*) AS sultengT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tengah';")->row();
 		$q['sulutT'] = $this->db->query("SELECT COUNT(*) AS sulutT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Utara';")->row();
 		$q['gorontaloT'] = $this->db->query("SELECT COUNT(*) AS gorontaloT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Gorontalo';")->row();
+        $q['m'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MAKASSAR' AND status!='CLOSED'")->row();
+        $q['k'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='KENDARI' AND status!='CLOSED'")->row();
+        $q['n'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->row();        
         session_start();
         if(
 			$_SESSION['role']=='Superadmin' || 
@@ -111,6 +114,7 @@ class Report extends CI_Controller {
             }
         }
     }
+    
 
     public function test(){
         
