@@ -165,19 +165,19 @@
                                                                         Sulut: <?php echo $sulutT->sulutT + $fsulut->total;?>
                                                                         <br>
                                                                         <br>
-                                                                        Makassar = 331 Tiket<br>
+                                                                        Makassar = <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
                                                                         On progress tim : 0<br>
-                                                                        Waiting : 280<br>
+                                                                        Waiting : 0 <br>
                                                                         Total Tim : 7 Tim<br>
                                                                         <br>
-                                                                        Kendari = 66 Tiket<br>
-                                                                        On progress tim : 19<br>
-                                                                        Waiting : 47<br>
+                                                                        Kendari = <?php echo $sultraT->sultraT + $fsultra->total + $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total;?>, Tiket<br>
+                                                                        On progress tim : 0<br>
+                                                                        Waiting : 0 <br>
                                                                         Total tim : 5 Tim<br>
                                                                         <br>
-                                                                        Manado = 32 Tiket<br>
-                                                                        On progress : 4<br>
-                                                                        Waiting : 28<br>
+                                                                        Manado = <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
+                                                                        On progress : 0<br>
+                                                                        Waiting : 0 <br>
                                                                         Total tim : 4 tim<br>
                                                                         <br>
                                                                         =========================================================<br>
