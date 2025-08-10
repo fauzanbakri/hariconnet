@@ -563,7 +563,7 @@
                                 echo '
                                  <li class="nav-item">
                                     <a class="nav-link menu-link" href="MonitoringSLA" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                        <i class="ri-rocket-line"></i> <span data-key="t-layouts">Monitoring SLA</span>
+                                        <i class="ri-pie-chart-line"></i> <span data-key="t-layouts">Monitoring SLA</span>
                                     </a>
                                 </li> 
                                 <li class="nav-item">
