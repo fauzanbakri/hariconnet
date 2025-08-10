@@ -215,7 +215,7 @@
 				'kecamatan splitter' => 'kecamatansplitter',
 				'kelurahan splitter' => 'kelurahansplitter',
 				'tanggal insiden' => 'tanggalinsiden',
-				'tanggal send noc' => 'tanggalsendnoc',
+				'tanggal send noc' => 'tanggalsendnoc'
 			];
 
 			$map = []; // 'A' => 'idtiket', dst.
