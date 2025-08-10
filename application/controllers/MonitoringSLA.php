@@ -34,7 +34,7 @@
 
 			if (!$this->upload->do_upload('excel_file')) {
 				$this->session->set_flashdata('error', $this->upload->display_errors('', ''));
-				return redirect('import-ticket');
+				return redirect('MonitoringSLA');
 			}
 
 			$fileData  = $this->upload->data();
