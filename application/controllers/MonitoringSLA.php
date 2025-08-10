@@ -34,7 +34,7 @@
 
 			if (!$this->upload->do_upload('excel_file')) {
 				$this->session->set_flashdata('error', $this->upload->display_errors('', ''));
-				return redirect('MonitoringSLA');
+				return header('location:MonitoringSLA');
 			}
 
 			$fileData  = $this->upload->data();
