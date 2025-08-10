@@ -77,7 +77,7 @@
 				foreach (array_chunk($dataToInsert, $chunk) as $pack) {
 					$total += $this->ticketModel->upsert_batch($pack, 'idtiket');
 				}
-
+				echo $total;
 				$this->session->set_flashdata('success', "Import selesai. Baris diproses: {$total}");
 			} catch (Throwable $e) {
 				$this->session->set_flashdata('error', 'Gagal memproses file: '.$e->getMessage());
@@ -85,7 +85,6 @@
 				// Hapus file sementara
 				if (is_file($fullPath)) { @unlink($fullPath); }
 			}
-			echo $total;
 			// return header('location:./MonitoringSLA');
 		}
 
