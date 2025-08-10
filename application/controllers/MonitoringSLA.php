@@ -7,7 +7,7 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
-        $this->load->model('ListTicketing_model', 'ticketModel');
+        $this->load->model('MonitoringSLA_model', 'ticketModel');
     }
 
     public function index()
