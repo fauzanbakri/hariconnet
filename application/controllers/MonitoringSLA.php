@@ -35,7 +35,7 @@
 			if (!$this->upload->do_upload('excel_file')) {
 				$this->session->set_flashdata('error', $this->upload->display_errors('', ''));
 				echo $this->upload->display_errors('', '').FCPATH.'application/uploads';die;
-				return header('location:MonitoringSLA');
+				return header('location:./MonitoringSLA');
 			}
 
 			$fileData  = $this->upload->data();
@@ -86,7 +86,7 @@
 				if (is_file($fullPath)) { @unlink($fullPath); }
 			}
 
-			return redirect('import-ticket');
+			// return header('location:./MonitoringSLA');
 		}
 
 		/**
