@@ -81,6 +81,7 @@
 				$this->session->set_flashdata('success', "Import selesai. Baris diproses: {$total}");
 			} catch (Throwable $e) {
 				$this->session->set_flashdata('error', 'Gagal memproses file: '.$e->getMessage());
+				echo $e->getMessage();
 			} finally {
 				// Hapus file sementara
 				if (is_file($fullPath)) { @unlink($fullPath); }
