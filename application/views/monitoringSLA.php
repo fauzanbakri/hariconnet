@@ -36,6 +36,19 @@
                                 </div><!-- end card-body -->
                             </div><!-- end card -->
                         </div>
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <?=form_open_multipart('MonitoringSLA/upload')?>
+                                <div class="row">
+                                    <label for="excel_file">Pilih file Excel (.xls / .xlsx)</label><br>
+                                    <input type="file" id="excel_file" name="excel_file" accept=".xls,.xlsx" required>
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary">Upload & Import</button>
+                                </div>
+                                <?=form_close()?>
+                            </div>
+                        </div>
                         <!-- end col -->
                     </div>
                     <!-- end row -->
