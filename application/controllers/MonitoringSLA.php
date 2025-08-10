@@ -8,8 +8,8 @@
 		public function __construct()
 		{
 			parent::__construct();
-			$this->load->helper(['form']);
-			// $this->load->library('session');
+			$this->load->helper(['form', 'url']);
+			$this->load->library('session');
 			$this->load->model('MonitoringSLA_model', 'ticketModel');
 		}
 
