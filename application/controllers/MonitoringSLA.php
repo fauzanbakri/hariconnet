@@ -8,15 +8,15 @@
 		public function __construct()
 		{
 			parent::__construct();
-			$this->load->helper(['form','url']);
-			$this->load->library('session');
+			// $this->load->helper(['form','url']);
+			// $this->load->library('session');
 			$this->load->model('MonitoringSLA_model', 'ticketModel');
 		}
 
 		public function index()
 		{
 			$title['title']="Monitoring SLA";
-			// session_start();
+			session_start();
 			$this->load->view('navbar',$title);
 			$this->load->view('monitoringSLA');
 		}
