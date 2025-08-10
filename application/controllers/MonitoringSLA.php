@@ -8,8 +8,7 @@
 		public function __construct()
 		{
 			parent::__construct();
-			$this->load->helper(['form']);
-			$this->load->library('session');
+			$this->load->helper(['form', 'url']);
 			$this->load->model('MonitoringSLA_model', 'ticketModel');
 		}
 
@@ -23,6 +22,7 @@
 
 		public function upload()
 		{
+			$this->load->library('session');
 			// 1) Upload file
 			$config = [
 				'upload_path'   => FCPATH.'application/uploads',
