@@ -16,7 +16,7 @@
 		public function index()
 		{
 			$title['title']="Monitoring SLA";
-			session_start();
+			// session_start();
 			$this->load->view('navbar',$title);
 			$this->load->view('monitoringSLA');
 		}
