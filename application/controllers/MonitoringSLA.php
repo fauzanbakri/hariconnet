@@ -12,8 +12,17 @@ class MonitoringSLA extends CI_Controller
 
     public function index()
     {
-        $this->load->view('ticketing_upload_form'); // form sederhana di atas
-    }
+		$title['title']="Monitoring SLA";
+        session_start();
+        if(
+			$_SESSION['role']=='Superadmin' || 
+			$_SESSION['role']=='NOC Ritel'
+			){
+                $this->load->view('navbar', $title);
+                $this->load->view('monitoringSLA');
+		}else{
+			header('location: ./DashboardNoc');
+		}    }
 
     public function upload()
     {
