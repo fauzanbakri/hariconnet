@@ -34,7 +34,7 @@
 
 			if (!$this->upload->do_upload('excel_file')) {
 				$this->session->set_flashdata('error', $this->upload->display_errors('', ''));
-				// echo $this->upload->display_errors('', '').FCPATH.'application/uploads';die;
+				echo $this->upload->display_errors('', '').FCPATH.'application/uploads';die;
 				return header('location:MonitoringSLA');
 			}
 
