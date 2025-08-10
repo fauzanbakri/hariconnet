@@ -85,7 +85,7 @@
 				// Hapus file sementara
 				if (is_file($fullPath)) { @unlink($fullPath); }
 			}
-
+			echo $total;
 			// return header('location:./MonitoringSLA');
 		}
 
