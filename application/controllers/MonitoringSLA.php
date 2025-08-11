@@ -7,42 +7,43 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
+        $this->load->library('session'); // gunakan session CI untuk flashdata
         $this->load->model('MonitoringSLA_model', 'ticketModel');
     }
 
     public function index()
     {
-		$title['title']="Monitoring SLA";
-        session_start();
-        if(
-			$_SESSION['role']=='Superadmin' || 
-			$_SESSION['role']=='NOC Ritel'
-			){
-                $this->load->view('navbar', $title);
-                $this->load->view('monitoringSLA');
-		}else{
-			header('location: ../DashboardNoc');
-		}    }
+        $title['title'] = "Monitoring SLA";
+
+        // native session (sesuai kode awalmu)
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset($_SESSION['role']) && ($_SESSION['role'] == 'Superadmin' || $_SESSION['role'] == 'NOC Ritel')) {
+            $this->load->view('navbar', $title);
+            $this->load->view('monitoringSLA'); // pastikan view ini ada form uploadnya
+        } else {
+            redirect('DashboardNoc');
+        }
+    }
 
     public function upload()
     {
-        $this->load->library('session');
-
         // ---- KONFIG UPLOAD ----
         $config = array(
             'upload_path'   => FCPATH.'application/uploads',
             'allowed_types' => 'xls|xlsx',
             'encrypt_name'  => TRUE,
             'max_size'      => 10240,
-            // Jika masih ditolak mime-type:
-            // 'detect_mime' => FALSE,
+            // kalau masih ditolak mime-type, aktifkan baris di bawah:
+            'detect_mime'   => FALSE,
         );
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('excel_file')) {
             $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
-			echo $this->upload->display_errors('', '');die;
-            header('location: ../MonitoringSLA');
+            redirect('MonitoringSLA');
             return;
         }
 
@@ -54,17 +55,87 @@ class MonitoringSLA extends CI_Controller
         require_once APPPATH.'third_party/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
         try {
-            $objPHPExcel = PHPExcel_IOFactory::load($path);
-            $sheet       = $objPHPExcel->getActiveSheet();
-            $rows        = $sheet->toArray(null, true, true, true);
+            // 1) Paksa reader sesuai ekstensi
+            $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+            if ($ext === 'xls') {
+                $reader = PHPExcel_IOFactory::createReader('Excel5');
+            } elseif ($ext === 'xlsx') {
+                $reader = PHPExcel_IOFactory::createReader('Excel2007');
+            } else {
+                $reader = PHPExcel_IOFactory::createReader('CSV');
+                $reader->setDelimiter(',');
+                $reader->setEnclosure('"');
+                $reader->setReadDataOnly(true);
+            }
 
-            if (count($rows) < 2) {
+            // 2) Custom ValueBinder: cegah Notice boolean (array offset on bool)
+            if (!class_exists('MyValueBinder')) {
+                class MyValueBinder extends PHPExcel_Cell_DefaultValueBinder {
+                    public function bindValue(PHPExcel_Cell $cell, $value = null) {
+                        if (is_bool($value)) {
+                            $cell->setValueExplicit($value ? 1 : 0, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                            return true;
+                        }
+                        return parent::bindValue($cell, $value);
+                    }
+                }
+            }
+            PHPExcel_Cell::setValueBinder(new MyValueBinder());
+
+            // 3) Tahan output liar dari library (supaya redirect aman)
+            ob_start();
+            $objPHPExcel = $reader->load($path);
+            $noise = ob_get_clean();
+            if (!empty($noise)) {
+                log_message('error', 'PHPExcel output suppressed: '.substr(preg_replace('/\s+/', ' ', $noise), 0, 1000));
+            }
+
+            $sheet = $objPHPExcel->getActiveSheet();
+            $rows  = $sheet->toArray(null, true, true, true); // keys A,B,C,...
+
+            if (count($rows) < 1) {
                 throw new Exception('File kosong atau tidak ada data.');
             }
 
-            // --- HEADER ---
-            $header = array_shift($rows); // baris 1
-            $map    = $this->buildHeaderMap($header);
+            // --- HEADER + fallback by-position ---
+            $header = array_shift($rows);
+
+            try {
+                $map = $this->buildHeaderMap($header);
+            } catch (Exception $e) {
+                // Fallback: tidak ada header -> map berdasarkan urutan kolom
+                array_unshift($rows, $header); // kembalikan baris sebagai data
+
+                $positional = array(
+                    'idtiket','idpelanggan','idinsiden','namapelanggan','sidbaru','sidlama','idpln',
+                    'namakelompok','namakondisi','namasbu','namakp','telepon','namapelapor','isilaporan',
+                    'tanggapan','status','waktugangguan','penerimalaporan','produk','posisitiket','idolt',
+                    'brandolt','idsplitter','penyebab','penyebabdetail','namamitra','petugaslapangan',
+                    'tipetiket','laporanberulang','gangguanke','namasumber','segmenicon','waktulapor',
+                    'waktulaporanselesai','durasilaporan','durasilaporanmenit',
+                    'waktugangguan2', // <<— kolom tambahan sesuai permintaan
+                    'waktugangguanselesai','durasigangguan','durasigangguanmenit','durasistopclock',
+                    'durasigangguaminusstopclock','endcustomer','durasistopclockpelanggan',
+                    'durasigangguanminusstopclockpelanggan','keteranganclose','segmenpelanggan',
+                    'bandwidth','lastkomen','latlongpelanggan','provinsipelanggan','kabupatenpelanggan',
+                    'kecamatanpelanggan','kelurahanpelanggan','latlongsplitter','provinsisplitter',
+                    'kabupatensplitter','kecamatansplitter','kelurahansplitter','vip',
+                    'tanggalinsiden','tanggalsendnoc'
+                );
+
+                $firstRow = reset($rows);
+                $cols     = array_keys($firstRow); // ex: ['A','B','C',...]
+                $map      = array();
+
+                $max = min(count($cols), count($positional));
+                for ($i = 0; $i < $max; $i++) {
+                    $map[$cols[$i]] = $positional[$i];
+                }
+
+                if (!in_array('idtiket', $map, true)) {
+                    throw new Exception('Header tidak dikenali dan fallback posisi gagal menemukan "idtiket".');
+                }
+            }
 
             // --- DATA ---
             $batch = array();
@@ -79,8 +150,7 @@ class MonitoringSLA extends CI_Controller
             }
 
             $total  = 0;
-            $chunks = array_chunk($batch, 500);
-            foreach ($chunks as $ck) {
+            foreach (array_chunk($batch, 500) as $ck) {
                 $total += $this->ticketModel->upsert_batch($ck, 'idtiket');
             }
 
@@ -90,8 +160,8 @@ class MonitoringSLA extends CI_Controller
         }
 
         if (is_file($path)) { @unlink($path); }
-			echo $e->getMessage();die;
-            header('location: ../MonitoringSLA');
+
+        redirect('MonitoringSLA');
     }
 
     private function buildHeaderMap($headerRow)
@@ -102,13 +172,15 @@ class MonitoringSLA extends CI_Controller
             'tanggapan','status','waktugangguan','penerimalaporan','produk','posisitiket','idolt',
             'brandolt','idsplitter','penyebab','penyebabdetail','namamitra','petugaslapangan',
             'tipetiket','laporanberulang','gangguanke','namasumber','segmenicon','waktulapor',
-            'waktulaporanselesai','durasilaporan','durasilaporanmenit','waktugangguan2','waktugangguanselesai',
-            'durasigangguan','durasigangguanmenit','durasistopclock','durasigangguaminusstopclock',
-            'endcustomer','durasistopclockpelanggan','durasigangguanminusstopclockpelanggan',
-            'keteranganclose','segmenpelanggan','bandwidth','lastkomen','latlongpelanggan',
-            'provinsipelanggan','kabupatenpelanggan','kecamatanpelanggan','kelurahanpelanggan',
-            'latlongsplitter','provinsisplitter','kabupatensplitter','kecamatansplitter',
-            'kelurahansplitter','vip','tanggalinsiden','tanggalsendnoc'
+            'waktulaporanselesai','durasilaporan','durasilaporanmenit',
+            'waktugangguan2', // <<— valid
+            'waktugangguanselesai','durasigangguan','durasigangguanmenit','durasistopclock',
+            'durasigangguaminusstopclock','endcustomer','durasistopclockpelanggan',
+            'durasigangguanminusstopclockpelanggan','keteranganclose','segmenpelanggan',
+            'bandwidth','lastkomen','latlongpelanggan','provinsipelanggan','kabupatenpelanggan',
+            'kecamatanpelanggan','kelurahanpelanggan','latlongsplitter','provinsisplitter',
+            'kabupatensplitter','kecamatansplitter','kelurahansplitter','vip',
+            'tanggalinsiden','tanggalsendnoc'
         );
 
         $aliases = array(
@@ -134,14 +206,20 @@ class MonitoringSLA extends CI_Controller
             'lat/long splitter'=>'latlongsplitter','provinsi splitter'=>'provinsisplitter',
             'kabupaten splitter'=>'kabupatensplitter','kecamatan splitter'=>'kecamatansplitter',
             'kelurahan splitter'=>'kelurahansplitter','tanggal insiden'=>'tanggalinsiden',
-            'tanggal send noc'=>'tanggalsendnoc'
+            'tanggal send noc'=>'tanggalsendnoc',
+            // variasi umum:
+            'waktu gangguan' => 'waktugangguan',
+            'waktu gangguan 2' => 'waktugangguan2',
+            'waktu gangguan kedua' => 'waktugangguan2',
         );
 
         $map = array();
         foreach ($headerRow as $col => $label) {
             $norm   = $this->normalize($label);
             $target = isset($aliases[$norm]) ? $aliases[$norm] : $norm;
-            if (in_array($target, $valid, true)) $map[$col] = $target;
+            if (in_array($target, $valid, true)) {
+                $map[$col] = $target;
+            }
         }
         if (empty($map) || !in_array('idtiket', $map, true)) {
             throw new Exception('Header tidak dikenali atau kolom "idtiket" tidak ada.');
@@ -164,7 +242,8 @@ class MonitoringSLA extends CI_Controller
 
             if (in_array($dbCol, array(
                 'waktugangguan','waktulapor','waktulaporanselesai',
-				'waktugangguan2','waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
+                'waktugangguan2', // <<—
+                'waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
             ), true)) {
                 $rec[$dbCol] = $this->toDatetime($val);
             } elseif (in_array($dbCol, array('durasilaporanmenit','durasigangguanmenit'), true)) {
@@ -182,7 +261,7 @@ class MonitoringSLA extends CI_Controller
 
         // Excel serial number?
         if (is_numeric($v)) {
-            // PHPExcel pakai basis 1900; 25569 = 1970-01-01
+            // PHPExcel basis 1900; 25569 = 1970-01-01
             $unix = ($v - 25569) * 86400;
             return gmdate('Y-m-d H:i:s', (int)$unix);
         }
