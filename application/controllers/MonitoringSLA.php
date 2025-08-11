@@ -90,7 +90,6 @@ class MonitoringSLA extends CI_Controller
         }
 
         if (is_file($path)) { @unlink($path); }
-			echo $e->getMessage();die;
             header('location: ../MonitoringSLA');
     }
 
@@ -163,8 +162,7 @@ class MonitoringSLA extends CI_Controller
             $val = isset($row[$col]) ? trim((string)$row[$col]) : null;
 
             if (in_array($dbCol, array(
-                'waktugangguan','waktulapor','waktulaporanselesai',
-				'waktugangguan2','waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
+                'waktugangguan','waktulapor','waktulaporanselesai','waktugangguan2','waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
             ), true)) {
                 $rec[$dbCol] = $this->toDatetime($val);
             } elseif (in_array($dbCol, array('durasilaporanmenit','durasigangguanmenit'), true)) {
