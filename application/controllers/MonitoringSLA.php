@@ -7,7 +7,6 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
-        // $this->load->library('session');
         $this->load->model('MonitoringSLA_model', 'ticketModel');
     }
 
@@ -41,7 +40,7 @@ class MonitoringSLA extends CI_Controller
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('excel_file')) {
-            $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
+            // $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
             redirect('MonitoringSLA');
             return;
         }
@@ -151,9 +150,9 @@ class MonitoringSLA extends CI_Controller
                 $total += $this->ticketModel->upsert_batch($ck, 'idtiket');
             }
 
-            $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
+            // $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
         } catch (Exception $e) {
-            $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
+            // $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
         }
 
         if (is_file($path)) { @unlink($path); }
