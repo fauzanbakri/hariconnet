@@ -7,7 +7,6 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
-        $this->load->library('session');
         $this->load->model('MonitoringSLA_model', 'ticketModel');
     }
 
@@ -29,6 +28,7 @@ class MonitoringSLA extends CI_Controller
 
     public function upload()
     {
+        $this->load->library('session');
         // ---- KONFIG UPLOAD ----
         $config = array(
             'upload_path'   => FCPATH.'application/uploads',
