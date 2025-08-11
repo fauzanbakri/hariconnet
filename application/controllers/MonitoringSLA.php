@@ -7,7 +7,7 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
-        $this->load->library('session'); // gunakan session CI untuk flashdata
+        $this->load->library('session');
         $this->load->model('MonitoringSLA_model', 'ticketModel');
     }
 
@@ -15,14 +15,13 @@ class MonitoringSLA extends CI_Controller
     {
         $title['title'] = "Monitoring SLA";
 
-        // native session (sesuai kode awalmu)
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
         if (isset($_SESSION['role']) && ($_SESSION['role'] == 'Superadmin' || $_SESSION['role'] == 'NOC Ritel')) {
             $this->load->view('navbar', $title);
-            $this->load->view('monitoringSLA'); // pastikan view ini ada form uploadnya
+            $this->load->view('monitoringSLA');
         } else {
             redirect('DashboardNoc');
         }
@@ -36,7 +35,7 @@ class MonitoringSLA extends CI_Controller
             'allowed_types' => 'xls|xlsx',
             'encrypt_name'  => TRUE,
             'max_size'      => 10240,
-            // kalau masih ditolak mime-type, aktifkan baris di bawah:
+            // jika masih ditolak mime-type, boleh aktifkan:
             'detect_mime'   => FALSE,
         );
         $this->load->library('upload', $config);
@@ -68,21 +67,19 @@ class MonitoringSLA extends CI_Controller
                 $reader->setReadDataOnly(true);
             }
 
-            // 2) Custom ValueBinder: cegah Notice boolean (array offset on bool)
-            if (!class_exists('MyValueBinder')) {
-                class MyValueBinder extends PHPExcel_Cell_DefaultValueBinder {
-                    public function bindValue(PHPExcel_Cell $cell, $value = null) {
-                        if (is_bool($value)) {
-                            $cell->setValueExplicit($value ? 1 : 0, PHPExcel_Cell_DataType::TYPE_NUMERIC);
-                            return true;
-                        }
-                        return parent::bindValue($cell, $value);
+            // 2) Anonymous ValueBinder: aman dari boolean notice, tanpa deklarasi class bernama
+            $binder = new class extends PHPExcel_Cell_DefaultValueBinder {
+                public function bindValue(PHPExcel_Cell $cell, $value = null) {
+                    if (is_bool($value)) {
+                        $cell->setValueExplicit($value ? 1 : 0, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                        return true;
                     }
+                    return parent::bindValue($cell, $value);
                 }
-            }
-            PHPExcel_Cell::setValueBinder(new MyValueBinder());
+            };
+            PHPExcel_Cell::setValueBinder($binder);
 
-            // 3) Tahan output liar dari library (supaya redirect aman)
+            // 3) Tahan output liar dari library (hindari "headers already sent")
             ob_start();
             $objPHPExcel = $reader->load($path);
             $noise = ob_get_clean();
@@ -103,8 +100,8 @@ class MonitoringSLA extends CI_Controller
             try {
                 $map = $this->buildHeaderMap($header);
             } catch (Exception $e) {
-                // Fallback: tidak ada header -> map berdasarkan urutan kolom
-                array_unshift($rows, $header); // kembalikan baris sebagai data
+                // fallback: tidak ada header → pakai urutan kolom
+                array_unshift($rows, $header);
 
                 $positional = array(
                     'idtiket','idpelanggan','idinsiden','namapelanggan','sidbaru','sidlama','idpln',
@@ -113,7 +110,7 @@ class MonitoringSLA extends CI_Controller
                     'brandolt','idsplitter','penyebab','penyebabdetail','namamitra','petugaslapangan',
                     'tipetiket','laporanberulang','gangguanke','namasumber','segmenicon','waktulapor',
                     'waktulaporanselesai','durasilaporan','durasilaporanmenit',
-                    'waktugangguan2', // <<— kolom tambahan sesuai permintaan
+                    'waktugangguan2',
                     'waktugangguanselesai','durasigangguan','durasigangguanmenit','durasistopclock',
                     'durasigangguaminusstopclock','endcustomer','durasistopclockpelanggan',
                     'durasigangguanminusstopclockpelanggan','keteranganclose','segmenpelanggan',
@@ -173,7 +170,7 @@ class MonitoringSLA extends CI_Controller
             'brandolt','idsplitter','penyebab','penyebabdetail','namamitra','petugaslapangan',
             'tipetiket','laporanberulang','gangguanke','namasumber','segmenicon','waktulapor',
             'waktulaporanselesai','durasilaporan','durasilaporanmenit',
-            'waktugangguan2', // <<— valid
+            'waktugangguan2',
             'waktugangguanselesai','durasigangguan','durasigangguanmenit','durasistopclock',
             'durasigangguaminusstopclock','endcustomer','durasistopclockpelanggan',
             'durasigangguanminusstopclockpelanggan','keteranganclose','segmenpelanggan',
@@ -242,7 +239,7 @@ class MonitoringSLA extends CI_Controller
 
             if (in_array($dbCol, array(
                 'waktugangguan','waktulapor','waktulaporanselesai',
-                'waktugangguan2', // <<—
+                'waktugangguan2',
                 'waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
             ), true)) {
                 $rec[$dbCol] = $this->toDatetime($val);
@@ -261,8 +258,7 @@ class MonitoringSLA extends CI_Controller
 
         // Excel serial number?
         if (is_numeric($v)) {
-            // PHPExcel basis 1900; 25569 = 1970-01-01
-            $unix = ($v - 25569) * 86400;
+            $unix = ($v - 25569) * 86400; // 25569 = 1970-01-01
             return gmdate('Y-m-d H:i:s', (int)$unix);
         }
 
