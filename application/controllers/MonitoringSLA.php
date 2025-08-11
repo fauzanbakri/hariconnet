@@ -7,6 +7,7 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
+        $this->load->library('session');
         $this->load->model('MonitoringSLA_model', 'ticketModel');
     }
 
@@ -22,13 +23,12 @@ class MonitoringSLA extends CI_Controller
             $this->load->view('navbar', $title);
             $this->load->view('monitoringSLA');
         } else {
-            header('location:../DashboardNoc');
+            redirect('DashboardNoc');
         }
     }
 
     public function upload()
     {
-        $this->load->library('session');
         // ---- KONFIG UPLOAD ----
         $config = array(
             'upload_path'   => FCPATH.'application/uploads',
@@ -42,7 +42,7 @@ class MonitoringSLA extends CI_Controller
 
         if (!$this->upload->do_upload('excel_file')) {
             $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
-            header('location:../MonitoringSLA');
+            redirect('MonitoringSLA');
             return;
         }
 
@@ -158,7 +158,7 @@ class MonitoringSLA extends CI_Controller
 
         if (is_file($path)) { @unlink($path); }
 
-        header('location:../MonitoringSLA');
+        redirect('MonitoringSLA');
     }
 
     private function buildHeaderMap($headerRow)
