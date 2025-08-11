@@ -21,7 +21,7 @@ class MonitoringSLA extends CI_Controller
                 $this->load->view('navbar', $title);
                 $this->load->view('monitoringSLA');
 		}else{
-			header('location: ./DashboardNoc');
+			header('location: ../DashboardNoc');
 		}    }
 
     public function upload()
@@ -42,7 +42,7 @@ class MonitoringSLA extends CI_Controller
         if (!$this->upload->do_upload('excel_file')) {
             $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
 			echo $this->upload->display_errors('', '');die;
-            header('location: ./MonitoringSLA');
+            header('location: ../MonitoringSLA');
             return;
         }
 
@@ -90,7 +90,7 @@ class MonitoringSLA extends CI_Controller
         }
 
         if (is_file($path)) { @unlink($path); }
-            header('location: ./MonitoringSLA');
+            header('location: ../MonitoringSLA');
     }
 
     private function buildHeaderMap($headerRow)
