@@ -41,7 +41,8 @@ class MonitoringSLA extends CI_Controller
 
         if (!$this->upload->do_upload('excel_file')) {
             $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
-            redirect('MonitoringSLA');
+			echo $this->upload->display_errors('', '');die;
+            header('location: ./MonitoringSLA');
             return;
         }
 
