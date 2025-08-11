@@ -21,7 +21,7 @@ class MonitoringSLA extends CI_Controller
                 $this->load->view('navbar', $title);
                 $this->load->view('monitoringSLA');
 		}else{
-			header('location: ../DashboardNoc');
+			header('location: ./DashboardNoc');
 		}    }
 
     public function upload()
@@ -41,8 +41,7 @@ class MonitoringSLA extends CI_Controller
 
         if (!$this->upload->do_upload('excel_file')) {
             $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
-			echo $this->upload->display_errors('', '');die;
-            header('location: ../MonitoringSLA');
+            header('location: ./MonitoringSLA');
             return;
         }
 
@@ -90,7 +89,7 @@ class MonitoringSLA extends CI_Controller
         }
 
         if (is_file($path)) { @unlink($path); }
-            header('location: ../MonitoringSLA');
+        redirect('MonitoringSLA');
     }
 
     private function buildHeaderMap($headerRow)
@@ -101,7 +100,7 @@ class MonitoringSLA extends CI_Controller
             'tanggapan','status','waktugangguan','penerimalaporan','produk','posisitiket','idolt',
             'brandolt','idsplitter','penyebab','penyebabdetail','namamitra','petugaslapangan',
             'tipetiket','laporanberulang','gangguanke','namasumber','segmenicon','waktulapor',
-            'waktulaporanselesai','durasilaporan','durasilaporanmenit','waktugangguan2','waktugangguanselesai',
+            'waktulaporanselesai','durasilaporan','durasilaporanmenit','waktugangguanselesai',
             'durasigangguan','durasigangguanmenit','durasistopclock','durasigangguaminusstopclock',
             'endcustomer','durasistopclockpelanggan','durasigangguanminusstopclockpelanggan',
             'keteranganclose','segmenpelanggan','bandwidth','lastkomen','latlongpelanggan',
@@ -163,7 +162,7 @@ class MonitoringSLA extends CI_Controller
 
             if (in_array($dbCol, array(
                 'waktugangguan','waktulapor','waktulaporanselesai',
-				'waktugangguan2','waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
+                'waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
             ), true)) {
                 $rec[$dbCol] = $this->toDatetime($val);
             } elseif (in_array($dbCol, array('durasilaporanmenit','durasigangguanmenit'), true)) {
