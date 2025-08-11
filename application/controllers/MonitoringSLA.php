@@ -90,7 +90,7 @@ class MonitoringSLA extends CI_Controller
         }
 
         if (is_file($path)) { @unlink($path); }
-        redirect('MonitoringSLA');
+            header('location: ./MonitoringSLA');
     }
 
     private function buildHeaderMap($headerRow)
