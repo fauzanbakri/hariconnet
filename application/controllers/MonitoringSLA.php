@@ -101,7 +101,7 @@ class MonitoringSLA extends CI_Controller
             'tanggapan','status','waktugangguan','penerimalaporan','produk','posisitiket','idolt',
             'brandolt','idsplitter','penyebab','penyebabdetail','namamitra','petugaslapangan',
             'tipetiket','laporanberulang','gangguanke','namasumber','segmenicon','waktulapor',
-            'waktulaporanselesai','durasilaporan','durasilaporanmenit','waktugangguanselesai',
+            'waktulaporanselesai','durasilaporan','durasilaporanmenit','waktugangguan2','waktugangguanselesai',
             'durasigangguan','durasigangguanmenit','durasistopclock','durasigangguaminusstopclock',
             'endcustomer','durasistopclockpelanggan','durasigangguanminusstopclockpelanggan',
             'keteranganclose','segmenpelanggan','bandwidth','lastkomen','latlongpelanggan',
@@ -163,7 +163,7 @@ class MonitoringSLA extends CI_Controller
 
             if (in_array($dbCol, array(
                 'waktugangguan','waktulapor','waktulaporanselesai',
-                'waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
+				'waktugangguan2','waktugangguanselesai','tanggalinsiden','tanggalsendnoc'
             ), true)) {
                 $rec[$dbCol] = $this->toDatetime($val);
             } elseif (in_array($dbCol, array('durasilaporanmenit','durasigangguanmenit'), true)) {
