@@ -90,6 +90,7 @@ class MonitoringSLA extends CI_Controller
         }
 
         if (is_file($path)) { @unlink($path); }
+			echo $e->getMessage();die;
             header('location: ../MonitoringSLA');
     }
 
