@@ -7,7 +7,7 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
-        // $this->load->library('session'); // flashdata
+        $this->load->library('session'); // flashdata
         session_start();
         $this->load->database();
     }
