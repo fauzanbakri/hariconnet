@@ -42,7 +42,7 @@ class MonitoringSLA extends CI_Controller
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('excel_file')) {
-            $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
+            // $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
             header('location:../MonitoringSLA');
             return;
         }
@@ -162,9 +162,9 @@ class MonitoringSLA extends CI_Controller
                 $total += $this->upsert_batch($ck, 'listTicketing', 'idtiket');
             }
 			echo 'Import selesai. Diproses: '.$total;die;
-            $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
+            // $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
         } catch (Exception $e) {
-            $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
+            // $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
             echo 'Gagal memproses: '.$e->getMessage();die;
 
         }
