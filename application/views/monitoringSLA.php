@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="card">
-                                <form action="<?= site_url('MonitoringSLA/upload'); ?>" method="POST" enctype="multipart/form-data">
+                                <form action="MonitoringSLA/upload" method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <label for="excel_file">Pilih file Excel (.xls / .xlsx)</label><br>
                                         <input type="file" id="excel_file" name="excel_file" accept=".xls,.xlsx" required>
