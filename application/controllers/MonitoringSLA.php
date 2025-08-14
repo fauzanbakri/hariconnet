@@ -23,7 +23,8 @@ class MonitoringSLA extends CI_Controller
         //     redirect('DashboardNoc');
         //     return;
         // }
-        $this->load->view('navbar');
+		$title['title']="Monitoring SLA";
+        $this->load->view('navbar', $title);
         $this->load->view('monitoringSLA');
     }
 
