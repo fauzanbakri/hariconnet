@@ -7,13 +7,12 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
-        $this->load->library('session'); // flashdata
-        session_start();
         $this->load->database();
     }
 
     public function index()
     {
+        session_start();
         // Jika perlu gate pakai session native:
         // if (session_status() === PHP_SESSION_NONE) {
         //     session_start();
@@ -30,6 +29,7 @@ class MonitoringSLA extends CI_Controller
 
     public function upload()
     {
+        session_start();
         // ---- KONFIG UPLOAD ----
         $config = array(
             'upload_path'   => FCPATH.'application/uploads',
