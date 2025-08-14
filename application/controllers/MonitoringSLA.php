@@ -8,15 +8,13 @@ class MonitoringSLA extends CI_Controller
         parent::__construct();
         $this->load->helper(array('form','url'));
         $this->load->library('session');
-		session_start();
         $this->load->database();
     }
 
     public function index()
     {
-        if (session_status() === PHP_SESSION_NONE) {
             session_start();
-        }
+
         // Gate opsional:
         // if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], array('Superadmin','NOC Ritel'))) {
         //     redirect('DashboardNoc'); return;
