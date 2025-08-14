@@ -7,16 +7,16 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
-        $this->load->library('session'); // flashdata
+        // $this->load->library('session'); // flashdata
         $this->load->database();
     }
 
     public function index()
     {
         // Jika perlu gate pakai session native:
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
         // Contoh gate (opsional):
         // if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], array('Superadmin','NOC Ritel'))) {
         //     redirect('DashboardNoc');
@@ -160,9 +160,9 @@ class MonitoringSLA extends CI_Controller
                 $total += $this->upsert_batch($ck, 'listTicketing', 'idtiket');
             }
 
-            $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
+            // $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
         } catch (Exception $e) {
-            $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
+            // $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
         }
 
         if (is_file($path)) { @unlink($path); }
