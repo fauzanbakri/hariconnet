@@ -28,7 +28,7 @@ class MonitoringSLA extends CI_Controller
 		session_start();
         // ====== 0) Validasi presence file ======
         if (!isset($_FILES['excel_file']) || $_FILES['excel_file']['error'] !== UPLOAD_ERR_OK) {
-            $this->session->set_flashdata('error', 'File tidak ditemukan atau gagal diunggah.');
+            echo 'File tidak ditemukan atau gagal diunggah.';
             redirect('MonitoringSLA'); return;
         }
 
@@ -62,7 +62,7 @@ class MonitoringSLA extends CI_Controller
         $dest = $destDir . '/' . uniqid('xl_', true) . '.' . $ext;
 
         if (!@move_uploaded_file($tmpPath, $dest)) {
-            $this->session->set_flashdata('error', 'Gagal menyimpan file upload.');
+            echo 'Gagal menyimpan file upload.';
             redirect('MonitoringSLA'); return;
         }
 
@@ -173,9 +173,9 @@ class MonitoringSLA extends CI_Controller
                 $total += $this->upsert_batch($ck, 'listTicketing', 'idtiket');
             }
 
-            $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
+           echo 'Import selesai. Diproses: '.$total;
         } catch (Exception $e) {
-            $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
+            echo 'Gagal memproses: '.$e->getMessage();
         }
 
         // Beres: hapus file + tutup koneksi
