@@ -31,10 +31,26 @@ return array(
 	'smi'	=>	'application/smil',
 	'smil'	=>	'application/smil',
 	'mif'	=>	'application/vnd.mif',
-	'xls'  => array('application/vnd.ms-excel', 'application/msexcel', 'application/octet-stream'),
+	'xls'  => array(
+    'application/vnd.ms-excel',
+    'application/msexcel',
+    'application/excel',
+    'application/octet-stream', // banyak hosting pakai ini
+    'application/vnd.ms-excel.sheet.macroenabled.12',
+    'application/vnd.ms-excel.sheet.binary.macroenabled.12'
+	),
 	'xlsx' => array(
 		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 		'application/vnd.ms-excel',
+		'application/zip',                // xlsx itu zip
+		'application/x-zip-compressed',
+		'application/octet-stream'        // fallback umum
+	),
+	'csv'  => array(
+		'text/csv',
+		'text/plain',
+		'application/csv',
+		'application/vnd.ms-excel',       // beberapa browser pakai ini untuk CSV
 		'application/octet-stream'
 	),
 	'ppt'	=>	array('application/powerpoint', 'application/vnd.ms-powerpoint', 'application/vnd.ms-office', 'application/msword'),
