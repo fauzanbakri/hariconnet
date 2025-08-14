@@ -161,10 +161,12 @@ class MonitoringSLA extends CI_Controller
             foreach (array_chunk($batch, 300) as $ck) {
                 $total += $this->upsert_batch($ck, 'listTicketing', 'idtiket');
             }
-
+			echo 'Import selesai. Diproses: '.$total;die;
             $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
         } catch (Exception $e) {
             $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
+            echo 'Gagal memproses: '.$e->getMessage();die;
+
         }
 
         if (is_file($path)) { @unlink($path); }
