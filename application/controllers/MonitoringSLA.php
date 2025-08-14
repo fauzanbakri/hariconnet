@@ -7,68 +7,85 @@ class MonitoringSLA extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form','url'));
+        $this->load->library('session');
+		session_start();
         $this->load->database();
     }
 
     public function index()
     {
-        session_start();
-        // Jika perlu gate pakai session native:
-        // if (session_status() === PHP_SESSION_NONE) {
-        //     session_start();
-        // }
-        // Contoh gate (opsional):
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        // Gate opsional:
         // if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], array('Superadmin','NOC Ritel'))) {
-        //     redirect('DashboardNoc');
-        //     return;
+        //     redirect('DashboardNoc'); return;
         // }
-		$title['title']="Monitoring SLA";
-        $this->load->view('navbar', $title);
+
         $this->load->view('monitoringSLA');
     }
 
     public function upload()
     {
-        session_start();
-        // ---- KONFIG UPLOAD ----
-        $config = array(
-            'upload_path'   => FCPATH.'application/uploads',
-            'allowed_types' => 'xls|xlsx',
-            'encrypt_name'  => TRUE,
-            'max_size'      => 10240,
-            // Bila hosting suka salah deteksi MIME:
-            'detect_mime'   => FALSE,
-        );
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload('excel_file')) {
-            echo $this->upload->display_errors('', '');die;
-            header('location:../MonitoringSLA');
-            return;
+		session_start();
+        // ====== 0) Validasi presence file ======
+        if (!isset($_FILES['excel_file']) || $_FILES['excel_file']['error'] !== UPLOAD_ERR_OK) {
+            $this->session->set_flashdata('error', 'File tidak ditemukan atau gagal diunggah.');
+            redirect('MonitoringSLA'); return;
         }
 
-        $fileData = $this->upload->data();
-        $path     = $fileData['full_path'];
+        // ====== 1) Simpan file secara MANUAL (bypass CI Upload lib) ======
+        $origName = $_FILES['excel_file']['name'];
+        $tmpPath  = $_FILES['excel_file']['tmp_name'];
 
-        // ---- LOAD PHPExcel TANPA COMPOSER ----
+        // Ekstensi dari nama file
+        $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+
+        // Kalau ekstensi tidak termasuk xls/xlsx/csv, coba sniff signature
+        $allowed = array('xls','xlsx','csv');
+        if (!in_array($ext, $allowed, true)) {
+            $sig4 = '';
+            if (is_readable($tmpPath)) {
+                $fh = fopen($tmpPath, 'rb');
+                if ($fh) { $sig4 = bin2hex(fread($fh, 4)); fclose($fh); }
+            }
+            // XLS (OLE) = D0 CF 11 E0
+            if (strpos($sig4, 'd0cf11e0') === 0)      { $ext = 'xls'; }
+            // XLSX (ZIP) = 50 4B 03 04
+            elseif (strpos($sig4, '504b0304') === 0)  { $ext = 'xlsx'; }
+            else                                      { $ext = 'csv'; }
+        }
+
+        // Pastikan folder upload ada
+        $destDir = FCPATH.'application/uploads';
+        if (!is_dir($destDir)) { @mkdir($destDir, 0755, true); }
+
+        // Nama file tujuan
+        $dest = $destDir . '/' . uniqid('xl_', true) . '.' . $ext;
+
+        if (!@move_uploaded_file($tmpPath, $dest)) {
+            $this->session->set_flashdata('error', 'Gagal menyimpan file upload.');
+            redirect('MonitoringSLA'); return;
+        }
+
+        // ====== 2) Baca file (PHPExcel tanpa Composer) ======
         require_once APPPATH.'third_party/PHPExcel/Classes/PHPExcel.php';
         require_once APPPATH.'third_party/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
         try {
-            // 1) Pilih reader berdasar ekstensi
-            $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+            // Pilih reader dari ekstensi
             if ($ext === 'xls') {
                 $reader = PHPExcel_IOFactory::createReader('Excel5');
             } elseif ($ext === 'xlsx') {
                 $reader = PHPExcel_IOFactory::createReader('Excel2007');
-            } else {
+            } else { // csv
                 $reader = PHPExcel_IOFactory::createReader('CSV');
                 $reader->setDelimiter(',');
                 $reader->setEnclosure('"');
                 $reader->setReadDataOnly(true);
             }
 
-            // 2) Anonymous ValueBinder: cegah warning boolean
+            // Anonymous ValueBinder: hindari notice boolean
             $binder = new class extends PHPExcel_Cell_DefaultValueBinder {
                 public function bindValue(PHPExcel_Cell $cell, $value = null) {
                     if (is_bool($value)) {
@@ -80,27 +97,27 @@ class MonitoringSLA extends CI_Controller
             };
             PHPExcel_Cell::setValueBinder($binder);
 
-            // 3) Tahan output dari library
+            // Buffer output liar dari library
             ob_start();
-            $objPHPExcel = $reader->load($path);
+            $objPHPExcel = $reader->load($dest);
             $noise = ob_get_clean();
             if (!empty($noise)) {
                 log_message('error', 'PHPExcel output suppressed: '.substr(preg_replace('/\s+/', ' ', $noise), 0, 1000));
             }
 
             $sheet = $objPHPExcel->getActiveSheet();
-            $rows  = $sheet->toArray(null, true, true, true); // keys A,B,C,...
+            $rows  = $sheet->toArray(null, true, true, true); // keys: A,B,C,...
 
             if (count($rows) < 1) {
                 throw new Exception('File kosong atau tidak ada data.');
             }
 
-            // --- HEADER + fallback by-position ---
+            // ====== 3) Header mapping + fallback posisi ======
             $header = array_shift($rows);
             try {
                 $map = $this->buildHeaderMap($header);
             } catch (Exception $e) {
-                // fallback: tidak ada header → pakai urutan kolom sesuai skema DB
+                // Fallback: tak ada header → pakai urutan kolom sesuai skema DB kamu
                 array_unshift($rows, $header);
 
                 $positional = array(
@@ -132,20 +149,16 @@ class MonitoringSLA extends CI_Controller
                 }
             }
 
-            // --- DATA: mapping & normalisasi ---
+            // ====== 4) Bangun data & normalisasi ======
             $batch = array();
             foreach ($rows as $r) {
                 $rec = $this->mapRowToRecord($r, $map);
 
-                // pastikan NOT NULL untuk waktugangguan2
+                // NOT NULL untuk waktugangguan2 (DB kamu set NOT NULL)
                 if (empty($rec['waktugangguan2'])) {
-                    if (!empty($rec['waktugangguan'])) {
-                        $rec['waktugangguan2'] = $rec['waktugangguan'];
-                    } elseif (!empty($rec['waktulapor'])) {
-                        $rec['waktugangguan2'] = $rec['waktulapor'];
-                    } else {
-                        $rec['waktugangguan2'] = '1970-01-01 00:00:00';
-                    }
+                    if (!empty($rec['waktugangguan']))      $rec['waktugangguan2'] = $rec['waktugangguan'];
+                    elseif (!empty($rec['waktulapor']))      $rec['waktugangguan2'] = $rec['waktulapor'];
+                    else                                     $rec['waktugangguan2'] = '1970-01-01 00:00:00';
                 }
 
                 if (!isset($rec['idtiket']) || $rec['idtiket'] === '') continue;
@@ -156,30 +169,29 @@ class MonitoringSLA extends CI_Controller
                 throw new Exception('Tidak ada baris valid untuk diimpor.');
             }
 
-            // --- UPSERT batch (ON DUPLICATE KEY UPDATE) ---
+            // ====== 5) UPSERT batch ======
             $total = 0;
             foreach (array_chunk($batch, 300) as $ck) {
                 $total += $this->upsert_batch($ck, 'listTicketing', 'idtiket');
             }
-			echo 'Import selesai. Diproses: '.$total;die;
-            // $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
-        } catch (Exception $e) {
-            // $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
-            echo 'Gagal memproses: '.$e->getMessage();die;
 
+            $this->session->set_flashdata('success', 'Import selesai. Diproses: '.$total);
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error', 'Gagal memproses: '.$e->getMessage());
         }
 
-        if (is_file($path)) { @unlink($path); }
-        if (isset($this->db)) { $this->db->close(); } // lepas koneksi (shared hosting)
+        // Beres: hapus file + tutup koneksi
+        if (is_file($dest)) { @unlink($dest); }
+        if (isset($this->db)) { $this->db->close(); }
 
-        header('location:../MonitoringSLA');
+        redirect('MonitoringSLA');
     }
 
     /* ======================== Helpers ======================== */
 
     private function buildHeaderMap($headerRow)
     {
-        // daftar kolom sesuai skema yang kamu berikan (tanpa tanggalsendnoc)
+        // Kolom sesuai skema yang kamu kirim
         $valid = array(
             'idtiket','idpelanggan','idinsiden','namapelanggan','sidbaru','sidlama','idpln',
             'namakelompok','namakondisi','namasbu','namakp','telepon','namapelapor','isilaporan',
@@ -269,13 +281,12 @@ class MonitoringSLA extends CI_Controller
 
         // Excel serial number?
         if (is_numeric($v)) {
-            // 25569 = 1970-01-01
-            $unix = ($v - 25569) * 86400;
+            $unix = ($v - 25569) * 86400; // 25569 = 1970-01-01
             return gmdate('Y-m-d H:i:s', (int)$unix);
         }
 
         $s = trim((string)$v);
-        // "14.59" -> "14:59" di akhir string
+        // ubah "14.59" -> "14:59" di akhir
         $s = preg_replace('/(\d{1,2})\.(\d{2})(?=$)/', '$1:$2', $s);
 
         $fmts = array(
@@ -291,7 +302,7 @@ class MonitoringSLA extends CI_Controller
     }
 
     /**
-     * Upsert batch (ON DUPLICATE KEY UPDATE) tanpa model
+     * UPSERT batch (ON DUPLICATE KEY UPDATE) langsung dari controller
      */
     private function upsert_batch(array $rows, $table, $uniqueKey = 'idtiket')
     {
