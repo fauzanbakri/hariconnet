@@ -667,7 +667,7 @@ const datapal = <?php echo $datapercent_palu; ?>;
 const datakdi = <?php echo $datapercent_kendari; ?>;
 const datagto = <?php echo $datapercent_gorontalo; ?>;
 const datamnd = <?php echo $datapercent_manado; ?>;
-const target = 62;
+const target = 75;
 
 const dataSources = {
     "makassar": datamks,
