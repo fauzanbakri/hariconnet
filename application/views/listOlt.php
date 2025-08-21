@@ -229,7 +229,7 @@
                                                 echo "
                                                 <tr>
                                                     <td>".$row->idOlt."</td>
-                                                    <td>".$row->lat."'".$row->longi."</td>
+                                                    <td>".$row->lat.",".$row->longi."</td>
                                                     <td>".$row->upe."</td>
                                                     <td>".$row->serpo."</td>
                                                     <td>".$row->kecamatan."</td>
