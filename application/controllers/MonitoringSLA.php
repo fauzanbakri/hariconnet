@@ -182,7 +182,7 @@ class MonitoringSLA extends CI_Controller
         if (is_file($dest)) { @unlink($dest); }
         if (isset($this->db)) { $this->db->close(); }
 
-        redirect('MonitoringSLA');
+        header('location:../MonitoringSLA');
     }
 
     /* ======================== Helpers ======================== */
