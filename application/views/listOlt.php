@@ -213,8 +213,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Hostname</th>
-                                                <th>Lattitude</th>
-                                                <th>Longitude</th>
+                                                <th>Tikor</th>
                                                 <th>UPE</th>
                                                 <th>Team</th>
                                                 <th>Kecamatan</th>
@@ -230,8 +229,7 @@
                                                 echo "
                                                 <tr>
                                                     <td>".$row->idOlt."</td>
-                                                    <td>".$row->lat."</td>
-                                                    <td>".$row->longi."</td>
+                                                    <td>".$row->lat."'".$row->longi."</td>
                                                     <td>".$row->upe."</td>
                                                     <td>".$row->serpo."</td>
                                                     <td>".$row->kecamatan."</td>
