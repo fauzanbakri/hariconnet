@@ -48,13 +48,8 @@
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="0">99</span></h4>
                                                     <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
-                                                </div>
-                                                <div class="avatar-sm flex-shrink-0">
-                                                    <span class="avatar-title bg-white bg-opacity-25 rounded fs-3">
-                                                        <i class="bx bx-shopping-bag text-white"></i>
-                                                    </span>
                                                 </div>
                                             </div>
                                         </div><!-- end card body -->
@@ -70,7 +65,7 @@
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="0">99</span></h4>
                                                     <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
                                                 </div>
                                             </div>
@@ -89,7 +84,7 @@
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="0">99</span></h4>
                                                     <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
                                                 </div>
                                             </div>
@@ -106,7 +101,7 @@
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="0">99</span></h4>
                                                     <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
                                                 </div>
                                             </div>
