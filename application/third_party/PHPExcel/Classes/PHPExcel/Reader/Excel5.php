@@ -1919,7 +1919,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 			}
 
 			// offset: 10; size: 1; underline type
-			$underlineType = ord($recordData{10});
+			$underlineType = ord($recordData[10]);
 			switch ($underlineType) {
 				case 0x00:
 					break; // no underline
