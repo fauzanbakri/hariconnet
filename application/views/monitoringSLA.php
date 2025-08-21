@@ -28,7 +28,7 @@
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title mb-0">Simple Donut Chart</h4>
+                                    <h4 class="card-title mb-0">SLA Gangguan</h4>
                                 </div><!-- end card header -->
 
                                 <div class="card-body">
@@ -39,22 +39,17 @@
                         <div class="col-xl-6">
                             <div class="row">
                                 <div class="col-xl-6">
-                                    <div class="card card-animate bg-info">
+                                    <div class="card card-animate bg-primary">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
-                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">Orders</p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <h5 class="text-warning fs-14 mb-0">
-                                                        <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                    </h5>
+                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">WO Belum Ditindaklanjuti over SLA</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">36,894</span></h4>
-                                                    <a href="#" class="text-decoration-underline text-white-50">View all orders</a>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
                                                 </div>
                                                 <div class="avatar-sm flex-shrink-0">
                                                     <span class="avatar-title bg-white bg-opacity-25 rounded fs-3">
@@ -66,27 +61,17 @@
                                     </div><!-- end card -->
                                 </div>
                                 <div class="col-xl-6">
-                                    <div class="card card-animate bg-info">
+                                    <div class="card card-animate bg-danger">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
-                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">Orders</p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <h5 class="text-warning fs-14 mb-0">
-                                                        <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                    </h5>
+                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">WO Sedang Ditindaklanjuti over SLA</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">36,894</span></h4>
-                                                    <a href="#" class="text-decoration-underline text-white-50">View all orders</a>
-                                                </div>
-                                                <div class="avatar-sm flex-shrink-0">
-                                                    <span class="avatar-title bg-white bg-opacity-25 rounded fs-3">
-                                                        <i class="bx bx-shopping-bag text-white"></i>
-                                                    </span>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
                                                 </div>
                                             </div>
                                         </div><!-- end card body -->
@@ -95,54 +80,34 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl-6">
-                                    <div class="card card-animate bg-info">
+                                    <div class="card card-animate bg-warning">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
-                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">Orders</p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <h5 class="text-warning fs-14 mb-0">
-                                                        <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                    </h5>
+                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">WO Belum Ditindaklanjuti</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">36,894</span></h4>
-                                                    <a href="#" class="text-decoration-underline text-white-50">View all orders</a>
-                                                </div>
-                                                <div class="avatar-sm flex-shrink-0">
-                                                    <span class="avatar-title bg-white bg-opacity-25 rounded fs-3">
-                                                        <i class="bx bx-shopping-bag text-white"></i>
-                                                    </span>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
                                                 </div>
                                             </div>
                                         </div><!-- end card body -->
                                     </div><!-- end card -->
                                 </div>
                                 <div class="col-xl-6">
-                                    <div class="card card-animate bg-info">
+                                    <div class="card card-animate bg-success">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
-                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">Orders</p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <h5 class="text-warning fs-14 mb-0">
-                                                        <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                    </h5>
+                                                    <p class="text-uppercase fw-medium text-white-50 mb-0">WO Sedang Ditindaklanjuti</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-end justify-content-between mt-4">
                                                 <div>
-                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">36,894</span></h4>
-                                                    <a href="#" class="text-decoration-underline text-white-50">View all orders</a>
-                                                </div>
-                                                <div class="avatar-sm flex-shrink-0">
-                                                    <span class="avatar-title bg-white bg-opacity-25 rounded fs-3">
-                                                        <i class="bx bx-shopping-bag text-white"></i>
-                                                    </span>
+                                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4 text-white"><span class="counter-value" data-target="36894">99</span></h4>
+                                                    <!-- <a href="#" class="text-decoration-underline text-white-50">View all orders</a> -->
                                                 </div>
                                             </div>
                                         </div><!-- end card body -->
