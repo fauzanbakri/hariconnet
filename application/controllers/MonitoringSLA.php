@@ -173,9 +173,9 @@ class MonitoringSLA extends CI_Controller
                 $total += $this->upsert_batch($ck, 'listTicketing', 'idtiket');
             }
 
-           echo 'Import selesai. Diproses: '.$total;
+           echo 'Import selesai. Diproses: '.$total; die;
         } catch (Exception $e) {
-            echo 'Gagal memproses: '.$e->getMessage();
+            echo 'Gagal memproses: '.$e->getMessage(); die;
         }
 
         // Beres: hapus file + tutup koneksi
