@@ -39,7 +39,7 @@
                         <div class="col-xl-6">
                             <div class="row">
                                 <div class="col-xl-6">
-                                    <div class="card card-animate bg-primary">
+                                    <div class="card card-animate bg-secondary">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
