@@ -117,10 +117,9 @@
                                         <label for="excel_file">Pilih file Excel (.xls / .xlsx)</label><br>
                                         <input type="file" id="excel_file" name="excel_file" accept=".xls,.xlsx" required>
                                     </div>
-                                    <div class="row">
+                                    <div class="container row">
                                         <button type="submit" class="btn btn-primary">Upload & Import</button>
                                     </div>
-                                    <p class="muted">Baris pertama sebaiknya berisi header. Jika tidak ada header, skrip akan mengasumsikan urutan kolom sesuai struktur tabel Anda.</p>
                                 </form>
                             </div>
                         </div>
