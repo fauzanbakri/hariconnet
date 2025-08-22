@@ -23,6 +23,7 @@ class MonitoringSLA extends CI_Controller
     public function upload()
     {
         session_start();
+
         // 0) Validasi presence file
         if (!isset($_FILES['excel_file']) || $_FILES['excel_file']['error'] !== UPLOAD_ERR_OK) {
             echo 'File tidak ditemukan atau gagal diunggah.';
@@ -274,6 +275,8 @@ class MonitoringSLA extends CI_Controller
                 $rec[$dbCol] = ($val === '' ? null : (int)preg_replace('/[^\d\-]+/', '', $val));
 
             } else {
+                // Simpan '-' sebagai NULL bila perlu (opsional):
+                // if ($val === '-' ) { $val = null; }
                 $rec[$dbCol] = ($val === '' ? null : $val);
             }
         }
@@ -284,18 +287,40 @@ class MonitoringSLA extends CI_Controller
     {
         if ($v === null || $v === '') return null;
 
-        // 1) Excel serial number
+        // 1) Excel serial number (numeric) → gunakan date() (bukan gmdate) agar tidak bergeser zona
         if (is_numeric($v)) {
             $unix = ($v - 25569) * 86400; // 25569 = 1970-01-01
-            return gmdate('Y-m-d H:i:s', (int)$unix);
+            return date('Y-m-d H:i:s', (int)$unix);
         }
 
         $s = trim((string)$v);
 
-        // 2) Normalisasi jam "07.53" atau "07.53.21" → "07:53" / "07:53:21"
+        // 2) Normalisasi jam "08.38" atau "08.38.21" → "08:38" / "08:38:21"
+        //    hanya mengganti jika segment waktu utuh (hindari kena tanggal)
         $s = preg_replace('/\b(\d{1,2})\.(\d{2})(?:\.(\d{2}))?\b/', '$1:$2' . '${3:+:$3}', $s);
 
-        // 3) Coba beberapa pola umum termasuk d/m/y HH:mm dengan tahun 2 digit
+        // 3) PARSER MANUAL khusus pola d/m/y[yy] atau d-m-y[yy] + waktu
+        //    Contoh: "19/08/25 08:38" → 2025-08-19 08:38:00
+        if (preg_match('/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/', $s, $m)) {
+            $d  = (int)$m[1];
+            $mo = (int)$m[2];
+            $y  = (int)$m[3];
+            $H  = isset($m[4]) ? (int)$m[4] : 0;
+            $i  = isset($m[5]) ? (int)$m[5] : 0;
+            $S  = isset($m[6]) ? (int)$m[6] : 0;
+
+            // Tahun 2 digit → 00–69 = 2000–2069, 70–99 = 1970–1999 (meniru aturan PHP)
+            if ($y < 100) {
+                $y += ($y <= 69) ? 2000 : 1900;
+            }
+
+            // Validasi sederhana
+            if (checkdate($mo, $d, $y)) {
+                return sprintf('%04d-%02d-%02d %02d:%02d:%02d', $y, $mo, $d, $H, $i, $S);
+            }
+        }
+
+        // 4) Coba beberapa pola umum (backup)
         $fmts = array(
             'd/m/y H:i:s','d/m/y H:i',
             'd/m/Y H:i:s','d/m/Y H:i',
@@ -306,10 +331,12 @@ class MonitoringSLA extends CI_Controller
         );
         foreach ($fmts as $f) {
             $dt = DateTime::createFromFormat($f, $s);
-            if ($dt instanceof DateTime) return $dt->format('Y-m-d H:i:s');
+            if ($dt instanceof DateTime) {
+                return $dt->format('Y-m-d H:i:s');
+            }
         }
 
-        // 4) Fallback strtotime
+        // 5) Fallback strtotime
         $ts = strtotime($s);
         return $ts ? date('Y-m-d H:i:s', $ts) : null;
     }
