@@ -287,59 +287,65 @@ class MonitoringSLA extends CI_Controller
     {
         if ($v === null || $v === '') return null;
 
-        // 1) Excel serial number (numeric) → gunakan date() (bukan gmdate) agar tidak bergeser zona
+        // 1) Excel serial number (numeric) → pakai date() (bukan gmdate) agar tidak geser TZ
         if (is_numeric($v)) {
             $unix = ($v - 25569) * 86400; // 25569 = 1970-01-01
             return date('Y-m-d H:i:s', (int)$unix);
         }
 
-        $s = trim((string)$v);
+        // Normalisasi string
+        $s = (string)$v;
+        // ganti NBSP ke spasi, trim
+        $s = str_replace("\xC2\xA0", ' ', $s);
+        $s = trim($s);
 
         // 2) Normalisasi jam "08.38" atau "08.38.21" → "08:38" / "08:38:21"
-        //    hanya mengganti jika segment waktu utuh (hindari kena tanggal)
         $s = preg_replace('/\b(\d{1,2})\.(\d{2})(?:\.(\d{2}))?\b/', '$1:$2' . '${3:+:$3}', $s);
 
-        // 3) PARSER MANUAL khusus pola d/m/y[yy] atau d-m-y[yy] + waktu
-        //    Contoh: "19/08/25 08:38" → 2025-08-19 08:38:00
-        if (preg_match('/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/', $s, $m)) {
-            $d  = (int)$m[1];
-            $mo = (int)$m[2];
+        // === PARSER *STRICT* D/M/Y ===
+        // Terima: dd/mm/yy(yy) HH:MM[:SS] atau dd-mm-yy(yy) HH:MM[:SS]
+        if (preg_match(
+            '/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/',
+            $s,
+            $m
+        )) {
+            $d  = (int)$m[1];   // H A R U S dianggap hari
+            $mo = (int)$m[2];   // H A R U S dianggap bulan
             $y  = (int)$m[3];
             $H  = isset($m[4]) ? (int)$m[4] : 0;
             $i  = isset($m[5]) ? (int)$m[5] : 0;
             $S  = isset($m[6]) ? (int)$m[6] : 0;
 
-            // Tahun 2 digit → 00–69 = 2000–2069, 70–99 = 1970–1999 (meniru aturan PHP)
-            if ($y < 100) {
-                $y += ($y <= 69) ? 2000 : 1900;
-            }
+            // Tahun 2 digit → 2000–2069 atau 1970–1999 (aturan PHP)
+            if ($y < 100) { $y += ($y <= 69) ? 2000 : 1900; }
 
-            // Validasi sederhana
             if (checkdate($mo, $d, $y)) {
                 return sprintf('%04d-%02d-%02d %02d:%02d:%02d', $y, $mo, $d, $H, $i, $S);
+            } else {
+                // Jika tanggal tidak valid (mis. 31/02/25), kembalikan null
+                return null;
             }
         }
 
-        // 4) Coba beberapa pola umum (backup)
-        $fmts = array(
-            'd/m/y H:i:s','d/m/y H:i',
-            'd/m/Y H:i:s','d/m/Y H:i',
-            'd-m-y H:i:s','d-m-y H:i',
-            'd-m-Y H:i:s','d-m-Y H:i',
-            'Y-m-d H:i:s','Y-m-d H:i',
-            'Y/m/d H:i:s','Y/m/d H:i'
+        // === Fallback HANYA untuk format yang TIDAK AMBIGU ===
+        // ISO atau variasi jelas (YYYY-mm-dd ...)
+        $fmts_clear = array(
+            'Y-m-d H:i:s','Y-m-d H:i','Y/m/d H:i:s','Y/m/d H:i',
+            'Y-m-d','Y/m/d',
+            // juga izinkan d-m-Y / d/m/Y tapi TETAP DMY (4 digit tahun tidak ambigu di ID)
+            'd-m-Y H:i:s','d-m-Y H:i','d/m/Y H:i:s','d/m/Y H:i','d-m-Y','d/m/Y'
         );
-        foreach ($fmts as $f) {
+        foreach ($fmts_clear as $f) {
             $dt = DateTime::createFromFormat($f, $s);
             if ($dt instanceof DateTime) {
                 return $dt->format('Y-m-d H:i:s');
             }
         }
 
-        // 5) Fallback strtotime
-        $ts = strtotime($s);
-        return $ts ? date('Y-m-d H:i:s', $ts) : null;
+        // Terakhir: JANGAN pakai strtotime() untuk format ambigu—bisa kebalik lagi.
+        return null;
     }
+
 
     private function upsert_batch(array $rows, $table, $uniqueKey = 'idtiket')
     {
