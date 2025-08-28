@@ -31,7 +31,28 @@ return array(
 	'smi'	=>	'application/smil',
 	'smil'	=>	'application/smil',
 	'mif'	=>	'application/vnd.mif',
-	'xls'	=>	array('application/vnd.ms-excel', 'application/msexcel', 'application/x-msexcel', 'application/x-ms-excel', 'application/x-excel', 'application/x-dos_ms_excel', 'application/xls', 'application/x-xls', 'application/excel', 'application/download', 'application/vnd.ms-office', 'application/msword'),
+	'xls'  => array(
+    'application/vnd.ms-excel',
+    'application/msexcel',
+    'application/excel',
+    'application/octet-stream', // banyak hosting pakai ini
+    'application/vnd.ms-excel.sheet.macroenabled.12',
+    'application/vnd.ms-excel.sheet.binary.macroenabled.12'
+	),
+	'xlsx' => array(
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		'application/vnd.ms-excel',
+		'application/zip',                // xlsx itu zip
+		'application/x-zip-compressed',
+		'application/octet-stream'        // fallback umum
+	),
+	'csv'  => array(
+		'text/csv',
+		'text/plain',
+		'application/csv',
+		'application/vnd.ms-excel',       // beberapa browser pakai ini untuk CSV
+		'application/octet-stream'
+	),
 	'ppt'	=>	array('application/powerpoint', 'application/vnd.ms-powerpoint', 'application/vnd.ms-office', 'application/msword'),
 	'pptx'	=> 	array('application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/x-zip', 'application/zip'),
 	'wbxml'	=>	'application/wbxml',
@@ -112,7 +133,6 @@ return array(
 	'docx'	=>	array('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip', 'application/msword', 'application/x-zip'),
 	'dot'	=>	array('application/msword', 'application/vnd.ms-office'),
 	'dotx'	=>	array('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip', 'application/msword'),
-	'xlsx'	=>	array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/zip', 'application/vnd.ms-excel', 'application/msword', 'application/x-zip'),
 	'word'	=>	array('application/msword', 'application/octet-stream'),
 	'xl'	=>	'application/excel',
 	'eml'	=>	'message/rfc822',

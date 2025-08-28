@@ -968,10 +968,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 className: 'priority-column',
                 responsivePriority: 1
             },
-            {
-                targets: 0,
-                visible: false
-            },
         ],
         responsive: true
     });

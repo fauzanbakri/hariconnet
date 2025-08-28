@@ -94,6 +94,11 @@
                                                                                 Manado
                                                                             </a>
                                                                         </li>
+                                                                        <li class="nav-item">
+                                                                            <a class="nav-link" data-bs-toggle="tab" href="#summary" role="tab">
+                                                                                Summary Tiket
+                                                                            </a>
+                                                                        </li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -146,6 +151,88 @@
                                                                     </div>
                                                                     <div class="tab-pane" id="manado" role="tabpanel">
                                                                         manado
+                                                                    </div>
+                                                                    <div class="tab-pane" id="summary" role="tabpanel">
+                                                                        *Laporan Gangguan Ritel Tanggal <?= date('d M Y')?>* <br>
+                                                                        Update per jam <?php 
+                                                                        date_default_timezone_set('Asia/Makassar');
+                                                                        echo date('h.i') 
+                                                                        ?> WITA <br>
+                                                                        <br>
+                                                                        Total Open Tiket :  <?php echo $total->total + $m->total + $k->total + $n->total;?><br>
+                                                                        Tiket Total : Sulsel: <?php echo $sulselT->sulselT + $fsulsel->total;?>, 
+                                                                        Sulbar: <?php echo $sulbarT->sulbarT + $fsulbar->total;?>,
+                                                                        Sultra: <?php echo $sultraT->sultraT + $fsultra->total;?>,  
+                                                                        Sulteng: <?php echo $sultengT->sultengT + $fsulteng->total;?>, 
+                                                                        Gorontalo: <?php echo $gorontaloT->gorontaloT + $fgorontalo->total;?>, 
+                                                                        Sulut: <?php echo $sulutT->sulutT + $fsulut->total;?>
+                                                                        <br>
+                                                                        <br>
+                                                                        Makassar = <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
+                                                                        On progress tim IKR: 0<br>
+                                                                        On progress tim Feeder: 0<br>
+                                                                        Waiting : 0 <br>
+                                                                        Total Tim : 0 Tim<br>                                                                        <br>
+                                                                        Kendari = <?php echo $sultraT->sultraT + $fsultra->total + $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total;?>, Tiket<br>
+                                                                        On progress tim IKR: 0<br>
+                                                                        On progress tim Feeder: 0<br>
+                                                                        Waiting : 0 <br>
+                                                                        Total tim : 0 Tim<br>
+                                                                        <br>
+                                                                        Manado = <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
+                                                                        On progress tim IKR: 0<br>
+                                                                        On progress tim Feeder: 0<br>
+                                                                        Waiting : 0 <br>
+                                                                        Total tim : 0 tim<br>
+                                                                        <br>
+                                                                        =========================================================<br>
+                                                                        <br>
+                                                                        *BREAKDOWN TIKET*<br>
+                                                                        Total : <?php echo $total->total + $m->total + $k->total + $n->total;?> Tiket<br>
+                                                                            
+                                                                        Makassar : <?php echo $sulselT->sulselT + $fsulsel->total;?> Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php echo $sulselT->sulselT; ?> Tiket<br>
+                                                                        Tiket Impact Feeder : <?php echo $fsulsel->total;?> Tiket<br>
+                                                                        <?php
+                                                                        foreach ($qm as $row){
+                                                                            echo '
+                                                                                <tr>
+                                                                                <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                                                                                <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                                                                </tr>
+                                                                                <br>
+                                                                            ';
+                                                                        }
+                                                                        ?>
+                                                                        <br>
+                                                                        Kendari : <?php echo $sulbarT->sulbarT + $fsulbar->total + $sultengT->sultengT + $fsulteng->total + $sultraT->sultraT + $fsultra->total ;?>, Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php echo $sulbarT->sulbarT + $sultengT->sultengT + $sultraT->sultraT;?> Tiket<br>
+                                                                        Tiket Impact Feeder : <?php echo $fsulbar->total + $fsulteng->total + $fsultra->total;?> Tiket<br>
+                                                                        <?php 
+                                                                        foreach ($qk as $row){
+                                                                            echo  '
+                                                                                <tr>
+                                                                                <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                                                                                <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                                                                </tr>
+                                                                                <br>
+                                                                            ';
+                                                                        }
+                                                                        ?>
+                                                                        <br><br>
+                                                                        Manado :  <?php echo $gorontaloT->gorontaloT + $fgorontalo->total + $sulutT->sulutT + $fsulut->total;?> Tiket<br>
+                                                                        Tiket Non BB-FD-DT : <?php echo $gorontaloT->gorontaloT + $sulutT->sulutT;?>  Tiket<br>
+                                                                        Tiket Impact Feeder : <?php echo $fsulut->total + $fgorontalo->total; ?> Tiket<br>
+                                                                        <?php
+                                                                        foreach ($qn as $row){
+                                                                            echo '
+                                                                                <tr>
+                                                                                    <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
+                                                                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                                                                </tr>
+                                                                                <br>';
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             </div><!-- end card body -->

@@ -28,6 +28,19 @@ class Report extends CI_Controller {
 		$q['sultengT'] = $this->db->query("SELECT COUNT(*) AS sultengT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Tengah';")->row();
 		$q['sulutT'] = $this->db->query("SELECT COUNT(*) AS sulutT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Utara';")->row();
 		$q['gorontaloT'] = $this->db->query("SELECT COUNT(*) AS gorontaloT FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Gorontalo';")->row();
+        $q['m'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MAKASSAR' AND status!='CLOSED'")->row();
+        $q['k'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='KENDARI' AND status!='CLOSED'")->row();
+        $q['n'] = $this->db->query("SELECT SUM(jumlahTiket) AS total FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->row();  
+        $q['fsulsel'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Selatan';")->row();
+        $q['fsulbar'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Barat';")->row();
+        $q['fsulteng'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Tengah';")->row();
+        $q['fsultra'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Tenggara';")->row();
+        $q['fgorontalo'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Gorontalo';")->row();
+        $q['fsulut'] = $this->db->query("SELECT COALESCE(SUM(f.jumlahTiket), 0) AS total FROM feeder f LEFT JOIN area a ON f.kode = a.kode WHERE a.provinsi = 'Sulawesi Utara';")->row();
+        $q['qm'] = $this->db->query("SELECT * FROM feeder WHERE kp='MAKASSAR' AND status!='CLOSED'")->result();
+        $q['qk'] = $this->db->query("SELECT * FROM feeder WHERE kp='KENDARI' AND status!='CLOSED'")->result();
+        $q['qn'] = $this->db->query("SELECT * FROM feeder WHERE kp='MANADO' AND status!='CLOSED'")->result();
+        
         session_start();
         if(
 			$_SESSION['role']=='Superadmin' || 
@@ -111,6 +124,7 @@ class Report extends CI_Controller {
             }
         }
     }
+    
 
     public function test(){
         
