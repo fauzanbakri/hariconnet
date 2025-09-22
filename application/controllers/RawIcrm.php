@@ -105,7 +105,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY kabupatenpelanggan
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan DESC;
 
         ")->result();
 
@@ -194,7 +194,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebab
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
         $q['makassartop10_2'] = $this->db->query("
@@ -281,7 +281,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI SELATAN' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebabdetail
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
         ")->result();
 
 
@@ -458,7 +458,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI BARAT' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebab
-        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
         $q['mamujutop10_2'] = $this->db->query("
@@ -545,7 +545,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI BARAT' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebabdetail
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
 
@@ -633,7 +633,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI TENGAH' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY kabupatenpelanggan
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan DESC;
         ")->result();
 
         $q['palutop10_1'] = $this->db->query("
@@ -720,7 +720,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI TENGAH' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebab
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
         $q['palutop10_2'] = $this->db->query("
@@ -807,7 +807,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI TENGAH' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebabdetail
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
 
@@ -895,7 +895,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI TENGGARA' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY kabupatenpelanggan
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan DESC;
         ")->result();
 
         $q['kendaritop10_1'] = $this->db->query("
@@ -982,7 +982,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI TENGGARA' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebab
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
         $q['kendaritop10_2'] = $this->db->query("
@@ -1069,7 +1069,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI TENGGARA' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebabdetail
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
 
@@ -1157,7 +1157,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'GORONTALO' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY kabupatenpelanggan
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan DESC;
 
         ")->result();
 
@@ -1245,7 +1245,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'GORONTALO' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebab
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
         $q['gorontalotop10_2'] = $this->db->query("
@@ -1332,7 +1332,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'GORONTALO' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebabdetail
-        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10;
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
 
         ")->result();
 
@@ -1508,8 +1508,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI UTARA' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebab
-        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan ASC LIMIT 10;
-
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
         ")->result();
         $q['manadotop10_2'] = $this->db->query("
         SELECT 
@@ -1595,8 +1594,7 @@ class RawIcrm extends CI_Controller {
         FROM rawicrm
         WHERE provinsipelanggan = 'SULAWESI UTARA' AND kabupatenpelanggan != '-' AND penyebab!='NOT INCIDENT' AND status='TICKET CLOSE' AND namakelompok='GANGGUAN'
         GROUP BY penyebabdetail
-        ORDER BY percentage_less_1_day_semua_bulan, less_1_day_semua_bulan ASC LIMIT 10;
-
+        ORDER BY total_semua_bulan DESC, percentage_less_1_day_semua_bulan ASC LIMIT 10
         ")->result();
 
 		session_start();
