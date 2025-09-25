@@ -34,7 +34,7 @@ class Login extends CI_Controller {
 			$_SESSION['role'] = $data['role'];
 			$_SESSION['nama'] = $data['nama'];
 			$_SESSION['idUser'] = $data['idUser'];
-			header("location:../DashboardNoc");
+			header("location:../Feeder");
 		}else{
 			header("location:../Login?msg=wrong");
 		}
