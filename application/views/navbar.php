@@ -644,7 +644,7 @@
                         <li class="menu-title"><span data-key="t-menu">Material Monitoring</span></li>
                          <li class="nav-item">
                             <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-layouts">Input Material</span>
+                                <i class="mdi mdi-archive-plus-outline"></i> <span data-key="t-layouts">Input Material</span>
                             </a>
                         </li> 
                         <li class="nav-item">
