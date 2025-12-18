@@ -110,12 +110,12 @@ class Tickets extends CI_Controller {
 		if($idTiket != ''){
 			// Gunakan prepared statement untuk keamanan yang lebih baik
 			$sql = "INSERT INTO tiket 
-				(idTiket, idInsiden, tanggal, sid, telepon, nama, keluhan, alamat, idOlt, sn, tim, keterangan, status, prioritas, createby, timestamp) 
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			
+				(idTiket, idInsiden, tanggal, sid, telepon, nama, keluhan, alamat, idOlt, sn, tim, keterangan, status, prioritas, kecamatan, createby, timestamp) 
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 			$result = $this->db->query($sql, [
-				$idTiket, $idInsiden, $tanggal, $sid, $telepon, $nama, $keluhan, $alamat, 
-				$idOlt, $sn, $tim, $keterangan, $status, $prioritas, $createby, $timestamp, $kecamatan
+				$idTiket, $idInsiden, $tanggal, $sid, $telepon, $nama, $keluhan, $alamat,
+				$idOlt, $sn, $tim, $keterangan, $status, $prioritas, $kecamatan, $createby, $timestamp
 			]);
 	
 			if($result){
@@ -168,10 +168,10 @@ class Tickets extends CI_Controller {
 				status='$status',
 				prioritas='$prioritas',
 				createby='$createby',
-				kecamatan='$kecamatan'
+				kecamatan='$kecamatan',
 				timestamp='$timestamp'
 				WHERE idTiket='$idTiket'
-				");
+			");
 			if($q){
 				echo 'success';
 			}else{

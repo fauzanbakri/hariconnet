@@ -698,7 +698,7 @@
                     tim: $('[name="tim"]').val(),
                     keterangan: $('[name="keterangan"]').val(),
                     prioritas: $('[name="prioritas"]').val(),
-                    prioritas: $('[name="kec"]').val(),
+                    kec: $('[name="kec"]').val(),
                 };
                 if (!formData.incident || !formData.tiket || !formData.tanggal || !formData.sid || !formData.nama) {
                     button.setAttribute('data-toast-text', 'Incident, Ticket, Tanggal, SID, Telepon, Nama Cannot Empty!');
@@ -751,7 +751,7 @@
                     status: $('[name="editstatus"]').val(),
                     keterangan: $('[name="editketerangan"]').val(),
                     prioritas: $('[name="editprioritas"]').val(),
-                    prioritas: $('[name="editkec"]').val(),
+                    kec: $('[name="editkec"]').val(),
                 };
                 if (!formData.incident || !formData.tiket || !formData.tanggal || !formData.sid || !formData.nama) {
                     button.setAttribute('data-toast-text', 'Incident, Ticket, Tanggal, SID, Telepon, Nama Cannot Empty!');
