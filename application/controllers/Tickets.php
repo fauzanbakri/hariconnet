@@ -24,7 +24,7 @@ class Tickets extends CI_Controller {
 			provinsi,
 			tim,
 			createby,
-			kecamatan,
+			tiket.kecamatan,
 			timestamp,
 			@urutan := IF(
 				status IN ('closed', 'Solved (ICRM Open)') OR tim = 'NO TIM', 
