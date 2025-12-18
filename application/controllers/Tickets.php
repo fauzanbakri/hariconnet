@@ -24,6 +24,7 @@ class Tickets extends CI_Controller {
 			provinsi,
 			tim,
 			createby,
+			kecamatan,
 			timestamp,
 			@urutan := IF(
 				status IN ('closed', 'Solved (ICRM Open)') OR tim = 'NO TIM', 
@@ -101,6 +102,7 @@ class Tickets extends CI_Controller {
 		$tim = cleanInput($this->input->post('tim'));
 		$keterangan = cleanInput($this->input->post('keterangan'));
 		$prioritas = cleanInput($this->input->post('prioritas'));
+		$kecamatan = cleanInput($this->input->post('kec'));
 		$createby = cleanInput($_SESSION['nama']);
 		$timestamp = date("Y-m-d H:i:s");
 		$status = 'NEW';
@@ -113,7 +115,7 @@ class Tickets extends CI_Controller {
 			
 			$result = $this->db->query($sql, [
 				$idTiket, $idInsiden, $tanggal, $sid, $telepon, $nama, $keluhan, $alamat, 
-				$idOlt, $sn, $tim, $keterangan, $status, $prioritas, $createby, $timestamp
+				$idOlt, $sn, $tim, $keterangan, $status, $prioritas, $createby, $timestamp, $kecamatan
 			]);
 	
 			if($result){
@@ -146,6 +148,7 @@ class Tickets extends CI_Controller {
 		$keterangan = $this->input->post('keterangan');
 		$status = $this->input->post('status');
 		$prioritas = $this->input->post('prioritas');
+		$kecamatan = $this->input->post('kec');
 		$createby = $_SESSION['nama'];
 		$timestamp = date("Y-m-d H:i:s");
 		// die();
@@ -165,6 +168,7 @@ class Tickets extends CI_Controller {
 				status='$status',
 				prioritas='$prioritas',
 				createby='$createby',
+				kecamatan='$kecamatan'
 				timestamp='$timestamp'
 				WHERE idTiket='$idTiket'
 				");
@@ -199,6 +203,7 @@ class Tickets extends CI_Controller {
 			$status = $row->status;
 			$prioritas = $row->prioritas;
 			$createby = $row->createby;
+			$kecamatan = $row->kecamatan;
 			$timestamp = $row->timestamp;
 
 			$this->db->query("INSERT INTO tiketClose VALUES(
@@ -217,6 +222,7 @@ class Tickets extends CI_Controller {
 			'$keterangan',
 			'$status',
 			'$prioritas',
+			'$kecamatan',
 			'$createby',
 			'$timestamp'
 			)");

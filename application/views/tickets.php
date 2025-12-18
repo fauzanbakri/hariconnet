@@ -184,6 +184,12 @@
                                                                 <option value="Low">Low</option>
                                                             </select>
                                                         </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label  class="form-label">Kecamatan</label>
+                                                                <input type="text" class="form-control" name="kec" autocomplete="off" placeholder="Kecamatan">
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -303,6 +309,12 @@
                                                                 <option value="CLOSED">CLOSED</option>
                                                                 <option value="EARLY">EARLY</option>
                                                             </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label  class="form-label">Kecamatan</label>
+                                                                <input type="text" class="form-control" name="editkec" autocomplete="off" placeholder="Kecamatan">
+                                                            </div>
                                                         </div>
                                                     <div class="col-lg-12">
                                                         <div class="hstack gap-2 justify-content-end">
@@ -686,6 +698,7 @@
                     tim: $('[name="tim"]').val(),
                     keterangan: $('[name="keterangan"]').val(),
                     prioritas: $('[name="prioritas"]').val(),
+                    prioritas: $('[name="kec"]').val(),
                 };
                 if (!formData.incident || !formData.tiket || !formData.tanggal || !formData.sid || !formData.nama) {
                     button.setAttribute('data-toast-text', 'Incident, Ticket, Tanggal, SID, Telepon, Nama Cannot Empty!');
@@ -738,6 +751,7 @@
                     status: $('[name="editstatus"]').val(),
                     keterangan: $('[name="editketerangan"]').val(),
                     prioritas: $('[name="editprioritas"]').val(),
+                    prioritas: $('[name="editkec"]').val(),
                 };
                 if (!formData.incident || !formData.tiket || !formData.tanggal || !formData.sid || !formData.nama) {
                     button.setAttribute('data-toast-text', 'Incident, Ticket, Tanggal, SID, Telepon, Nama Cannot Empty!');
