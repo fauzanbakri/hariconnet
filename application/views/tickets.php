@@ -187,7 +187,7 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label  class="form-label">Kecamatan</label>
-                                                                <input type="text" class="form-control" name="kec" autocomplete="off" placeholder="Kecamatan">
+                                                                <input type="text" class="form-control" name="kec" autocomplete="off" required placeholder="Kecamatan">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
