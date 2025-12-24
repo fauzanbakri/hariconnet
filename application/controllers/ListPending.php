@@ -88,7 +88,7 @@ class ListPending extends CI_Controller {
        }
    }
    public function pending(){
-        $q = $this->db->query("SELECT DISTINCT tiket.tim FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE tiket.status!='closed' ORDER BY tim ASC;")->result();
+       $q = $this->db->query("SELECT DISTINCT tiket.tim FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE tiket.status NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') ORDER BY tim ASC;")->result();
         foreach($q as $kab){
             if ($kab->tim!=''){
                 echo '<span class="badge badge-label bg-secondary"><i class="mdi mdi-circle-medium"></i>'.$kab->tim.'</span><br><br>';
