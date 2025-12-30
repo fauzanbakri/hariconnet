@@ -211,7 +211,7 @@ class Report extends CI_Controller {
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.'('.$durasi.') Tiket</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket('.$durasi.')</td>
                                 </tr>
                                  <tr>
                                     <th class="" scope="row">Impact :</th>
@@ -247,7 +247,7 @@ class Report extends CI_Controller {
                             </tr>';
                             foreach ($qk as $row){
                                 $tanggalSekarang = new DateTime();
-                                $durasi1 = new DateTime($row->tanggal);;
+                                $durasi1 = new DateTime($row->downtime);
                                 $selisih = $durasi1->diff($tanggalSekarang);
                                 $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
                                 if($row->tipe=="FTTH BACKBONE"){
@@ -260,7 +260,7 @@ class Report extends CI_Controller {
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.'('.$durasi.') Tiket</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket('.$durasi.')</td>
                                 </tr>
                                  <tr>
                                     <th class="" scope="row">Impact :</th>
@@ -296,7 +296,7 @@ class Report extends CI_Controller {
                             </tr>';
                             foreach ($qn as $row){
                                 $tanggalSekarang = new DateTime();
-                                $durasi1 = new DateTime($row->tanggal);;
+                                $durasi1 = new DateTime($row->downtime);
                                 $selisih = $durasi1->diff($tanggalSekarang);
                                 $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
                                 if($row->tipe=="FTTH BACKBONE"){
@@ -309,7 +309,7 @@ class Report extends CI_Controller {
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.'('.$durasi.') Tiket</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket('.$durasi.')</td>
                                 </tr>
                                  <tr>
                                     <th class="" scope="row">Impact :</th>
