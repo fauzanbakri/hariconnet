@@ -161,8 +161,6 @@ class Report extends CI_Controller {
         $tiketnonbbkendari = $kendaridivision - $ck[0]->total;
         $tiketnonbbmanado = $manadodivision - $cn[0]->total;
 
-
-
         echo '
         <div class="card">
             <div class="card-body">
@@ -199,10 +197,33 @@ class Report extends CI_Controller {
                                 <td class="text-muted">'.$belummasukmakassar.' Tiket</td>
                             </tr>';
                             foreach ($qm as $row){
+                                $tanggalSekarang = new DateTime();
+                                $durasi1 = new DateTime($row->tanggal);;
+                                $selisih = $durasi1->diff($tanggalSekarang);
+                                $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                if($row->tipe=="FTTH BACKBONE"){
+                                    $v = "OLT TO UPLINK";
+                                }elseif($row->tipe=="FTTH FEEDER"){
+                                    $v = "FDT TO OLT";
+                                }else{
+                                    $v = "FAT TO FDT";
+                                }
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.'('.$durasi.') Tiket</td>
+                                </tr>
+                                 <tr>
+                                    <th class="" scope="row">Impact :</th>
+                                    <td class="text-muted">'.$v.'</td>
+                                </tr>
+                                <tr>
+                                    <th class="" scope="row">Status :</th>
+                                    <td class="text-muted">'.$row->status.'</td>
+                                </tr>
+                                <tr>
+                                    <th class="" scope="row">Estimasi UP :</th>
+                                    <td class="text-muted"></td>
                                 </tr>
                                 ';
                             }
@@ -225,10 +246,33 @@ class Report extends CI_Controller {
                                 <td class="text-muted">'.$belummasukkendari.' Tiket</td>
                             </tr>';
                             foreach ($qk as $row){
+                                $tanggalSekarang = new DateTime();
+                                $durasi1 = new DateTime($row->tanggal);;
+                                $selisih = $durasi1->diff($tanggalSekarang);
+                                $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                if($row->tipe=="FTTH BACKBONE"){
+                                    $v = "OLT TO UPLINK";
+                                }elseif($row->tipe=="FTTH FEEDER"){
+                                    $v = "FDT TO OLT";
+                                }else{
+                                    $v = "FAT TO FDT";
+                                }
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.'('.$durasi.') Tiket</td>
+                                </tr>
+                                 <tr>
+                                    <th class="" scope="row">Impact :</th>
+                                    <td class="text-muted">'.$v.'</td>
+                                </tr>
+                                <tr>
+                                    <th class="" scope="row">Status :</th>
+                                    <td class="text-muted">'.$row->status.'</td>
+                                </tr>
+                                <tr>
+                                    <th class="" scope="row">Estimasi UP :</th>
+                                    <td class="text-muted"></td>
                                 </tr>
                                 ';
                             }
@@ -251,10 +295,33 @@ class Report extends CI_Controller {
                                 <td class="text-muted">'.$belummasukmanado.' Tiket</td>
                             </tr>';
                             foreach ($qn as $row){
+                                $tanggalSekarang = new DateTime();
+                                $durasi1 = new DateTime($row->tanggal);;
+                                $selisih = $durasi1->diff($tanggalSekarang);
+                                $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                if($row->tipe=="FTTH BACKBONE"){
+                                    $v = "OLT TO UPLINK";
+                                }elseif($row->tipe=="FTTH FEEDER"){
+                                    $v = "FDT TO OLT";
+                                }else{
+                                    $v = "FAT TO FDT";
+                                }
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.'('.$durasi.') Tiket</td>
+                                </tr>
+                                 <tr>
+                                    <th class="" scope="row">Impact :</th>
+                                    <td class="text-muted">'.$v.'</td>
+                                </tr>
+                                <tr>
+                                    <th class="" scope="row">Status :</th>
+                                    <td class="text-muted">'.$row->status.'</td>
+                                </tr>
+                                <tr>
+                                    <th class="" scope="row">Estimasi UP :</th>
+                                    <td class="text-muted"></td>
                                 </tr>
                                 ';
                             }
