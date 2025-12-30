@@ -198,7 +198,7 @@ class Report extends CI_Controller {
                             </tr>';
                             foreach ($qm as $row){
                                 $tanggalSekarang = new DateTime();
-                                $durasi1 = new DateTime($row->tanggal);;
+                                $durasi1 = new DateTime($row->downtime);
                                 $selisih = $durasi1->diff($tanggalSekarang);
                                 $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
                                 if($row->tipe=="FTTH BACKBONE"){
