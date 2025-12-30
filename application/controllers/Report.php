@@ -211,7 +211,7 @@ class Report extends CI_Controller {
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket('.$durasi.')</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>
                                 </tr>
                                  <tr>
                                     <th class="" scope="row">Impact :</th>
@@ -260,7 +260,7 @@ class Report extends CI_Controller {
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket('.$durasi.')</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>
                                 </tr>
                                  <tr>
                                     <th class="" scope="row">Impact :</th>
@@ -309,7 +309,7 @@ class Report extends CI_Controller {
                                 echo '
                                  <tr>
                                     <th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>
-                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket('.$durasi.')</td>
+                                    <td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>
                                 </tr>
                                  <tr>
                                     <th class="" scope="row">Impact :</th>
