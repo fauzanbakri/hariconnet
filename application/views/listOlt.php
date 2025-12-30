@@ -219,6 +219,7 @@
                                                 <th>Kecamatan</th>
                                                 <th>Kabupaten</th>
                                                 <th>Provinsi</th>
+                                                <th>Kode Kunci</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -235,6 +236,7 @@
                                                     <td>".$row->kecamatan."</td>
                                                     <td>".$row->kabupaten."</td>
                                                     <td>".$row->provinsi."</td>
+                                                    <td>".$row->key."</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
