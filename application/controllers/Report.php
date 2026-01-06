@@ -189,7 +189,7 @@ class Report extends CI_Controller {
                                 <td class="text-muted">'.$makassartotal.' Tiket</td>
                             </tr>
                             <tr>
-                                <th class="" scope="row">Tiket Non BB-FD-DT :</th>
+                                <th class="" scope="row">Tiket IKR :</th>
                                 <td class="text-muted">'.$tiketnonbbmakassar.' Tiket</td>
                             </tr>
                             <tr>
@@ -238,7 +238,7 @@ class Report extends CI_Controller {
                                 <td class="text-muted">'.$kendaritotal.' Tiket</td>
                             </tr>
                             <tr>
-                                <th class="" scope="row">Tiket Non BB-FD-DT :</th>
+                                <th class="" scope="row">Tiket IKR :</th>
                                 <td class="text-muted">'.$tiketnonbbkendari.' Tiket</td>
                             </tr>
                             <tr>
@@ -287,7 +287,7 @@ class Report extends CI_Controller {
                                 <td class="text-muted">'.$manadototal.' Tiket</td>
                             </tr>
                             <tr>
-                                <th class="" scope="row">Tiket Non BB-FD-DT :</th>
+                                <th class="" scope="row">Tiket IKR :</th>
                                 <td class="text-muted">'.$tiketnonbbmanado.' Tiket</td>
                             </tr>
                             <tr>
