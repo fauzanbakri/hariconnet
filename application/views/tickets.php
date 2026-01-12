@@ -953,7 +953,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(ticketData);
             const fields = [
                 'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
-                'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editprovinsi', 'editurutan', 'edittimestamp'
+                'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editkec', 'editprovinsi', 'editurutan', 'edittimestamp'
             ];
             fields.forEach(field => {
                 const inputElement = document.getElementById(field);
