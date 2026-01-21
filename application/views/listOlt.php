@@ -114,6 +114,12 @@
                                                                 <input type="text" class="form-control" name="kelurahan" id="kelurahan" autocomplete="off" placeholder="Kelurahan">
                                                             </div>
                                                         </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kode Kunci</label>
+                                                                <input type="text" class="form-control" name="kodeKunci" id="kodeKunci" autocomplete="off" placeholder="Kode Kunci">
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -194,6 +200,12 @@
                                                                 <input type="text" class="form-control" name="editkelurahan" id="editkelurahan" autocomplete="off" placeholder="Kelurahan">
                                                             </div>
                                                         </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kode Kunci</label>
+                                                                <input type="text" class="form-control" name="editkodeKunci" id="editkodeKunci" autocomplete="off" placeholder="Kode Kunci">
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -236,7 +248,7 @@
                                                     <td>".$row->kecamatan."</td>
                                                     <td>".$row->kabupaten."</td>
                                                     <td>".$row->provinsi."</td>
-                                                    <td>".$row->key."</td>
+                                                    <td>".$row->kodeKunci."</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -244,7 +256,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-edithostname='".$row->idOlt."' data-edittim='".$row->serpo."' data-editkabupaten='".$row->kabupaten."' data-editkecamatan='".$row->kecamatan."' data-editkelurahan='".$row->kelurahan."'  data-editlongitude='".$row->longi."' data-editlatitude='".$row->lat."' data-editupe='".$row->upe."' data-editprov='".$row->provinsi."' >
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-edithostname='".$row->idOlt."' data-edittim='".$row->serpo."' data-editkabupaten='".$row->kabupaten."' data-editkecamatan='".$row->kecamatan."' data-editkelurahan='".$row->kelurahan."'  data-editlongitude='".$row->longi."' data-editlatitude='".$row->lat."' data-editupe='".$row->upe."' data-editprov='".$row->provinsi."' data-editkodeKunci='".$row->kodeKunci."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
@@ -400,7 +412,8 @@
                     prov: $('[name="prov"]').val(),
                     kabupaten: $('[name="kabupaten"]').val(),
                     kecamatan: $('[name="kecamatan"]').val(),
-                    kelurahan: $('[name="kelurahan"]').val()
+                    kelurahan: $('[name="kelurahan"]').val(),
+                    kodeKunci: $('[name="kodeKunci"]').val()
                 };
                 if (!formData.hostname) {
                     button.setAttribute('data-toast-text', 'Hostname Cannot Empty!');
@@ -445,7 +458,8 @@
                     prov: $('[name="editprov"]').val(),
                     kabupaten: $('[name="editkabupaten"]').val(),
                     kecamatan: $('[name="editkecamatan"]').val(),
-                    kelurahan: $('[name="editkelurahan"]').val()
+                    kelurahan: $('[name="editkelurahan"]').val(),
+                    kodeKunci: $('[name="editkodeKunci"]').val()
                 };
                 if (!formData.hostname) {
                     button.setAttribute('data-toast-text', 'Hostname Cannot Empty!');
@@ -566,7 +580,8 @@
                     'editprov',
                     'editkabupaten',
                     'editkecamatan',
-                    'editkelurahan'
+                    'editkelurahan',
+                    'editkodeKunci'
                 ];
                 fields.forEach(field => {
                     const inputElement = document.getElementById(field);
