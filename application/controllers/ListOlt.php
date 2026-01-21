@@ -41,6 +41,7 @@ class ListOlt extends CI_Controller {
 		$kabupaten = $this->input->post('kabupaten');
 		$kecamatan = $this->input->post('kecamatan');
 		$kelurahan = $this->input->post('kelurahan');
+		$kodeKunci = $this->input->post('kodeKunci');
 		if($hostname!=''){
 			$q = $this->db->query("INSERT INTO 
 			olt(
@@ -52,7 +53,8 @@ class ListOlt extends CI_Controller {
 			kelurahan,
 			kecamatan,
 			kabupaten,
-			provinsi
+			provinsi,
+			kodeKunci
 			) 
 			VALUES(
 				'$hostname',
@@ -63,7 +65,8 @@ class ListOlt extends CI_Controller {
 				'$kelurahan',
 				'$kecamatan',
 				'$kabupaten',
-				'$prov'
+				'$prov',
+				'$kodeKunci'
 				)");
 			if($q){
 				echo 'success';
@@ -87,6 +90,7 @@ class ListOlt extends CI_Controller {
 		$kabupaten = $this->input->post('kabupaten');
 		$kecamatan = $this->input->post('kecamatan');
 		$kelurahan = $this->input->post('kelurahan');
+		$kodeKunci = $this->input->post('kodeKunci');
 		if($hostname!=''){
 			$q = $this->db->query("UPDATE olt SET
 				lat='$latitude',
@@ -96,7 +100,8 @@ class ListOlt extends CI_Controller {
 				kelurahan='$kelurahan',
 				kecamatan='$kecamatan',
 				kabupaten='$kabupaten',
-				provinsi='$prov'
+				provinsi='$prov',
+				kodeKunci='$kodeKunci'
 				WHERE idOlt='$hostname'
 				");
 			if($q){
