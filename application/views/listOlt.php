@@ -248,7 +248,7 @@
                                                     <td>".$row->kecamatan."</td>
                                                     <td>".$row->kabupaten."</td>
                                                     <td>".$row->provinsi."</td>
-                                                    <td>".$row->kodeKunci."</td>
+                                                    <td>".$row->key."</td>
                                                     <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -256,7 +256,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-edithostname='".$row->idOlt."' data-edittim='".$row->serpo."' data-editkabupaten='".$row->kabupaten."' data-editkecamatan='".$row->kecamatan."' data-editkelurahan='".$row->kelurahan."'  data-editlongitude='".$row->longi."' data-editlatitude='".$row->lat."' data-editupe='".$row->upe."' data-editprov='".$row->provinsi."' data-editkodeKunci='".$row->kodeKunci."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-edithostname='".$row->idOlt."' data-edittim='".$row->serpo."' data-editkabupaten='".$row->kabupaten."' data-editkecamatan='".$row->kecamatan."' data-editkelurahan='".$row->kelurahan."'  data-editlongitude='".$row->longi."' data-editlatitude='".$row->lat."' data-editupe='".$row->upe."' data-editprov='".$row->provinsi."' data-editkodeKunci='".$row->key."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>

@@ -54,7 +54,7 @@ class ListOlt extends CI_Controller {
 			kecamatan,
 			kabupaten,
 			provinsi,
-			kodeKunci
+			`key`
 			) 
 			VALUES(
 				'$hostname',
@@ -101,7 +101,7 @@ class ListOlt extends CI_Controller {
 				kecamatan='$kecamatan',
 				kabupaten='$kabupaten',
 				provinsi='$prov',
-				kodeKunci='$kodeKunci'
+				`key`='$kodeKunci'
 				WHERE idOlt='$hostname'
 				");
 			if($q){
