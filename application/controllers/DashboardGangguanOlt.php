@@ -90,6 +90,7 @@ class DashboardGangguanOlt extends CI_Controller {
         $counts = [];
         $causes = [];
         $latestTimestamp = 0;
+        $insertRows = [];
 
         foreach ($data as $r) {
             $dev = isset($r[$colDevice]) ? trim((string)$r[$colDevice]) : '';
@@ -101,6 +102,29 @@ class DashboardGangguanOlt extends CI_Controller {
             if (strcasecmp($petugas, 'VIA NGAOSS') !== 0) continue;
             if ($dev === '' || $idins === '') continue;
 
+            // prepare for DB insert
+            $ts = 0;
+            $tglDb = null;
+            if ($tglRaw !== '') {
+                if (is_numeric($tglRaw)) {
+                    $unix = ($tglRaw - 25569) * 86400;
+                    $ts = (int)$unix;
+                } else {
+                    $try = strtotime($tglRaw);
+                    if ($try !== false) $ts = $try;
+                }
+            }
+            if ($ts) $tglDb = date('Y-m-d H:i:s', $ts);
+
+            $insertRows[] = [
+                'id_insiden' => $idins,
+                'devicename' => $dev,
+                'nama_petugas' => $petugas,
+                'tanggal_gangguan' => $tglDb,
+                'penyebab' => $peny,
+                'raw_row' => json_encode($r),
+            ];
+
             if (!isset($counts[$dev])) $counts[$dev] = 0;
             $counts[$dev]++;
 
@@ -109,19 +133,21 @@ class DashboardGangguanOlt extends CI_Controller {
                 $causes[$dev][] = $peny;
             }
 
-            // attempt parse date
-            $ts = 0;
-            if ($tglRaw !== '') {
-                if (is_numeric($tglRaw)) {
-                    // Excel serialized number -> convert to unix timestamp
-                    $unix = ($tglRaw - 25569) * 86400;
-                    $ts = (int)$unix;
-                } else {
-                    $try = strtotime($tglRaw);
-                    if ($try !== false) $ts = $try;
-                }
-            }
             if ($ts > $latestTimestamp) $latestTimestamp = $ts;
+        }
+
+        // persist: clear old data and insert new
+        try {
+            $this->db->trans_start();
+            // use TRUNCATE to remove old rows
+            $this->db->query('TRUNCATE TABLE gangguan_olt');
+            if (!empty($insertRows)) {
+                $this->db->insert_batch('gangguan_olt', $insertRows);
+            }
+            $this->db->trans_complete();
+        } catch (Exception $e) {
+            // ignore DB error here but report
+            // continue to return aggregated result
         }
 
         // build result list

@@ -492,6 +492,20 @@
                                             </li>
                                             ';   
                                     }
+                                    // Gangguan OLT Berulang menu
+                                    if(
+                                        $_SESSION['role']=='Superadmin' || 
+                                        $_SESSION['role']=='NOC Ritel' || 
+                                        $_SESSION['role']=='Team Leader' || 
+                                        $_SESSION['role']=='Pemeliharaan Ritel'    ||
+                                        $_SESSION['role']=='Resepsionis'
+                                        ){
+                                            echo '
+                                             <li class="nav-item">
+                                                <a href="DashboardGangguanOlt" class="nav-link" data-key="t-crm"> Gangguan OLT Berulang </a>
+                                            </li>
+                                            ';   
+                                    }
                                     if(
                                         $_SESSION['role']=='Superadmin'
                                         ){
