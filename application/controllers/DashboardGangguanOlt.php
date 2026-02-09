@@ -84,15 +84,23 @@ class DashboardGangguanOlt extends CI_Controller {
             return null;
         };
 
-        $colDevice = $findCol(['devicename','device','olt','devicename']);
-        $colId = $findCol(['idinsiden','idinsiden','idins','idincident','id_insiden','id']);
-        $colPetugas = $findCol(['namapetugasbuat','petugas','createdby','createby','namapetugas']);
-        $colTanggal = $findCol(['tanggal','tanggalgangguan','date','tgl']);
-        $colPenyebab = $findCol(['penyebab','cause','keterangan','description','reason']);
+        $colDevice = $findCol(['devicename','deviceName']);
+        $colId = $findCol(['idinsiden','idInsiden']);
+        $colPetugas = $findCol(['namapetugasbuat','namaPetugasBuat']);
+        $colTanggal = $findCol(['tanggalgangguan','tanggalGangguan']);
+        $colPenyebab = $findCol(['penyebabdetail','penyebabDetail','penyebab']);
+
+        // Debug: log all found columns
+        error_log("Found headers: " . json_encode($headers));
+        error_log("Columns - Device:$colDevice, ID:$colId, Petugas:$colPetugas, Tanggal:$colTanggal, Penyebab:$colPenyebab");
 
         if (!$colDevice || !$colId || !$colPetugas) {
             error_log("Columns not found. Device=$colDevice, ID=$colId, Petugas=$colPetugas");
-            echo json_encode(['error'=>'Required columns not found (devicename, idinsiden, namaPetugasBuat)']);
+            echo json_encode([
+                'error'=>'Required columns not found (devicename, idinsiden, namaPetugasBuat)',
+                'debug_headers' => $headers,
+                'debug_raw_headers' => $headerRow,
+            ]);
             return;
         }
 

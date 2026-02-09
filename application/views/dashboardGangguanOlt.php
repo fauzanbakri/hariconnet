@@ -36,7 +36,8 @@
                                         <form id="uploadForm" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <input type="file" name="file" id="fileInput" class="form-control" accept=".xls,.xlsx" />
+                                                    <input type="file" name="file" id="fileInput" class="form-control" accept=".xls,.xlsx,.csv" />
+                                                    <small class="text-muted">Format: XLSX, CSV, atau XLS</small>
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <button type="submit" id="uploadBtn" class="btn rounded-pill btn-primary waves-effect waves-light">Upload</button>
