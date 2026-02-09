@@ -127,14 +127,16 @@
                         try{
                             var j = (typeof res === 'string')? JSON.parse(res) : res;
                         }catch(err){
-                            $('#results').html('<div class="text-danger">Response parsing error</div>');
+                            console.error("JSON parse error:", err, "Response:", res);
+                            Swal.fire('Error','Response parsing error: ' + err.message,'error');
                             return;
                         }
                         if (j.error){
                             Swal.fire('Error', j.error, 'error');
                             return;
                         }
-                        var html = '<div class="table-responsive"><table class="table table-bordered"><thead><tr><th>OLT</th><th>Count Incident (VIA NGAOSS)</th><th>Penyebab Detail</th></tr></thead><tbody>';
+                        var html = '<div class="alert alert-info">Baris diproses: ' + (j.rows_filtered || 0) + ' | Baris disimpan: ' + (j.rows_inserted || 0) + '</div>';
+                        html += '<div class="table-responsive"><table class="table table-bordered"><thead><tr><th>OLT</th><th>Count Incident (VIA NGAOSS)</th><th>Penyebab Detail</th></tr></thead><tbody>';
                         if (j.data && j.data.length){
                             j.data.forEach(function(row){
                                 var causes = row.causes && row.causes.length ? row.causes.join(' ; ') : '-';

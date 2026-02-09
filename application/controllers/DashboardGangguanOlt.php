@@ -145,9 +145,13 @@ class DashboardGangguanOlt extends CI_Controller {
                 $this->db->insert_batch('gangguan_olt', $insertRows);
             }
             $this->db->trans_complete();
+            
+            if ($this->db->trans_status() === FALSE) {
+                $dbErr = $this->db->error();
+                error_log("Database error in DashboardGangguanOlt/upload: " . print_r($dbErr, true));
+            }
         } catch (Exception $e) {
-            // ignore DB error here but report
-            // continue to return aggregated result
+            error_log("Exception in DashboardGangguanOlt/upload: " . $e->getMessage());
         }
 
         // build result list
@@ -171,6 +175,8 @@ class DashboardGangguanOlt extends CI_Controller {
             'data' => $result,
             'last_timestamp' => $latestTimestamp,
             'last_datetime' => $latestTimestamp ? date('Y-m-d H:i:s', $latestTimestamp) : null,
+            'rows_inserted' => count($insertRows),
+            'rows_filtered' => count($counts),
         ];
 
         header('Content-Type: application/json');
