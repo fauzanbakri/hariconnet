@@ -187,39 +187,73 @@ class DashboardGangguanOlt extends CI_Controller {
     {
         $zip = new ZipArchive();
         if ($zip->open($filePath) !== true) {
+            error_log("Failed to open XLSX as ZIP");
             return null;
         }
 
-        // Read worksheet XML
-        $xml_string = $zip->getFromName('xl/worksheets/sheet1.xml');
+        // Try sheet1.xml first, then look for other sheets
+        $xml_string = null;
+        for ($i = 1; $i <= 10; $i++) {
+            $sheet_path = 'xl/worksheets/sheet' . $i . '.xml';
+            if ($zip->locateName($sheet_path) !== false) {
+                $xml_string = $zip->getFromName($sheet_path);
+                if ($xml_string) break;
+            }
+        }
         $zip->close();
 
-        if (!$xml_string) return null;
+        if (!$xml_string) {
+            error_log("No worksheet XML found in XLSX");
+            return null;
+        }
 
+        // Parse XML
+        libxml_use_internal_errors(true);
         $xml = simplexml_load_string($xml_string);
-        if (!$xml) return null;
+        if (!$xml) {
+            error_log("Failed to parse worksheet XML: " . implode("; ", array_map(function($e) { return $e->message; }, libxml_get_errors())));
+            libxml_clear_errors();
+            return null;
+        }
 
         $rows = [];
         $sheetData = $xml->sheetData;
 
-        if (!$sheetData) return null;
+        if (!$sheetData) {
+            error_log("No sheetData element found");
+            return null;
+        }
 
         foreach ($sheetData->row as $row) {
             $rowData = [];
-            foreach ($row->c as $cell) {
-                $val = '';
-                if (isset($cell->v)) {
-                    $val = (string)$cell->v;
-                } elseif (isset($cell->is->t)) {
-                    $val = (string)$cell->is->t;
+            if (count($row->c) > 0) {
+                foreach ($row->c as $cell) {
+                    $val = '';
+                    // Handle different cell value types
+                    if (isset($cell->v)) {
+                        $val = (string)$cell->v;
+                    } elseif (isset($cell->is->t)) {
+                        $val = (string)$cell->is->t;
+                    } elseif (isset($cell->t)) {
+                        // Some formats store text in different way
+                        if ((string)$cell->t === 's') {
+                            // Shared string reference
+                            $val = (string)$cell->v;
+                        }
+                    }
+                    $rowData[] = $val;
                 }
-                $rowData[] = $val;
             }
+            // Keep all rows including empty, but track non-empty
             if (!empty(array_filter($rowData))) {
+                $rows[] = $rowData;
+            } elseif (count($rows) > 0) {
+                // Keep empty rows after first data row to maintain structure
                 $rows[] = $rowData;
             }
         }
 
+        error_log("XLSX parsed: " . count($rows) . " rows");
         return $rows;
     }
 

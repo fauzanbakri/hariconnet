@@ -155,7 +155,9 @@
                     },
                     error: function(xhr, status, err){
                         $('#uploadBtn').prop('disabled', false).text('Upload');
-                        Swal.fire('Error','Upload gagal','error');
+                        console.error("Upload error:", status, err);
+                        console.error("Response:", xhr.responseText);
+                        Swal.fire('Error','Upload gagal: ' + status,'error');
                     }
                 })
             });
