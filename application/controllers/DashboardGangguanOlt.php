@@ -43,19 +43,26 @@ class DashboardGangguanOlt extends CI_Controller {
         $tmp = $f['tmp_name'];
         $ext = strtolower(pathinfo($f['name'], PATHINFO_EXTENSION));
 
-        // Parse Excel file
+        // Parse file based on extension
         if ($ext === 'xlsx') {
             $data = $this->parseXLSX($tmp);
+        } elseif ($ext === 'csv') {
+            $data = $this->parseCSV($tmp);
         } elseif ($ext === 'xls') {
-            // For XLS, try to use simplexml if available, otherwise reject
-            $data = $this->parseXLS($tmp);
+            // Try CSV fallback for XLS (many XLS can be read as text)
+            $data = $this->parseCSV($tmp);
+            if (!$data) {
+                echo json_encode(['error'=>'Format XLS tidak didukung. Silakan convert ke XLSX atau CSV']);
+                return;
+            }
         } else {
-            echo json_encode(['error'=>'File harus .xlsx atau .xls']);
+            echo json_encode(['error'=>'File harus .xlsx, .csv, atau .xls']);
             return;
         }
 
         if (!$data || count($data) < 2) {
-            echo json_encode(['error'=>'Spreadsheet contains no data']);
+            error_log("Parse result: " . count($data ?? []) . " rows");
+            echo json_encode(['error'=>'Spreadsheet contains no data or parsing failed']);
             return;
         }
 
@@ -84,6 +91,7 @@ class DashboardGangguanOlt extends CI_Controller {
         $colPenyebab = $findCol(['penyebab','cause','keterangan','description','reason']);
 
         if (!$colDevice || !$colId || !$colPetugas) {
+            error_log("Columns not found. Device=$colDevice, ID=$colId, Petugas=$colPetugas");
             echo json_encode(['error'=>'Required columns not found (devicename, idinsiden, namaPetugasBuat)']);
             return;
         }
@@ -183,6 +191,37 @@ class DashboardGangguanOlt extends CI_Controller {
         echo json_encode($out);
     }
 
+    private function parseCSV($filePath)
+    {
+        $rows = [];
+        $handle = fopen($filePath, 'r');
+        if (!$handle) {
+            error_log("Failed to open file for CSV parsing");
+            return null;
+        }
+
+        // Detect delimiter (try comma, semicolon, tab)
+        $firstLine = fgets($handle);
+        rewind($handle);
+
+        $delimiter = ',';
+        if (substr_count($firstLine, ';') > substr_count($firstLine, ',')) {
+            $delimiter = ';';
+        } elseif (substr_count($firstLine, "\t") > substr_count($firstLine, ',')) {
+            $delimiter = "\t";
+        }
+
+        while (($data = fgetcsv($handle, 0, $delimiter)) !== false) {
+            if (!empty(array_filter($data))) {
+                $rows[] = $data;
+            }
+        }
+        fclose($handle);
+
+        error_log("CSV parsed: " . count($rows) . " rows with delimiter '$delimiter'");
+        return $rows;
+    }
+
     private function parseXLSX($filePath)
     {
         $zip = new ZipArchive();
@@ -255,14 +294,5 @@ class DashboardGangguanOlt extends CI_Controller {
 
         error_log("XLSX parsed: " . count($rows) . " rows");
         return $rows;
-    }
-
-    private function parseXLS($filePath)
-    {
-        // For XLS (binary format), we'd need a library.
-        // For now, return error or try CSV fallback
-        // Most modern users upload XLSX anyway
-        error_log("XLS file format not directly supported without PhpSpreadsheet. Please use XLSX.");
-        return null;
     }
 }
