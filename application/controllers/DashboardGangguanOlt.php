@@ -29,6 +29,8 @@ class DashboardGangguanOlt extends CI_Controller {
 
     public function upload()
     {
+        header('Content-Type: application/json');
+        
         if (!isset($_FILES['file'])){
             echo json_encode(['error'=>'No file uploaded']);
             return;
@@ -56,12 +58,14 @@ class DashboardGangguanOlt extends CI_Controller {
                 return;
             }
         } else {
+            http_response_code(400);
             echo json_encode(['error'=>'File harus .xlsx, .csv, atau .xls']);
             return;
         }
 
         if (!$data || count($data) < 2) {
             error_log("Parse result: " . count($data ?? []) . " rows");
+            http_response_code(400);
             echo json_encode(['error'=>'Spreadsheet contains no data or parsing failed']);
             return;
         }
@@ -96,6 +100,7 @@ class DashboardGangguanOlt extends CI_Controller {
 
         if (!$colDevice || !$colId || !$colPetugas) {
             error_log("Columns not found. Device=$colDevice, ID=$colId, Petugas=$colPetugas");
+            http_response_code(400);
             echo json_encode([
                 'error'=>'Required columns not found (devicename, idinsiden, namaPetugasBuat)',
                 'debug_headers' => $headers,
@@ -139,7 +144,7 @@ class DashboardGangguanOlt extends CI_Controller {
                 'nama_petugas' => $petugas,
                 'tanggal_gangguan' => $tglDb,
                 'penyebab' => $peny,
-                'raw_row' => json_encode($r),
+                'raw_row' => json_encode($r, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE),
             ];
 
             if (!isset($counts[$dev])) $counts[$dev] = 0;
@@ -165,9 +170,15 @@ class DashboardGangguanOlt extends CI_Controller {
             if ($this->db->trans_status() === FALSE) {
                 $dbErr = $this->db->error();
                 error_log("Database error in DashboardGangguanOlt/upload: " . print_r($dbErr, true));
+                header('Content-Type: application/json');
+                echo json_encode(['error' => 'Database error: ' . $dbErr['message']]);
+                return;
             }
         } catch (Exception $e) {
             error_log("Exception in DashboardGangguanOlt/upload: " . $e->getMessage());
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Exception: ' . $e->getMessage()]);
+            return;
         }
 
         // build result list
@@ -188,6 +199,7 @@ class DashboardGangguanOlt extends CI_Controller {
         usort($result, function($a,$b){return $b['count'] - $a['count'];});
 
         $out = [
+            'success' => true,
             'data' => $result,
             'last_timestamp' => $latestTimestamp,
             'last_datetime' => $latestTimestamp ? date('Y-m-d H:i:s', $latestTimestamp) : null,
@@ -195,8 +207,8 @@ class DashboardGangguanOlt extends CI_Controller {
             'rows_filtered' => count($counts),
         ];
 
-        header('Content-Type: application/json');
-        echo json_encode($out);
+        http_response_code(200);
+        echo json_encode($out, JSON_UNESCAPED_UNICODE);
     }
 
     private function parseCSV($filePath)
