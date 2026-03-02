@@ -978,9 +978,22 @@ document.addEventListener("DOMContentLoaded", function() {
         order: [[19, 'desc']],
         columnDefs: [
             {
+                targets: 9,
+                className: 'priority-column',
+                responsivePriority: 3,
+                visible: true
+            },
+            {
+                targets: 19,
+                className: 'priority-column',
+                responsivePriority: 1,
+                visible: true
+            },
+            {
                 targets: 20,
                 className: 'priority-column',
-                responsivePriority: 1
+                responsivePriority: 2,
+                visible: true
             },
         ],
         responsive: true

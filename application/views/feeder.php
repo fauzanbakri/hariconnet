@@ -897,13 +897,25 @@ document.addEventListener("DOMContentLoaded", function() {
             {
                 targets: 10,
                 className: 'priority-column',
-                responsivePriority: 2,
+                responsivePriority: 3,
                 visible: true
             },
             {
                 targets: 11,
                 className: 'priority-column',
                 responsivePriority: 1,
+                visible: true
+            },
+            {
+                targets: 15,
+                className: 'priority-column',
+                responsivePriority: 4,
+                visible: true
+            },
+            {
+                targets: 18,
+                className: 'priority-column',
+                responsivePriority: 2,
                 visible: true
             },
             {
