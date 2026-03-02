@@ -970,7 +970,7 @@ document.addEventListener('DOMContentLoaded', function () {
     </script>
     <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const table = new DataTable('#example', {
+    const table = new DataTable('#example1', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
