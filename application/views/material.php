@@ -1,4 +1,5 @@
 
+    
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
@@ -11,11 +12,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Inventory Material</h4>
+                                <h4 class="mb-sm-0">Tickets</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Material</a></li>
-                                        <li class="breadcrumb-item active">Input Material</li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Tickets</a></li>
+                                        <li class="breadcrumb-item active">Ticket</li>
                                     </ol>
                                 </div>
 
@@ -27,378 +28,426 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Daftar Material</h5><br>
+                                    <h5 class="card-title mb-0">Incident Feeder</h5><br>
                                     <!-- Base Buttons -->
                                      <!-- Grids in modals -->
-                                    <!-- Grids in modals -->
-                                     <div class="row">
+                                <!-- Grids in modals -->
+                                 <div class="row">
+                                    <div class="col-md-3">
+                                        <?php
+                                            if(
+                                                $_SESSION['role']=='Resepsionis' ||
+                                                $_SESSION['role']=='Guest 1'
+                                                ){
+                                                    echo '';
+                                                }else{
+                                                    echo '
+                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
+                                                        Add New Incident
+                                                        </button>';
+                                                }
+                                        ?>
+                                        <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="row g-3 mb-3">
                                         <div class="col-md-3">
-                                            <?php
-                                                if(
-                                                    $_SESSION['role']=='Superadmin' ||
-                                                    $_SESSION['role']=='Team Leader'
-                                                    ){
-                                                        echo '
-                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">
-                                                            Tambah Material
-                                                            </button>';
+                                            <label for="filterTipe" class="form-label">Tipe</label>
+                                            <select id="filterTipe" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <?php
+                                                    $tipeOptions = array_unique(array_column($data, 'tipe'));
+                                                    foreach ($tipeOptions as $tipe) {
+                                                        echo "<option value='{$tipe}'>{$tipe}</option>";
                                                     }
-                                            ?>
-                                            <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
+                                                ?>
+                                            </select>
                                         </div>
-                                     </div>
-                                     <div class="row mt-3">
-                                        <div class="row g-3 mb-3">
-                                            <div class="col-md-3">
-                                                <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
-                                                <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
-                                                <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="filterReservasi" class="form-label">Status Reservasi</label>
-                                                <select id="filterReservasi" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <option value="Sudah">Sudah</option>
-                                                    <option value="Belum">Belum</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="filterTerpakai" class="form-label">Status Terpakai</label>
-                                                <select id="filterTerpakai" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <?php foreach ($status_terpakai_list as $status) { ?>
-                                                        <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
-                                                <select id="filterPengiriman" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                    <option value="On Loc">On Loc</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button class="btn btn-sm btn-info" style="margin-top: 24px;" onclick="applyFilters()">
-                                                    Filter
-                                                </button>
-                                                <button class="btn btn-sm btn-secondary" onclick="resetFilters()">
-                                                    Reset
-                                                </button>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label for="filterKP" class="form-label">KP</label>
+                                            <select id="filterKP" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <?php
+                                                    $kpOptions = array_unique(array_column($data, 'kp'));
+                                                    foreach ($kpOptions as $kp) {
+                                                        echo "<option value='{$kp}'>{$kp}</option>";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="filterTim" class="form-label">Tim</label>
+                                            <select id="filterTim" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <?php
+                                                    $timOptions = array_unique(array_column($data, 'tim'));
+                                                    foreach ($timOptions as $tims) {
+                                                        echo "<option value='{$tims}'>{$tims}</option>";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="filterStatus" class="form-label">Status</label>
+                                            <select id="filterStatus" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <?php
+                                                    $statusOptions = array_unique(array_column($data, 'status'));
+                                                    foreach ($statusOptions as $status) {
+                                                        echo "<option value='{$status}'>{$status}</option>";
+                                                    }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
-
-                                <!-- Modal Add Material -->
-                                <div class="modal fade" id="materialModal" tabindex="-1" aria-labelledby="materialModalLabel" aria-modal="true">
-                                    <div class="modal-dialog modal-lg">
+                                </div>
+                                <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
+                                    <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="materialModalLabel">Tambah Material</h5>
+                                                <h5 class="modal-title" id="exampleModalgridLabel">New Feeder</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                     <div class="row g-3">
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="date" class="form-control" name="tanggal" id="tanggal" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
+                                                                <label class="form-label">Incident</label>
+                                                                <input type="text" class="form-control" name="incident" id="incident" autocomplete="off" placeholder="Incident">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Kategori</label>
-                                                                <select class="form-select" name="kategori" id="kategori" aria-label="Default select example">
-                                                                    <option value="">Pilih Kategori</option>
-                                                                    <option value="FOC">FOC</option>
-                                                                    <option value="FOT">FOT</option>
-                                                                </select>
+                                                                <label for="lastName" class="form-label">Downtime</label>
+                                                                <input type="text" class="form-control" name="downtime" id="downtime" autocomplete="off" placeholder="Tanggal">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Kode Material</label>
-                                                                <input type="text" class="form-control" name="kode_material" id="kode_material" autocomplete="off" placeholder="Kode Material">
-                                                            </div>
+                                                            <label for="lastName" class="form-label">Type</label>
+                                                            <select class="form-select mb-3" name="tipe" id="tipe" aria-label="Default select example">
+                                                                <option value="FTTH BACKBONE">FTTH BACKBONE</option>
+                                                                <option value="FTTH FEEDER">FTTH FEEDER</option>
+                                                                <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
+                                                            </select>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN</label>
-                                                                <input type="text" class="form-control" name="sn" id="sn" autocomplete="off" placeholder="SN">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN Terpakai</label>
-                                                                <input type="text" class="form-control" name="sn_terpakai" id="sn_terpakai" autocomplete="off" placeholder="SN Terpakai">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Merk</label>
-                                                                <input type="text" class="form-control" name="merk" id="merk" autocomplete="off" placeholder="Merk">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Tim</label>
-                                                                <select class="form-select" name="idtim" id="idtim" aria-label="Default select example">
-                                                                    <option value="">Pilih Tim</option>
-                                                                    <?php foreach ($tims as $tim) { ?>
-                                                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">Satuan</label>
-                                                                <input type="text" class="form-control" name="satuan" id="satuan" autocomplete="off" placeholder="Satuan">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">QTY</label>
-                                                                <input type="number" class="form-control" name="qty" id="qty" autocomplete="off" placeholder="QTY">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label class="form-label">Status Reservasi</label>
-                                                            <select class="form-select" name="status_reservasi" id="status_reservasi" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Sudah">Sudah</option>
-                                                                <option value="Belum">Belum</option>
+                                                            <label for="lastName" class="form-label">KP</label>
+                                                            <select class="form-select mb-3" name="kp" id="kp" aria-label="Default select example">
+                                                                <option value="MAKASSAR">MAKASSAR</option>
+                                                                <option value="KENDARI">KENDARI</option>
+                                                                <option value="MANADO">MANADO</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Status Terpakai</label>
-                                                                <input type="text" class="form-control" name="status_terpakai" id="status_terpakai" autocomplete="off" placeholder="Status Terpakai">
+                                                                <label for="autoCompleteFruit" class="text-muted">OLT</label>
+                                                                <input id="olt" class="olt" type="text" name="olt" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label class="form-label">Status Pengiriman</label>
-                                                            <select class="form-select" name="status_pengiriman" id="status_pengiriman" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                                <option value="On Loc">On Loc</option>
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kode Area</label>
+                                                                <input type="text" class="form-control" id="area" name="area" autocomplete="off" placeholder="Kode Area">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Deskripsi</label>
+                                                                <input type="text" class="form-control" id="deskripsi" name="deskripsi" autocomplete="off" placeholder="Deskripsi">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            
+                                                            <div>
+                                                                <label for="autoCompleteFruit" class="text-muted">Tim</label>
+                                                                <input id="tim" type="text" name="tim" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
+                                                            </div>
+                                                            
+                                                            <!--  -->
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Status</label>
+                                                            <select class="form-select mb-3" name="status" id="status1" aria-label="Default select example">
+                                                                <option value="OPEN">OPEN</option>
+                                                                <option value="ANTRIAN">ANTRIAN</option>
+                                                                <option value="ON PROGRESS">ON PROGRESS</option>
+                                                                <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
+                                                                <option value="STOPCLOCK">STOPCLOCK</option>
+                                                                <option value="CLOSED">CLOSED</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Keterangan</label>
-                                                                <textarea type="text" class="form-control" name="ket" id="ket" autocomplete="off" placeholder="Keterangan"></textarea>
+                                                                <label for="lastName" class="form-label">Jumlah Tiket</label>
+                                                                <input type="text" class="form-control" id="jumlahtiket" name="jumlahtiket" autocomplete="off" placeholder="Jumlah Tiket">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Tipe Penyebab</label>
+                                                            <select class="form-select mb-3" name="tipePenyebab" id="tipePenyebab" aria-label="Default select example">
+                                                                <option value="Belum Diketahui">Belum Diketahui</option>
+                                                                <option value="Putus Kabel">Putus Kabel</option>
+                                                                <option value="Kabel Bending">Kabel Bending</option>
+                                                                <option value="Putus Core">Putus Core</option>
+                                                                <option value="FOC Konektor">FOC Konektor</option>
+                                                                <option value="FOT Perangkat">FOT Perangkat</option>
+                                                                <option value="Power Supply">Power Supply</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Keterangan</label>
+                                                                <textarea type="text" class="form-control" id="keterangan" name="keterangan" autocomplete="off" placeholder="Keterangan"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                <button class="btn btn-primary" id="submitBtn" onclick="saveMaterial()">Submit</button>
+                                                                <button class="btn btn-primary" id="submitBtn">Submit</button>
                                                             </div>
-                                                        </div>
-                                                        <input type="hidden" id="idmaterial" name="idmaterial" value="">
-                                                    </div>
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                <!-- </form> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Modal Edit Material -->
-                                <div class="modal fade" id="editMaterialModal" tabindex="-1" aria-labelledby="editMaterialModalLabel" aria-modal="true">
-                                    <div class="modal-dialog modal-lg">
+                                
+                                <!-- modal edit -->
+                                <div class="modal fade" id="exampleModalgrid1" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
+                                    <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editMaterialModalLabel">Edit Material</h5>
+                                                <h5 class="modal-title" id="exampleModalgridLabel">Edit Feeder</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                     <div class="row g-3">
-                                                        <input type="hidden" id="editIdmaterial" name="editIdmaterial" value="">
                                                         <div class="col-xxl-6">
+                                                            <input type="hidden" class="form-control" name="idfeeder" id="idfeeder" autocomplete="off" placeholder="Incident">
                                                             <div>
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="date" class="form-control" name="editTanggal" id="editTanggal" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Kategori</label>
-                                                                <select class="form-select" name="editKategori" id="editKategori" aria-label="Default select example">
-                                                                    <option value="">Pilih Kategori</option>
-                                                                    <option value="FOC">FOC</option>
-                                                                    <option value="FOT">FOT</option>
-                                                                </select>
+                                                                <label class="form-label">Incident</label>
+                                                                <input type="text" class="form-control" name="editincident" id="editincident" autocomplete="off" placeholder="Incident">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Kode Material</label>
-                                                                <input type="text" class="form-control" name="editKodeMaterial" id="editKodeMaterial" autocomplete="off" placeholder="Kode Material">
+                                                                <label for="lastName" class="form-label">Downtime</label>
+                                                                <input type="text" class="form-control" name="editdowntime" id="editdowntime" autocomplete="off" placeholder="Tanggal">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN</label>
-                                                                <input type="text" class="form-control" name="editSn" id="editSn" autocomplete="off" placeholder="SN">
-                                                            </div>
+                                                            <label for="lastName" class="form-label">Type</label>
+                                                            <select class="form-select mb-3" name="edittipe" id="edittipe" aria-label="Default select example">
+                                                                <option value="FTTH BACKBONE">FTTH BACKBONE</option>
+                                                                <option value="FTTH FEEDER">FTTH FEEDER</option>
+                                                                <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
+                                                            </select>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN Terpakai</label>
-                                                                <input type="text" class="form-control" name="editSnTerpakai" id="editSnTerpakai" autocomplete="off" placeholder="SN Terpakai">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Merk</label>
-                                                                <input type="text" class="form-control" name="editMerk" id="editMerk" autocomplete="off" placeholder="Merk">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Tim</label>
-                                                                <select class="form-select" name="editIdtim" id="editIdtim" aria-label="Default select example">
-                                                                    <option value="">Pilih Tim</option>
-                                                                    <?php foreach ($tims as $tim) { ?>
-                                                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">Satuan</label>
-                                                                <input type="text" class="form-control" name="editSatuan" id="editSatuan" autocomplete="off" placeholder="Satuan">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">QTY</label>
-                                                                <input type="number" class="form-control" name="editQty" id="editQty" autocomplete="off" placeholder="QTY">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label class="form-label">Status Reservasi</label>
-                                                            <select class="form-select" name="editStatusReservasi" id="editStatusReservasi" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Sudah">Sudah</option>
-                                                                <option value="Belum">Belum</option>
+                                                            <label for="lastName" class="form-label">KP</label>
+                                                            <select class="form-select mb-3" name="editkp" id="editkp" aria-label="Default select example">
+                                                                <option value="MAKASSAR">MAKASSAR</option>
+                                                                <option value="KENDARI">KENDARI</option>
+                                                                <option value="MANADO">MANADO</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Status Terpakai</label>
-                                                                <input type="text" class="form-control" name="editStatusTerpakai" id="editStatusTerpakai" autocomplete="off" placeholder="Status Terpakai">
+                                                                <label for="olt" class="form-label">OLT</label>
+                                                                <input type="text" class="form-control" name="editolt" id="editolt" autocomplete="off" placeholder="OLT">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label class="form-label">Status Pengiriman</label>
-                                                            <select class="form-select" name="editStatusPengiriman" id="editStatusPengiriman" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                                <option value="On Loc">On Loc</option>
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Kode Area</label>
+                                                                <input type="text" class="form-control" id="editarea" name="editarea" autocomplete="off" placeholder="Kode Area">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Deskripsi</label>
+                                                                <input type="text" class="form-control" id="editdeskripsi" name="editdeskripsi" autocomplete="off" placeholder="Deskripsi">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Tim</label>
+                                                            <input class="form-control mb-3" aria-label="Default select example" name="edittim" id="edittim" >
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Status</label>
+                                                            <select class="form-select mb-3" name="editstatus" id="editstatus" aria-label="Default select example">
+                                                                <option value="OPEN">OPEN</option>
+                                                                <option value="ANTRIAN">ANTRIAN</option>
+                                                                <option value="ON PROGRESS">ON PROGRESS</option>
+                                                                <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
+                                                                <option value="STOPCLOCK">STOPCLOCK</option>
+                                                                <option value="CLOSED">CLOSED</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label class="form-label">Keterangan</label>
-                                                                <textarea type="text" class="form-control" name="editKet" id="editKet" autocomplete="off" placeholder="Keterangan"></textarea>
+                                                                <label for="lastName" class="form-label">Jumlah Tiket</label>
+                                                                <input type="text" class="form-control" id="editjumlahtiket" name="editjumlahtiket" autocomplete="off" placeholder="Jumlah Tiket">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label for="lastName" class="form-label">Tipe Penyebab</label>
+                                                            <select class="form-select mb-3" name="edittipepenyebab" id="edittipepenyebab" aria-label="Default select example">
+                                                                <option value="Belum Diketahui">Belum Diketahui</option>
+                                                                <option value="Putus Kabel">Putus Kabel</option>
+                                                                <option value="Kabel Bending">Kabel Bending</option>
+                                                                <option value="Putus Core">Putus Core</option>
+                                                                <option value="FOC Konektor">FOC Konektor</option>
+                                                                <option value="FOT Perangkat">FOT Perangkat</option>
+                                                                <option value="Power Supply">Power Supply</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Keterangan</label>
+                                                                <textarea type="text" class="form-control" id="editketerangan" name="editketerangan" autocomplete="off" placeholder="Keterangan"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                <button class="btn btn-primary" id="editsubmitBtn" onclick="editSaveMaterial()">Submit</button>
+                                                                <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                        </div><!--end col-->
+                                                    </div><!--end row-->
+                                                <!-- </form> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                </div>
                                 <div class="card-body">
                                     <table id="example1" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Tanggal</th>
-                                                <th>Kategori</th>
-                                                <th>Kode Material</th>
-                                                <th>SN</th>
-                                                <th>SN Terpakai</th>
-                                                <th>Merk</th>
+                                                <th>Insiden</th>
+                                                <th>Downtime</th>
+                                                <th>Durasi</th>
+                                                <th>Tipe</th>
+                                                <th>KP</th>
+                                                <th>Kode Area</th>
+                                                <th>OLT</th>
+                                                <th>Deskripsi</th>
                                                 <th>Tim</th>
-                                                <th>Satuan</th>
-                                                <th>QTY</th>
-                                                <th>Status Reservasi</th>
-                                                <th>Status Terpakai</th>
-                                                <th>Status Pengiriman</th>
+                                                <th>Deskripsi Insiden</th>
+                                                <th>Status</th>
+                                                <th>Jumlah Tiket</th>
+                                                <th>Tipe Penyebab</th>
+                                                <th>ID</th>
                                                 <th>Keterangan</th>
+                                                <th>Last Update By</th>
+                                                <th>Timestamp</th>
                                                 <?php
                                                 if(
-                                                    $_SESSION['role']=='Superadmin' ||
-                                                    $_SESSION['role']=='Team Leader'
+                                                    $_SESSION['role']!='Resepsionis'
                                                     ){
                                                         echo "<th>Action</th>";
                                                 }
+
+                                                    
                                                 ?>
                                             </tr>
                                         </thead>
+                                        <!-- <span class="badge bg-danger">Danger</span> -->
                                         <tbody>
                                             <?php
                                             $count = 0;
-                                            if(!empty($materials)) {
-                                                foreach ($materials as $material) {
-                                                    $count = $count + 1;
-                                                    echo "
-                                                    <tr>
-                                                        <td>".$count."</td>
-                                                        <td>".date('d-m-Y', strtotime($material->tanggal))."</td>
-                                                        <td><span class='badge bg-info'>".$material->kategori."</span></td>
-                                                        <td>".$material->kode_material."</td>
-                                                        <td>".$material->sn."</td>
-                                                        <td>".$material->sn_terpakai."</td>
-                                                        <td>".$material->merk."</td>
-                                                        <td>".$material->nama."</td>
-                                                        <td>".$material->satuan."</td>
-                                                        <td>".$material->qty."</td>
-                                                        <td><span class='badge ".(($material->status_reservasi == 'Sudah') ? 'bg-success' : 'bg-warning')."'>".$material->status_reservasi."</span></td>
-                                                        <td>".$material->status_terpakai."</td>
-                                                        <td><span class='badge ".(($material->status_pengiriman == 'Dalam Pengiriman') ? 'bg-primary' : 'bg-secondary')."'>".$material->status_pengiriman."</span></td>
-                                                        <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
-                                                        if(
-                                                            $_SESSION['role']=='Superadmin' ||
-                                                            $_SESSION['role']=='Team Leader'
-                                                        ){
-                                                            echo "<td>
-                                                            <div class='dropdown d-inline-block'>
-                                                                <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                                                                    <i class='ri-more-fill align-middle'></i>
-                                                                </button>
-                                                                <ul class='dropdown-menu dropdown-menu-end'>
-                                                                    <li>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."'>
-                                                                            <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href='#' class='dropdown-item remove-item-btn' data-id='".$material->idmaterial."'>
-                                                                            <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>";
-                                                        }
-                                                        echo "
-                                                    </tr>
-                                                    ";
+                                            foreach ($data as $row){
+                                                date_default_timezone_set('Asia/Makassar');
+                                                $tanggalSekarang = new DateTime();
+                                                $durasi1 = new DateTime($row->downtime);
+                                                $selisih = $durasi1->diff($tanggalSekarang);
+                                                $durasi = $selisih->d." Hari ".$selisih->h." Jam ".$selisih->i." Menit";
+                                                $count = $count + 1;
+                                                if($row->tipe=="FTTH BACKBONE"){
+                                                    $v = "OLT TO UPLINK";
+                                                }elseif($row->tipe=="FTTH FEEDER"){
+                                                    $v = "FDT TO OLT";
+                                                }else{
+                                                    $v = "FAT TO FDT";
                                                 }
+
+                                                if($row->tipe=="FTTH BACKBONE"){
+                                                    $a = '<span class="badge border border-danger text-danger">FTTH BACKBONE</span>';
+                                                }elseif($row->tipe=="FTTH FEEDER"){
+                                                    $a = '<span class="badge border border-warning text-warning">FTTH FEEDER</span>';
+                                                }else{
+                                                    $a = '<span class="badge border border-info text-info">FTTH DISTRIBUSI</span>';
+                                                }
+
+
+                                                if($row->status=="CLOSED"){
+                                                    $b = '<span class="badge bg-success">CLOSED</span>';
+                                                }elseif($row->status=="ON PROGRESS"){
+                                                    $b = '<span class="badge bg-info">ON PROGRESS</span>';
+                                                }elseif($row->status=="SOLVED (ICRM OPEN)"){
+                                                    $b = '<span class="badge border border-success text-success">SOLVED (ICRM OPEN)</span>';
+                                                }elseif($row->status=="STOPCLOCK"){
+                                                    $b = '<span class="badge bg-dark">STOPCLOCK</span>';
+                                                }elseif($row->status=="ANTRIAN"){
+                                                    $b = '<span class="badge bg-warning">ANTRIAN</span>';
+                                                }else{
+                                                    $b = '<span class="badge bg-primary">OPEN</span>';
+                                                }
+
+                                                if(
+                                                    $_SESSION['role']=='Resepsionis'
+                                                    ){
+                                                        $s = "hidden";
+                                                }else{
+                                                        $s ="";
+                                                }
+
+                                                echo "
+                                                <tr>
+                                                    <td>".$count."</td>
+                                                    <td>".$row->idInsiden."</td>
+                                                    <td>".$row->downtime."</td>
+                                                    <td>".$durasi."</td>
+                                                    <td>".$a."</td>
+                                                    <td>".$row->kp."</td>
+                                                    <td>".$row->kode."</td>
+                                                    <td>".$row->idOlt."</td>
+                                                    <td>".$row->gangguan."</td>
+                                                    <td>".$row->tim."</td>
+                                                    <td>"."INSIDEN NO. ".$row->idInsiden." ".$row->tipe."_".$row->kode." [PROAKTIF NOC SBU]_".$v." ".$row->idOlt." ".$row->gangguan."</td>
+                                                    <td>".$b."</td>
+                                                    <td>".$row->jumlahTiket."</td>
+                                                    <td>".$row->tipePenyebab."</td>
+                                                    <td>".$row->id."</td>
+                                                    <td>".$row->keterangan."</td>
+                                                    <td>".$row->createby."</td>  
+                                                    <td>".$row->timestamp."</td>  
+                                                    <td ".$s.">
+                                                        <div class='dropdown d-inline-block'>
+                                                            <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                                <i class='ri-more-fill align-middle'></i>
+                                                            </button>
+                                                            <ul class='dropdown-menu dropdown-menu-end'>               
+                                                                <li>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-idfeeder='".$row->id."' data-editarea='".$row->kode."' data-editdeskripsi='".$row->gangguan."' data-editincident='".$row->idInsiden."' data-editdowntime='".$row->downtime."' data-edittipe='".$row->tipe."' data-editkp='".$row->kp."' data-editkode='".$row->kode."' data-editolt='".$row->idOlt."' data-editgangguan='".$row->gangguan."' data-edittim='".$row->tim."' data-editstatus='".$row->status."' data-editketerangan='".$row->keterangan."' data-editjumlahTiket='".$row->jumlahTiket."' data-edittipepenyebab='".$row->tipePenyebab."'>
+                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->id.">
+                                                                        <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>  
+                                                </tr>                                              
+                                                ";
                                             }
                                             ?>
                                         </tbody>
@@ -416,11 +465,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Material Input System
+                            <script>document.write(new Date().getFullYear())</script> © fauzanbakri.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by SIBT
+                                Design & Develop by Srisyaha
                             </div>
                         </div>
                     </div>
@@ -432,12 +481,30 @@
     </div>
     <!-- END layout-wrapper -->
 
+
+
+    <!--start back-to-top-->
+    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+    <!--end back-to-top-->
+
+    <!--preloader-->
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner-border text-primary avatar-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
     <!-- JAVASCRIPT -->
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/libs/simplebar/simplebar.min.js"></script>
     <script src="assets/libs/node-waves/waves.min.js"></script>
     <script src="assets/libs/feather-icons/feather.min.js"></script>
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <!-- <script src="assets/js/plugins.js"></script> -->
 
     <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -451,258 +518,414 @@
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
+    
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <!-- <script src="assets/js/pages/sweetalerts.init.js"></script> -->
 
+    <!-- multi.js -->
+    <script src="assets/libs/multi.js/multi.min.js"></script>
+    <!-- autocomplete js -->
+    <script src="assets/libs/%40tarekraafat/autocomplete.js/autoComplete.min.js"></script>
     <script src="assets/js/pages/datatables.init.js"></script>
     <script src="assets/js/plugins.js"></script>
 
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app.js"></script>   
 
-<script>
-const button = document.getElementById('toast');
-const baseUrl = '<?php echo base_url(); ?>';
 
-function resetForm() {
-    document.getElementById('idmaterial').value = '';
-    document.getElementById('tanggal').value = '<?php echo date('Y-m-d'); ?>';
-    document.getElementById('kategori').value = '';
-    document.getElementById('kode_material').value = '';
-    document.getElementById('sn').value = '';
-    document.getElementById('sn_terpakai').value = '';
-    document.getElementById('merk').value = '';
-    document.getElementById('idtim').value = '';
-    document.getElementById('satuan').value = '';
-    document.getElementById('qty').value = '';
-    document.getElementById('status_reservasi').value = '';
-    document.getElementById('status_terpakai').value = '';
-    document.getElementById('status_pengiriman').value = '';
-    document.getElementById('ket').value = '';
-}
-
-function saveMaterial() {
-    const formData = {
-        tanggal: $('#tanggal').val(),
-        kategori: $('#kategori').val(),
-        kode_material: $('#kode_material').val(),
-        sn: $('#sn').val(),
-        sn_terpakai: $('#sn_terpakai').val(),
-        merk: $('#merk').val(),
-        idtim: $('#idtim').val(),
-        satuan: $('#satuan').val(),
-        qty: $('#qty').val(),
-        status_reservasi: $('#status_reservasi').val(),
-        status_terpakai: $('#status_terpakai').val(),
-        status_pengiriman: $('#status_pengiriman').val(),
-        ket: $('#ket').val()
-    };
-
-    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman) {
-        button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
-        button.click();
-        return;
-    }
-
-    $.ajax({
-        url: baseUrl + 'Material/insertData',
-        type: 'POST',
-        data: formData,
-        success: function(response) {
-            if(response=='success'){
-                button.setAttribute('data-toast-text', 'Material berhasil ditambahkan!');
-                button.click();
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            }else{
-                button.setAttribute('data-toast-text', response);
-                button.click();
+    <script>
+        var multiSelectBasic2 = document.getElementById("multiselect-basic2"),
+        multiSelectHeader2 = (multiSelectBasic2 && multi(multiSelectBasic2, {
+            enable_search: !1
+        }), document.getElementById("multiselect-header2")),
+        multiSelectOptGroup2 = (multiSelectHeader2 && multi(multiSelectHeader2, {
+            non_selected_header: "Cars",
+            selected_header: "Favorite Cars"
+        }), document.getElementById("multiselect-optiongroup2")),
+        autoCompleteFruit2 = (multiSelectOptGroup2 && multi(multiSelectOptGroup2, {
+            enable_search: !0
+        }), new autoComplete({
+            selector: "#olt",
+            placeHolder: "Search for OLT...",
+            data: {
+                src: [
+                    <?php 
+                        foreach ($olt as $row){
+                            echo "'".$row->idOlt."',";
+                        }
+                    ?>
+                ],
+                cache: !0
+            },
+            resultsList: {
+                element: function(e, t) {
+                    var l;
+                    t.results.length || ((l = document.createElement("div")).setAttribute("class", "no_result"), l.innerHTML = '<span>Found No Results for "' + t.query + '"</span>', e.prepend(l))
+                },
+                noResults: !0
+            },
+            resultItem: {
+                highlight: !0
+            },
+            events: {
+                input: {
+                    selection: function(e) {
+                        e = e.detail.selection.value;
+                        autoCompleteFruit2.input.value = e
+                    }
+                }
             }
-        },
-        error: function(xhr, status, error) {
-            button.setAttribute('data-toast-text', error);
-            button.click();
-        }
-    });
-}
+        }));
+    </script>
 
-function editSaveMaterial() {
-    const formData = {
-        idmaterial: $('#editIdmaterial').val(),
-        tanggal: $('#editTanggal').val(),
-        kategori: $('#editKategori').val(),
-        kode_material: $('#editKodeMaterial').val(),
-        sn: $('#editSn').val(),
-        sn_terpakai: $('#editSnTerpakai').val(),
-        merk: $('#editMerk').val(),
-        idtim: $('#editIdtim').val(),
-        satuan: $('#editSatuan').val(),
-        qty: $('#editQty').val(),
-        status_reservasi: $('#editStatusReservasi').val(),
-        status_terpakai: $('#editStatusTerpakai').val(),
-        status_pengiriman: $('#editStatusPengiriman').val(),
-        ket: $('#editKet').val()
-    };
-
-    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman) {
-        button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
-        button.click();
-        return;
-    }
-
-    $.ajax({
-        url: baseUrl + 'Material/editData',
-        type: 'POST',
-        data: formData,
-        success: function(response) {
-            if(response=='success'){
-                button.setAttribute('data-toast-text', 'Material berhasil diperbarui!');
-                button.click();
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            }else{
-                button.setAttribute('data-toast-text', response);
-                button.click();
+    <script>
+        var multiSelectBasic = document.getElementById("multiselect-basic"),
+        multiSelectHeader = (multiSelectBasic && multi(multiSelectBasic, {
+            enable_search: !1
+        }), document.getElementById("multiselect-header")),
+        multiSelectOptGroup = (multiSelectHeader && multi(multiSelectHeader, {
+            non_selected_header: "Cars",
+            selected_header: "Favorite Cars"
+        }), document.getElementById("multiselect-optiongroup")),
+        autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
+            enable_search: !0
+        }), new autoComplete({
+            selector: "#tim",
+            placeHolder: "Search for Tim...",
+            data: {
+                src: [
+                    <?php 
+                        foreach ($tim as $row){
+                            echo "'".$row->nama."',";
+                        }
+                    ?>
+                ],
+                cache: !0
+            },
+            resultsList: {
+                element: function(e, t) {
+                    var l;
+                    t.results.length || ((l = document.createElement("div")).setAttribute("class", "no_result"), l.innerHTML = '<span>Found No Results for "' + t.query + '"</span>', e.prepend(l))
+                },
+                noResults: !0
+            },
+            resultItem: {
+                highlight: !0
+            },
+            events: {
+                input: {
+                    selection: function(e) {
+                        e = e.detail.selection.value;
+                        autoCompleteFruit.input.value = e
+                    }
+                }
             }
-        },
-        error: function(xhr, status, error) {
-            button.setAttribute('data-toast-text', error);
-            button.click();
-        }
-    });
-}
+        }));
+    </script>
 
-function applyFilters() {
-    const startDate = document.getElementById('filterStartDate').value;
-    const endDate = document.getElementById('filterEndDate').value;
-    const statusReservasi = document.getElementById('filterReservasi').value;
-    const statusTerpakai = document.getElementById('filterTerpakai').value;
-    const statusPengiriman = document.getElementById('filterPengiriman').value;
-
-    let url = baseUrl + 'Material?';
-    if (startDate) url += 'start_date=' + startDate + '&';
-    if (endDate) url += 'end_date=' + endDate + '&';
-    if (statusReservasi) url += 'status_reservasi=' + statusReservasi + '&';
-    if (statusTerpakai) url += 'status_terpakai=' + statusTerpakai + '&';
-    if (statusPengiriman) url += 'status_pengiriman=' + statusPengiriman;
-
-    window.location.href = url;
-}
-
-function resetFilters() {
-    document.getElementById('filterStartDate').value = '<?php echo date('Y-m-d'); ?>';
-    document.getElementById('filterEndDate').value = '<?php echo date('Y-m-d'); ?>';
-    document.getElementById('filterReservasi').value = '';
-    document.getElementById('filterTerpakai').value = '';
-    document.getElementById('filterPengiriman').value = '';
-
-    window.location.href = baseUrl + 'Material';
-}
-
-$(document).ready(function () {
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalElement = document.getElementById('editMaterialModal');
-        const modal = new bootstrap.Modal(modalElement);
-        document.querySelectorAll('.edit-item-btn').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const data = this.dataset;
-                document.getElementById('editIdmaterial').value = data.idmaterial;
-                document.getElementById('editTanggal').value = data.tanggal;
-                document.getElementById('editKategori').value = data.kategori;
-                document.getElementById('editKodeMaterial').value = data.kode_material;
-                document.getElementById('editSn').value = data.sn;
-                document.getElementById('editSnTerpakai').value = data.sn_terpakai;
-                document.getElementById('editMerk').value = data.merk;
-                document.getElementById('editIdtim').value = data.idtim;
-                document.getElementById('editSatuan').value = data.satuan;
-                document.getElementById('editQty').value = data.qty;
-                document.getElementById('editStatusReservasi').value = data.status_reservasi;
-                document.getElementById('editStatusTerpakai').value = data.status_terpakai;
-                document.getElementById('editStatusPengiriman').value = data.status_pengiriman;
-                document.getElementById('editKet').value = data.ket;
-                modal.show();
-            });
-        });
-    });
-
-    const deleteButtons = document.querySelectorAll('.remove-item-btn');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            const idMaterial = this.getAttribute('data-id');
+    <script>
+        document.getElementById("sa-warning") && document.getElementById("sa-warning").addEventListener("click", function() {
             Swal.fire({
-                title: "Apakah Anda yakin?",
-                text: "Data yang dihapus tidak bisa dikembalikan!",
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
                 icon: "warning",
-                showCancelButton: true,
+                showCancelButton: !0,
                 customClass: {
                     confirmButton: "btn btn-primary w-xs me-2 mt-2",
                     cancelButton: "btn btn-danger w-xs mt-2"
                 },
-                confirmButtonText: "Ya, hapus!",
-                buttonsStyling: false,
-                showCloseButton: true
-            }).then(function(result) {
-                if (result.value) {
+                confirmButtonText: "Yes, Change Shift!",
+                buttonsStyling: !1,
+                showCloseButton: !0
+            }).then(function(t) {
+                console.log(t.value);
+                var response;
+                if(t.value){
                     $.ajax({
-                        url: baseUrl + 'Material/deleteRow?id='+idMaterial,
+                        url: "Tickets/changeShift",
                         type: 'GET',
-                        success: function(response) {
-                            if (response == 'success') {
+                        success: function(res) {
+                            if (res=='success'){
                                 Swal.fire({
-                                    title: "Terhapus!",
-                                    text: "Data material berhasil dihapus.",
+                                    title: "Success!",
+                                    text: "Shift Change Successfully.",
                                     icon: "success",
                                     customClass: {
                                         confirmButton: "btn btn-primary w-xs mt-2"
                                     },
-                                    buttonsStyling: false
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
+                                    buttonsStyling: !1
+                                }) 
+                            }else{
                                 Swal.fire({
                                     title: "Error!",
-                                    text: response,
-                                    icon: "error",
+                                    text: "Failed to Change Shift",
+                                    icon: "warning",
                                     customClass: {
                                         confirmButton: "btn btn-primary w-xs mt-2"
                                     },
-                                    buttonsStyling: false
-                                });
+                                    buttonsStyling: !1
+                                })
                             }
+                        }
+                    })
+                    
+                }
+            })
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#olt').on('click change keyup keydown', function () {
+                let oltValue = $(this).val();
+                console.log(oltValue);
+                $.ajax({
+                    url: 'Feeder/autoArea?area='+oltValue,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log('Response:', response);
+                        $('#area').val(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error); 
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        const button = document.getElementById('toast');
+        $(document).ready(function () {
+            $('#submitBtn').on('click', function (e) {
+                e.preventDefault();
+                const formData = {
+                    incident: $('[name="incident"]').val(),
+                    downtime: $('[name="downtime"]').val(),
+                    tipe: $('[name="tipe"]').val(),
+                    kp: $('[name="kp"]').val(),
+                    olt: $('[name="olt"]').val(),
+                    area: $('[name="area"]').val(),
+                    deskripsi: $('[name="deskripsi"]').val(),
+                    tim: $('[name="tim"]').val(),
+                    status: $('[name="status"]').val(),
+                    jumlahtiket: $('[name="jumlahtiket"]').val(),
+                    tipePenyebab: $('[name="tipePenyebab"]').val(),
+                    keterangan: $('[name="keterangan"]').val()
+                   
+                };
+                if (!formData.deskripsi) {
+                    button.setAttribute('data-toast-text', 'Deskripsi Cannot Empty!');
+                    button.setAttribute('data-toast-className', 'danger');
+                    button.click();
+                    return;
+                }
+                $.ajax({
+                    url: 'Feeder/insertData',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        if(response=='success'){
+                            button.setAttribute('data-toast-text', 'Data Saved!');
+                            button.setAttribute('data-toast-className', 'success');
+                            button.click();
+                            location.reload();
+                        }else{
+                            button.setAttribute('data-toast-text', response);
+                            button.setAttribute('data-toast-className', 'danger');
+                            button.click();   
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        button.setAttribute('data-toast-text', error);
+                        button.setAttribute('data-toast-className', 'danger');
+                        button.click();
+                    }
+                });
+                console.log('asdasdsadasd');
+            });
+
+            $('#editsubmitBtn').on('click', function (e) {
+                e.preventDefault();
+                const formData = {
+                    id: $('[name="idfeeder"]').val(),
+                    incident: $('[name="editincident"]').val(),
+                    downtime: $('[name="editdowntime"]').val(),
+                    tipe: $('[name="edittipe"]').val(),
+                    kp: $('[name="editkp"]').val(),
+                    olt: $('[name="editolt"]').val(),
+                    area: $('[name="editarea"]').val(),
+                    deskripsi: $('[name="editdeskripsi"]').val(),
+                    tim: $('[name="edittim"]').val(),
+                    status: $('[name="editstatus"]').val(),
+                    jumlahtiket: $('[name="editjumlahtiket"]').val(),
+                    tipePenyebab: $('[name="edittipepenyebab"]').val(),
+                    keterangan: $('[name="editketerangan"]').val()
+                };
+                if (!formData.deskripsi) {
+                    button.setAttribute('data-toast-text', 'Deskripsi Cannot Empty!');
+                    button.setAttribute('data-toast-className', 'danger');
+                    button.click();
+                    return;
+                }
+                $.ajax({
+                    url: 'Feeder/editData',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        if(response=='success'){
+                            button.setAttribute('data-toast-text', 'Data Saved!');
+                            button.setAttribute('data-toast-className', 'success');
+                            button.click();
+                            location.reload();
+                        }else{
+                            button.setAttribute('data-toast-text', response);
+                            button.setAttribute('data-toast-className', 'danger');
+                            button.click();   
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        button.setAttribute('data-toast-text', error);
+                        button.setAttribute('data-toast-className', 'danger');
+                        button.click();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.remove-item-btn');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const idTiket = this.getAttribute('data-id');
+                    console.log(idTiket);
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "This action cannot be undone!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        customClass: {
+                            confirmButton: "btn btn-primary w-xs me-2 mt-2",
+                            cancelButton: "btn btn-danger w-xs mt-2"
                         },
-                        error: function() {
-                            Swal.fire({
-                                title: "Error!",
-                                text: "Terjadi kesalahan saat menghapus data.",
-                                icon: "error",
-                                customClass: {
-                                    confirmButton: "btn btn-primary w-xs mt-2"
+                        confirmButtonText: "Yes, Delete it!",
+                        buttonsStyling: false,
+                        showCloseButton: true
+                    }).then(function(result) {
+                        if (result.value) {
+                            $.ajax({
+                                url: 'Feeder/deleteRow?id='+idTiket,
+                                type: 'GET',
+                                success: function(response) {
+                                    console.log(response.success);
+                                    if (response) {
+                                        Swal.fire({
+                                            title: "Deleted!",
+                                            text: "The data has been deleted.",
+                                            icon: "success",
+                                            customClass: {
+                                                confirmButton: "btn btn-primary w-xs mt-2"
+                                            },
+                                            buttonsStyling: false
+                                        }).then(() => {
+                                            location.reload(); 
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            title: "Error!",
+                                            text: response.message || "Failed to delete the data.",
+                                            icon: "error",
+                                            customClass: {
+                                                confirmButton: "btn btn-primary w-xs mt-2"
+                                            },
+                                            buttonsStyling: false
+                                        });
+                                    }
                                 },
-                                buttonsStyling: false
+                                error: function() {
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: "An error occurred while processing the request.",
+                                        icon: "error",
+                                        customClass: {
+                                            confirmButton: "btn btn-primary w-xs mt-2"
+                                        },
+                                        buttonsStyling: false
+                                    });
+                                }
                             });
                         }
                     });
-                }
+                });
+            });
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalElement = document.getElementById('exampleModalgrid1');
+        const modal = new bootstrap.Modal(modalElement);
+        document.querySelectorAll('.edit-item-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const ticketData = this.dataset;
+                console.log(ticketData);
+                const fields = [
+                    'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
+                    'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
+                ];
+                fields.forEach(field => {
+                    const inputElement = document.getElementById(field);
+                    if (inputElement) {
+                        console.log(`Setting ${field} with value:`, ticketData[field]);
+                        inputElement.value = ticketData[field] || '';
+                    }
+                });
+                modal.show();
             });
         });
     });
-
-    new DataTable('#example1', {
+    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const table = new DataTable('#example1', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
+         columnDefs: [
+            {
+                targets: 18,
+                className: 'priority-column',
+                responsivePriority: 1,
+                visible: true
+            }, 
+            {
+                targets: 14,
+                visible: false
+            },
+        ],
         responsive: true,
         order: [],
+    });
+    const kolomTipe = 4;
+    const kolomKP = 5;
+    const kolomTim = 9;
+    const kolomStatus = 11;
+
+    ['#filterTipe', '#filterKP', '#filterTim', '#filterStatus'].forEach(function(selector) {
+        document.querySelector(selector).addEventListener('change', function() {
+            table.column(kolomTipe).search(document.getElementById('filterTipe').value).draw();
+            table.column(kolomKP).search(document.getElementById('filterKP').value).draw();
+            table.column(kolomTim).search(document.getElementById('filterTim').value).draw();
+            table.column(kolomStatus).search(document.getElementById('filterStatus').value).draw();
+        });
     });
 });
 </script>
 
 </body>
+
 
 <!-- Mirrored from Srisyaha.com/velzon/html/default/tables-datatables.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 05:19:48 GMT -->
 </html>
