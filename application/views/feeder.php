@@ -899,7 +899,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 className: 'priority-column',
                 responsivePriority: 2,
                 visible: true
-            },
+            }, 
+            {
+                targets: 14, // Deskripsi Insiden
+                responsivePriority: 1,
+                width: '40px'
+            }
             {
                 targets: 10, // Deskripsi Insiden
                 responsivePriority: 1,
