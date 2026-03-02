@@ -405,7 +405,6 @@
 
 <script>
 const button = document.getElementById('toast');
-const baseUrl = '<?php echo base_url(); ?>';
 
 function resetForm() {
     document.getElementById('idmaterial').value = '';
@@ -448,7 +447,7 @@ function saveMaterial() {
     }
 
     $.ajax({
-        url: baseUrl + 'Material/insertData',
+        url: 'Material/insertData',
         type: 'POST',
         data: formData,
         success: function(response) {
@@ -495,7 +494,7 @@ function editSaveMaterial() {
     }
 
     $.ajax({
-        url: baseUrl + 'Material/editData',
+        url: 'Material/editData',
         type: 'POST',
         data: formData,
         success: function(response) {
@@ -524,7 +523,7 @@ function applyFilters() {
     const statusTerpakai = document.getElementById('filterTerpakai').value;
     const statusPengiriman = document.getElementById('filterPengiriman').value;
 
-    let url = baseUrl + 'Material?';
+    let url = 'Material?';
     if (startDate) url += 'start_date=' + startDate + '&';
     if (endDate) url += 'end_date=' + endDate + '&';
     if (statusReservasi) url += 'status_reservasi=' + statusReservasi + '&';
@@ -541,7 +540,7 @@ function resetFilters() {
     document.getElementById('filterTerpakai').value = '';
     document.getElementById('filterPengiriman').value = '';
 
-    window.location.href = baseUrl + 'Material';
+    window.location.href = 'Material';
 }
 
 $(document).ready(function () {
@@ -591,7 +590,7 @@ $(document).ready(function () {
             }).then(function(result) {
                 if (result.value) {
                     $.ajax({
-                        url: baseUrl + 'Material/deleteRow?id='+idMaterial,
+                        url: 'Material/deleteRow?id='+idMaterial,
                         type: 'GET',
                         success: function(response) {
                             if (response == 'success') {
