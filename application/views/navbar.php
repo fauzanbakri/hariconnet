@@ -662,7 +662,7 @@
                             </a>
                         </li> 
                          <li class="nav-item">
-                            <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link menu-link" href="<?php echo base_url(); ?>Material" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-archive-plus-outline"></i> <span data-key="t-layouts">Input Material</span>
                             </a>
                         </li> 
