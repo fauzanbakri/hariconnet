@@ -905,10 +905,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 responsivePriority: 2,
                 visible: true
             },
-            {
-                targets: 14,
-                visible: false
-            },
+            
         ],
         responsive: true,
         order: [],
