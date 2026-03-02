@@ -977,84 +977,16 @@ document.addEventListener("DOMContentLoaded", function() {
         ],
         order: [[19, 'desc']],
         columnDefs: [
-            {
-                targets: 0,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 1,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 2,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 3,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 4,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 7,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 8,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 9,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 11,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 13,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 18,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 19,
-                className: 'priority-column',
-                responsivePriority: 2,
-                visible: true
-            },
-            {
-                targets: 20,
-                className: 'priority-column',
+             {
+                targets: 14, // Deskripsi Insiden
                 responsivePriority: 1,
-                visible: true
-            },
+                width: '40px'
+            }
+            {
+                targets: 10, // Deskripsi Insiden
+                responsivePriority: 1,
+                width: '40px'
+            }
         ],
         responsive: true
     });
