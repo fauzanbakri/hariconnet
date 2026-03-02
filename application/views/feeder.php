@@ -895,7 +895,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ],
          columnDefs: [
             {
-                targets: 18,
+                targets: 11,
                 className: 'priority-column',
                 responsivePriority: 1,
                 visible: true
