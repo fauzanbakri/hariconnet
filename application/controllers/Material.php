@@ -61,6 +61,7 @@ class Material extends CI_Controller {
 		$kode_material = $this->input->post('kode_material');
 		$sn = $this->input->post('sn');
 		$sn_terpakai = $this->input->post('sn_terpakai');
+		$kode_material_terpakai = $this->input->post('kode_material_terpakai');
 		$merk = $this->input->post('merk');
 		$idtim = $this->input->post('idtim');
 		$satuan = $this->input->post('satuan');
@@ -71,7 +72,7 @@ class Material extends CI_Controller {
 		$ket = $this->input->post('ket');
 
 		// Validation
-		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != ''){
+		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
 			$data = array(
 				'incident' => $incident,
 				'tanggal' => $tanggal,
@@ -79,6 +80,7 @@ class Material extends CI_Controller {
 				'kode_material' => $kode_material,
 				'sn' => $sn,
 				'sn_terpakai' => $sn_terpakai,
+				'kode_material_terpakai' => $kode_material_terpakai,
 				'merk' => $merk,
 				'idtim' => $idtim,
 				'satuan' => $satuan,
@@ -124,6 +126,7 @@ class Material extends CI_Controller {
 		$kode_material = $this->input->post('kode_material');
 		$sn = $this->input->post('sn');
 		$sn_terpakai = $this->input->post('sn_terpakai');
+		$kode_material_terpakai = $this->input->post('kode_material_terpakai');
 		$merk = $this->input->post('merk');
 		$idtim = $this->input->post('idtim');
 		$satuan = $this->input->post('satuan');
@@ -134,7 +137,7 @@ class Material extends CI_Controller {
 		$ket = $this->input->post('ket');
 
 		// Validation
-		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != ''){
+		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
 			$data = array(
 				'incident' => $incident,
 				'tanggal' => $tanggal,
@@ -142,6 +145,7 @@ class Material extends CI_Controller {
 				'kode_material' => $kode_material,
 				'sn' => $sn,
 				'sn_terpakai' => $sn_terpakai,
+				'kode_material_terpakai' => $kode_material_terpakai,
 				'merk' => $merk,
 				'idtim' => $idtim,
 				'satuan' => $satuan,

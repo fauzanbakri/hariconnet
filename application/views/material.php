@@ -149,7 +149,7 @@
                                                                 </button>
                                                                 <ul class='dropdown-menu dropdown-menu-end'>
                                                                     <li>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-incident='".$material->incident."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."'>
+                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-incident='".$material->incident."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."'>
                                                                             <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                         </a>
                                                                     </li>
@@ -232,6 +232,10 @@
                                 <input type="text" class="form-control" name="sn_terpakai" id="sn_terpakai" autocomplete="off" placeholder="SN Terpakai">
                             </div>
                             <div class="col-xxl-6">
+                                <label class="form-label">Kode Material Terpakai</label>
+                                <input type="text" class="form-control" name="kode_material_terpakai" id="kode_material_terpakai" autocomplete="off" placeholder="Kode Material Terpakai">
+                            </div>
+                            <div class="col-xxl-6">
                                 <label class="form-label">Merk</label>
                                 <input type="text" class="form-control" name="merk" id="merk" autocomplete="off" placeholder="Merk">
                             </div>
@@ -262,7 +266,11 @@
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Status Terpakai</label>
-                                <input type="text" class="form-control" name="status_terpakai" id="status_terpakai" autocomplete="off" placeholder="Status Terpakai">
+                                <select class="form-select" name="status_terpakai" id="status_terpakai" aria-label="Default select example">
+                                    <option value="">Pilih Status</option>
+                                    <option value="Sudah">Sudah</option>
+                                    <option value="Belum">Belum</option>
+                                </select>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Status Pengiriman</label>
@@ -329,6 +337,10 @@
                                 <input type="text" class="form-control" name="editSnTerpakai" id="editSnTerpakai" autocomplete="off" placeholder="SN Terpakai">
                             </div>
                             <div class="col-xxl-6">
+                                <label class="form-label">Kode Material Terpakai</label>
+                                <input type="text" class="form-control" name="editKodeMaterialTerpakai" id="editKodeMaterialTerpakai" autocomplete="off" placeholder="Kode Material Terpakai">
+                            </div>
+                            <div class="col-xxl-6">
                                 <label class="form-label">Merk</label>
                                 <input type="text" class="form-control" name="editMerk" id="editMerk" autocomplete="off" placeholder="Merk">
                             </div>
@@ -359,7 +371,11 @@
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Status Terpakai</label>
-                                <input type="text" class="form-control" name="editStatusTerpakai" id="editStatusTerpakai" autocomplete="off" placeholder="Status Terpakai">
+                                <select class="form-select" name="editStatusTerpakai" id="editStatusTerpakai" aria-label="Default select example">
+                                    <option value="">Pilih Status</option>
+                                    <option value="Sudah">Sudah</option>
+                                    <option value="Belum">Belum</option>
+                                </select>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Status Pengiriman</label>
@@ -424,6 +440,7 @@ function resetForm() {
     document.getElementById('kode_material').value = '';
     document.getElementById('sn').value = '';
     document.getElementById('sn_terpakai').value = '';
+    document.getElementById('kode_material_terpakai').value = '';
     document.getElementById('merk').value = '';
     document.getElementById('idtim').value = '';
     document.getElementById('satuan').value = '';
@@ -442,6 +459,7 @@ function saveMaterial() {
         kode_material: $('#kode_material').val(),
         sn: $('#sn').val(),
         sn_terpakai: $('#sn_terpakai').val(),
+        kode_material_terpakai: $('#kode_material_terpakai').val(),
         merk: $('#merk').val(),
         idtim: $('#idtim').val(),
         satuan: $('#satuan').val(),
@@ -452,7 +470,7 @@ function saveMaterial() {
         ket: $('#ket').val()
     };
 
-    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman) {
+    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
         button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
         button.click();
         return;
@@ -490,6 +508,7 @@ function editSaveMaterial() {
         kode_material: $('#editKodeMaterial').val(),
         sn: $('#editSn').val(),
         sn_terpakai: $('#editSnTerpakai').val(),
+        kode_material_terpakai: $('#editKodeMaterialTerpakai').val(),
         merk: $('#editMerk').val(),
         idtim: $('#editIdtim').val(),
         satuan: $('#editSatuan').val(),
@@ -500,7 +519,7 @@ function editSaveMaterial() {
         ket: $('#editKet').val()
     };
 
-    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman) {
+    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
         button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
         button.click();
         return;
@@ -570,6 +589,7 @@ $(document).ready(function () {
         document.getElementById('editKodeMaterial').value = data.kode_material;
         document.getElementById('editSn').value = data.sn;
         document.getElementById('editSnTerpakai').value = data.sn_terpakai;
+        document.getElementById('editKodeMaterialTerpakai').value = data.kode_material_terpakai;
         document.getElementById('editMerk').value = data.merk;
         document.getElementById('editIdtim').value = data.idtim;
         document.getElementById('editSatuan').value = data.satuan;
