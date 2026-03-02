@@ -82,17 +82,16 @@
                                                     <option value="On Loc">On Loc</option>
                                                 </select>
                                             </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-sm btn-info" style="margin-top: 24px;" onclick="applyFilters()">
+                                                    Filter
+                                                </button>
+                                                <button class="btn btn-sm btn-secondary" onclick="resetFilters()">
+                                                    Reset
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <button class="btn btn-sm btn-info" onclick="applyFilters()">
-                                            Filter
-                                        </button>
-                                        <button class="btn btn-sm btn-secondary" onclick="resetFilters()">
-                                            Reset
-                                        </button>
-                                    </div>
-                                </div>
 
                                 <!-- Modal Add Material -->
                                 <div class="modal fade" id="materialModal" tabindex="-1" aria-labelledby="materialModalLabel" aria-modal="true">
