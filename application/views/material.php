@@ -1,5 +1,4 @@
 
-
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
@@ -19,306 +18,70 @@
                                         <li class="breadcrumb-item active">Input Material</li>
                                     </ol>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title mb-0">Daftar Material</h5><br>
-                                    <!-- Base Buttons -->
-                                     <!-- Grids in modals -->
-                                    <!-- Grids in modals -->
-                                     <div class="row">
+                                    <h5 class="card-title mb-0">Daftar Material</h5>
+                                </div>
+
+                                <div class="card-header">
+                                    <div class="row mb-3">
                                         <div class="col-md-3">
                                             <?php
                                                 if(
                                                     $_SESSION['role']=='Superadmin' ||
                                                     $_SESSION['role']=='Team Leader'
                                                     ){
-                                                        echo '
-                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">
-                                                            Tambah Material
-                                                            </button>';
+                                                        echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
                                                     }
                                             ?>
                                             <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                         </div>
-                                     </div>
-                                     <div class="row mt-3">
-                                        <div class="row g-3 mb-3">
-                                            <div class="col-md-3">
-                                                <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
-                                                <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
-                                                <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="filterReservasi" class="form-label">Status Reservasi</label>
-                                                <select id="filterReservasi" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <option value="Sudah">Sudah</option>
-                                                    <option value="Belum">Belum</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="filterTerpakai" class="form-label">Status Terpakai</label>
-                                                <select id="filterTerpakai" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <?php foreach ($status_terpakai_list as $status) { ?>
-                                                        <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
-                                                <select id="filterPengiriman" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                    <option value="On Loc">On Loc</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button class="btn btn-sm btn-info" style="margin-top: 24px;" onclick="applyFilters()">
-                                                    Filter
-                                                </button>
-                                                <button class="btn btn-sm btn-secondary" onclick="resetFilters()">
-                                                    Reset
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Modal Add Material -->
-                                <div class="modal fade" id="materialModal" tabindex="-1" aria-labelledby="materialModalLabel" aria-modal="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="materialModalLabel">Tambah Material</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                    <div class="row g-3">
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="date" class="form-control" name="tanggal" id="tanggal" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Kategori</label>
-                                                                <select class="form-select" name="kategori" id="kategori" aria-label="Default select example">
-                                                                    <option value="">Pilih Kategori</option>
-                                                                    <option value="FOC">FOC</option>
-                                                                    <option value="FOT">FOT</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Kode Material</label>
-                                                                <input type="text" class="form-control" name="kode_material" id="kode_material" autocomplete="off" placeholder="Kode Material">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN</label>
-                                                                <input type="text" class="form-control" name="sn" id="sn" autocomplete="off" placeholder="SN">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN Terpakai</label>
-                                                                <input type="text" class="form-control" name="sn_terpakai" id="sn_terpakai" autocomplete="off" placeholder="SN Terpakai">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Merk</label>
-                                                                <input type="text" class="form-control" name="merk" id="merk" autocomplete="off" placeholder="Merk">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Tim</label>
-                                                                <select class="form-select" name="idtim" id="idtim" aria-label="Default select example">
-                                                                    <option value="">Pilih Tim</option>
-                                                                    <?php foreach ($tims as $tim) { ?>
-                                                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">Satuan</label>
-                                                                <input type="text" class="form-control" name="satuan" id="satuan" autocomplete="off" placeholder="Satuan">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">QTY</label>
-                                                                <input type="number" class="form-control" name="qty" id="qty" autocomplete="off" placeholder="QTY">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label class="form-label">Status Reservasi</label>
-                                                            <select class="form-select" name="status_reservasi" id="status_reservasi" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Sudah">Sudah</option>
-                                                                <option value="Belum">Belum</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Status Terpakai</label>
-                                                                <input type="text" class="form-control" name="status_terpakai" id="status_terpakai" autocomplete="off" placeholder="Status Terpakai">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label class="form-label">Status Pengiriman</label>
-                                                            <select class="form-select" name="status_pengiriman" id="status_pengiriman" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                                <option value="On Loc">On Loc</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Keterangan</label>
-                                                                <textarea type="text" class="form-control" name="ket" id="ket" autocomplete="off" placeholder="Keterangan"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="hstack gap-2 justify-content-end">
-                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                <button class="btn btn-primary" id="submitBtn" onclick="saveMaterial()">Submit</button>
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" id="idmaterial" name="idmaterial" value="">
-                                                    </div>
-                                            </div>
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-md-3">
+                                            <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
+                                            <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
                                         </div>
-                                    </div>
-                                </div>
-
-                                <!-- Modal Edit Material -->
-                                <div class="modal fade" id="editMaterialModal" tabindex="-1" aria-labelledby="editMaterialModalLabel" aria-modal="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editMaterialModalLabel">Edit Material</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                    <div class="row g-3">
-                                                        <input type="hidden" id="editIdmaterial" name="editIdmaterial" value="">
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="date" class="form-control" name="editTanggal" id="editTanggal" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Kategori</label>
-                                                                <select class="form-select" name="editKategori" id="editKategori" aria-label="Default select example">
-                                                                    <option value="">Pilih Kategori</option>
-                                                                    <option value="FOC">FOC</option>
-                                                                    <option value="FOT">FOT</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Kode Material</label>
-                                                                <input type="text" class="form-control" name="editKodeMaterial" id="editKodeMaterial" autocomplete="off" placeholder="Kode Material">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN</label>
-                                                                <input type="text" class="form-control" name="editSn" id="editSn" autocomplete="off" placeholder="SN">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">SN Terpakai</label>
-                                                                <input type="text" class="form-control" name="editSnTerpakai" id="editSnTerpakai" autocomplete="off" placeholder="SN Terpakai">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Merk</label>
-                                                                <input type="text" class="form-control" name="editMerk" id="editMerk" autocomplete="off" placeholder="Merk">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Tim</label>
-                                                                <select class="form-select" name="editIdtim" id="editIdtim" aria-label="Default select example">
-                                                                    <option value="">Pilih Tim</option>
-                                                                    <?php foreach ($tims as $tim) { ?>
-                                                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">Satuan</label>
-                                                                <input type="text" class="form-control" name="editSatuan" id="editSatuan" autocomplete="off" placeholder="Satuan">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-3">
-                                                            <div>
-                                                                <label class="form-label">QTY</label>
-                                                                <input type="number" class="form-control" name="editQty" id="editQty" autocomplete="off" placeholder="QTY">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label class="form-label">Status Reservasi</label>
-                                                            <select class="form-select" name="editStatusReservasi" id="editStatusReservasi" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Sudah">Sudah</option>
-                                                                <option value="Belum">Belum</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Status Terpakai</label>
-                                                                <input type="text" class="form-control" name="editStatusTerpakai" id="editStatusTerpakai" autocomplete="off" placeholder="Status Terpakai">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <label class="form-label">Status Pengiriman</label>
-                                                            <select class="form-select" name="editStatusPengiriman" id="editStatusPengiriman" aria-label="Default select example">
-                                                                <option value="">Pilih Status</option>
-                                                                <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                                <option value="On Loc">On Loc</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Keterangan</label>
-                                                                <textarea type="text" class="form-control" name="editKet" id="editKet" autocomplete="off" placeholder="Keterangan"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="hstack gap-2 justify-content-end">
-                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                <button class="btn btn-primary" id="editsubmitBtn" onclick="editSaveMaterial()">Submit</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
+                                            <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="filterReservasi" class="form-label">Status Reservasi</label>
+                                            <select id="filterReservasi" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <option value="Sudah">Sudah</option>
+                                                <option value="Belum">Belum</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="filterTerpakai" class="form-label">Status Terpakai</label>
+                                            <select id="filterTerpakai" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <?php foreach ($status_terpakai_list as $status) { ?>
+                                                    <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
+                                            <select id="filterPengiriman" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                                                <option value="On Loc">On Loc</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button class="btn btn-sm btn-info" onclick="applyFilters()">Filter</button>
+                                            <button class="btn btn-sm btn-secondary" onclick="resetFilters()">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -407,12 +170,10 @@
                                     </table>
                                 </div>
                             </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
+                        </div>
+                    </div>
                 </div>
-                <!-- container-fluid -->
             </div>
-            <!-- End Page-content -->
 
             <footer class="footer">
                 <div class="container-fluid">
@@ -429,10 +190,192 @@
                 </div>
             </footer>
         </div>
-        <!-- end main content-->
+
+        <!-- Modal Add Material -->
+        <div class="modal fade" id="materialModal" tabindex="-1" aria-labelledby="materialModalLabel" aria-modal="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="materialModalLabel">Tambah Material</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-xxl-6">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" class="form-control" name="tanggal" id="tanggal" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Kategori</label>
+                                <select class="form-select" name="kategori" id="kategori" aria-label="Default select example">
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="FOC">FOC</option>
+                                    <option value="FOT">FOT</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Kode Material</label>
+                                <input type="text" class="form-control" name="kode_material" id="kode_material" autocomplete="off" placeholder="Kode Material">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">SN</label>
+                                <input type="text" class="form-control" name="sn" id="sn" autocomplete="off" placeholder="SN">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">SN Terpakai</label>
+                                <input type="text" class="form-control" name="sn_terpakai" id="sn_terpakai" autocomplete="off" placeholder="SN Terpakai">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Merk</label>
+                                <input type="text" class="form-control" name="merk" id="merk" autocomplete="off" placeholder="Merk">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Tim</label>
+                                <select class="form-select" name="idtim" id="idtim" aria-label="Default select example">
+                                    <option value="">Pilih Tim</option>
+                                    <?php foreach ($tims as $tim) { ?>
+                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-xxl-3">
+                                <label class="form-label">Satuan</label>
+                                <input type="text" class="form-control" name="satuan" id="satuan" autocomplete="off" placeholder="Satuan">
+                            </div>
+                            <div class="col-xxl-3">
+                                <label class="form-label">QTY</label>
+                                <input type="number" class="form-control" name="qty" id="qty" autocomplete="off" placeholder="QTY">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Status Reservasi</label>
+                                <select class="form-select" name="status_reservasi" id="status_reservasi" aria-label="Default select example">
+                                    <option value="">Pilih Status</option>
+                                    <option value="Sudah">Sudah</option>
+                                    <option value="Belum">Belum</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Status Terpakai</label>
+                                <input type="text" class="form-control" name="status_terpakai" id="status_terpakai" autocomplete="off" placeholder="Status Terpakai">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Status Pengiriman</label>
+                                <select class="form-select" name="status_pengiriman" id="status_pengiriman" aria-label="Default select example">
+                                    <option value="">Pilih Status</option>
+                                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                                    <option value="On Loc">On Loc</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Keterangan</label>
+                                <textarea type="text" class="form-control" name="ket" id="ket" autocomplete="off" placeholder="Keterangan"></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary" id="submitBtn" onclick="saveMaterial()">Submit</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="idmaterial" name="idmaterial" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit Material -->
+        <div class="modal fade" id="editMaterialModal" tabindex="-1" aria-labelledby="editMaterialModalLabel" aria-modal="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editMaterialModalLabel">Edit Material</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <input type="hidden" id="editIdmaterial" name="editIdmaterial" value="">
+                            <div class="col-xxl-6">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" class="form-control" name="editTanggal" id="editTanggal" autocomplete="off">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Kategori</label>
+                                <select class="form-select" name="editKategori" id="editKategori" aria-label="Default select example">
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="FOC">FOC</option>
+                                    <option value="FOT">FOT</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Kode Material</label>
+                                <input type="text" class="form-control" name="editKodeMaterial" id="editKodeMaterial" autocomplete="off" placeholder="Kode Material">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">SN</label>
+                                <input type="text" class="form-control" name="editSn" id="editSn" autocomplete="off" placeholder="SN">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">SN Terpakai</label>
+                                <input type="text" class="form-control" name="editSnTerpakai" id="editSnTerpakai" autocomplete="off" placeholder="SN Terpakai">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Merk</label>
+                                <input type="text" class="form-control" name="editMerk" id="editMerk" autocomplete="off" placeholder="Merk">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Tim</label>
+                                <select class="form-select" name="editIdtim" id="editIdtim" aria-label="Default select example">
+                                    <option value="">Pilih Tim</option>
+                                    <?php foreach ($tims as $tim) { ?>
+                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-xxl-3">
+                                <label class="form-label">Satuan</label>
+                                <input type="text" class="form-control" name="editSatuan" id="editSatuan" autocomplete="off" placeholder="Satuan">
+                            </div>
+                            <div class="col-xxl-3">
+                                <label class="form-label">QTY</label>
+                                <input type="number" class="form-control" name="editQty" id="editQty" autocomplete="off" placeholder="QTY">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Status Reservasi</label>
+                                <select class="form-select" name="editStatusReservasi" id="editStatusReservasi" aria-label="Default select example">
+                                    <option value="">Pilih Status</option>
+                                    <option value="Sudah">Sudah</option>
+                                    <option value="Belum">Belum</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Status Terpakai</label>
+                                <input type="text" class="form-control" name="editStatusTerpakai" id="editStatusTerpakai" autocomplete="off" placeholder="Status Terpakai">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Status Pengiriman</label>
+                                <select class="form-select" name="editStatusPengiriman" id="editStatusPengiriman" aria-label="Default select example">
+                                    <option value="">Pilih Status</option>
+                                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                                    <option value="On Loc">On Loc</option>
+                                </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Keterangan</label>
+                                <textarea type="text" class="form-control" name="editKet" id="editKet" autocomplete="off" placeholder="Keterangan"></textarea>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary" id="editsubmitBtn" onclick="editSaveMaterial()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
-    <!-- END layout-wrapper -->
 
     <!-- JAVASCRIPT -->
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -458,7 +401,6 @@
 
     <script src="assets/js/pages/datatables.init.js"></script>
     <script src="assets/js/plugins.js"></script>
-
     <script src="assets/js/app.js"></script>
 
 <script>
