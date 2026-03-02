@@ -331,7 +331,7 @@
 
                                 </div>
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                    <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Priority</th>
@@ -970,20 +970,25 @@ document.addEventListener('DOMContentLoaded', function () {
     </script>
     <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const table = new DataTable('#example1', {
+    const table = new DataTable('#example', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
         order: [[19, 'desc']],
         columnDefs: [
+             {
+                targets: 14, // Deskripsi Insiden
+                responsivePriority: 1,
+                width: '40px'
+            }
             {
                 targets: 20, // Deskripsi Insiden
                 responsivePriority: 2,
                 width: '40px'
             }
         ],
-        responsive: true,
+        // responsive: true
     });
 
     // Event filtering
