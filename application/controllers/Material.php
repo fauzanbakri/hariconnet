@@ -7,7 +7,6 @@ class Material extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Material_model');
-		// session_start();
 	}
 
 	/**
@@ -16,6 +15,7 @@ class Material extends CI_Controller {
 	public function index()
 	{
 		$title['title'] = "Input Material";
+		session_start();
 
 		// Check user role
 		if(
