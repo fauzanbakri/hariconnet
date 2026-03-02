@@ -979,72 +979,72 @@ document.addEventListener("DOMContentLoaded", function() {
         columnDefs: [
             {
                 targets: 0, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 1, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 2, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 3, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 4, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 5, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 6, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 7, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 8, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 9, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 10, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 11, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 12, // Deskripsi Insiden
-                responsivePriority: 1,
+                responsivePriority: 2,
                 width: '40px'
             },
             {
                 targets: 20, // Deskripsi Insiden
-                responsivePriority: 2,
+                responsivePriority: 1,
                 width: '40px'
             }
         ],
