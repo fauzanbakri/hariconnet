@@ -25,152 +25,150 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <h5 class="card-title mb-0">Daftar Material</h5>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">
-                                        <i class="mdi mdi-plus"></i> Tambah Material
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Filter Section -->
-                        <div class="card-body border-bottom">
-                            <div class="row g-3">
-                                <!-- Filter Date Range -->
+                            <h5 class="card-title mb-0">Daftar Material</h5><br>
+                            <!-- Add Button -->
+                            <div class="row">
                                 <div class="col-md-3">
-                                    <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
-                                    <input type="date" id="filterStartDate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
-                                    <input type="date" id="filterEndDate" class="form-control" value="<?php echo date('Y-m-d'); ?>">
-                                </div>
-
-                                <!-- Filter Status Reservasi -->
-                                <div class="col-md-2">
-                                    <label for="filterReservasi" class="form-label">Status Reservasi</label>
-                                    <select id="filterReservasi" class="form-select form-select-sm">
-                                        <option value="">Semua</option>
-                                        <option value="Sudah">Sudah</option>
-                                        <option value="Belum">Belum</option>
-                                    </select>
-                                </div>
-
-                                <!-- Filter Status Terpakai -->
-                                <div class="col-md-2">
-                                    <label for="filterTerpakai" class="form-label">Status Terpakai</label>
-                                    <select id="filterTerpakai" class="form-select form-select-sm">
-                                        <option value="">Semua</option>
-                                        <?php foreach ($status_terpakai_list as $status) { ?>
-                                            <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-
-                                <!-- Filter Status Pengiriman -->
-                                <div class="col-md-2">
-                                    <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
-                                    <select id="filterPengiriman" class="form-select form-select-sm">
-                                        <option value="">Semua</option>
-                                        <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                        <option value="On Loc">On Loc</option>
-                                    </select>
+                                    <?php
+                                        if(
+                                            $_SESSION['role']=='Superadmin' ||
+                                            $_SESSION['role']=='Team Leader'
+                                        ){
+                                            echo '
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">
+                                                    <i class="mdi mdi-plus"></i> Tambah Material
+                                                </button>';
+                                        }
+                                    ?>
+                                    <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                 </div>
                             </div>
 
-                            <!-- Filter Button -->
+                            <!-- Filter Section -->
                             <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <button class="btn btn-sm btn-info" onclick="applyFilters()">
-                                        <i class="mdi mdi-filter"></i> Filter
-                                    </button>
-                                    <button class="btn btn-sm btn-secondary" onclick="resetFilters()">
-                                        <i class="mdi mdi-refresh"></i> Reset
-                                    </button>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-3">
+                                        <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
+                                        <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
+                                        <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="filterReservasi" class="form-label">Status Reservasi</label>
+                                        <select id="filterReservasi" class="form-select form-select-sm">
+                                            <option value="">Semua</option>
+                                            <option value="Sudah">Sudah</option>
+                                            <option value="Belum">Belum</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="filterTerpakai" class="form-label">Status Terpakai</label>
+                                        <select id="filterTerpakai" class="form-select form-select-sm">
+                                            <option value="">Semua</option>
+                                            <?php foreach ($status_terpakai_list as $status) { ?>
+                                                <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
+                                        <select id="filterPengiriman" class="form-select form-select-sm">
+                                            <option value="">Semua</option>
+                                            <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                                            <option value="On Loc">On Loc</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-sm btn-info" onclick="applyFilters()">
+                                            <i class="mdi mdi-filter"></i> Filter
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary" onclick="resetFilters()">
+                                            <i class="mdi mdi-refresh"></i> Reset
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Table Section -->
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover" id="materialTable">
-                                    <thead>
-                                        <tr class="table-light">
-                                            <th>No</th>
-                                            <th>Tanggal</th>
-                                            <th>Kategori</th>
-                                            <th>Kode Material</th>
-                                            <th>SN</th>
-                                            <th>SN Terpakai</th>
-                                            <th>Merk</th>
-                                            <th>Tim</th>
-                                            <th>Satuan</th>
-                                            <th>QTY</th>
-                                            <th>Status Reservasi</th>
-                                            <th>Status Terpakai</th>
-                                            <th>Status Pengiriman</th>
-                                            <th>Keterangan</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $no = 1;
-                                        if(!empty($materials)) {
-                                            foreach ($materials as $material) {
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $no++; ?></td>
-                                            <td><?php echo date('d-m-Y', strtotime($material->tanggal)); ?></td>
-                                            <td><span class="badge bg-info"><?php echo $material->kategori; ?></span></td>
-                                            <td><?php echo $material->kode_material; ?></td>
-                                            <td><?php echo $material->sn; ?></td>
-                                            <td><?php echo $material->sn_terpakai; ?></td>
-                                            <td><?php echo $material->merk; ?></td>
-                                            <td><?php echo $material->nama_tim; ?></td>
-                                            <td><?php echo $material->satuan; ?></td>
-                                            <td><?php echo $material->qty; ?></td>
-                                            <td>
-                                                <span class="badge <?php echo $material->status_reservasi == 'Sudah' ? 'bg-success' : 'bg-warning'; ?>">
-                                                    <?php echo $material->status_reservasi; ?>
-                                                </span>
-                                            </td>
-                                            <td><?php echo $material->status_terpakai; ?></td>
-                                            <td>
-                                                <span class="badge <?php echo $material->status_pengiriman == 'Dalam Pengiriman' ? 'bg-primary' : 'bg-secondary'; ?>">
-                                                    <?php echo $material->status_pengiriman; ?>
-                                                </span>
-                                            </td>
-                                            <td><?php echo substr($material->ket, 0, 30) . (strlen($material->ket) > 30 ? '...' : ''); ?></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-warning" onclick="editMaterial(<?php echo $material->idmaterial; ?>)">
-                                                    <i class="mdi mdi-pencil"></i> Edit
-                                                </button>
-                                                <button class="btn btn-sm btn-danger" onclick="deleteMaterial(<?php echo $material->idmaterial; ?>)">
-                                                    <i class="mdi mdi-delete"></i> Hapus
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                            }
-                                        } else {
-                                        ?>
-                                        <tr>
-                                            <td colspan="15" class="text-center text-muted py-3">Tidak ada data material</td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover mb-0">
+                                <thead>
+                                    <tr class="table-light">
+                                        <th>No</th>
+                                        <th>Tanggal</th>
+                                        <th>Kategori</th>
+                                        <th>Kode Material</th>
+                                        <th>SN</th>
+                                        <th>SN Terpakai</th>
+                                        <th>Merk</th>
+                                        <th>Tim</th>
+                                        <th>Satuan</th>
+                                        <th>QTY</th>
+                                        <th>Status Reservasi</th>
+                                        <th>Status Terpakai</th>
+                                        <th>Status Pengiriman</th>
+                                        <th>Keterangan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    if(!empty($materials)) {
+                                        foreach ($materials as $material) {
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $no++; ?></td>
+                                        <td><?php echo date('d-m-Y', strtotime($material->tanggal)); ?></td>
+                                        <td><span class="badge bg-info"><?php echo $material->kategori; ?></span></td>
+                                        <td><?php echo $material->kode_material; ?></td>
+                                        <td><?php echo $material->sn; ?></td>
+                                        <td><?php echo $material->sn_terpakai; ?></td>
+                                        <td><?php echo $material->merk; ?></td>
+                                        <td><?php echo $material->nama_tim; ?></td>
+                                        <td><?php echo $material->satuan; ?></td>
+                                        <td><?php echo $material->qty; ?></td>
+                                        <td>
+                                            <span class="badge <?php echo $material->status_reservasi == 'Sudah' ? 'bg-success' : 'bg-warning'; ?>">
+                                                <?php echo $material->status_reservasi; ?>
+                                            </span>
+                                        </td>
+                                        <td><?php echo $material->status_terpakai; ?></td>
+                                        <td>
+                                            <span class="badge <?php echo $material->status_pengiriman == 'Dalam Pengiriman' ? 'bg-primary' : 'bg-secondary'; ?>">
+                                                <?php echo $material->status_pengiriman; ?>
+                                            </span>
+                                        </td>
+                                        <td><?php echo substr($material->ket, 0, 30) . (strlen($material->ket) > 30 ? '...' : ''); ?></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="editMaterial(<?php echo $material->idmaterial; ?>)">
+                                                <i class="mdi mdi-pencil"></i> Edit
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteRow(<?php echo $material->idmaterial; ?>)">
+                                                <i class="mdi mdi-delete"></i> Hapus
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                        }
+                                    } else {
+                                    ?>
+                                    <tr>
+                                        <td colspan="15" class="text-center text-muted py-3">Tidak ada data material</td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -184,16 +182,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="materialForm">
-                    <input type="hidden" id="idmaterial" name="idmaterial">
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="tanggal" class="form-label">Tanggal <span class="text-danger">*</span></label>
+                <div class="row g-3">
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Tanggal <span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="kategori" class="form-label">Kategori <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Kategori <span class="text-danger">*</span></label>
                             <select class="form-select" id="kategori" name="kategori" required>
                                 <option value="">Pilih Kategori</option>
                                 <option value="FOC">FOC</option>
@@ -201,32 +199,33 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="kode_material" class="form-label">Kode Material <span class="text-danger">*</span></label>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Kode Material <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="kode_material" name="kode_material" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="sn" class="form-label">SN <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">SN <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="sn" name="sn" required>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="sn_terpakai" class="form-label">SN Terpakai</label>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">SN Terpakai</label>
                             <input type="text" class="form-control" id="sn_terpakai" name="sn_terpakai">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="merk" class="form-label">Merk <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Merk <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="merk" name="merk" required>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="idtim" class="form-label">Tim <span class="text-danger">*</span></label>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Tim <span class="text-danger">*</span></label>
                             <select class="form-select" id="idtim" name="idtim" required>
                                 <option value="">Pilih Tim</option>
                                 <?php foreach ($tims as $tim) { ?>
@@ -234,34 +233,38 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="satuan" class="form-label">Satuan <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-xxl-3">
+                        <div>
+                            <label class="form-label">Satuan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="satuan" name="satuan" required>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="qty" class="form-label">QTY <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-xxl-3">
+                        <div>
+                            <label class="form-label">QTY <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="qty" name="qty" required>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="status_reservasi" class="form-label">Status Reservasi <span class="text-danger">*</span></label>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Status Reservasi <span class="text-danger">*</span></label>
                             <select class="form-select" id="status_reservasi" name="status_reservasi" required>
                                 <option value="">Pilih Status</option>
                                 <option value="Sudah">Sudah</option>
                                 <option value="Belum">Belum</option>
                             </select>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="status_terpakai" class="form-label">Status Terpakai</label>
+                    </div>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Status Terpakai</label>
                             <input type="text" class="form-control" id="status_terpakai" name="status_terpakai">
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="status_pengiriman" class="form-label">Status Pengiriman <span class="text-danger">*</span></label>
+                    <div class="col-xxl-6">
+                        <div>
+                            <label class="form-label">Status Pengiriman <span class="text-danger">*</span></label>
                             <select class="form-select" id="status_pengiriman" name="status_pengiriman" required>
                                 <option value="">Pilih Status</option>
                                 <option value="Dalam Pengiriman">Dalam Pengiriman</option>
@@ -269,12 +272,14 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="ket" class="form-label">Keterangan</label>
-                        <textarea class="form-control" id="ket" name="ket" rows="3"></textarea>
+                    <div class="col-xxl-12">
+                        <div>
+                            <label class="form-label">Keterangan</label>
+                            <textarea class="form-control" id="ket" name="ket" rows="2"></textarea>
+                        </div>
                     </div>
-                </form>
+                </div>
+                <input type="hidden" id="idmaterial" name="idmaterial" value="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -284,52 +289,78 @@
     </div>
 </div>
 
-<!-- Toast for notifications -->
-<button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
-
 <script>
     const baseUrl = '<?php echo base_url(); ?>';
 
     // Reset form for add new
     function resetForm() {
-        document.getElementById('materialForm').reset();
         document.getElementById('idmaterial').value = '';
         document.getElementById('tanggal').value = '<?php echo date('Y-m-d'); ?>';
+        document.getElementById('kategori').value = '';
+        document.getElementById('kode_material').value = '';
+        document.getElementById('sn').value = '';
+        document.getElementById('sn_terpakai').value = '';
+        document.getElementById('merk').value = '';
+        document.getElementById('idtim').value = '';
+        document.getElementById('satuan').value = '';
+        document.getElementById('qty').value = '';
+        document.getElementById('status_reservasi').value = '';
+        document.getElementById('status_terpakai').value = '';
+        document.getElementById('status_pengiriman').value = '';
+        document.getElementById('ket').value = '';
         document.getElementById('materialModalLabel').textContent = 'Tambah Material';
     }
 
     // Save material (add or update)
     function saveMaterial() {
         const idmaterial = document.getElementById('idmaterial').value;
-        const url = idmaterial ? baseUrl + 'Material/update' : baseUrl + 'Material/add';
+        const url = idmaterial ? baseUrl + 'Material/editData' : baseUrl + 'Material/insertData';
 
-        const formData = new FormData(document.getElementById('materialForm'));
+        const formData = {
+            idmaterial: idmaterial,
+            tanggal: document.getElementById('tanggal').value,
+            kategori: document.getElementById('kategori').value,
+            kode_material: document.getElementById('kode_material').value,
+            sn: document.getElementById('sn').value,
+            sn_terpakai: document.getElementById('sn_terpakai').value,
+            merk: document.getElementById('merk').value,
+            idtim: document.getElementById('idtim').value,
+            satuan: document.getElementById('satuan').value,
+            qty: document.getElementById('qty').value,
+            status_reservasi: document.getElementById('status_reservasi').value,
+            status_terpakai: document.getElementById('status_terpakai').value,
+            status_pengiriman: document.getElementById('status_pengiriman').value,
+            ket: document.getElementById('ket').value
+        };
 
-        fetch(url, {
+        $.ajax({
+            url: url,
             method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                showToast(data.message, 'success');
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
-            } else {
-                showToast(data.message, 'error');
+            data: formData,
+            success: function(response) {
+                if(response == 'success') {
+                    let toastEl = document.getElementById('toast');
+                    toastEl.setAttribute('data-toast-text', idmaterial ? 'Material berhasil diperbarui' : 'Material berhasil ditambahkan');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    alert('Error: ' + response);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Terjadi kesalahan: ' + error);
             }
-        })
-        .catch(error => {
-            showToast('Terjadi kesalahan: ' + error, 'error');
         });
     }
 
     // Edit material
     function editMaterial(id) {
-        fetch(baseUrl + 'Material/get_material/' + id)
-            .then(response => response.json())
-            .then(data => {
+        $.ajax({
+            url: baseUrl + 'Material/getData?id=' + id,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
                 if (data) {
                     document.getElementById('idmaterial').value = data.idmaterial;
                     document.getElementById('tanggal').value = data.tanggal;
@@ -347,38 +378,34 @@
                     document.getElementById('ket').value = data.ket;
 
                     document.getElementById('materialModalLabel').textContent = 'Edit Material';
-                    const modal = new bootstrap.Modal(document.getElementById('materialModal'));
-                    modal.show();
                 }
-            })
-            .catch(error => {
-                showToast('Gagal memuat data: ' + error, 'error');
-            });
+            },
+            error: function(xhr, status, error) {
+                alert('Gagal memuat data: ' + error);
+            }
+        });
     }
 
     // Delete material
-    function deleteMaterial(id) {
+    function deleteRow(id) {
         if (confirm('Apakah Anda yakin ingin menghapus material ini?')) {
-            fetch(baseUrl + 'Material/delete', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+            $.ajax({
+                url: baseUrl + 'Material/deleteRow?id=' + id,
+                method: 'GET',
+                success: function(response) {
+                    if(response == 'success') {
+                        let toastEl = document.getElementById('toast');
+                        toastEl.setAttribute('data-toast-text', 'Material berhasil dihapus');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        alert('Error: ' + response);
+                    }
                 },
-                body: 'id=' + id
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    showToast(data.message, 'success');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1500);
-                } else {
-                    showToast(data.message, 'error');
+                error: function(xhr, status, error) {
+                    alert('Terjadi kesalahan: ' + error);
                 }
-            })
-            .catch(error => {
-                showToast('Terjadi kesalahan: ' + error, 'error');
             });
         }
     }
@@ -410,19 +437,5 @@
         document.getElementById('filterPengiriman').value = '';
 
         window.location.href = baseUrl + 'Material';
-    }
-
-    // Show toast notification
-    function showToast(message, type) {
-        const toastEl = document.getElementById('toast');
-        toastEl.setAttribute('data-toast-text', message);
-
-        // Gunakan toast library yang sudah ada di project
-        // Atau gunakan cara sederhana dengan alert
-        if (type === 'success') {
-            alert('✓ ' + message);
-        } else {
-            alert('✗ ' + message);
-        }
     }
 </script>
