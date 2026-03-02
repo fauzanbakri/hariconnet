@@ -135,7 +135,7 @@
                                                         <td>".$material->satuan."</td>
                                                         <td>".$material->qty."</td>
                                                         <td><span class='badge ".(($material->status_reservasi == 'Sudah') ? 'bg-success' : 'bg-warning')."'>".$material->status_reservasi."</span></td>
-                                                        <td><span class='badge bg-secondary'>".$material->status_terpakai."</span></td>
+                                                        <td><span class='badge bg-warning'>".$material->status_terpakai."</span></td>
                                                         <td><span class='badge ".(($material->status_pengiriman == 'Dalam Pengiriman') ? 'bg-primary' : 'bg-secondary')."'>".$material->status_pengiriman."</span></td>
                                                         <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
                                                         if(
