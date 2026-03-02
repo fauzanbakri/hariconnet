@@ -337,15 +337,15 @@
                                                 <th>Kode Area</th>
                                                 <th>OLT</th>
                                                 <th>Deskripsi</th>
-                                                <th>Deskripsi Insiden</th>
                                                 <th>Tim</th>
+                                                <th>Deskripsi Insiden</th>
+                                                <th>Status</th>
                                                 <th>Jumlah Tiket</th>
                                                 <th>Tipe Penyebab</th>
+                                                <th>ID</th>
                                                 <th>Keterangan</th>
                                                 <th>Last Update By</th>
                                                 <th>Timestamp</th>
-                                                <th>Status</th>
-                                                <th>ID</th>
                                                 <?php
                                                 if(
                                                     $_SESSION['role']!='Resepsionis'
