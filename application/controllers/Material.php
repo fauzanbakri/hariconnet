@@ -179,4 +179,17 @@ class Material extends CI_Controller {
 			echo 'Gagal menghapus material';
 		}
 	}
+
+	/**
+	 * Get kode material detail from kode_material table
+	 */
+	public function getKodeMaterialDetail()
+	{
+		$kode = $this->input->get('kode');
+		$this->db->select('kode_material, deskripsi_material, kategori');
+		$this->db->from('kode_material');
+		$this->db->where('kode_material', $kode);
+		$result = $this->db->get()->row();
+		echo json_encode($result);
+	}
 }
