@@ -41,6 +41,7 @@ class Material extends CI_Controller {
 			$data['status_pengiriman_list'] = ['Dalam Pengiriman', 'On Loc'];
 
 			$this->load->view('navbar', $title);
+			die();
 			$this->load->view('material', $data);
 		} else {
 			header('location: ./DashboardNoc');
