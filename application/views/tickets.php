@@ -983,7 +983,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 width: '40px'
             }
             {
-                targets: 20, // Deskripsi Insiden
+                targets: 19, // Deskripsi Insiden
                 responsivePriority: 1,
                 width: '40px'
             }
