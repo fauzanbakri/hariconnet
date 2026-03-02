@@ -130,7 +130,7 @@
                                         <td><?php echo $material->sn; ?></td>
                                         <td><?php echo $material->sn_terpakai; ?></td>
                                         <td><?php echo $material->merk; ?></td>
-                                        <td><?php echo $material->nama_tim; ?></td>
+                                        <td><?php echo $material->nama; ?></td>
                                         <td><?php echo $material->satuan; ?></td>
                                         <td><?php echo $material->qty; ?></td>
                                         <td>
@@ -229,7 +229,7 @@
                             <select class="form-select" id="idtim" name="idtim" required>
                                 <option value="">Pilih Tim</option>
                                 <?php foreach ($tims as $tim) { ?>
-                                <option value="<?php echo $tim->idtim; ?>"><?php echo $tim->nama_tim; ?></option>
+                                <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

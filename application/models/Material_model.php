@@ -14,9 +14,9 @@ class Material_model extends CI_Model {
 	 */
 	public function get_all_materials()
 	{
-		$this->db->select('m.*, t.nama_tim');
+		$this->db->select('m.*, t.nama');
 		$this->db->from('material m');
-		$this->db->join('tim t', 'm.idtim = t.idtim', 'left');
+		$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
 		$this->db->order_by('m.idmaterial', 'DESC');
 		return $this->db->get()->result();
 	}
@@ -26,9 +26,9 @@ class Material_model extends CI_Model {
 	 */
 	public function get_materials_filtered($start_date = null, $end_date = null, $status_reservasi = null, $status_terpakai = null, $status_pengiriman = null)
 	{
-		$this->db->select('m.*, t.nama_tim');
+		$this->db->select('m.*, t.nama');
 		$this->db->from('material m');
-		$this->db->join('tim t', 'm.idtim = t.idtim', 'left');
+		$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
 
 		if ($start_date && $end_date) {
 			$this->db->where('DATE(m.tanggal) >=', $start_date);
@@ -56,9 +56,9 @@ class Material_model extends CI_Model {
 	 */
 	public function get_material_by_id($id)
 	{
-		$this->db->select('m.*, t.nama_tim');
+		$this->db->select('m.*, t.nama');
 		$this->db->from('material m');
-		$this->db->join('tim t', 'm.idtim = t.idtim', 'left');
+		$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
 		$this->db->where('m.idmaterial', $id);
 		return $this->db->get()->row();
 	}
