@@ -245,12 +245,12 @@
                                 </select>
                             </div>
                             <div class="col-xxl-3">
-                                <label class="form-label">Satuan</label>
-                                <input type="text" class="form-control" name="satuan" id="satuan" autocomplete="off" placeholder="Satuan">
-                            </div>
-                            <div class="col-xxl-3">
                                 <label class="form-label">QTY</label>
                                 <input type="number" class="form-control" name="qty" id="qty" autocomplete="off" placeholder="QTY">
+                            </div>
+                            <div class="col-xxl-3">
+                                <label class="form-label">Satuan</label>
+                                <input type="text" class="form-control" name="satuan" id="satuan" autocomplete="off" placeholder="Satuan">
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Status Reservasi</label>
