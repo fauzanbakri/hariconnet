@@ -1056,7 +1056,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 visible: true
             },
         ],
-        responsive: false
+        responsive: true
     });
 
     // Event filtering
