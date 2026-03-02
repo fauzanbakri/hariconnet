@@ -372,8 +372,12 @@
                                                         <td><span class='badge ".(($material->status_reservasi == 'Sudah') ? 'bg-success' : 'bg-warning')."'>".$material->status_reservasi."</span></td>
                                                         <td>".$material->status_terpakai."</td>
                                                         <td><span class='badge ".(($material->status_pengiriman == 'Dalam Pengiriman') ? 'bg-primary' : 'bg-secondary')."'>".$material->status_pengiriman."</span></td>
-                                                        <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>
-                                                        <td>
+                                                        <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
+                                                        if(
+                                                            $_SESSION['role']=='Superadmin' ||
+                                                            $_SESSION['role']=='Team Leader'
+                                                        ){
+                                                            echo "<td>
                                                             <div class='dropdown d-inline-block'>
                                                                 <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                     <i class='ri-more-fill align-middle'></i>
@@ -391,7 +395,9 @@
                                                                     </li>
                                                                 </ul>
                                                             </div>
-                                                        </td>
+                                                        </td>";
+                                                        }
+                                                        echo "
                                                     </tr>
                                                     ";
                                                 }
