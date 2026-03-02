@@ -7,7 +7,7 @@ class Material extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Material_model');
-		session_start();
+		// session_start();
 	}
 
 	/**
