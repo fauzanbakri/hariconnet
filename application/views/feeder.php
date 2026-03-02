@@ -963,13 +963,13 @@ document.addEventListener("DOMContentLoaded", function() {
             {
                 targets: 10,
                 className: 'priority-column',
-                responsivePriority: 1,
+                responsivePriority: 2,
                 visible: true
             },
             {
                 targets: 11,
                 className: 'priority-column',
-                responsivePriority: 2,
+                responsivePriority: 1,
                 visible: true
             },
             {
