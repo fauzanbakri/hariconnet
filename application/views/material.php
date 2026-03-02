@@ -557,31 +557,28 @@ function resetFilters() {
 }
 
 $(document).ready(function () {
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalElement = document.getElementById('editMaterialModal');
-        const modal = new bootstrap.Modal(modalElement);
-        document.querySelectorAll('.edit-item-btn').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const data = this.dataset;
-                document.getElementById('editIdmaterial').value = data.idmaterial;
-                document.getElementById('editIncident').value = data.incident;
-                document.getElementById('editTanggal').value = data.tanggal;
-                document.getElementById('editKategori').value = data.kategori;
-                document.getElementById('editKodeMaterial').value = data.kode_material;
-                document.getElementById('editSn').value = data.sn;
-                document.getElementById('editSnTerpakai').value = data.sn_terpakai;
-                document.getElementById('editMerk').value = data.merk;
-                document.getElementById('editIdtim').value = data.idtim;
-                document.getElementById('editSatuan').value = data.satuan;
-                document.getElementById('editQty').value = data.qty;
-                document.getElementById('editStatusReservasi').value = data.status_reservasi;
-                document.getElementById('editStatusTerpakai').value = data.status_terpakai;
-                document.getElementById('editStatusPengiriman').value = data.status_pengiriman;
-                document.getElementById('editKet').value = data.ket;
-                modal.show();
-            });
-        });
+    const modalElement = document.getElementById('editMaterialModal');
+    const modal = new bootstrap.Modal(modalElement);
+
+    $(document).on('click', '.edit-item-btn', function(e) {
+        e.preventDefault();
+        const data = this.dataset;
+        document.getElementById('editIdmaterial').value = data.idmaterial;
+        document.getElementById('editIncident').value = data.incident;
+        document.getElementById('editTanggal').value = data.tanggal;
+        document.getElementById('editKategori').value = data.kategori;
+        document.getElementById('editKodeMaterial').value = data.kode_material;
+        document.getElementById('editSn').value = data.sn;
+        document.getElementById('editSnTerpakai').value = data.sn_terpakai;
+        document.getElementById('editMerk').value = data.merk;
+        document.getElementById('editIdtim').value = data.idtim;
+        document.getElementById('editSatuan').value = data.satuan;
+        document.getElementById('editQty').value = data.qty;
+        document.getElementById('editStatusReservasi').value = data.status_reservasi;
+        document.getElementById('editStatusTerpakai').value = data.status_terpakai;
+        document.getElementById('editStatusPengiriman').value = data.status_pengiriman;
+        document.getElementById('editKet').value = data.ket;
+        modal.show();
     });
 
     const deleteButtons = document.querySelectorAll('.remove-item-btn');
