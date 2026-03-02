@@ -55,6 +55,7 @@ class Material extends CI_Controller {
 		date_default_timezone_set('Asia/Makassar');
 		session_start();
 
+		$incident = $this->input->post('incident');
 		$tanggal = $this->input->post('tanggal');
 		$kategori = $this->input->post('kategori');
 		$kode_material = $this->input->post('kode_material');
@@ -72,6 +73,7 @@ class Material extends CI_Controller {
 		// Validation
 		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != ''){
 			$data = array(
+				'incident' => $incident,
 				'tanggal' => $tanggal,
 				'kategori' => $kategori,
 				'kode_material' => $kode_material,
@@ -116,6 +118,7 @@ class Material extends CI_Controller {
 		session_start();
 
 		$idmaterial = $this->input->post('idmaterial');
+		$incident = $this->input->post('incident');
 		$tanggal = $this->input->post('tanggal');
 		$kategori = $this->input->post('kategori');
 		$kode_material = $this->input->post('kode_material');
@@ -133,6 +136,7 @@ class Material extends CI_Controller {
 		// Validation
 		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != ''){
 			$data = array(
+				'incident' => $incident,
 				'tanggal' => $tanggal,
 				'kategori' => $kategori,
 				'kode_material' => $kode_material,
