@@ -6,7 +6,7 @@ class Material extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Material_model');
+		// $this->load->model('Material_model');
 		session_start();
 	}
 
@@ -41,7 +41,6 @@ class Material extends CI_Controller {
 			$data['status_pengiriman_list'] = ['Dalam Pengiriman', 'On Loc'];
 
 			$this->load->view('navbar', $title);
-			die();
 			$this->load->view('material', $data);
 		} else {
 			header('location: ./DashboardNoc');
