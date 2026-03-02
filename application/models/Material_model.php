@@ -113,7 +113,8 @@ class Material_model extends CI_Model {
 	 */
 	public function get_status_terpakai()
 	{
-		$this->db->select('DISTINCT status_terpakai');
+		$this->db->distinct();
+		$this->db->select('status_terpakai');
 		$this->db->from('material');
 		$this->db->where('status_terpakai !=', '');
 		return $this->db->get()->result();
@@ -124,7 +125,8 @@ class Material_model extends CI_Model {
 	 */
 	public function get_status_pengiriman()
 	{
-		$this->db->select('DISTINCT status_pengiriman');
+		$this->db->distinct();
+		$this->db->select('status_pengiriman');
 		$this->db->from('material');
 		$this->db->where('status_pengiriman !=', '');
 		return $this->db->get()->result();
