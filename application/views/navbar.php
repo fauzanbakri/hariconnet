@@ -27,7 +27,12 @@
     <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
        <!-- Bootstrap Css -->
     <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-    
+
+    <!-- DataTables Css -->
+    <link href="js/cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="js/cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <link href="js/cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+
 
 </head>
 
