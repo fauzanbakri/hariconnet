@@ -900,7 +900,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 responsivePriority: 2,
                 visible: true
             },
-            
+            {
+                targets: 10, // Deskripsi Insiden
+                responsivePriority: 1,
+                width: '100px'
+            }
         ],
         responsive: true,
         order: [],
