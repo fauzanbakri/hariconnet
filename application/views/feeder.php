@@ -1001,7 +1001,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 visible: false
             },
         ],
-        responsive: true,
+        responsive: false,
         order: [],
     });
     const kolomTipe = 4;
