@@ -977,18 +977,13 @@ document.addEventListener("DOMContentLoaded", function() {
         ],
         order: [[19, 'desc']],
         columnDefs: [
-             {
-                targets: 14, // Deskripsi Insiden
-                responsivePriority: 1,
-                width: '40px'
-            }
             {
                 targets: 20, // Deskripsi Insiden
                 responsivePriority: 2,
                 width: '40px'
             }
         ],
-        responsive: true
+        responsive: true,
     });
 
     // Event filtering
