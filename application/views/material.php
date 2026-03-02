@@ -284,11 +284,19 @@
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Kode Material</label>
-                                <div class="form-control" id="displayKodeMaterial" style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 8px;">-</div>
+                                <p id="displayKodeMaterial">-</p>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Deskripsi Material</label>
-                                <div class="form-control" id="displayDeskripsiMaterial" style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 8px;">-</div>
+                                <p id="displayDeskripsiMaterial">-</p>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Kode Material Terpakai</label>
+                                <p id="displayKodeMaterialTerpakai">-</p>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Deskripsi Material Terpakai</label>
+                                <p id="displayDeskripsiMaterialTerpakai">-</p>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Keterangan</label>
@@ -397,11 +405,19 @@
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Kode Material</label>
-                                <div class="form-control" id="editDisplayKodeMaterial" style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 8px;">-</div>
+                                <p id="editDisplayKodeMaterial">-</p>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Deskripsi Material</label>
-                                <div class="form-control" id="editDisplayDeskripsiMaterial" style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 8px;">-</div>
+                                <p id="editDisplayDeskripsiMaterial">-</p>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Kode Material Terpakai</label>
+                                <p id="editDisplayKodeMaterialTerpakai">-</p>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Deskripsi Material Terpakai</label>
+                                <p id="editDisplayDeskripsiMaterialTerpakai">-</p>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Keterangan</label>
@@ -469,6 +485,8 @@ function resetForm() {
     document.getElementById('ket').value = '';
     document.getElementById('displayKodeMaterial').textContent = '-';
     document.getElementById('displayDeskripsiMaterial').textContent = '-';
+    document.getElementById('displayKodeMaterialTerpakai').textContent = '-';
+    document.getElementById('displayDeskripsiMaterialTerpakai').textContent = '-';
 }
 
 function saveMaterial() {
@@ -642,6 +660,29 @@ $(document).ready(function () {
             });
         }
 
+        // Fetch and display kode_material_terpakai details
+        const kodeMaterialTerpakai = data.kode_material_terpakai;
+        if (kodeMaterialTerpakai) {
+            $.ajax({
+                url: 'Material/getKodeMaterialDetail?kode=' + kodeMaterialTerpakai,
+                type: 'GET',
+                success: function(response) {
+                    const detailData = JSON.parse(response);
+                    if (detailData && detailData.kode_material) {
+                        $('#editDisplayKodeMaterialTerpakai').text(detailData.kode_material);
+                        $('#editDisplayDeskripsiMaterialTerpakai').text(detailData.deskripsi_material ? detailData.deskripsi_material : '-');
+                    } else {
+                        $('#editDisplayKodeMaterialTerpakai').text('-');
+                        $('#editDisplayDeskripsiMaterialTerpakai').text('-');
+                    }
+                },
+                error: function() {
+                    $('#editDisplayKodeMaterialTerpakai').text('-');
+                    $('#editDisplayDeskripsiMaterialTerpakai').text('-');
+                }
+            });
+        }
+
         modal.show();
     });
 
@@ -762,6 +803,62 @@ $(document).ready(function () {
         } else {
             $('#editDisplayKodeMaterial').text('-');
             $('#editDisplayDeskripsiMaterial').text('-');
+        }
+    });
+
+    // Event listener for kode_material_terpakai change in Add Material modal
+    $('#kode_material_terpakai').on('change keyup', function() {
+        const kodeMaterial = $(this).val();
+        if (kodeMaterial) {
+            $.ajax({
+                url: 'Material/getKodeMaterialDetail?kode=' + kodeMaterial,
+                type: 'GET',
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    if (data && data.kode_material) {
+                        $('#displayKodeMaterialTerpakai').text(data.kode_material);
+                        $('#displayDeskripsiMaterialTerpakai').text(data.deskripsi_material ? data.deskripsi_material : '-');
+                    } else {
+                        $('#displayKodeMaterialTerpakai').text('-');
+                        $('#displayDeskripsiMaterialTerpakai').text('-');
+                    }
+                },
+                error: function() {
+                    $('#displayKodeMaterialTerpakai').text('-');
+                    $('#displayDeskripsiMaterialTerpakai').text('-');
+                }
+            });
+        } else {
+            $('#displayKodeMaterialTerpakai').text('-');
+            $('#displayDeskripsiMaterialTerpakai').text('-');
+        }
+    });
+
+    // Event listener for kode_material_terpakai change in Edit Material modal
+    $('#editKodeMaterialTerpakai').on('change keyup', function() {
+        const kodeMaterial = $(this).val();
+        if (kodeMaterial) {
+            $.ajax({
+                url: 'Material/getKodeMaterialDetail?kode=' + kodeMaterial,
+                type: 'GET',
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    if (data && data.kode_material) {
+                        $('#editDisplayKodeMaterialTerpakai').text(data.kode_material);
+                        $('#editDisplayDeskripsiMaterialTerpakai').text(data.deskripsi_material ? data.deskripsi_material : '-');
+                    } else {
+                        $('#editDisplayKodeMaterialTerpakai').text('-');
+                        $('#editDisplayDeskripsiMaterialTerpakai').text('-');
+                    }
+                },
+                error: function() {
+                    $('#editDisplayKodeMaterialTerpakai').text('-');
+                    $('#editDisplayDeskripsiMaterialTerpakai').text('-');
+                }
+            });
+        } else {
+            $('#editDisplayKodeMaterialTerpakai').text('-');
+            $('#editDisplayDeskripsiMaterialTerpakai').text('-');
         }
     });
 
