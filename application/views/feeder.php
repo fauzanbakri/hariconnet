@@ -895,15 +895,21 @@ document.addEventListener("DOMContentLoaded", function() {
         ],
          columnDefs: [
             {
-                targets: 10,
+                targets: 18,
                 className: 'priority-column',
-                responsivePriority: 3,
+                responsivePriority: 1,
                 visible: true
             },
             {
-                targets: 11,
+                targets: 17,
                 className: 'priority-column',
-                responsivePriority: 1,
+                responsivePriority: 2,
+                visible: true
+            },
+            {
+                targets: 16,
+                className: 'priority-column',
+                responsivePriority: 3,
                 visible: true
             },
             {
@@ -913,9 +919,81 @@ document.addEventListener("DOMContentLoaded", function() {
                 visible: true
             },
             {
-                targets: 18,
+                targets: 13,
                 className: 'priority-column',
-                responsivePriority: 2,
+                responsivePriority: 5,
+                visible: true
+            },
+            {
+                targets: 12,
+                className: 'priority-column',
+                responsivePriority: 6,
+                visible: true
+            },
+            {
+                targets: 9,
+                className: 'priority-column',
+                responsivePriority: 7,
+                visible: true
+            },
+            {
+                targets: 10,
+                className: 'priority-column',
+                responsivePriority: 8,
+                visible: true
+            },
+            {
+                targets: 8,
+                className: 'priority-column',
+                responsivePriority: 9,
+                visible: true
+            },
+            {
+                targets: 7,
+                className: 'priority-column',
+                responsivePriority: 10,
+                visible: true
+            },
+            {
+                targets: 6,
+                className: 'priority-column',
+                responsivePriority: 11,
+                visible: true
+            },
+            {
+                targets: 5,
+                className: 'priority-column',
+                responsivePriority: 12,
+                visible: true
+            },
+            {
+                targets: 4,
+                className: 'priority-column',
+                responsivePriority: 13,
+                visible: true
+            },
+            {
+                targets: 3,
+                className: 'priority-column',
+                responsivePriority: 14,
+                visible: true
+            },
+            {
+                targets: 2,
+                className: 'priority-column',
+                responsivePriority: 15,
+                visible: true
+            },
+            {
+                targets: 1,
+                className: 'priority-column',
+                responsivePriority: 16,
+                visible: true
+            },
+            {
+                targets: 0,
+                className: 'priority-column',
+                responsivePriority: 17,
                 visible: true
             },
             {
