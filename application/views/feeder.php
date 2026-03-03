@@ -906,7 +906,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 width: '100px'
             }
         ],
-        responsive: true,
+        responsive: false,  // disable auto-hiding
+        scrollX: true,      // allow horizontal scrolling
         order: [],
     });
     const kolomTipe = 4;
