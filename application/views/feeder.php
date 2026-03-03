@@ -894,24 +894,16 @@ document.addEventListener("DOMContentLoaded", function() {
             ['All', 10, 25, 50]
         ],
          columnDefs: [
-            // priority list (1 = highest)
-            { targets: 18, responsivePriority: 1 }, // Action
-            { targets: 17, responsivePriority: 2 }, // Timestamp
-            { targets: 16, responsivePriority: 3 }, // Last Update By
-            { targets: 15, responsivePriority: 4 }, // Keterangan
-            { targets: 13, responsivePriority: 5 }, // Tipe Penyebab
-            { targets: 12, responsivePriority: 6 }, // Jumlah Tiket
-            { targets: 9,  responsivePriority: 7 }, // Tim
-            { targets: 10, responsivePriority: 8, width: '100px' }, // Deskripsi Insiden
-            { targets: 8,  responsivePriority: 9 }, // Deskripsi
-            { targets: 7,  responsivePriority: 10 }, // OLT
-            { targets: 6,  responsivePriority: 11 }, // Kode Area
-            { targets: 5,  responsivePriority: 12 }, // KP
-            { targets: 4,  responsivePriority: 13 }, // Tipe
-            { targets: 3,  responsivePriority: 14 }, // Durasi
-            { targets: 2,  responsivePriority: 15 }, // Downtime
-            { targets: 1,  responsivePriority: 16 }, // Insiden
-            { targets: 0,  responsivePriority: 17, className: 'priority-column', visible: true } // No
+            {
+                targets: 0,
+                className: 'priority-column',
+                responsivePriority: 2,
+                visible: true
+            },
+            {
+                targets: 10,
+                width: '100px'
+            }
         ],
         responsive: true,
         order: [],
