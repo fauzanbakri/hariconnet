@@ -325,7 +325,7 @@
 
                                 </div>
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                    <table id="example1" class="table table-bordered dt-responsive table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -907,7 +907,8 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         ],
         responsive: false,  // disable auto-hiding
-        scrollX: true,      // allow horizontal scrolling
+        scrollX: false,      // turn off horizontal scroll to fit on screen
+        autoWidth: false,
         order: [],
     });
     const kolomTipe = 4;
@@ -925,6 +926,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+    <style>
+        /* allow table cells to wrap onto multiple lines and break long words */
+        #example1 td, #example1 th {
+            white-space: normal !important;
+            word-break: break-word;
+            max-width: 120px;
+        }
+    </style>
 
 </body>
 
