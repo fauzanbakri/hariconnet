@@ -904,6 +904,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 targets: 10,
                 responsivePriority: 1,
                 width: '100px'
+            },
+            {
+                targets: 14,
+                visible: false
             }
         ],
         responsive: false,  // disable auto-hiding
