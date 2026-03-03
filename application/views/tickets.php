@@ -331,7 +331,7 @@
 
                                 </div>
                                 <div class="card-body">
-                                    <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                    <table id="example" class="table table-bordered dt-responsive table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Priority</th>
@@ -978,77 +978,13 @@ document.addEventListener("DOMContentLoaded", function() {
         order: [[19, 'desc']],
         columnDefs: [
             {
-                targets: 0, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 1, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 2, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 3, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 4, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 5, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 6, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 7, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 8, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 9, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 10, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 11, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 12, // Deskripsi Insiden
-                responsivePriority: 2,
-                width: '40px'
-            },
-            {
-                targets: 20, // Deskripsi Insiden
-                responsivePriority: 10,
-                width: '40px'
+                targets: 14,  // ID column
+                visible: false
             }
         ],
-        responsive: true
+        responsive: false,
+        scrollX: false,
+        autoWidth: false
     });
 
     // Event filtering
@@ -1061,6 +997,16 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+    <style>
+        /* allow table cells to wrap onto multiple lines and break long words */
+        #example td, #example th {
+            white-space: normal !important;
+            word-break: break-word;
+            max-width: 120px;
+        }
+    </style>
+
 </body>
 
 
