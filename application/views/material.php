@@ -513,6 +513,7 @@ $(document).on('click', '.tandai-terpakai-btn', function() {
                     success: function(res) {
                         if (res.status && res.status === 'success') {
                             var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                            // Kode Material Terpakai (td index 6) dan SN Terpakai (td index 7)
                             row.children('td').eq(6).text('');
                             row.children('td').eq(7).text('');
                             row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
@@ -555,10 +556,10 @@ $('#simpanTandaiTerpakai').on('click', function() {
             if (res.status && res.status === 'success') {
                 // Update row in table
                 var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
-                // SN Terpakai (td index 6)
-                row.children('td').eq(6).text(sn_terpakai);
-                // Kode Material Terpakai (td index 7)
-                row.children('td').eq(7).text(kode_material_terpakai);
+                // Kode Material Terpakai (td index 6)
+                row.children('td').eq(6).text(kode_material_terpakai);
+                // SN Terpakai (td index 7)
+                row.children('td').eq(7).text(sn_terpakai);
                 // Status Terpakai badge (td index 13)
                 row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
                 // Disable button
