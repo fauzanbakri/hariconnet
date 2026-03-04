@@ -402,7 +402,10 @@
         if ($.fn.DataTable) {
             $('#databc').DataTable({
                 lengthMenu: [[-1,10,25,50], ['All',10,25,50]],
-                responsive: true
+                responsive: true,
+                columnDefs: [
+                    { responsivePriority: 1, targets: 12 }
+                ]
             });
         }
     });
