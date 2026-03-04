@@ -902,7 +902,7 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             {
                 targets: 6,
-                width: '60px' // smaller kode area
+                width: '30px' // smaller kode area
             },
             {
                 targets: 10,
@@ -911,7 +911,7 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             {
                 targets: 12,
-                width: '60px' // smaller jumlah tiket
+                width: '30px' // smaller jumlah tiket
             },
             {
                 targets: 14,
