@@ -482,7 +482,49 @@ $(document).on('click', '.tandai-terpakai-btn', function() {
         var modal = new bootstrap.Modal(document.getElementById('tandaiTerpakaiModal'));
         modal.show();
     } else {
-        Swal.fire('Kategori bukan FOT', 'Tandai Terpakai hanya untuk kategori FOT.', 'info');
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Kategori bukan FOT. Tandai material ini sebagai terpakai?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, tandai',
+            cancelButtonText: 'Batal',
+            customClass: {
+                confirmButton: 'btn btn-primary w-xs me-2 mt-2',
+                cancelButton: 'btn btn-light w-xs mt-2'
+            },
+            buttonsStyling: false
+        }).then(function(result) {
+            if (result.isConfirmed) {
+                // langsung tandai terpakai tanpa kode/sn
+                $.ajax({
+                    url: 'Material/tandai_terpakai',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        idmaterial: idmaterial,
+                        kode_material_terpakai: '',
+                        sn_terpakai: ''
+                    },
+                    success: function(res) {
+                        if (res.status && res.status === 'success') {
+                            var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                            row.children('td').eq(6).text('');
+                            row.children('td').eq(7).text('');
+                            row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
+                            var btn = row.find('.tandai-terpakai-btn');
+                            btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
+                            Swal.fire('Berhasil', 'Material telah ditandai terpakai.', 'success');
+                        } else {
+                            Swal.fire('Error', res.message || 'Gagal memperbarui status.', 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire('Error', 'Terjadi kesalahan: ' + error, 'error');
+                    }
+                });
+            }
+        });
     }
 });
 
