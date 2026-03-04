@@ -169,8 +169,12 @@
                                                         <td><span class='badge bg-warning'>".$material->status_terpakai."</span></td>
                                                         <td><span class='badge ".(($material->status_pengiriman == 'Dalam Pengiriman') ? 'bg-primary' : 'bg-secondary')."'>".$material->status_pengiriman."</span></td>
                                                         <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
-                                                        // Tombol Tandai Terpakai
-                                                        echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
+                                                        // Tombol Tandai Terpakai (disable jika sudah 'Sudah')
+                                                        if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
+                                                            echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
+                                                        } else {
+                                                            echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
+                                                        }
                                                         if(
                                                             $_SESSION['role']=='Superadmin' ||
                                                             $_SESSION['role']=='Team Leader'
