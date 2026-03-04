@@ -491,20 +491,44 @@ $('#simpanTandaiTerpakai').on('click', function() {
     var idmaterial = $('#tandaiIdMaterial').val();
     var kode_material_terpakai = $('#tandaiKodeMaterialTerpakai').val();
     var sn_terpakai = $('#tandaiSnTerpakai').val();
-    // TODO: Kirim data ke backend via AJAX (implementasi tergantung backend)
-    // Contoh:
-    /*
-    $.post('material/tandai_terpakai', {
-        idmaterial: idmaterial,
-        kode_material_terpakai: kode_material_terpakai,
-        sn_terpakai: sn_terpakai
-    }, function(res) {
-        // reload table atau tampilkan notifikasi
+    if (!idmaterial) {
+        Swal.fire('Error', 'ID material tidak ditemukan.', 'error');
+        return;
+    }
+
+    $.ajax({
+        url: 'Material/tandai_terpakai',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            idmaterial: idmaterial,
+            kode_material_terpakai: kode_material_terpakai,
+            sn_terpakai: sn_terpakai
+        },
+        success: function(res) {
+            if (res.status && res.status === 'success') {
+                // Update row in table
+                var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                // SN Terpakai (td index 6)
+                row.children('td').eq(6).text(sn_terpakai);
+                // Kode Material Terpakai (td index 7)
+                row.children('td').eq(7).text(kode_material_terpakai);
+                // Status Terpakai badge (td index 13)
+                row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
+                // Disable button
+                var btn = row.find('.tandai-terpakai-btn');
+                btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
+
+                $('#tandaiTerpakaiModal').modal('hide');
+                Swal.fire('Berhasil', 'Material telah ditandai terpakai.', 'success');
+            } else {
+                Swal.fire('Error', res.message || 'Gagal menyimpan', 'error');
+            }
+        },
+        error: function(xhr, status, error) {
+            Swal.fire('Error', 'Terjadi kesalahan: ' + error, 'error');
+        }
     });
-    */
-    // Tutup modal
-    $('#tandaiTerpakaiModal').modal('hide');
-    Swal.fire('Berhasil', 'Material telah ditandai terpakai.', 'success');
 });
 const button = document.getElementById('toast');
 

@@ -192,4 +192,31 @@ class Material extends CI_Controller {
 		$result = $this->db->get()->row();
 		echo json_encode($result);
 	}
+
+	/**
+	 * Tandai material terpakai (AJAX)
+	 */
+	public function tandai_terpakai()
+	{
+		$idmaterial = $this->input->post('idmaterial');
+		$kode_material_terpakai = $this->input->post('kode_material_terpakai');
+		$sn_terpakai = $this->input->post('sn_terpakai');
+
+		if (!$idmaterial) {
+			echo json_encode(['status' => 'error', 'message' => 'ID material tidak valid']);
+			return;
+		}
+
+		$data = [
+			'kode_material_terpakai' => $kode_material_terpakai,
+			'sn_terpakai' => $sn_terpakai,
+			'status_terpakai' => 'Sudah'
+		];
+
+		if ($this->Material_model->update_material($idmaterial, $data)) {
+			echo json_encode(['status' => 'success']);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui material']);
+		}
+	}
 }
