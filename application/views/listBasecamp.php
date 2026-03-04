@@ -108,27 +108,18 @@
                                         </thead>
                                         <tbody>
                                             <?php foreach($basecamp as $row){
-+                                            echo "<tr>";
-+                                            echo "<td>".$row->idBc."</td>";
-+                                            echo "<td>".$row->kp."</td>";
-+                                            echo "<td>".$row->mitra."</td>";
-+                                            echo "<td>".$row->lat."</td>";
-+                                            echo "<td>".$row->longi."</td>";
-+                                            echo "<td>".$row->sloc."</td>";
-+                                            echo "<td>".$row->namaAkun."</td>";
-+                                            echo "<td>".$row->kendaraan."</td>";
-+                                            echo "<td>
-+                                                <div class='dropdown d-inline-block'>
-+                                                    <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
-+                                                        <i class='ri-more-fill align-middle'></i>
-+                                                    </button>
-+                                                    <ul class='dropdown-menu dropdown-menu-end'>
-+                                                        <li><a href='#' class='dropdown-item remove-item-btn' data-idBc='".$row->idBc."'> <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
-+                                                    </ul>
-+                                                </div>
-+                                            </td>";
-+                                            echo "</tr>";
-+                                            }
+                                                echo "<tr>";
+                                                echo "<td>".$row->idBc."</td>";
+                                                echo "<td>".$row->kp."</td>";
+                                                echo "<td>".$row->mitra."</td>";
+                                                echo "<td>".$row->lat."</td>";
+                                                echo "<td>".$row->longi."</td>";
+                                                echo "<td>".$row->sloc."</td>";
+                                                echo "<td>".$row->namaAkun."</td>";
+                                                echo "<td>".$row->kendaraan."</td>";
+                                                echo "<td>\n                                                <div class='dropdown d-inline-block'>\n                                                    <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n                                                        <i class='ri-more-fill align-middle'></i>\n                                                    </button>\n                                                    <ul class='dropdown-menu dropdown-menu-end'>\n                                                        <li><a href='#' class='dropdown-item remove-item-btn' data-idBc='".$row->idBc."'> <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n                                                    </ul>\n                                                </div>\n                                            </td>";
+                                                echo "</tr>";
+                                            }
                                             ?>
                                         </tbody>
                                     </table>
