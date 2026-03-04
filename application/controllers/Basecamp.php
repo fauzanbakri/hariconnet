@@ -24,10 +24,19 @@ class Basecamp extends CI_Controller {
         $sloc = $this->input->post('sloc');
         $namaAkun = $this->input->post('namaAkun');
         $kendaraan = $this->input->post('kendaraan');
+        // debug log incoming POST data
+        @file_put_contents('/tmp/basecamp_debug.log', date('Y-m-d H:i:s') . " INSERT ATTEMPT\n" . print_r($_POST, true) . "\n", FILE_APPEND);
         if($mitra!=''){
             $q = $this->db->query("INSERT INTO basecamp(kp, mitra, lat, longi, sloc, namaAkun, kendaraan) VALUES('$kp','$mitra','$lat','$longi','$sloc','$namaAkun','$kendaraan')");
-            if($q) echo 'success'; else { $e = $this->db->error(); echo $e['message']; }
+            if($q) {
+                echo 'success';
+            } else {
+                $e = $this->db->error();
+                @file_put_contents('/tmp/basecamp_debug.log', date('Y-m-d H:i:s') . " DB ERROR: " . print_r($e, true) . "\n", FILE_APPEND);
+                echo $e['message'];
+            }
         }else{
+            @file_put_contents('/tmp/basecamp_debug.log', date('Y-m-d H:i:s') . " MISSING mitra\n", FILE_APPEND);
             echo 'Mitra Cannot Empty';
         }
     }
