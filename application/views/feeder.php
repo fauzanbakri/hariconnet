@@ -907,7 +907,7 @@ document.addEventListener("DOMContentLoaded", function() {
             {
                 targets: 10,
                 responsivePriority: 1,
-                width: '120px'
+                width: '200px'
             },
             {
                 targets: 12,
