@@ -166,9 +166,11 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label  class="form-label">Tim</label>
-                                                                <input type="text" class="form-control" id="tim" name="tim" autocomplete="off" placeholder="Tim Serpo">
-                                                            </div>
+                                                                    <label  class="form-label">Tim</label>
+                                                                    <select id="tim" name="tim" class="form-select js-team-select" style="width:100%">
+                                                                        <option value="">-- Pilih Tim --</option>
+                                                                    </select>
+                                                                </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
@@ -301,7 +303,9 @@
                                                     </div>
                                                     <div class="col-xxl-6">
                                                             <label  class="form-label">Status</label>
-                                                            <select class="form-select mb-3" aria-label="Default select example" id="editstatus" name="editstatus" >
+                                                           <select class="form-select js-team-select-edit" name="edittim" id="edittim" style="width:100%">
+                                                               <option value="">-- Pilih Tim --</option>
+                                                           </select>
                                                                 <option value="NEW">NEW</option>
                                                                 <option value="OPEN">OPEN</option>
                                                                 <option value="ON PROGRESS">ON PROGRESS</option>
@@ -997,6 +1001,77 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+    <!-- Select2 for searchable team dropdown -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        function loadAllTeams($select, selected) {
+            $.ajax({
+                url: 'Tickets/getAllTim',
+                method: 'GET',
+                success: function(res) {
+                    let data = [];
+                    try { data = JSON.parse(res); } catch(e) { data = res; }
+                    $select.empty();
+                    $select.append('<option value="">-- Pilih Tim --</option>');
+                    data.forEach(function(item){
+                        const text = '(' + (item.kendaraan || '') + ') ' + item.nama;
+                        const opt = $('<option>').val(item.nama).text(text);
+                        $select.append(opt);
+                    });
+                    if(selected) {
+                        $select.val(selected);
+                    }
+                    $select.trigger('change');
+                },
+                error: function(){
+                    $select.html('<option value="">-- Pilih Tim --</option>');
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $('.js-team-select').select2({
+                placeholder: '-- Pilih Tim --',
+                allowClear: true,
+                dropdownParent: $('#exampleModalgrid')
+            });
+            $('.js-team-select-edit').select2({
+                placeholder: '-- Pilih Tim --',
+                allowClear: true,
+                dropdownParent: $('#exampleModalgrid1')
+            });
+
+            // load teams for add modal
+            loadAllTeams($('#tim'));
+        });
+
+        // when opening edit modal, populate teams and set selected
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalElement = document.getElementById('exampleModalgrid1');
+            const modal = new bootstrap.Modal(modalElement);
+            document.querySelectorAll('.edit-item-btn').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const ticketData = this.dataset;
+                    const fields = [
+                        'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
+                        'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editkec', 'editprovinsi', 'editurutan', 'edittimestamp'
+                    ];
+                    fields.forEach(field => {
+                        const inputElement = document.getElementById(field);
+                        if (inputElement) {
+                            inputElement.value = ticketData[field] || '';
+                        }
+                    });
+                    // load teams then set selected
+                    const selectedTim = ticketData['edittim'] || '';
+                    loadAllTeams($('#edittim'), selectedTim);
+                    modal.show();
+                });
+            });
+        });
+    </script>
 
     <style>
         /* allow table cells to wrap onto multiple lines and break long words */

@@ -69,6 +69,11 @@ class Tickets extends CI_Controller {
 			echo $row->serpo;
 		}
 	}
+
+	public function getAllTim(){
+		$q = $this->db->query("SELECT t.nama, b.kendaraan FROM tim t LEFT JOIN basecamp b ON t.idBc = b.idBc ORDER BY b.kendaraan DESC, t.nama ASC")->result();
+		echo json_encode($q);
+	}
 	public function deleteRow()
 	{
 		$idTiket = $this->input->get('id');
