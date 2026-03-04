@@ -128,8 +128,8 @@
                                                 <th>Kode Material Terpakai</th>
                                                 <th>Merk</th>
                                                 <th>Tim</th>
-                                                <th>Satuan</th>
                                                 <th>QTY</th>
+                                                <th>Satuan</th>
                                                 <th>Status Reservasi</th>
                                                 <th>Status Terpakai</th>
                                                 <th>Status Pengiriman</th>
@@ -156,18 +156,18 @@
                                                         <td>".$count."</td>
                                                         <td>".$material->incident."</td>
                                                         <td>".date('d-m-Y', strtotime($material->tanggal))."</td>
-                                                        <td>".(( $material->kategori == 'FOT') ? "<span class='badge bg-primary'>".$material->kategori."</span>" : "<span class='badge bg-info'>".$material->kategori."</span>")."</td>
+                                                        <td class='text-center'>".(( $material->kategori == 'FOT') ? "<span class='badge bg-primary'>".$material->kategori."</span>" : "<span class='badge bg-info'>".$material->kategori."</span>")."</td>
                                                         <td>".$material->kode_material."</td>
                                                         <td>".$material->sn."</td>
                                                         <td>".(($material->kategori == 'FOC') ? '' : $material->sn_terpakai)."</td>
                                                         <td>".(($material->kategori == 'FOC') ? '' : $material->kode_material_terpakai)."</td>
                                                         <td>".$material->merk."</td>
                                                         <td>".$material->nama."</td>
-                                                        <td>".$material->satuan."</td>
                                                         <td>".$material->qty."</td>
-                                                        <td>".(( $material->status_reservasi == 'Sudah') ? "<span class='badge bg-success'>".$material->status_reservasi."</span>" : "<span class='badge bg-danger'>".$material->status_reservasi."</span>")."</td>
-                                                        <td>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
-                                                        <td>".(( $material->status_pengiriman == 'On Loc') ? "<span class='badge bg-primary'>".$material->status_pengiriman."</span>" : "<span class='badge bg-info'>".$material->status_pengiriman."</span>")."</td>
+                                                        <td>".$material->satuan."</td>
+                                                        <td class='text-center'>".(( $material->status_reservasi == 'Sudah') ? "<span class='badge bg-success'>".$material->status_reservasi."</span>" : "<span class='badge bg-danger'>".$material->status_reservasi."</span>")."</td>
+                                                        <td class='text-center'>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
+                                                        <td class='text-center'>".(( $material->status_pengiriman == 'On Loc') ? "<span class='badge bg-primary'>".$material->status_pengiriman."</span>" : "<span class='badge bg-info'>".$material->status_pengiriman."</span>")."</td>
                                                         <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
                                                         // Tombol Tandai Terpakai (disable jika sudah 'Sudah')
                                                         if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
