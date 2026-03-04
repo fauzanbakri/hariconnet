@@ -484,7 +484,7 @@ $(document).on('click', '.tandai-terpakai-btn', function() {
     } else {
         Swal.fire({
             title: 'Konfirmasi',
-            text: 'Kategori bukan FOT. Tandai material ini sebagai terpakai?',
+            text: 'Tandai material ini sebagai terpakai?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya, tandai',
