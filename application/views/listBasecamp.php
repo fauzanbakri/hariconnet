@@ -39,7 +39,12 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label class="form-label">KP</label>
-                                                                <input type="text" class="form-control" name="kp" id="kp" autocomplete="off" placeholder="KP">
+                                                                <select class="form-select" name="kp" id="kp">
+                                                                    <option value="">-- Select KP --</option>
+                                                                    <option value="MAKASSAR">MAKASSAR</option>
+                                                                    <option value="KENDARI">KENDARI</option>
+                                                                    <option value="MANADO">MANADO</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -75,7 +80,11 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label class="form-label">Kendaraan</label>
-                                                                <input type="text" class="form-control" name="kendaraan" id="kendaraan" autocomplete="off" placeholder="Kendaraan">
+                                                                <select class="form-select" name="kendaraan" id="kendaraan">
+                                                                    <option value="">-- Select Kendaraan --</option>
+                                                                    <option value="MOTOR">MOTOR</option>
+                                                                    <option value="MOBIL">MOBIL</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
@@ -104,7 +113,12 @@
                                                             <div>
                                                                 <input type="hidden" class="form-control" name="editidBc" id="editidBc" autocomplete="off">
                                                                 <label class="form-label">KP</label>
-                                                                <input type="text" class="form-control" name="editkp" id="editkp" autocomplete="off" placeholder="KP">
+                                                                <select class="form-select" name="editkp" id="editkp">
+                                                                    <option value="">-- Select KP --</option>
+                                                                    <option value="MAKASSAR">MAKASSAR</option>
+                                                                    <option value="KENDARI">KENDARI</option>
+                                                                    <option value="MANADO">MANADO</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -140,7 +154,11 @@
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label class="form-label">Kendaraan</label>
-                                                                <input type="text" class="form-control" name="editkendaraan" id="editkendaraan" autocomplete="off" placeholder="Kendaraan">
+                                                                <select class="form-select" name="editkendaraan" id="editkendaraan">
+                                                                    <option value="">-- Select Kendaraan --</option>
+                                                                    <option value="MOTOR">MOTOR</option>
+                                                                    <option value="MOBIL">MOBIL</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
