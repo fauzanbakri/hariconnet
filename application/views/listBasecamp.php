@@ -90,6 +90,71 @@
                                         </div>
                                     </div>
 
+                                    <!-- edit modal -->
+                                    <div class="modal fade" id="exampleModalgridEdit" tabindex="-1" aria-labelledby="exampleModalgridEditLabel" aria-modal="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalgridEditLabel">Edit Basecamp</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row g-3">
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <input type="hidden" class="form-control" name="editidBc" id="editidBc" autocomplete="off">
+                                                                <label class="form-label">KP</label>
+                                                                <input type="text" class="form-control" name="editkp" id="editkp" autocomplete="off" placeholder="KP">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Mitra</label>
+                                                                <input type="text" class="form-control" name="editmitra" id="editmitra" autocomplete="off" placeholder="Mitra">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Latitude</label>
+                                                                <input type="text" class="form-control" name="editlat" id="editlat" autocomplete="off" placeholder="Latitude">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Longitude</label>
+                                                                <input type="text" class="form-control" name="editlongi" id="editlongi" autocomplete="off" placeholder="Longitude">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">SLOC</label>
+                                                                <input type="text" class="form-control" name="editsloc" id="editsloc" autocomplete="off" placeholder="SLOC">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Nama Akun</label>
+                                                                <input type="text" class="form-control" name="editnamaAkun" id="editnamaAkun" autocomplete="off" placeholder="Nama Akun">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Kendaraan</label>
+                                                                <input type="text" class="form-control" name="editkendaraan" id="editkendaraan" autocomplete="off" placeholder="Kendaraan">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary" id="editsubmitBtn">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="card-body">
                                     <table id="databc" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
@@ -117,7 +182,7 @@
                                                 echo "<td>".$row->sloc."</td>";
                                                 echo "<td>".$row->namaAkun."</td>";
                                                 echo "<td>".$row->kendaraan."</td>";
-                                                echo "<td>\n                                                <div class='dropdown d-inline-block'>\n                                                    <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n                                                        <i class='ri-more-fill align-middle'></i>\n                                                    </button>\n                                                    <ul class='dropdown-menu dropdown-menu-end'>\n                                                        <li><a href='#' class='dropdown-item remove-item-btn' data-idBc='".$row->idBc."'> <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n                                                    </ul>\n                                                </div>\n                                            </td>";
+                                                echo "<td>\n                                                <div class='dropdown d-inline-block'>\n                                                    <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n                                                        <i class='ri-more-fill align-middle'></i>\n                                                    </button>\n                                                    <ul class='dropdown-menu dropdown-menu-end'>\n                                                        <li><a href='#' class='dropdown-item edit-item-btn' data-idBc='".$row->idBc."' data-kp='".$row->kp."' data-mitra='".$row->mitra."' data-lat='".$row->lat."' data-longi='".$row->longi."' data-sloc='".$row->sloc."' data-namaAkun='".$row->namaAkun."' data-kendaraan='".$row->kendaraan."'> <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>\n                                                        <li><a href='#' class='dropdown-item remove-item-btn' data-idBc='".$row->idBc."'> <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n                                                    </ul>\n                                                </div>\n                                            </td>";
                                                 echo "</tr>";
                                             }
                                             ?>
@@ -236,6 +301,81 @@
                     }
                 });
             }
+        });
+    });
+</script>
+<script>
+    // Edit basecamp handler
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.matches('.edit-item-btn')) {
+            e.preventDefault();
+            const el = e.target;
+            const id = el.getAttribute('data-idBc');
+            const kp = el.getAttribute('data-kp');
+            const mitra = el.getAttribute('data-mitra');
+            const lat = el.getAttribute('data-lat');
+            const longi = el.getAttribute('data-longi');
+            const sloc = el.getAttribute('data-sloc');
+            const namaAkun = el.getAttribute('data-namaAkun');
+            const kendaraan = el.getAttribute('data-kendaraan');
+            $('#editidBc').val(id);
+            $('#editkp').val(kp);
+            $('#editmitra').val(mitra);
+            $('#editlat').val(lat);
+            $('#editlongi').val(longi);
+            $('#editsloc').val(sloc);
+            $('#editnamaAkun').val(namaAkun);
+            $('#editkendaraan').val(kendaraan);
+            var modal = new bootstrap.Modal(document.getElementById('exampleModalgridEdit'));
+            modal.show();
+        }
+    });
+
+    $(document).ready(function () {
+        $('#editsubmitBtn').on('click', function (e) {
+            e.preventDefault();
+            const formData = {
+                idBc: $('[name="editidBc"]').val(),
+                kp: $('[name="editkp"]').val(),
+                mitra: $('[name="editmitra"]').val(),
+                lat: $('[name="editlat"]').val(),
+                longi: $('[name="editlongi"]').val(),
+                sloc: $('[name="editsloc"]').val(),
+                namaAkun: $('[name="editnamaAkun"]').val(),
+                kendaraan: $('[name="editkendaraan"]').val()
+            };
+            if (!formData.mitra) {
+                const button = document.getElementById('toast');
+                button.setAttribute('data-toast-text', 'Mitra Cannot Empty!');
+                button.setAttribute('data-toast-className', 'danger');
+                button.click();
+                return;
+            }
+            $.ajax({
+                url: 'Basecamp/editData',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if(response=='success'){
+                        const button = document.getElementById('toast');
+                        button.setAttribute('data-toast-text', 'Data Updated!');
+                        button.setAttribute('data-toast-className', 'success');
+                        button.click();
+                        location.reload();
+                    }else{
+                        const button = document.getElementById('toast');
+                        button.setAttribute('data-toast-text', response);
+                        button.setAttribute('data-toast-className', 'danger');
+                        button.click();
+                    }
+                },
+                error: function () {
+                    const button = document.getElementById('toast');
+                    button.setAttribute('data-toast-text', 'Error');
+                    button.setAttribute('data-toast-className', 'danger');
+                    button.click();
+                }
+            });
         });
     });
 </script>

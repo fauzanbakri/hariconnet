@@ -62,29 +62,10 @@ class ListTeam extends CI_Controller {
 		// date_default_timezone_set('Asia/Makassar');
 		// session_start();
 		$namatim = $this->input->post('namatim');
-		$lat = $this->input->post('lat');
-		$longi = $this->input->post('longi');
 		$chatid = $this->input->post('chatid');
-		$segmen = $this->input->post('segmen');
 		$idBc = $this->input->post('idBc');
 		if($namatim!=''){
-			$q = $this->db->query("INSERT INTO 
-			tim(
-			nama,
-			lat,
-			longi,
-			segmen,
-			chatId,
-			idBc
-			) 
-			VALUES(
-				'$namatim',
-				'$lat',
-				'$longi',
-				'$segmen',
-				'$chatid',
-				'$idBc'
-				)");
+			$q = $this->db->query("INSERT INTO tim(nama, chatId, idBc) VALUES('$namatim', '$chatid', '$idBc')");
 			if($q){
 				echo 'success';
 			}else{
@@ -102,21 +83,10 @@ class ListTeam extends CI_Controller {
 		// session_start();
 		$id = $this->input->post('idtim');
 		$namatim = $this->input->post('namatim');
-		$lat = $this->input->post('lat');
-		$longi = $this->input->post('longi');
 		$chatid = $this->input->post('chatid');
-		$segmen = $this->input->post('segmen');
 		$idBc = $this->input->post('idBc');
 		if($namatim!=''){
-			$q = $this->db->query("UPDATE tim SET
-			nama='$namatim',
-			lat='$lat',
-			longi='$longi',
-			segmen='$segmen',
-			chatId='$chatid',
-			idBc='$idBc'
-			WHERE idTim='$id'
-			");
+			$q = $this->db->query("UPDATE tim SET nama='$namatim', chatId='$chatid', idBc='$idBc' WHERE idTim='$id'");
 			if($q){
 				echo 'success';
 			}else{

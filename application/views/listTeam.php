@@ -56,22 +56,18 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Segmen</label>
-                                                            <select class="form-select mb-3" name="segmen" id="segmen" aria-label="Default select example">
-                                                                <option value="Retail">Retail</option>
-                                                                <option value="Korporat">Korporat</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Latitude</label>
-                                                                <input type="text" class="form-control" name="lat" id="lat" autocomplete="off" placeholder="Latitude">
+                                                                <label class="form-label">Chat ID Telegram</label>
+                                                                <input type="text" class="form-control" id="chatid" name="chatid" autocomplete="off" placeholder="Chat ID">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Longitude</label>
-                                                                <input type="text" class="form-control" name="longi" id="longi" autocomplete="off" placeholder="Longitude">
+                                                                <label for="lastName" class="form-label">Basecamp</label>
+                                                                <select class="form-select mb-3" name="idBc" id="idBc" aria-label="Default select example">
+                                                                    <option value="">-- Select Basecamp --</option>
+                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -120,31 +116,21 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label for="lastName" class="form-label">Segmen</label>
-                                                            <select class="form-select mb-3" name="editsegmen" id="editsegmen" aria-label="Default select example">
-                                                                <option value="Retail">Retail</option>
-                                                                <option value="Korporat">Korporat</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="lastName" class="form-label">Latitude</label>
-                                                                <input type="text" class="form-control" name="editlat" id="editlat" autocomplete="off" placeholder="Latitude">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="lastName" class="form-label">Longitude</label>
-                                                                <input type="text" class="form-control" name="editlongi" id="editlongi" autocomplete="off" placeholder="Longitude">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Chat ID Telegram</label>
                                                                 <input type="text" class="form-control" id="editchatid" name="editchatid" autocomplete="off" placeholder="Chat ID">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Basecamp</label>
+                                                                <select class="form-select mb-3" name="editidBc" id="editidBc" aria-label="Default select example">
+                                                                    <option value="">-- Select Basecamp --</option>
+                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
                                                             <div>
                                                                 <label for="lastName" class="form-label">Basecamp</label>
                                                                 <select class="form-select mb-3" name="editidBc" id="editidBc" aria-label="Default select example">
@@ -173,10 +159,8 @@
                                             <tr>
                                                 <th>id</th>
                                                 <th>Team Name</th>
+                                                <th>Chat ID</th>
                                                 <th>Basecamp</th>
-                                                <th>Lattitude</th>
-                                                <th>Longitude</th>
-                                                <th>Segment</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -188,18 +172,16 @@
                                                     <tr>
                                                         <td>".$row->idTim."</td>
                                                         <td>".$row->nama."</td>
+                                                        <td>".(isset($row->chatId)?$row->chatId:'')."</td>
                                                         <td>".(!empty($row->basecamp_mitra)?$row->basecamp_mitra:'-')."</td>
-                                                        <td>".(isset($row->lat)?$row->lat:'')."</td>
-                                                        <td>".(isset($row->longi)?$row->longi:'')."</td>
-                                                        <td>".(isset($row->segmen)?$row->segmen:'')."</td>
                                                         <td>
                                                         <div class='dropdown d-inline-block'>
-                                                            <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                               <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editlat='".(isset($row->lat)?$row->lat:'')."' data-editlongi='".(isset($row->longi)?$row->longi:'')."' data-editsegmen='".(isset($row->segmen)?$row->segmen:'')."' data-editchatId='".$row->chatId."' data-editidBc='".(!empty($row->basecamp_id)?$row->basecamp_id:'')."'>
+                                                                       <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editchatid='".$row->chatId."' data-editidBc='".(!empty($row->basecamp_id)?$row->basecamp_id:'')."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
@@ -353,12 +335,8 @@
                 e.preventDefault();
                 const formData = {
                     namatim: $('[name="namatim"]').val(),
-                    segmen: $('[name="segmen"]').val(),
-                    lat: $('[name="lat"]').val(),
-                    longi: $('[name="longi"]').val(),
                     chatid: $('[name="chatid"]').val(),
                     idBc: $('[name="idBc"]').val()
-                   
                 };
                 if (!formData.namatim) {
                     button.setAttribute('data-toast-text', 'Nama Tim Cannot Empty!');
@@ -397,9 +375,6 @@
                 const formData = {
                     idtim: $('[name="editidtim"]').val(),
                     namatim: $('[name="editnama"]').val(),
-                    segmen: $('[name="editsegmen"]').val(),
-                    lat: $('[name="editlat"]').val(),
-                    longi: $('[name="editlongi"]').val(),
                     chatid: $('[name="editchatid"]').val(),
                     idBc: $('[name="editidBc"]').val()
                 };
@@ -514,7 +489,7 @@
                 const ticketData = this.dataset;
                 console.log(ticketData);
                 const fields = [
-                    'editidtim', 'editnama', 'editlat', 'editlongi', 'editsegmen', 'editchatid'
+                    'editidtim', 'editnama', 'editchatid'
                 ];
                 fields.forEach(field => {
                     const inputElement = document.getElementById(field);
