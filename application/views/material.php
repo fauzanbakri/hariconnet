@@ -415,6 +415,10 @@
                                 </select>
                             </div>
                             <div class="col-xxl-6">
+                                <label class="form-label">Keterangan</label>
+                                <textarea type="text" class="form-control" name="editKet" id="editKet" autocomplete="off" placeholder="Keterangan"></textarea>
+                            </div>
+                            <div class="col-xxl-6">
                                 <label class="form-label">Kode Material</label>
                                 <p id="editDisplayKodeMaterial">-</p>
                             </div>
@@ -429,10 +433,6 @@
                             <div class="col-xxl-6">
                                 <label class="form-label">Deskripsi Material Terpakai</label>
                                 <p id="editDisplayDeskripsiMaterialTerpakai">-</p>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label class="form-label">Keterangan</label>
-                                <textarea type="text" class="form-control" name="editKet" id="editKet" autocomplete="off" placeholder="Keterangan"></textarea>
                             </div>
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
