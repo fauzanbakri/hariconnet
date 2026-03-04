@@ -66,25 +66,11 @@
                                                                 <label for="lastName" class="form-label">Basecamp</label>
                                                                 <select class="form-select mb-3" name="idBc" id="idBc" aria-label="Default select example">
                                                                     <option value="">-- Select Basecamp --</option>
-                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
+                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->namaAkun." (".$bc->kp.")</option>"; } ?>
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="lastName" class="form-label">Chat ID Telegram</label>
-                                                                <input type="text" class="form-control" id="chatid" name="chatid" autocomplete="off" placeholder="Chat ID">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label for="lastName" class="form-label">Basecamp</label>
-                                                                <select class="form-select mb-3" name="idBc" id="idBc" aria-label="Default select example">
-                                                                    <option value="">-- Select Basecamp --</option>
-                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
+                                                        
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -126,19 +112,11 @@
                                                                 <label for="lastName" class="form-label">Basecamp</label>
                                                                 <select class="form-select mb-3" name="editidBc" id="editidBc" aria-label="Default select example">
                                                                     <option value="">-- Select Basecamp --</option>
-                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
+                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->namaAkun." (".$bc->kp.")</option>"; } ?>
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12">
-                                                            <div>
-                                                                <label for="lastName" class="form-label">Basecamp</label>
-                                                                <select class="form-select mb-3" name="editidBc" id="editidBc" aria-label="Default select example">
-                                                                    <option value="">-- Select Basecamp --</option>
-                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
+                                                        
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -173,7 +151,7 @@
                                                         <td>".$row->idTim."</td>
                                                         <td>".$row->nama."</td>
                                                         <td>".(isset($row->chatId)?$row->chatId:'')."</td>
-                                                        <td>".(!empty($row->basecamp_mitra)?$row->basecamp_mitra:'-')."</td>
+                                                        <td>".(!empty($row->basecamp_namaAkun)?$row->basecamp_namaAkun:'-')."</td>
                                                         <td>
                                                         <div class='dropdown d-inline-block'>
                                                                <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>

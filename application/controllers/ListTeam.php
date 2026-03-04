@@ -22,7 +22,7 @@ class ListTeam extends CI_Controller {
 	{
 		$title['title']="List Team";
 		$q['tim'] = $this->db->query(
-		"SELECT t.*, b.mitra AS basecamp_mitra, b.kp AS basecamp_kp, b.idBc AS basecamp_id
+		"SELECT t.*, b.namaAkun AS basecamp_namaAkun, b.kp AS basecamp_kp, b.idBc AS basecamp_id
 		 FROM tim t
 		 LEFT JOIN basecamp b ON t.idBc = b.idBc"
 		)->result();
