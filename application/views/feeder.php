@@ -901,9 +901,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 visible: true
             },
             {
+                targets: 6,
+                width: '60px' // smaller kode area
+            },
+            {
                 targets: 10,
                 responsivePriority: 1,
                 width: '100px'
+            },
+            {
+                targets: 12,
+                width: '60px' // smaller jumlah tiket
             },
             {
                 targets: 14,
