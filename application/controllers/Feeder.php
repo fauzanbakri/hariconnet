@@ -56,6 +56,16 @@ class Feeder extends CI_Controller {
 			echo $row->kode;
 		}
 	}
+
+	public function getTimByKP(){
+		$kp = $this->input->get('kp');
+		if(!$kp){
+			echo json_encode([]);
+			return;
+		}
+		$q = $this->db->query("SELECT t.nama, b.kendaraan FROM tim t LEFT JOIN basecamp b ON t.idBc = b.idBc WHERE b.kp = ? ORDER BY b.kendaraan DESC, t.nama ASC", array($kp))->result();
+		echo json_encode($q);
+	}
 	public function deleteRow()
 	{
 		$idTiket = $this->input->get('id');

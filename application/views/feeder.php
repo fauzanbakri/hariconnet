@@ -160,9 +160,11 @@
                                                         <div class="col-xxl-6">
                                                             
                                                             <div>
-                                                                <label for="autoCompleteFruit" class="text-muted">Tim</label>
-                                                                <input id="tim" type="text" name="tim" dir="ltr" spellcheck=false autocomplete="off" autocapitalize="off">
-                                                            </div>
+                                                                    <label for="autoCompleteFruit" class="text-muted">Tim</label>
+                                                                    <select id="tim" name="tim" class="form-select js-team-select" style="width:100%">
+                                                                        <option value="">-- Pilih Tim --</option>
+                                                                    </select>
+                                                                </div>
                                                             
                                                             <!--  -->
                                                         </div>
@@ -273,7 +275,9 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Tim</label>
-                                                            <input class="form-control mb-3" aria-label="Default select example" name="edittim" id="edittim" >
+                                                            <select class="form-select js-team-select-edit" name="edittim" id="edittim" style="width:100%">
+                                                                <option value="">-- Pilih Tim --</option>
+                                                            </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Status</label>
@@ -575,6 +579,98 @@
                 }
             }
         }));
+    </script>
+    <!-- Select2 for searchable team dropdown -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        function loadTeamsByKP(kp, $select, selected) {
+            if(!kp) {
+                $select.html('<option value="">-- Pilih Tim --</option>');
+                $select.val('');
+                $select.trigger('change');
+                return;
+            }
+            $.ajax({
+                url: 'Feeder/getTimByKP?kp='+encodeURIComponent(kp),
+                method: 'GET',
+                success: function(res) {
+                    let data = [];
+                    try { data = JSON.parse(res); } catch(e) { data = res; }
+                    $select.empty();
+                    $select.append('<option value="">-- Pilih Tim --</option>');
+                    data.forEach(function(item){
+                        const text = '(' + (item.kendaraan || '') + ') ' + item.nama;
+                        const opt = $('<option>').val(item.nama).text(text);
+                        $select.append(opt);
+                    });
+                    if(selected) {
+                        $select.val(selected);
+                    }
+                    $select.trigger('change');
+                },
+                error: function(){
+                    $select.html('<option value="">-- Pilih Tim --</option>');
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            // init select2
+            $('.js-team-select, .js-team-select-edit').select2({
+                placeholder: '-- Pilih Tim --',
+                allowClear: true,
+                dropdownParent: $('#exampleModalgrid')
+            });
+
+            // ensure edit select uses correct modal parent
+            $('.js-team-select-edit').each(function(){
+                $(this).select2({
+                    placeholder: '-- Pilih Tim --',
+                    allowClear: true,
+                    dropdownParent: $('#exampleModalgrid1')
+                });
+            });
+
+            // when KP changes in add modal
+            $('#kp').on('change', function(){
+                const kp = $(this).val();
+                loadTeamsByKP(kp, $('#tim'));
+            });
+
+            // when KP changes in edit modal
+            $('#editkp').on('change', function(){
+                const kp = $(this).val();
+                loadTeamsByKP(kp, $('#edittim'));
+            });
+        });
+
+        // populate edit modal teams when opening
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalElement = document.getElementById('exampleModalgrid1');
+            const modal = new bootstrap.Modal(modalElement);
+            document.querySelectorAll('.edit-item-btn').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const ticketData = this.dataset;
+                    const fields = [
+                        'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
+                        'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
+                    ];
+                    fields.forEach(field => {
+                        const inputElement = document.getElementById(field);
+                        if (inputElement) {
+                            inputElement.value = ticketData[field] || '';
+                        }
+                    });
+                    // load teams for editkp then set selected
+                    const kp = ticketData['editkp'] || '';
+                    const selectedTim = ticketData['edittim'] || '';
+                    loadTeamsByKP(kp, $('#edittim'), selectedTim);
+                    modal.show();
+                });
+            });
+        });
     </script>
 
     <script>
