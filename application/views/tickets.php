@@ -302,14 +302,19 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-xxl-6">
-                                                            <label  class="form-label">Status</label>
+                                                            <label  class="form-label">Tim</label>
                                                            <select class="form-select js-team-select-edit" name="edittim" id="edittim" style="width:100%">
                                                                <option value="">-- Pilih Tim --</option>
                                                            </select>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <label  class="form-label">Status</label>
+                                                           <select class="form-select" name="editstatus" id="editstatus" aria-label="Default select example">
                                                                 <option value="NEW">NEW</option>
                                                                 <option value="OPEN">OPEN</option>
                                                                 <option value="ON PROGRESS">ON PROGRESS</option>
                                                                 <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
+                                                                <option value="STOPCLOCK">STOPCLOCK</option>
                                                                 <option value="CLOSED">CLOSED</option>
                                                                 <option value="EARLY">EARLY</option>
                                                             </select>
