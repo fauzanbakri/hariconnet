@@ -189,9 +189,9 @@
                                                         <td>".$row->idTim."</td>
                                                         <td>".$row->nama."</td>
                                                         <td>".(!empty($row->basecamp_mitra)?$row->basecamp_mitra:'-')."</td>
-                                                        <td>".$row->lat."</td>
-                                                        <td>".$row->longi."</td>
-                                                        <td>".$row->segmen."</td>
+                                                        <td>".(isset($row->lat)?$row->lat:'')."</td>
+                                                        <td>".(isset($row->longi)?$row->longi:'')."</td>
+                                                        <td>".(isset($row->segmen)?$row->segmen:'')."</td>
                                                         <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -199,7 +199,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editlat='".$row->lat."' data-editlongi='".$row->longi."' data-editsegmen='".$row->segmen."' data-editchatId='".$row->chatId."' data-editidBc='".(!empty($row->basecamp_id)?$row->basecamp_id:'')."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editlat='".(isset($row->lat)?$row->lat:'')."' data-editlongi='".(isset($row->longi)?$row->longi:'')."' data-editsegmen='".(isset($row->segmen)?$row->segmen:'')."' data-editchatId='".$row->chatId."' data-editidBc='".(!empty($row->basecamp_id)?$row->basecamp_id:'')."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
