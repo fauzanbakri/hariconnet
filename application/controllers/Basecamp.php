@@ -24,10 +24,14 @@ class Basecamp extends CI_Controller {
         $sloc = $this->input->post('sloc');
         $namaAkun = $this->input->post('namaAkun');
         $kendaraan = $this->input->post('kendaraan');
+        $alamat = $this->input->post('alamat');
+        $provinsi = $this->input->post('provinsi');
+        $kabupaten = $this->input->post('kabupaten');
+        $kecamatan = $this->input->post('kecamatan');
         // debug log incoming POST data
         @file_put_contents('/tmp/basecamp_debug.log', date('Y-m-d H:i:s') . " INSERT ATTEMPT\n" . print_r($_POST, true) . "\n", FILE_APPEND);
         if($mitra!=''){
-            $q = $this->db->query("INSERT INTO basecamp(kp, mitra, lat, longi, sloc, namaAkun, kendaraan) VALUES('$kp','$mitra','$lat','$longi','$sloc','$namaAkun','$kendaraan')");
+            $q = $this->db->query("INSERT INTO basecamp(kp, mitra, lat, longi, sloc, namaAkun, kendaraan, alamat, provinsi, kabupaten, kecamatan) VALUES('$kp','$mitra','$lat','$longi','$sloc','$namaAkun','$kendaraan', '$alamat', '$provinsi', '$kabupaten', '$kecamatan')");
             if($q) {
                 echo 'success';
             } else {
@@ -50,8 +54,12 @@ class Basecamp extends CI_Controller {
         $sloc = $this->input->post('sloc');
         $namaAkun = $this->input->post('namaAkun');
         $kendaraan = $this->input->post('kendaraan');
+        $alamat = $this->input->post('alamat');
+        $provinsi = $this->input->post('provinsi');
+        $kabupaten = $this->input->post('kabupaten');
+        $kecamatan = $this->input->post('kecamatan');
         if($mitra!=''){
-            $q = $this->db->query("UPDATE basecamp SET kp='$kp', mitra='$mitra', lat='$lat', longi='$longi', sloc='$sloc', namaAkun='$namaAkun', kendaraan='$kendaraan' WHERE idBc='$id'");
+            $q = $this->db->query("UPDATE basecamp SET kp='$kp', mitra='$mitra', lat='$lat', longi='$longi', sloc='$sloc', namaAkun='$namaAkun', kendaraan='$kendaraan', alamat='$alamat', provinsi='$provinsi', kabupaten='$kabupaten', kecamatan='$kecamatan' WHERE idBc='$id'");
             if($q) echo 'success'; else { $e = $this->db->error(); echo $e['message']; }
         }else{
             echo 'Mitra Cannot Empty';

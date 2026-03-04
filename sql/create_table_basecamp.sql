@@ -9,5 +9,9 @@ CREATE TABLE IF NOT EXISTS `basecamp` (
   `sloc` varchar(5) NOT NULL,
   `namaAkun` text NOT NULL,
   `kendaraan` varchar(5) NOT NULL,
+  `alamat` text NOT NULL,
+  `provinsi` text NOT NULL,
+  `kabupaten` text NOT NULL,
+  `kecamatan` text NOT NULL,
   PRIMARY KEY (`idBc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

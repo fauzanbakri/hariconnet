@@ -77,6 +77,30 @@
                                                                 <input type="text" class="form-control" name="namaAkun" id="namaAkun" autocomplete="off" placeholder="Nama Akun">
                                                             </div>
                                                         </div>
+                                                        <div class="col-xxl-12">
+                                                            <div>
+                                                                <label class="form-label">Alamat</label>
+                                                                <textarea class="form-control" name="alamat" id="alamat" rows="2" placeholder="Alamat"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Provinsi</label>
+                                                                <input type="text" class="form-control" name="provinsi" id="provinsi" autocomplete="off" placeholder="Provinsi">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Kabupaten</label>
+                                                                <input type="text" class="form-control" name="kabupaten" id="kabupaten" autocomplete="off" placeholder="Kabupaten">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Kecamatan</label>
+                                                                <input type="text" class="form-control" name="kecamatan" id="kecamatan" autocomplete="off" placeholder="Kecamatan">
+                                                            </div>
+                                                        </div>
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label class="form-label">Kendaraan</label>
@@ -151,6 +175,30 @@
                                                                 <input type="text" class="form-control" name="editnamaAkun" id="editnamaAkun" autocomplete="off" placeholder="Nama Akun">
                                                             </div>
                                                         </div>
+                                                        <div class="col-xxl-12">
+                                                            <div>
+                                                                <label class="form-label">Alamat</label>
+                                                                <textarea class="form-control" name="editalamat" id="editalamat" rows="2" placeholder="Alamat"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Provinsi</label>
+                                                                <input type="text" class="form-control" name="editprovinsi" id="editprovinsi" autocomplete="off" placeholder="Provinsi">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Kabupaten</label>
+                                                                <input type="text" class="form-control" name="editkabupaten" id="editkabupaten" autocomplete="off" placeholder="Kabupaten">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Kecamatan</label>
+                                                                <input type="text" class="form-control" name="editkecamatan" id="editkecamatan" autocomplete="off" placeholder="Kecamatan">
+                                                            </div>
+                                                        </div>
                                                         <div class="col-xxl-6">
                                                             <div>
                                                                 <label class="form-label">Kendaraan</label>
@@ -186,6 +234,10 @@
                                                 <th>SLOC</th>
                                                 <th>Nama Akun</th>
                                                 <th>Kendaraan</th>
+                                                <th>Alamat</th>
+                                                <th>Provinsi</th>
+                                                <th>Kabupaten</th>
+                                                <th>Kecamatan</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -200,7 +252,24 @@
                                                 echo "<td>".$row->sloc."</td>";
                                                 echo "<td>".$row->namaAkun."</td>";
                                                 echo "<td>".$row->kendaraan."</td>";
-                                                echo "<td>\n                                                <div class='dropdown d-inline-block'>\n                                                    <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n                                                        <i class='ri-more-fill align-middle'></i>\n                                                    </button>\n                                                    <ul class='dropdown-menu dropdown-menu-end'>\n                                                        <li><a href='#' class='dropdown-item edit-item-btn' data-idBc='".$row->idBc."' data-kp='".$row->kp."' data-mitra='".$row->mitra."' data-lat='".$row->lat."' data-longi='".$row->longi."' data-sloc='".$row->sloc."' data-namaAkun='".$row->namaAkun."' data-kendaraan='".$row->kendaraan."'> <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>\n                                                        <li><a href='#' class='dropdown-item remove-item-btn' data-idBc='".$row->idBc."'> <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n                                                    </ul>\n                                                </div>\n                                            </td>";
+                                                echo "<td>".$row->alamat."</td>";
+                                                echo "<td>".$row->provinsi."</td>";
+                                                echo "<td>".$row->kabupaten."</td>";
+                                                echo "<td>".$row->kecamatan."</td>";
+                                                $editDataAttrs = "data-idBc='" . $row->idBc . "' " .
+                                                                 "data-kp='" . $row->kp . "' " .
+                                                                 "data-mitra='" . $row->mitra . "' " .
+                                                                 "data-lat='" . $row->lat . "' " .
+                                                                 "data-longi='" . $row->longi . "' " .
+                                                                 "data-sloc='" . $row->sloc . "' " .
+                                                                 "data-namaAkun='" . $row->namaAkun . "' " .
+                                                                 "data-kendaraan='" . $row->kendaraan . "' " .
+                                                                 "data-alamat='" . htmlspecialchars($row->alamat, ENT_QUOTES) . "' " .
+                                                                 "data-provinsi='" . htmlspecialchars($row->provinsi, ENT_QUOTES) . "' " .
+                                                                 "data-kabupaten='" . htmlspecialchars($row->kabupaten, ENT_QUOTES) . "' " .
+                                                                 "data-kecamatan='" . htmlspecialchars($row->kecamatan, ENT_QUOTES) . "'";
+
+                                                echo "<td>\n                                                <div class='dropdown d-inline-block'>\n                                                    <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n                                                        <i class='ri-more-fill align-middle'></i>\n                                                    </button>\n                                                    <ul class='dropdown-menu dropdown-menu-end'>\n                                                        <li><a href='#' class='dropdown-item edit-item-btn ' " . $editDataAttrs . " > <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>\n                                                        <li><a href='#' class='dropdown-item remove-item-btn' data-idBc='" . $row->idBc . "'> <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n                                                    </ul>\n                                                </div>\n                                            </td>";
                                                 echo "</tr>";
                                             }
                                             ?>
@@ -227,7 +296,11 @@
                 longi: $('[name="longi"]').val(),
                 sloc: $('[name="sloc"]').val(),
                 namaAkun: $('[name="namaAkun"]').val(),
-                kendaraan: $('[name="kendaraan"]').val()
+                kendaraan: $('[name="kendaraan"]').val(),
+                alamat: $('[name="alamat"]').val(),
+                provinsi: $('[name="provinsi"]').val(),
+                kabupaten: $('[name="kabupaten"]').val(),
+                kecamatan: $('[name="kecamatan"]').val()
             };
             if (!formData.mitra) {
                 button.setAttribute('data-toast-text', 'Mitra Cannot Empty!');
@@ -376,6 +449,10 @@
             const sloc = el.getAttribute('data-sloc');
             const namaAkun = el.getAttribute('data-namaAkun');
             const kendaraan = el.getAttribute('data-kendaraan');
+            const alamat = el.getAttribute('data-alamat');
+            const provinsi = el.getAttribute('data-provinsi');
+            const kabupaten = el.getAttribute('data-kabupaten');
+            const kecamatan = el.getAttribute('data-kecamatan');
             $('#editidBc').val(id);
             $('#editkp').val(kp);
             $('#editmitra').val(mitra);
@@ -384,6 +461,10 @@
             $('#editsloc').val(sloc);
             $('#editnamaAkun').val(namaAkun);
             $('#editkendaraan').val(kendaraan);
+            $('#editalamat').val(alamat);
+            $('#editprovinsi').val(provinsi);
+            $('#editkabupaten').val(kabupaten);
+            $('#editkecamatan').val(kecamatan);
             var modal = new bootstrap.Modal(document.getElementById('exampleModalgridEdit'));
             modal.show();
         }
@@ -400,7 +481,11 @@
                 longi: $('[name="editlongi"]').val(),
                 sloc: $('[name="editsloc"]').val(),
                 namaAkun: $('[name="editnamaAkun"]').val(),
-                kendaraan: $('[name="editkendaraan"]').val()
+                kendaraan: $('[name="editkendaraan"]').val(),
+                alamat: $('[name="editalamat"]').val(),
+                provinsi: $('[name="editprovinsi"]').val(),
+                kabupaten: $('[name="editkabupaten"]').val(),
+                kecamatan: $('[name="editkecamatan"]').val()
             };
             if (!formData.mitra) {
                 const button = document.getElementById('toast');
