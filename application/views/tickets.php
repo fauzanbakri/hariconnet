@@ -951,32 +951,7 @@ TERMINATING: ${rowData.idOlt}/${rowData.sn}
     });
     </script>
 
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const modalElement = document.getElementById('exampleModalgrid1');
-    const modal = new bootstrap.Modal(modalElement);
-    document.querySelectorAll('.edit-item-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const ticketData = this.dataset;
-            console.log(ticketData);
-            const fields = [
-                'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
-                'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editkec', 'editprovinsi', 'editurutan', 'edittimestamp'
-            ];
-            fields.forEach(field => {
-                const inputElement = document.getElementById(field);
-                if (inputElement) {
-                    console.log(`Setting ${field} with value:`, ticketData[field]);
-                    inputElement.value = ticketData[field] || '';
-                }
-            });
-            modal.show();
-        });
-    });
-});
-
-    </script>
+    
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     const table = new DataTable('#example', {
