@@ -80,6 +80,15 @@
                                                                 <input type="text" class="form-control" id="chatid" name="chatid" autocomplete="off" placeholder="Chat ID">
                                                             </div>
                                                         </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Basecamp</label>
+                                                                <select class="form-select mb-3" name="idBc" id="idBc" aria-label="Default select example">
+                                                                    <option value="">-- Select Basecamp --</option>
+                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -135,6 +144,15 @@
                                                                 <input type="text" class="form-control" id="editchatid" name="editchatid" autocomplete="off" placeholder="Chat ID">
                                                             </div>
                                                         </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label for="lastName" class="form-label">Basecamp</label>
+                                                                <select class="form-select mb-3" name="editidBc" id="editidBc" aria-label="Default select example">
+                                                                    <option value="">-- Select Basecamp --</option>
+                                                                    <?php foreach($basecamps as $bc){ echo "<option value='".$bc->idBc."'>".$bc->mitra." (".$bc->kp.")</option>"; } ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <div class="hstack gap-2 justify-content-end">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -155,6 +173,7 @@
                                             <tr>
                                                 <th>id</th>
                                                 <th>Team Name</th>
+                                                <th>Basecamp</th>
                                                 <th>Lattitude</th>
                                                 <th>Longitude</th>
                                                 <th>Segment</th>
@@ -166,25 +185,26 @@
                                             <?php
                                             foreach ($tim as $row){
                                                 echo "
-                                                <tr>
-                                                    <td>".$row->idTim."</td>
-                                                    <td>".$row->nama."</td>
-                                                    <td>".$row->lat."</td>
-                                                    <td>".$row->longi."</td>
-                                                    <td>".$row->segmen."</td>
-                                                    <td>
+                                                    <tr>
+                                                        <td>".$row->idTim."</td>
+                                                        <td>".$row->nama."</td>
+                                                        <td>".(!empty($row->basecamp_mitra)?$row->basecamp_mitra:'-')."</td>
+                                                        <td>".$row->lat."</td>
+                                                        <td>".$row->longi."</td>
+                                                        <td>".$row->segmen."</td>
+                                                        <td>
                                                         <div class='dropdown d-inline-block'>
                                                             <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editlat='".$row->lat."' data-editlongi='".$row->longi."' data-editsegmen='".$row->segmen."' data-editchatId='".$row->chatId."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editlat='".$row->lat."' data-editlongi='".$row->longi."' data-editsegmen='".$row->segmen."' data-editchatId='".$row->chatId."' data-editidBc='".(!empty($row->basecamp_id)?$row->basecamp_id:'')."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item remove-item-btn' data-idTim=".$row->idTim."'>
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-idTim='".$row->idTim."'>
                                                                         <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
                                                                     </a>
                                                                 </li>
@@ -336,7 +356,8 @@
                     segmen: $('[name="segmen"]').val(),
                     lat: $('[name="lat"]').val(),
                     longi: $('[name="longi"]').val(),
-                    chatid: $('[name="chatid"]').val()
+                    chatid: $('[name="chatid"]').val(),
+                    idBc: $('[name="idBc"]').val()
                    
                 };
                 if (!formData.namatim) {
@@ -379,7 +400,8 @@
                     segmen: $('[name="editsegmen"]').val(),
                     lat: $('[name="editlat"]').val(),
                     longi: $('[name="editlongi"]').val(),
-                    chatid: $('[name="editchatid"]').val()
+                    chatid: $('[name="editchatid"]').val(),
+                    idBc: $('[name="editidBc"]').val()
                 };
                 if (!formData.namatim) {
                     button.setAttribute('data-toast-text', 'Nama Tim Cannot Empty!');
@@ -497,10 +519,15 @@
                 fields.forEach(field => {
                     const inputElement = document.getElementById(field);
                     if (inputElement) {
-                        console.log(`Setting ${field} with value:`, ticketData[field]);
-                        inputElement.value = ticketData[field] || ''; // Set value or empty if no data
+                        const val = ticketData[field] || ticketData[field.replace(/edit/, 'edit')] || ticketData[field.replace(/edit/, 'edit')];
+                        inputElement.value = val || '';
                     }
                 });
+                // set basecamp select explicitly
+                const editBasecampEl = document.getElementById('editidBc');
+                if (editBasecampEl) {
+                    editBasecampEl.value = ticketData.editidBc || ticketData.editidbc || '';
+                }
                 modal.show();
             });
         });

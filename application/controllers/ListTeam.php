@@ -21,8 +21,12 @@ class ListTeam extends CI_Controller {
 	public function index()
 	{
 		$title['title']="List Team";
-		$q['tim'] = $this->db->query("
-		SELECT * FROM tim")->result();
+		$q['tim'] = $this->db->query(
+		"SELECT t.*, b.mitra AS basecamp_mitra, b.kp AS basecamp_kp, b.idBc AS basecamp_id
+		 FROM tim t
+		 LEFT JOIN basecamp b ON t.idBc = b.idBc"
+		)->result();
+		$q['basecamps'] = $this->db->query("SELECT * FROM basecamp")->result();
 		// $q['olt'] = $this->db->query("
 		// SELECT * FROM tim")->result();
 		session_start();
@@ -62,6 +66,7 @@ class ListTeam extends CI_Controller {
 		$longi = $this->input->post('longi');
 		$chatid = $this->input->post('chatid');
 		$segmen = $this->input->post('segmen');
+		$idBc = $this->input->post('idBc');
 		if($namatim!=''){
 			$q = $this->db->query("INSERT INTO 
 			tim(
@@ -69,14 +74,16 @@ class ListTeam extends CI_Controller {
 			lat,
 			longi,
 			segmen,
-			chatId
+			chatId,
+			idBc
 			) 
 			VALUES(
 				'$namatim',
 				'$lat',
 				'$longi',
 				'$segmen',
-				'$chatid'
+				'$chatid',
+				'$idBc'
 				)");
 			if($q){
 				echo 'success';
@@ -99,15 +106,17 @@ class ListTeam extends CI_Controller {
 		$longi = $this->input->post('longi');
 		$chatid = $this->input->post('chatid');
 		$segmen = $this->input->post('segmen');
+		$idBc = $this->input->post('idBc');
 		if($namatim!=''){
 			$q = $this->db->query("UPDATE tim SET
-				nama='$namatim',
-				lat='$lat',
-				longi='$longi',
-				segmen='$segmen',
-				chatId='$chatid'
-				WHERE idTim='$id'
-				");
+			nama='$namatim',
+			lat='$lat',
+			longi='$longi',
+			segmen='$segmen',
+			chatId='$chatid',
+			idBc='$idBc'
+			WHERE idTim='$id'
+			");
 			if($q){
 				echo 'success';
 			}else{
