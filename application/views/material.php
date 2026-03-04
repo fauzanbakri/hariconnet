@@ -18,6 +18,34 @@
                                         <li class="breadcrumb-item active">Input Material</li>
                                     </ol>
                                 </div>
+                                <!-- Modal Tandai Terpakai -->
+                                <div class="modal fade" id="tandaiTerpakaiModal" tabindex="-1" aria-labelledby="tandaiTerpakaiModalLabel" aria-modal="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="tandaiTerpakaiModalLabel">Tandai Material Terpakai</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="tandaiTerpakaiForm">
+                                                    <input type="hidden" id="tandaiIdMaterial">
+                                                    <div class="mb-3">
+                                                        <label for="tandaiKodeMaterialTerpakai" class="form-label">Kode Material Terpakai</label>
+                                                        <input type="text" class="form-control" id="tandaiKodeMaterialTerpakai" placeholder="Kode Material Terpakai">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="tandaiSnTerpakai" class="form-label">SN Terpakai</label>
+                                                        <input type="text" class="form-control" id="tandaiSnTerpakai" placeholder="SN Terpakai">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="button" class="btn btn-primary" id="simpanTandaiTerpakai">Simpan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,6 +134,7 @@
                                                 <th>Status Terpakai</th>
                                                 <th>Status Pengiriman</th>
                                                 <th>Keterangan</th>
+                                                <th>Tandai Terpakai</th>
                                                 <?php
                                                 if(
                                                     $_SESSION['role']=='Superadmin' ||
@@ -140,6 +169,8 @@
                                                         <td><span class='badge bg-warning'>".$material->status_terpakai."</span></td>
                                                         <td><span class='badge ".(($material->status_pengiriman == 'Dalam Pengiriman') ? 'bg-primary' : 'bg-secondary')."'>".$material->status_pengiriman."</span></td>
                                                         <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
+                                                        // Tombol Tandai Terpakai
+                                                        echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
                                                         if(
                                                             $_SESSION['role']=='Superadmin' ||
                                                             $_SESSION['role']=='Team Leader'
@@ -230,14 +261,6 @@
                                 <input type="text" class="form-control" name="sn" id="sn" autocomplete="off" placeholder="SN">
                             </div>
                             <div class="col-xxl-6">
-                                <label class="form-label">SN Terpakai</label>
-                                <input type="text" class="form-control" name="sn_terpakai" id="sn_terpakai" autocomplete="off" placeholder="SN Terpakai">
-                            </div>
-                            <div class="col-xxl-6">
-                                <label class="form-label">Kode Material Terpakai</label>
-                                <input type="text" class="form-control" name="kode_material_terpakai" id="kode_material_terpakai" autocomplete="off" placeholder="Kode Material Terpakai">
-                            </div>
-                            <div class="col-xxl-6">
                                 <label class="form-label">Merk</label>
                                 <input type="text" class="form-control" name="merk" id="merk" autocomplete="off" placeholder="Merk">
                             </div>
@@ -281,22 +304,6 @@
                                     <option value="Dalam Pengiriman">Dalam Pengiriman</option>
                                     <option value="On Loc">On Loc</option>
                                 </select>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label class="form-label">Kode Material</label>
-                                <p id="displayKodeMaterial">-</p>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label class="form-label">Deskripsi Material</label>
-                                <p id="displayDeskripsiMaterial">-</p>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label class="form-label">Kode Material Terpakai</label>
-                                <p id="displayKodeMaterialTerpakai">-</p>
-                            </div>
-                            <div class="col-xxl-6">
-                                <label class="form-label">Deskripsi Material Terpakai</label>
-                                <p id="displayDeskripsiMaterialTerpakai">-</p>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Keterangan</label>
@@ -464,6 +471,41 @@
     <script src="assets/js/app.js"></script>
 
 <script>
+// Modal & tombol Tandai Terpakai
+$(document).on('click', '.tandai-terpakai-btn', function() {
+    var idmaterial = $(this).data('idmaterial');
+    var kategori = $(this).data('kategori');
+    if (kategori === 'FOT') {
+        $('#tandaiIdMaterial').val(idmaterial);
+        $('#tandaiKodeMaterialTerpakai').val('');
+        $('#tandaiSnTerpakai').val('');
+        var modal = new bootstrap.Modal(document.getElementById('tandaiTerpakaiModal'));
+        modal.show();
+    } else {
+        Swal.fire('Kategori bukan FOT', 'Tandai Terpakai hanya untuk kategori FOT.', 'info');
+    }
+});
+
+$('#simpanTandaiTerpakai').on('click', function() {
+    // Ambil data
+    var idmaterial = $('#tandaiIdMaterial').val();
+    var kode_material_terpakai = $('#tandaiKodeMaterialTerpakai').val();
+    var sn_terpakai = $('#tandaiSnTerpakai').val();
+    // TODO: Kirim data ke backend via AJAX (implementasi tergantung backend)
+    // Contoh:
+    /*
+    $.post('material/tandai_terpakai', {
+        idmaterial: idmaterial,
+        kode_material_terpakai: kode_material_terpakai,
+        sn_terpakai: sn_terpakai
+    }, function(res) {
+        // reload table atau tampilkan notifikasi
+    });
+    */
+    // Tutup modal
+    $('#tandaiTerpakaiModal').modal('hide');
+    Swal.fire('Berhasil', 'Material telah ditandai terpakai.', 'success');
+});
 const button = document.getElementById('toast');
 
 function resetForm() {
