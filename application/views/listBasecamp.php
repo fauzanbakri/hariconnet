@@ -304,6 +304,17 @@
         });
     });
 </script>
+<script>
+    // Initialize DataTable for Basecamp list
+    $(document).ready(function(){
+        if ($.fn.DataTable) {
+            $('#databc').DataTable({
+                lengthMenu: [[-1,10,25,50], ['All',10,25,50]],
+                responsive: true
+            });
+        }
+    });
+</script>
     <!-- JAVASCRIPT -->
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/libs/simplebar/simplebar.min.js"></script>
