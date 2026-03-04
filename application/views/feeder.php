@@ -902,16 +902,16 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             {
                 targets: 6,
-                width: '30px' // smaller kode area
+                width: '40px' // smaller kode area
             },
             {
                 targets: 10,
                 responsivePriority: 1,
-                width: '100px'
+                width: '120px'
             },
             {
                 targets: 12,
-                width: '30px' // smaller jumlah tiket
+                width: '40px' // smaller jumlah tiket
             },
             {
                 targets: 14,
