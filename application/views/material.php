@@ -159,8 +159,8 @@
                                                         <td><span class='badge bg-info'>".$material->kategori."</span></td>
                                                         <td>".$material->kode_material."</td>
                                                         <td>".$material->sn."</td>
-                                                        <td>".$material->sn_terpakai."</td>
-                                                        <td>".$material->kode_material_terpakai."</td>
+                                                        <td>".(($material->kategori == 'FOC') ? '' : $material->sn_terpakai)."</td>
+                                                        <td>".(($material->kategori == 'FOC') ? '' : $material->kode_material_terpakai)."</td>
                                                         <td>".$material->merk."</td>
                                                         <td>".$material->nama."</td>
                                                         <td>".$material->satuan."</td>
@@ -745,6 +745,19 @@ $(document).ready(function () {
         document.getElementById('editStatusPengiriman').value = data.status_pengiriman;
         document.getElementById('editKet').value = data.ket;
 
+        // Hide SN Terpakai and Kode Material Terpakai fields if kategori is FOC
+        if (data.kategori === 'FOC') {
+            $('#editSnTerpakai').closest('.col-xxl-6').hide();
+            $('#editKodeMaterialTerpakai').closest('.col-xxl-6').hide();
+            $('#editDisplayKodeMaterialTerpakai').closest('.col-xxl-6').hide();
+            $('#editDisplayDeskripsiMaterialTerpakai').closest('.col-xxl-6').hide();
+        } else {
+            $('#editSnTerpakai').closest('.col-xxl-6').show();
+            $('#editKodeMaterialTerpakai').closest('.col-xxl-6').show();
+            $('#editDisplayKodeMaterialTerpakai').closest('.col-xxl-6').show();
+            $('#editDisplayDeskripsiMaterialTerpakai').closest('.col-xxl-6').show();
+        }
+
         // Fetch and display kode_material details
         const kodeMaterial = data.kode_material;
         if (kodeMaterial) {
@@ -967,6 +980,22 @@ $(document).ready(function () {
         } else {
             $('#editDisplayKodeMaterialTerpakai').text('-');
             $('#editDisplayDeskripsiMaterialTerpakai').text('-');
+        }
+    });
+
+    // Toggle SN/Kode Terpakai fields based on kategori selection in edit modal
+    $('#editKategori').on('change', function() {
+        var val = $(this).val();
+        if (val === 'FOC') {
+            $('#editSnTerpakai').closest('.col-xxl-6').hide();
+            $('#editKodeMaterialTerpakai').closest('.col-xxl-6').hide();
+            $('#editDisplayKodeMaterialTerpakai').closest('.col-xxl-6').hide();
+            $('#editDisplayDeskripsiMaterialTerpakai').closest('.col-xxl-6').hide();
+        } else {
+            $('#editSnTerpakai').closest('.col-xxl-6').show();
+            $('#editKodeMaterialTerpakai').closest('.col-xxl-6').show();
+            $('#editDisplayKodeMaterialTerpakai').closest('.col-xxl-6').show();
+            $('#editDisplayDeskripsiMaterialTerpakai').closest('.col-xxl-6').show();
         }
     });
 
