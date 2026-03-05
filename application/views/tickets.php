@@ -79,9 +79,7 @@
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 d-flex align-items-end">
-                                        <button id="filterAllBtn" class="btn btn-outline-primary w-100">All</button>
-                                    </div>
+                                    
                                     <div class="col-md-3">
                                         <label for="filterStatus" class="form-label">Status</label>
                                         <select id="filterStatus" class="form-select form-select-sm">
@@ -980,12 +978,11 @@ document.addEventListener("DOMContentLoaded", function() {
         table.draw();
     });
 
-    // Clear all filters (All)
-    $('#filterAllBtn').on('click', function(){
+    // Clear all filters helper (called manually if needed)
+    function clearAllFilters(){
         $('#filterProvinsi, #filterKabupaten, #filterTim, #filterStatus').val('').trigger('change');
-        // clear DataTable global and column searches
         table.search('').columns().search('').draw();
-    });
+    }
 });
 </script>
     <!-- Select2 for searchable team dropdown -->
