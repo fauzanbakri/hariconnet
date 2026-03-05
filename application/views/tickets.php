@@ -955,7 +955,8 @@ document.addEventListener("DOMContentLoaded", function() {
             [10, 25, 50, -1],
             [10, 25, 50, 'All']
         ],
-        pageLength: 10,
+        // default to show all rows
+        pageLength: -1,
         order: [[19, 'desc']],
         columnDefs: [
             {
