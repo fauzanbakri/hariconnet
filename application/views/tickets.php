@@ -79,6 +79,9 @@
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+                                    <div class="col-md-3 d-flex align-items-end">
+                                        <button id="filterAllBtn" class="btn btn-outline-primary w-100">All</button>
+                                    </div>
                                     <div class="col-md-3">
                                         <label for="filterStatus" class="form-label">Status</label>
                                         <select id="filterStatus" class="form-select form-select-sm">
@@ -973,6 +976,13 @@ document.addEventListener("DOMContentLoaded", function() {
         table.column(13).search($('#filterTim').val(), false, false);
         table.column(7).search($('#filterStatus').val(), false, false);
         table.draw();
+    });
+
+    // Clear all filters (All)
+    $('#filterAllBtn').on('click', function(){
+        $('#filterProvinsi, #filterKabupaten, #filterTim, #filterStatus').val('').trigger('change');
+        // clear DataTable global and column searches
+        table.search('').columns().search('').draw();
     });
 });
 </script>
