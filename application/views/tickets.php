@@ -953,10 +953,12 @@ TERMINATING: ${rowData.idOlt}/${rowData.sn}
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     const table = new DataTable('#example', {
+        // show entries options including 'All' (uses -1 value for all)
         lengthMenu: [
-            [-1, 10, 25, 50],
-            ['All', 10, 25, 50]
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
         ],
+        pageLength: 10,
         order: [[19, 'desc']],
         columnDefs: [
             {
