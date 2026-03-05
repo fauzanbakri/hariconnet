@@ -948,7 +948,6 @@ TERMINATING: ${rowData.idOlt}/${rowData.sn}
     </script>
 
     <script>
-    <script>
 document.addEventListener("DOMContentLoaded", function() {
     const table = new DataTable('#example', {
         // show entries options including 'All' (uses -1 value for all)
