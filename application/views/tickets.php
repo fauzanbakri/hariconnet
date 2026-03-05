@@ -1016,6 +1016,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
+                    console.debug('Teams response:', data, 'selected:', selected);
                     if(!Array.isArray(data)) {
                         console.error('Unexpected teams response', data);
                         $select.html('<option value="">-- Pilih Tim --</option>');
@@ -1029,7 +1030,37 @@ document.addEventListener("DOMContentLoaded", function() {
                         $select.append(opt);
                     });
                     if(selected) {
-                        $select.val(selected);
+                        // first try exact value match
+                        if($select.find("option[value='" + selected + "']").length) {
+                            $select.val(selected);
+                        } else {
+                            // try to find by text or partial matches
+                            let matched = false;
+                            $select.find('option').each(function(){
+                                const v = $(this).val();
+                                const t = $(this).text();
+                                if(v === selected || (t && t.indexOf(selected) !== -1) || (v && v.indexOf(selected) !== -1)){
+                                    $select.val(v);
+                                    matched = true;
+                                    return false; // break
+                                }
+                            });
+                            // if still not matched and selected contains underscore, try last segment
+                            if(!matched && selected.indexOf('_') !== -1){
+                                const parts = selected.split('_');
+                                const last = parts[parts.length-1];
+                                $select.find('option').each(function(){
+                                    const v = $(this).val();
+                                    const t = $(this).text();
+                                    if(v === last || (t && t.indexOf(last) !== -1)){
+                                        $select.val(v);
+                                        matched = true;
+                                        return false;
+                                    }
+                                });
+                            }
+                            if(!matched) console.warn('No matching team option found for:', selected);
+                        }
                     }
                     // notify Select2 to refresh
                     $select.trigger('change');
