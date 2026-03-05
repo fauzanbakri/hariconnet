@@ -1014,22 +1014,28 @@ document.addEventListener("DOMContentLoaded", function() {
             $.ajax({
                 url: 'Tickets/getAllTim',
                 method: 'GET',
-                success: function(res) {
-                    let data = [];
-                    try { data = JSON.parse(res); } catch(e) { data = res; }
+                dataType: 'json',
+                success: function(data) {
+                    if(!Array.isArray(data)) {
+                        console.error('Unexpected teams response', data);
+                        $select.html('<option value="">-- Pilih Tim --</option>');
+                        return;
+                    }
                     $select.empty();
                     $select.append('<option value="">-- Pilih Tim --</option>');
                     data.forEach(function(item){
-                        const text = '(' + (item.kendaraan || '') + ') ' + item.nama;
+                        const text = '(' + (item.kendaraan || '') + ') ' + (item.nama || '');
                         const opt = $('<option>').val(item.nama).text(text);
                         $select.append(opt);
                     });
                     if(selected) {
                         $select.val(selected);
                     }
+                    // notify Select2 to refresh
                     $select.trigger('change');
                 },
-                error: function(){
+                error: function(xhr, status, err){
+                    console.error('Failed to load teams', status, err, xhr.responseText);
                     $select.html('<option value="">-- Pilih Tim --</option>');
                 }
             });
