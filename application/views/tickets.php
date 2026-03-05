@@ -281,12 +281,7 @@
                                                             <input type="text" class="form-control" id="editsn" name="editsn" autocomplete="off" placeholder="Serial Number">
                                                         </div>
                                                     </div>
-                                                    <div class="col-xxl-6">
-                                                        <div>
-                                                            <label  class="form-label">Tim</label>
-                                                            <input type="text" class="form-control" id="edittim" name="edittim" autocomplete="off" placeholder="Tim Serpo">
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="col-xxl-6">
                                                         <div>
                                                             <label  class="form-label">Keterangan</label>
