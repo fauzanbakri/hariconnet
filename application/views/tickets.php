@@ -448,9 +448,32 @@
                                                                     <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-editincident='".$row->idInsiden."' data-edittiket='".$row->idTiket."' data-edittanggal='".$row->tanggal."' data-editsid='".$row->sid."' data-edittelepon='".$row->telepon."' data-editnama='".$row->nama."' data-editkeluhan='".$row->keluhan."' data-editalamat='".$row->alamat."' data-editOlt='".$row->idOlt."' data-editsn='".$row->sn."' data-editketerangan='".$row->keterangan."' data-editprioritas='".$row->prioritas."' data-edittim='".$row->tim."' data-editcreateby='".$row->createby."' data-editkabupaten='".$row->kabupaten."' data-editkec='".$row->kecamatan."' data-editprovinsi='".$row->provinsi."' data-urutan='".$row->urutan."' data-timestamp='".$row->timestamp."' data-editstatus='".$row->status."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
-                                                                </li>
-                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idTiket.">
-                                                                        <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
+                                                                <?php
+                                                                    $editAttrs = "data-id='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
+                                                                                 "data-editincident='" . htmlspecialchars($row->idInsiden, ENT_QUOTES) . "' " .
+                                                                                 "data-edittiket='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
+                                                                                 "data-edittanggal='" . htmlspecialchars($row->tanggal, ENT_QUOTES) . "' " .
+                                                                                 "data-editsid='" . htmlspecialchars($row->sid, ENT_QUOTES) . "' " .
+                                                                                 "data-edittelepon='" . htmlspecialchars($row->telepon, ENT_QUOTES) . "' " .
+                                                                                 "data-editnama='" . htmlspecialchars($row->nama, ENT_QUOTES) . "' " .
+                                                                                 "data-editkeluhan='" . htmlspecialchars($row->keluhan, ENT_QUOTES) . "' " .
+                                                                                 "data-editalamat='" . htmlspecialchars($row->alamat, ENT_QUOTES) . "' " .
+                                                                                 "data-editOlt='" . htmlspecialchars($row->idOlt, ENT_QUOTES) . "' " .
+                                                                                 "data-editsn='" . htmlspecialchars($row->sn, ENT_QUOTES) . "' " .
+                                                                                 "data-editketerangan='" . htmlspecialchars($row->keterangan, ENT_QUOTES) . "' " .
+                                                                                 "data-editprioritas='" . htmlspecialchars($row->prioritas, ENT_QUOTES) . "' " .
+                                                                                 "data-edittim='" . htmlspecialchars($row->tim, ENT_QUOTES) . "' " .
+                                                                                 "data-editcreateby='" . htmlspecialchars($row->createby, ENT_QUOTES) . "' " .
+                                                                                 "data-editkabupaten='" . htmlspecialchars($row->kabupaten, ENT_QUOTES) . "' " .
+                                                                                 "data-editkec='" . htmlspecialchars($row->kecamatan, ENT_QUOTES) . "' " .
+                                                                                 "data-editprovinsi='" . htmlspecialchars($row->provinsi, ENT_QUOTES) . "' " .
+                                                                                 "data-urutan='" . htmlspecialchars($row->urutan, ENT_QUOTES) . "' " .
+                                                                                 "data-timestamp='" . htmlspecialchars($row->timestamp, ENT_QUOTES) . "' " .
+                                                                                 "data-editstatus='" . htmlspecialchars($row->status, ENT_QUOTES) . "'";
+                                                                ?>
+                                                                <li>
+                                                                    <a href="#" class="dropdown-item edit-item-btn" <?php echo $editAttrs; ?>>
+                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
                                                             </ul>
