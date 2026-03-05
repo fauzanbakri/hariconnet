@@ -303,7 +303,7 @@
                                                            </select>
                                                         </div>
                                                         <div class="col-xxl-6">
-                                                            <label  class="form-label">Status</label>
+                                                                <label  class="form-label">Status</label>
                                                            <select class="form-select" name="editstatus" id="editstatus" aria-label="Default select example">
                                                                 <option value="NEW">NEW</option>
                                                                 <option value="OPEN">OPEN</option>
@@ -947,31 +947,6 @@ TERMINATING: ${rowData.idOlt}/${rowData.sn}
     </script>
 
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const modalElement = document.getElementById('exampleModalgrid1');
-    const modal = new bootstrap.Modal(modalElement);
-    document.querySelectorAll('.edit-item-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const ticketData = this.dataset;
-            console.log(ticketData);
-            const fields = [
-                'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
-                'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editkec', 'editprovinsi', 'editurutan', 'edittimestamp'
-            ];
-            fields.forEach(field => {
-                const inputElement = document.getElementById(field);
-                if (inputElement) {
-                    console.log(`Setting ${field} with value:`, ticketData[field]);
-                    inputElement.value = ticketData[field] || '';
-                }
-            });
-            modal.show();
-        });
-    });
-});
-
-    </script>
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     const table = new DataTable('#example', {
