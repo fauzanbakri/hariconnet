@@ -50,76 +50,11 @@
                                                     <td>".$p."</td>
                                                     <td>".$row->idInsiden."</td>
                                                     <td>".$row->idTiket."</td>
-                                                    <td>".$row->tanggal."</td>
-                                                    <td>".$durasi."</td>
-                                                    <td>".$row->sid."</td>
-                                                    <td>".$row->nama."</td>
-                                                    <td>".$a."</td>
-                                                    <td>".$row->idOlt."</td>
-                                                    <td>".$row->keterangan."</td>
-                                                    <td>".$row->keluhan."</td>
-                                                    <td>".$row->kabupaten."</td>
-                                                    <td>".$row->sn."</td>  
-                                                    <td>".$row->tim."</td>
-                                                    <td>".$row->urutan."</td>  
-                                                    <td>".$row->provinsi."</td>
-                                                    <td>".$row->telepon."</td> 
-                                                    <td>".$row->alamat."</td>
-                                                    <td>".$row->createby."</td>  
-                                                    <td>".$row->timestamp."</td>  
-                                                    <td  " . $hide . ">
-                                                        <div class='dropdown d-inline-block'>
-                                                            <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                                                                <i class='ri-more-fill align-middle'></i>
-                                                            </button>
-                                                            <ul class='dropdown-menu dropdown-menu-end'>
-                                                                <li><a href='#' class='dropdown-item copy-btn' data-row='".htmlspecialchars(json_encode($row))."'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
-                                                                <li><a href='#' class='dropdown-item telegram-btn' data-id='".htmlspecialchars(json_encode($row))."'><i class='ri-send-plane-fill align-bottom me-2 text-muted'></i> Telegram</a></li>
-                                                                <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' " . $editAttrs . ">
-                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
-                                                                    </a>
-                                                                
-                                                </tr>
-                                                ";
-                                        </select>
-                                    </div>
-                                 </div>
-                                <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalgridLabel">New Ticket</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                    <div class="row g-3">
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label class="form-label">Incident</label>
-                                                                <input type="text" class="form-control" name="incident" autocomplete="off" placeholder="Incident">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label  class="form-label">Tiket</label>
-                                                                <input type="text" class="form-control" name="tiket" autocomplete="off" placeholder="Tiket">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            <div>
-                                                                <label  class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control" name="tanggal" autocomplete="off" placeholder="Tanggal">
-                                                            </div>
-                                                        </div>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' " . $editAttrs . ">
-                                                                            <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
-                                                                        </a>
-                                                                <input type="text" class="form-control" name="sid" autocomplete="off" placeholder="SID">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xxl-6">
-                                                            </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
