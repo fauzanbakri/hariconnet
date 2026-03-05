@@ -23,38 +23,110 @@
                             </div>
                         </div>
                     </div>
-                                                $editAttrs = "data-id='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
-                                                             "data-editincident='" . htmlspecialchars($row->idInsiden, ENT_QUOTES) . "' " .
-                                                             "data-edittiket='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
-                                                             "data-edittanggal='" . htmlspecialchars($row->tanggal, ENT_QUOTES) . "' " .
-                                                             "data-editsid='" . htmlspecialchars($row->sid, ENT_QUOTES) . "' " .
-                                                             "data-edittelepon='" . htmlspecialchars($row->telepon, ENT_QUOTES) . "' " .
-                                                             "data-editnama='" . htmlspecialchars($row->nama, ENT_QUOTES) . "' " .
-                                                             "data-editkeluhan='" . htmlspecialchars($row->keluhan, ENT_QUOTES) . "' " .
-                                                             "data-editalamat='" . htmlspecialchars($row->alamat, ENT_QUOTES) . "' " .
-                                                             "data-editOlt='" . htmlspecialchars($row->idOlt, ENT_QUOTES) . "' " .
-                                                             "data-editsn='" . htmlspecialchars($row->sn, ENT_QUOTES) . "' " .
-                                                             "data-editketerangan='" . htmlspecialchars($row->keterangan, ENT_QUOTES) . "' " .
-                                                             "data-editprioritas='" . htmlspecialchars($row->prioritas, ENT_QUOTES) . "' " .
-                                                             "data-edittim='" . htmlspecialchars($row->tim, ENT_QUOTES) . "' " .
-                                                             "data-editcreateby='" . htmlspecialchars($row->createby, ENT_QUOTES) . "' " .
-                                                             "data-editkabupaten='" . htmlspecialchars($row->kabupaten, ENT_QUOTES) . "' " .
-                                                             "data-editkec='" . htmlspecialchars($row->kecamatan, ENT_QUOTES) . "' " .
-                                                             "data-editprovinsi='" . htmlspecialchars($row->provinsi, ENT_QUOTES) . "' " .
-                                                             "data-urutan='" . htmlspecialchars($row->urutan, ENT_QUOTES) . "' " .
-                                                             "data-timestamp='" . htmlspecialchars($row->timestamp, ENT_QUOTES) . "' " .
-                                                             "data-editstatus='" . htmlspecialchars($row->status, ENT_QUOTES) . "'";
-
-                                                echo "
-                                                <tr> 
-                                                    <td>".$p."</td>
-                                                    <td>".$row->idInsiden."</td>
-                                                    <td>".$row->idTiket."</td>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
+                    <!-- end page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Ticket</h5><br>
+                                    <!-- Base Buttons -->
+                                     <!-- Grids in modals -->
+                                <!-- Grids in modals -->
+                                <?php if($_SESSION['role']=='Guest 1'){
+                                    $hide = 'hidden';
+                                }else{
+                                    $hide = '';
+                                }
+                                ?>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button <?php echo $hide;?> type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalgrid">
+                                            Add New
+                                        </button>
+                                    </div>
+                                    <div class="col-md-9 d-flex flex-row-reverse">
+                                    <button  <?php echo $hide;?> type="button" class="btn btn-danger flex-row-reverse" id="sa-warning">
+                                        Change Shift
+                                    </button>
+                                        <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-3">
+                                        <label for="filterProvinsi" class="form-label">Provinsi</label>
+                                        <select id="filterProvinsi" class="form-select form-select-sm">
+                                            <option value="">Semua</option>
+                                            <?php foreach ($provinsi as $item): ?>
+                                                <option value="<?= $item ?>"><?= $item ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="filterKabupaten" class="form-label">Kabupaten</label>
+                                        <select id="filterKabupaten" class="form-select form-select-sm">
+                                            <option value="">Semua</option>
+                                            <?php foreach ($kabupaten as $item): ?>
+                                                <option value="<?= $item ?>"><?= $item ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="filterTim" class="form-label">Tim</label>
+                                        <select id="filterTim" class="form-select form-select-sm">
+                                            <option value="">Semua</option>
+                                            <?php foreach ($tim as $item): ?>
+                                                <option value="<?= $item ?>"><?= $item ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="filterStatus" class="form-label">Status</label>
+                                        <select id="filterStatus" class="form-select form-select-sm">
+                                            <option value="">Semua</option>
+                                            <?php foreach ($status as $item): ?>
+                                                <option value="<?= $item ?>"><?= $item ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                 </div>
+                                <div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalgridLabel">New Ticket</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                    <div class="row g-3">
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Incident</label>
+                                                                <input type="text" class="form-control" name="incident" autocomplete="off" placeholder="Incident">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label  class="form-label">Tiket</label>
+                                                                <input type="text" class="form-control" name="tiket" autocomplete="off" placeholder="Tiket">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label  class="form-label">Tanggal</label>
+                                                                <input type="text" class="form-control" name="tanggal" autocomplete="off" placeholder="Tanggal">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label  class="form-label">SID</label>
+                                                                <input type="text" class="form-control" name="sid" autocomplete="off" placeholder="SID">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label  class="form-label">Telepon</label>
+                                                                <input type="text" class="form-control" name="telepon" autocomplete="off" placeholder="Telepon">
+                                                            </div>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
@@ -291,33 +363,38 @@
                                                         <option value="10">10 Hari</option>
                                                     </select>
                                                 </th>
-                                                                <?php
-                                                                    $editAttrs = "data-id='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
-                                                                                 "data-editincident='" . htmlspecialchars($row->idInsiden, ENT_QUOTES) . "' " .
-                                                                                 "data-edittiket='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
-                                                                                 "data-edittanggal='" . htmlspecialchars($row->tanggal, ENT_QUOTES) . "' " .
-                                                                                 "data-editsid='" . htmlspecialchars($row->sid, ENT_QUOTES) . "' " .
-                                                                                 "data-edittelepon='" . htmlspecialchars($row->telepon, ENT_QUOTES) . "' " .
-                                                                                 "data-editnama='" . htmlspecialchars($row->nama, ENT_QUOTES) . "' " .
-                                                                                 "data-editkeluhan='" . htmlspecialchars($row->keluhan, ENT_QUOTES) . "' " .
-                                                                                 "data-editalamat='" . htmlspecialchars($row->alamat, ENT_QUOTES) . "' " .
-                                                                                 "data-editOlt='" . htmlspecialchars($row->idOlt, ENT_QUOTES) . "' " .
-                                                                                 "data-editsn='" . htmlspecialchars($row->sn, ENT_QUOTES) . "' " .
-                                                                                 "data-editketerangan='" . htmlspecialchars($row->keterangan, ENT_QUOTES) . "' " .
-                                                                                 "data-editprioritas='" . htmlspecialchars($row->prioritas, ENT_QUOTES) . "' " .
-                                                                                 "data-edittim='" . htmlspecialchars($row->tim, ENT_QUOTES) . "' " .
-                                                                                 "data-editcreateby='" . htmlspecialchars($row->createby, ENT_QUOTES) . "' " .
-                                                                                 "data-editkabupaten='" . htmlspecialchars($row->kabupaten, ENT_QUOTES) . "' " .
-                                                                                 "data-editkec='" . htmlspecialchars($row->kecamatan, ENT_QUOTES) . "' " .
-                                                                                 "data-editprovinsi='" . htmlspecialchars($row->provinsi, ENT_QUOTES) . "' " .
-                                                                                 "data-urutan='" . htmlspecialchars($row->urutan, ENT_QUOTES) . "' " .
-                                                                                 "data-timestamp='" . htmlspecialchars($row->timestamp, ENT_QUOTES) . "' " .
-                                                                                 "data-editstatus='" . htmlspecialchars($row->status, ENT_QUOTES) . "'";
-                                                                ?>
-                                                                <li>
-                                                                    <a href="#" class="dropdown-item edit-item-btn" <?php echo $editAttrs; ?>>
-                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
-                                                                    </a>
+                                                <th>SID</th>
+                                                <th>Nama</th>
+                                                <th>Status</th>
+                                                <th>OLT</th>
+                                                <th>Keterangan</th>
+                                                <th>Kendala</th>
+                                                <th>Kabupaten
+                                                    <!-- <br>
+                                                    <select id="filterKabupaten" class="form-select form-select-sm">
+                                                        <option value="">Semua</option>
+                                                    </select> -->
+                                                </th>
+                                                <th>Serial Number</th>
+                                                <th>Tim</th>
+                                                <th>Posisi Antrian</th>
+                                                <th>Provinsi</th>
+                                                <th>Telepon</th>
+                                                <th>Alamat</th>
+                                                <th>Last Update By</th>
+                                                <th>timestamp</th>
+                                                <th  <?php echo $hide;?>>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            date_default_timezone_set('Asia/Makassar');
+                                            foreach ($data as $row){
+                                                if($row->status=="CLOSED"){
+                                                    $a = '<span class="badge bg-success">CLOSED</span>';
+                                                }elseif($row->status=="ON PROGRESS"){
+                                                    $a = '<span class="badge border border-info text-info">ON PROGRESS</span>';
+                                                }elseif($row->status=="NEW"){
                                                     $a = '<span class="badge border border-primary text-primary">NEW</span>';
                                                 }elseif($row->status=="SOLVED (ICRM OPEN)"){
                                                     $a = '<span class="badge border border-success text-success">SOLVED (ICRM OPEN)</span>';
@@ -371,34 +448,15 @@
                                                                     <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-editincident='".$row->idInsiden."' data-edittiket='".$row->idTiket."' data-edittanggal='".$row->tanggal."' data-editsid='".$row->sid."' data-edittelepon='".$row->telepon."' data-editnama='".$row->nama."' data-editkeluhan='".$row->keluhan."' data-editalamat='".$row->alamat."' data-editOlt='".$row->idOlt."' data-editsn='".$row->sn."' data-editketerangan='".$row->keterangan."' data-editprioritas='".$row->prioritas."' data-edittim='".$row->tim."' data-editcreateby='".$row->createby."' data-editkabupaten='".$row->kabupaten."' data-editkec='".$row->kecamatan."' data-editprovinsi='".$row->provinsi."' data-urutan='".$row->urutan."' data-timestamp='".$row->timestamp."' data-editstatus='".$row->status."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
-                                                                <?php
-                                                                    $editAttrs = "data-id='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
-                                                                                 "data-editincident='" . htmlspecialchars($row->idInsiden, ENT_QUOTES) . "' " .
-                                                                                 "data-edittiket='" . htmlspecialchars($row->idTiket, ENT_QUOTES) . "' " .
-                                                                                 "data-edittanggal='" . htmlspecialchars($row->tanggal, ENT_QUOTES) . "' " .
-                                                                                 "data-editsid='" . htmlspecialchars($row->sid, ENT_QUOTES) . "' " .
-                                                                                 "data-edittelepon='" . htmlspecialchars($row->telepon, ENT_QUOTES) . "' " .
-                                                                                 "data-editnama='" . htmlspecialchars($row->nama, ENT_QUOTES) . "' " .
-                                                                                 "data-editkeluhan='" . htmlspecialchars($row->keluhan, ENT_QUOTES) . "' " .
-                                                                                 "data-editalamat='" . htmlspecialchars($row->alamat, ENT_QUOTES) . "' " .
-                                                                                 "data-editOlt='" . htmlspecialchars($row->idOlt, ENT_QUOTES) . "' " .
-                                                                                 "data-editsn='" . htmlspecialchars($row->sn, ENT_QUOTES) . "' " .
-                                                                                 "data-editketerangan='" . htmlspecialchars($row->keterangan, ENT_QUOTES) . "' " .
-                                                                                 "data-editprioritas='" . htmlspecialchars($row->prioritas, ENT_QUOTES) . "' " .
-                                                                                 "data-edittim='" . htmlspecialchars($row->tim, ENT_QUOTES) . "' " .
-                                                                                 "data-editcreateby='" . htmlspecialchars($row->createby, ENT_QUOTES) . "' " .
-                                                                                 "data-editkabupaten='" . htmlspecialchars($row->kabupaten, ENT_QUOTES) . "' " .
-                                                                                 "data-editkec='" . htmlspecialchars($row->kecamatan, ENT_QUOTES) . "' " .
-                                                                                 "data-editprovinsi='" . htmlspecialchars($row->provinsi, ENT_QUOTES) . "' " .
-                                                                                 "data-urutan='" . htmlspecialchars($row->urutan, ENT_QUOTES) . "' " .
-                                                                                 "data-timestamp='" . htmlspecialchars($row->timestamp, ENT_QUOTES) . "' " .
-                                                                                 "data-editstatus='" . htmlspecialchars($row->status, ENT_QUOTES) . "'";
-                                                                ?>
-                                                                <li>
-                                                                    <a href="#" class="dropdown-item edit-item-btn" <?php echo $editAttrs; ?>>
-                                                                        <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
+                                                                </li>
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idTiket.">
+                                                                        <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
                                                                     </a>
-                                                                
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td> 
+                                                </tr>                                              
                                                 ";
                                             }
                                             ?>
@@ -893,7 +951,32 @@ TERMINATING: ${rowData.idOlt}/${rowData.sn}
     });
     </script>
 
-    
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modalElement = document.getElementById('exampleModalgrid1');
+    const modal = new bootstrap.Modal(modalElement);
+    document.querySelectorAll('.edit-item-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const ticketData = this.dataset;
+            console.log(ticketData);
+            const fields = [
+                'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
+                'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editkec', 'editprovinsi', 'editurutan', 'edittimestamp'
+            ];
+            fields.forEach(field => {
+                const inputElement = document.getElementById(field);
+                if (inputElement) {
+                    console.log(`Setting ${field} with value:`, ticketData[field]);
+                    inputElement.value = ticketData[field] || '';
+                }
+            });
+            modal.show();
+        });
+    });
+});
+
+    </script>
     <script>
 document.addEventListener("DOMContentLoaded", function() {
     const table = new DataTable('#example', {
