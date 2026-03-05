@@ -1010,9 +1010,57 @@ document.addEventListener("DOMContentLoaded", function() {
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        var teamsCache = null;
+        var teamsEndpoint = '<?php echo site_url("Tickets/getAllTim"); ?>';
+
+        function populateSelectFromData($select, data, selected){
+            $select.empty();
+            $select.append('<option value="">-- Pilih Tim --</option>');
+            data.forEach(function(item){
+                const text = '(' + (item.kendaraan || '') + ') ' + (item.nama || '');
+                const opt = $('<option>').val(item.nama).text(text);
+                $select.append(opt);
+            });
+            if(selected) {
+                if($select.find("option[value='" + selected + "']").length) {
+                    $select.val(selected);
+                } else {
+                    let matched = false;
+                    $select.find('option').each(function(){
+                        const v = $(this).val();
+                        const t = $(this).text();
+                        if(v === selected || (t && t.indexOf(selected) !== -1) || (v && v.indexOf(selected) !== -1)){
+                            $select.val(v);
+                            matched = true;
+                            return false;
+                        }
+                    });
+                    if(!matched && selected.indexOf('_') !== -1){
+                        const parts = selected.split('_');
+                        const last = parts[parts.length-1];
+                        $select.find('option').each(function(){
+                            const v = $(this).val();
+                            const t = $(this).text();
+                            if(v === last || (t && t.indexOf(last) !== -1)){
+                                $select.val(v);
+                                matched = true;
+                                return false;
+                            }
+                        });
+                    }
+                    if(!matched) console.warn('No matching team option found for:', selected);
+                }
+            }
+            $select.trigger('change');
+        }
+
         function loadAllTeams($select, selected) {
+            if(teamsCache){
+                populateSelectFromData($select, teamsCache, selected);
+                return;
+            }
             $.ajax({
-                url: 'Tickets/getAllTim',
+                url: teamsEndpoint,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -1022,48 +1070,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         $select.html('<option value="">-- Pilih Tim --</option>');
                         return;
                     }
-                    $select.empty();
-                    $select.append('<option value="">-- Pilih Tim --</option>');
-                    data.forEach(function(item){
-                        const text = '(' + (item.kendaraan || '') + ') ' + (item.nama || '');
-                        const opt = $('<option>').val(item.nama).text(text);
-                        $select.append(opt);
-                    });
-                    if(selected) {
-                        // first try exact value match
-                        if($select.find("option[value='" + selected + "']").length) {
-                            $select.val(selected);
-                        } else {
-                            // try to find by text or partial matches
-                            let matched = false;
-                            $select.find('option').each(function(){
-                                const v = $(this).val();
-                                const t = $(this).text();
-                                if(v === selected || (t && t.indexOf(selected) !== -1) || (v && v.indexOf(selected) !== -1)){
-                                    $select.val(v);
-                                    matched = true;
-                                    return false; // break
-                                }
-                            });
-                            // if still not matched and selected contains underscore, try last segment
-                            if(!matched && selected.indexOf('_') !== -1){
-                                const parts = selected.split('_');
-                                const last = parts[parts.length-1];
-                                $select.find('option').each(function(){
-                                    const v = $(this).val();
-                                    const t = $(this).text();
-                                    if(v === last || (t && t.indexOf(last) !== -1)){
-                                        $select.val(v);
-                                        matched = true;
-                                        return false;
-                                    }
-                                });
-                            }
-                            if(!matched) console.warn('No matching team option found for:', selected);
-                        }
-                    }
-                    // notify Select2 to refresh
-                    $select.trigger('change');
+                    teamsCache = data;
+                    populateSelectFromData($select, data, selected);
                 },
                 error: function(xhr, status, err){
                     console.error('Failed to load teams', status, err, xhr.responseText);
