@@ -10,6 +10,7 @@
 
                     <!-- start page title -->
                     <div class="row">
+                        <?php
                                             $count = 0;
                                             if(!empty($materials)) {
                                                 foreach ($materials as $material) {
@@ -67,7 +68,7 @@
                                                 }
                                             }
                                                         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
-                                                    }
+                                                    
                                             ?>
                                             <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                         </div>
