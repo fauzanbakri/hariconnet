@@ -24,7 +24,7 @@
                             <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo htmlentities($this->input->get('end_date') ?: date('Y-m-d')); ?>">
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Filter Material</label>
+                            <label class="form-label">Filter Basecamp</label>
                             <select id="filterMaterial" class="form-select form-select-sm">
                                 <option value="">Semua</option>
                                 <?php foreach (($materials ?? []) as $m) { ?>
@@ -47,7 +47,7 @@
                                 <th>No</th>
                                 <th>ID Pemakaian</th>
                                 <th>Kode Material</th>
-                                <th>Nama Material</th>
+                                <th>Nama Basecamp</th>
                                 <th>SN Terpakai</th>
                                 <th>Incident</th>
                                 <th>Tanggal</th>
