@@ -14,9 +14,22 @@ class Material_model extends CI_Model {
 	 */
 	public function get_all_materials()
 	{
-		$this->db->select('m.*, t.nama');
+		// Detect if material table uses idBc and basecamp table exists
+		$material_fields = $this->db->list_fields('material');
+		$select_extra = '';
+		$join_table = '';
+		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+			// alias idBc to idtim so views/controllers expecting idtim keep working
+			$select_extra = 'm.idBc as idtim, b.namaAkun as nama';
+			$join_table = 'LEFT JOIN basecamp b ON m.idBc = b.idBc';
+		} else {
+			$select_extra = 't.nama';
+			$join_table = 'LEFT JOIN tim t ON m.idtim = t.idTim';
+		}
+
+		$this->db->select('m.*' . ( $select_extra ? ', ' . $select_extra : '' ));
 		$this->db->from('material m');
-		$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
+		if ($join_table) $this->db->join('', $join_table, '');
 		$this->db->order_by('m.idmaterial', 'DESC');
 		return $this->db->get()->result();
 	}
@@ -26,9 +39,18 @@ class Material_model extends CI_Model {
 	 */
 	public function get_materials_filtered($start_date = null, $end_date = null, $status_reservasi = null, $status_terpakai = null, $status_pengiriman = null)
 	{
-		$this->db->select('m.*, t.nama');
+		$material_fields = $this->db->list_fields('material');
+		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+			$select_extra = 'm.idBc as idtim, b.namaAkun as nama';
+			$join_table = 'LEFT JOIN basecamp b ON m.idBc = b.idBc';
+		} else {
+			$select_extra = 't.nama';
+			$join_table = 'LEFT JOIN tim t ON m.idtim = t.idTim';
+		}
+
+		$this->db->select('m.*' . ( $select_extra ? ', ' . $select_extra : '' ));
 		$this->db->from('material m');
-		$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
+		if ($join_table) $this->db->join('', $join_table, '');
 
 		if ($start_date && $end_date) {
 			$this->db->where('DATE(m.tanggal) >=', $start_date);
@@ -56,9 +78,18 @@ class Material_model extends CI_Model {
 	 */
 	public function get_material_by_id($id)
 	{
-		$this->db->select('m.*, t.nama');
+		$material_fields = $this->db->list_fields('material');
+		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+			$select_extra = 'm.idBc as idtim, b.namaAkun as nama';
+			$join_table = 'LEFT JOIN basecamp b ON m.idBc = b.idBc';
+		} else {
+			$select_extra = 't.nama';
+			$join_table = 'LEFT JOIN tim t ON m.idtim = t.idTim';
+		}
+
+		$this->db->select('m.*' . ( $select_extra ? ', ' . $select_extra : '' ));
 		$this->db->from('material m');
-		$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
+		if ($join_table) $this->db->join('', $join_table, '');
 		$this->db->where('m.idmaterial', $id);
 		return $this->db->get()->row();
 	}
@@ -107,6 +138,19 @@ class Material_model extends CI_Model {
 	 */
 	public function get_all_tim()
 	{
+		// If basecamp table exists, return its rows mapped to idTim/nama for compatibility
+		if ($this->db->table_exists('basecamp')) {
+			$rows = $this->db->select('idBc, namaAkun')->order_by('namaAkun','ASC')->get('basecamp')->result();
+			// map to expected properties
+			$result = [];
+			foreach ($rows as $r) {
+				$item = new stdClass();
+				$item->idTim = $r->idBc;
+				$item->nama = $r->namaAkun;
+				$result[] = $item;
+			}
+			return $result;
+		}
 		return $this->db->get('tim')->result();
 	}
 
