@@ -80,6 +80,40 @@ class PemakaianMaterial extends CI_Controller {
             return;
         }
 
+        // incident is required
+        if (!$incident || trim($incident) === '') {
+            echo json_encode(['status' => 'error', 'message' => 'Incident wajib diisi']);
+            return;
+        }
+
+        $qty = (int)$qty;
+
+        // check available quantity for material
+        $ptable = $this->get_pemakaian_table();
+        if (!$ptable) {
+            echo json_encode(['status' => 'error', 'message' => 'Table pemakaian material tidak ditemukan in database']);
+            return;
+        }
+
+        $mat = $this->db->get_where('material', ['idmaterial' => $idmaterial])->row();
+        if (!$mat) {
+            echo json_encode(['status' => 'error', 'message' => 'Material tidak ditemukan']);
+            return;
+        }
+
+        $this->db->select('SUM(qty) as used');
+        $this->db->from($ptable);
+        $this->db->where('idMaterial', $idmaterial);
+        $usedRow = $this->db->get()->row();
+        $used = isset($usedRow->used) ? (int)$usedRow->used : 0;
+        $available = (int)$mat->qty - $used;
+        if ($available < 0) $available = 0;
+
+        if ($qty > $available) {
+            echo json_encode(['status' => 'error', 'message' => 'QTY terpakai melebihi tersedia ('.$available.')']);
+            return;
+        }
+
         // insert into pemakaian_material (create table beforehand if needed)
         // table uses columns: idPemakaianMaterial, idMaterial, incident, tanggal, qty
         $insert = [
@@ -88,12 +122,7 @@ class PemakaianMaterial extends CI_Controller {
             'incident' => $incident,
             'qty' => $qty
         ];
-        $ptable = $this->get_pemakaian_table();
-        if (!$ptable) {
-            echo json_encode(['status' => 'error', 'message' => 'Table pemakaian material tidak ditemukan in database']);
-            return;
-        }
-
+        // insert after validations
         $this->db->insert($ptable, $insert);
 
         // update material record with kode/sn terpakai if provided

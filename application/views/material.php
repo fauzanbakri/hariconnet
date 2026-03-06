@@ -1059,12 +1059,14 @@ $(document).ready(function () {
     $(document).on('click', '.input-penggunaan-btn', function() {
         var idmaterial = $(this).data('idmaterial');
         var kategori = $(this).data('kategori');
+        var available = $(this).data('available') || 0;
         $('#inputIdMaterial').val(idmaterial);
         $('#inputTanggalPenggunaan').val('<?php echo date('Y-m-d'); ?>');
         $('#inputIncident').val('');
         $('#inputKodeMaterialTerpakai').val('');
         $('#inputSnTerpakai').val('');
         $('#inputQtyTerpakai').val(1);
+        $('#inputAvailable').val(available);
         if (kategori === 'FOT') {
             $('.fot-only').show();
         } else {
@@ -1080,10 +1082,21 @@ $(document).ready(function () {
         var incident = $('#inputIncident').val();
         var kode_terpakai = $('#inputKodeMaterialTerpakai').val();
         var sn_terpakai = $('#inputSnTerpakai').val();
-        var qty = $('#inputQtyTerpakai').val();
+        var qty = parseInt($('#inputQtyTerpakai').val(), 10) || 0;
+        var available = parseInt($('#inputAvailable').val(), 10) || 0;
 
         if (!idmaterial || !tanggal || !qty) {
-            Swal.fire('Error', 'Field tanggal dan qty wajib diisi.', 'error');
+            Swal.fire('Error', 'Field tanggal, incident, dan qty wajib diisi.', 'error');
+            return;
+        }
+
+        if (!incident || incident.trim() === '') {
+            Swal.fire('Error', 'Incident wajib diisi.', 'error');
+            return;
+        }
+
+        if (qty > available) {
+            Swal.fire('Error', 'QTY terpakai tidak boleh melebihi tersedia (' + available + ').', 'error');
             return;
         }
 
