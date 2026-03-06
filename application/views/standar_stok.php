@@ -110,6 +110,10 @@
                                                         } ?>
                                                     </select>
                                                     <?php if (isset($basecamp)) { echo '<small class="text-muted">Jumlah basecamp: '.count($basecamp).'</small>'; } ?>
+                                                    <div class="mt-2">
+                                                        <a href="Basecamp" target="_blank" class="btn btn-sm btn-outline-primary">Tambah Basecamp</a>
+                                                        <small class="text-muted ms-2">(buka halaman Basecamp untuk menambah SLOC)</small>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label class="form-label">ONT HUAWEI</label>
