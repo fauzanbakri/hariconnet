@@ -167,6 +167,7 @@
                                                 <th>SN Terpakai</th>
                                                 <th>Kode Material Terpakai</th>
                                                 <th>Merk</th>
+                                                <th>Tipe Material</th>
                                                 <th>Tim</th>
                                                 <th>QTY</th>
                                                 <th>Satuan</th>
@@ -208,6 +209,7 @@
                                                         <td>".(($material->kategori == 'FOC') ? '' : $material->sn_terpakai)."</td>
                                                         <td>".(($material->kategori == 'FOC') ? '' : $material->kode_material_terpakai)."</td>
                                                         <td>".$material->merk."</td>
+                                                        <td>".(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:''))."</td>
                                                         <td>".$material->nama."</td>
                                                         <td>".$available."</td>
                                                         <td>".$material->satuan."</td>
