@@ -327,18 +327,17 @@
                                     <option>ONT FIBERHOME</option>
                                     <option>ONT ZTE</option>
                                     <option>ONT RAISECOM</option>
+                                    <option>ONT BDCOM</option>
                                     <option>DW 50</option>
                                     <option>DW 100</option>
                                     <option>DW 150</option>
                                     <option>DW 250</option>
                                     <option>DW 300</option>
                                     <option>DW 1000</option>
-                                    <option>DW 6F 100</option>
-                                    <option>ADSS 24F 100 SS</option>
-                                    <option>DW 48F 100</option>
-                                    <option>DW 96F 100</option>
-                                    <option>DW 144F 100</option>
-                                    <option>KABEL POTONGAN</option>
+                                    <option>ADSS 6C</option>
+                                    <option>ADSS 24C</option>
+                                    <option>ADSS 48C</option>
+                                    <option>ADSS 96C</option>
                                 </select>
                             </div>
                             <div class="col-xxl-6">
