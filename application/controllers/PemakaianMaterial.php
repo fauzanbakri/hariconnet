@@ -9,6 +9,25 @@ class PemakaianMaterial extends CI_Controller {
         $this->load->database();
     }
 
+    /**
+     * Resolve the pemakaian table name in DB. Try common variants.
+     * Returns table name string or false if not found.
+     */
+    private function get_pemakaian_table()
+    {
+        $candidates = [
+            'pemakaian_material',
+            'pemakaianMaterial',
+            'pemakaianmaterial',
+            'pemakaian_materials',
+            'pemakaianmaterials'
+        ];
+        foreach ($candidates as $t) {
+            if ($this->db->table_exists($t)) return $t;
+        }
+        return false;
+    }
+
     public function index()
     {
         // load data for view
@@ -22,22 +41,23 @@ class PemakaianMaterial extends CI_Controller {
         $filter_material = $this->input->get('idmaterial');
 
         $data['usages'] = [];
-        if ($this->db->table_exists('pemakaian_material')) {
+        $ptable = $this->get_pemakaian_table();
+        if ($ptable) {
             // Select usages and join material to get kode_material and nama
-            $this->db->select('pemakaian_material.*, material.kode_material, material.nama, material.sn_terpakai');
-            $this->db->from('pemakaian_material');
-            $this->db->join('material', 'pemakaian_material.idMaterial = material.idmaterial', 'left');
+            $this->db->select("{$ptable}.*, material.kode_material, material.nama, material.sn_terpakai");
+            $this->db->from($ptable);
+            $this->db->join('material', "{$ptable}.idMaterial = material.idmaterial", 'left');
 
             if ($start_date) {
-                $this->db->where('DATE(pemakaian_material.tanggal) >=', $start_date);
+                $this->db->where("DATE({$ptable}.tanggal) >=", $start_date);
             }
             if ($end_date) {
-                $this->db->where('DATE(pemakaian_material.tanggal) <=', $end_date);
+                $this->db->where("DATE({$ptable}.tanggal) <=", $end_date);
             }
             if ($filter_material) {
-                $this->db->where('pemakaian_material.idMaterial', $filter_material);
+                $this->db->where("{$ptable}.idMaterial", $filter_material);
             }
-            $this->db->order_by('pemakaian_material.tanggal', 'DESC');
+            $this->db->order_by("{$ptable}.tanggal", 'DESC');
             $data['usages'] = $this->db->get()->result();
         }
 
@@ -67,7 +87,13 @@ class PemakaianMaterial extends CI_Controller {
             'incident' => $incident,
             'qty' => $qty
         ];
-        $this->db->insert('pemakaian_material', $insert);
+        $ptable = $this->get_pemakaian_table();
+        if (!$ptable) {
+            echo json_encode(['status' => 'error', 'message' => 'Table pemakaian material tidak ditemukan in database']);
+            return;
+        }
+
+        $this->db->insert($ptable, $insert);
 
         // update material record with kode/sn terpakai if provided
         $update = [];
