@@ -45,11 +45,20 @@ class PemakaianMaterial extends CI_Controller {
         $data['usages'] = [];
         $ptable = $this->get_pemakaian_table();
         if ($ptable) {
-            // Select usages and join material and tim to get kode_material and team nama
-            $this->db->select("{$ptable}.*, material.kode_material, material.sn_terpakai, tim.nama as nama");
+            // Select usages and join material and either tim or basecamp to get kode_material and team/basecamp nama
+            $material_fields = $this->db->list_fields('material');
+            if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+                $this->db->select("{$ptable}.*, material.kode_material, material.sn_terpakai, b.namaAkun as nama");
+            } else {
+                $this->db->select("{$ptable}.*, material.kode_material, material.sn_terpakai, tim.nama as nama");
+            }
             $this->db->from($ptable);
             $this->db->join('material', "{$ptable}.idMaterial = material.idmaterial", 'left');
-            $this->db->join('tim', 'material.idtim = tim.idTim', 'left');
+            if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+                $this->db->join('basecamp b', 'material.idBc = b.idBc', 'left');
+            } else {
+                $this->db->join('tim', 'material.idtim = tim.idTim', 'left');
+            }
 
             if ($start_date) {
                 $this->db->where("DATE({$ptable}.tanggal) >=", $start_date);
