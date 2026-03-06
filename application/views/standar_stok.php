@@ -101,18 +101,55 @@
                                                     <label class="form-label">Basecamp (SLOC)</label>
                                                     <select id="inputIdBc" class="form-select">
                                                         <option value="">Pilih Basecamp</option>
-                                                        <?php if (!empty($basecamp)) {
-                                                            foreach ($basecamp as $bc) {
-                                                                $label = htmlspecialchars(isset($bc->namaAkun)?$bc->namaAkun:$bc->sloc);
-                                                                if (!empty($bc->sloc)) $label .= ' ('.htmlspecialchars($bc->sloc).')';
-                                                                echo '<option value="'.htmlspecialchars($bc->idBc).'">'.$label.'</option>';
+                                                        <?php
+                                                        // Normalize basecamp input: support CI result objects, arrays, or single objects
+                                                        $bc_list = [];
+                                                        if (!empty($basecamp)) {
+                                                            if (is_object($basecamp) && method_exists($basecamp, 'result')) {
+                                                                $bc_list = $basecamp->result();
+                                                            } elseif (is_array($basecamp)) {
+                                                                $bc_list = $basecamp;
+                                                            } elseif (is_object($basecamp)) {
+                                                                // Try to convert traversable/object to array of objects
+                                                                try {
+                                                                    $bc_list = iterator_to_array($basecamp);
+                                                                } catch (Exception $e) {
+                                                                    $bc_list = [(object)$basecamp];
+                                                                }
+                                                            } else {
+                                                                $bc_list = (array)$basecamp;
+                                                            }
+                                                        }
+
+                                                        if (!empty($bc_list)) {
+                                                            foreach ($bc_list as $bc) {
+                                                                // support both object and associative-array items
+                                                                $id = '';
+                                                                $name = '';
+                                                                $sloc = '';
+                                                                if (is_object($bc)) {
+                                                                    $id = isset($bc->idBc) ? $bc->idBc : (isset($bc->id) ? $bc->id : '');
+                                                                    $name = isset($bc->namaAkun) ? $bc->namaAkun : (isset($bc->nama) ? $bc->nama : '');
+                                                                    $sloc = isset($bc->sloc) ? $bc->sloc : '';
+                                                                } elseif (is_array($bc)) {
+                                                                    $id = isset($bc['idBc']) ? $bc['idBc'] : (isset($bc['id']) ? $bc['id'] : '');
+                                                                    $name = isset($bc['namaAkun']) ? $bc['namaAkun'] : (isset($bc['nama']) ? $bc['nama'] : '');
+                                                                    $sloc = isset($bc['sloc']) ? $bc['sloc'] : '';
+                                                                } else {
+                                                                    $id = (string)$bc;
+                                                                }
+
+                                                                $label = htmlspecialchars($name ?: $sloc ?: $id);
+                                                                if (!empty($sloc)) $label .= ' ('.htmlspecialchars($sloc).')';
+                                                                echo '<option value="'.htmlspecialchars($id).'">'.$label.'</option>';
                                                             }
                                                         } else {
                                                             echo '<option value="" disabled>Tidak ada Basecamp (SLOC) — tambahkan di menu Basecamp</option>';
-                                                        } ?>
+                                                        }
+                                                        ?>
                                                     </select>
-                                                        <?php if (isset($basecamp)) { echo '<small class="text-muted">Jumlah basecamp: '.count($basecamp).'</small>'; } ?>
-                                                        <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { echo '<pre style="max-height:200px;overflow:auto;background:#fff;border:1px solid #ddd;padding:8px;margin-top:8px">'.htmlspecialchars(print_r($basecamp, true)).'</pre>'; } ?>
+                                                        <?php if (!empty($bc_list)) { echo '<small class="text-muted">Jumlah basecamp: '.count($bc_list).'</small>'; } ?>
+                                                        <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { echo '<pre style="max-height:200px;overflow:auto;background:#fff;border:1px solid #ddd;padding:8px;margin-top:8px">'.htmlspecialchars(print_r($bc_list, true)).'</pre>'; } ?>
                                                     <div class="mt-2">
                                                         <a href="Basecamp" target="_blank" class="btn btn-sm btn-outline-primary">Tambah Basecamp</a>
                                                         <small class="text-muted ms-2">(buka halaman Basecamp untuk menambah SLOC)</small>
