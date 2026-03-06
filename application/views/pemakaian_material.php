@@ -24,12 +24,44 @@
                             <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo htmlentities($this->input->get('end_date') ?: date('Y-m-d')); ?>">
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Filter Basecamp</label>
+                            <label class="form-label">Filter Material</label>
                             <select id="filterMaterial" class="form-select form-select-sm">
                                 <option value="">Semua</option>
-                                <?php foreach (($materials ?? []) as $m) { ?>
-                                <option value="<?php echo $m->idmaterial; ?>" <?php echo ($this->input->get('idmaterial') == $m->idmaterial) ? 'selected' : ''; ?>><?php echo $m->kode_material.' - '.$m->nama; ?></option>
-                                <?php } ?>
+                                <?php
+                                $mat_list = [];
+                                if (!empty($materials)) {
+                                    if (is_object($materials) && method_exists($materials, 'result')) {
+                                        $mat_list = $materials->result();
+                                    } elseif (is_array($materials)) {
+                                        $mat_list = $materials;
+                                    } elseif (is_object($materials)) {
+                                        try { $mat_list = iterator_to_array($materials); } catch (Exception $e) { $mat_list = [(object)$materials]; }
+                                    } else {
+                                        $mat_list = (array)$materials;
+                                    }
+                                }
+
+                                foreach ($mat_list as $m) {
+                                    $mid = '';
+                                    $kode = '';
+                                    $name = '';
+                                    if (is_object($m)) {
+                                        $mid = isset($m->idmaterial) ? $m->idmaterial : (isset($m->id) ? $m->id : '');
+                                        $kode = isset($m->kode_material) ? $m->kode_material : (isset($m->kode) ? $m->kode : '');
+                                        $name = isset($m->nama) ? $m->nama : (isset($m->namaAkun) ? $m->namaAkun : '');
+                                    } elseif (is_array($m)) {
+                                        $mid = isset($m['idmaterial']) ? $m['idmaterial'] : (isset($m['id']) ? $m['id'] : '');
+                                        $kode = isset($m['kode_material']) ? $m['kode_material'] : (isset($m['kode']) ? $m['kode'] : '');
+                                        $name = isset($m['nama']) ? $m['nama'] : (isset($m['namaAkun']) ? $m['namaAkun'] : '');
+                                    } else {
+                                        $mid = (string)$m;
+                                    }
+                                    $mid_esc = htmlspecialchars($mid);
+                                    $selected = ($this->input->get('idmaterial') == $mid) ? 'selected' : '';
+                                    $label = trim(($kode ?: $mid_esc) . ' - ' . ($name ?: '-'));
+                                    echo '<option value="'.$mid_esc.'" '.$selected.'>'.htmlspecialchars($label).'</option>';
+                                }
+                                ?>
                             </select>
                         </div>
                         <div class="col-md-3 text-end">
