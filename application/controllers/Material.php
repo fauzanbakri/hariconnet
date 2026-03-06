@@ -10,6 +10,24 @@ class Material extends CI_Controller {
 	}
 
 	/**
+	 * Resolve pemakaian table name variants
+	 */
+	private function get_pemakaian_table()
+	{
+		$candidates = [
+			'pemakaian_material',
+			'pemakaianMaterial',
+			'pemakaianmaterial',
+			'pemakaian_materials',
+			'pemakaianmaterials'
+		];
+		foreach ($candidates as $t) {
+			if ($this->db->table_exists($t)) return $t;
+		}
+		return false;
+	}
+
+	/**
 	 * Display material list with filters
 	 */
 	public function index()
@@ -39,6 +57,19 @@ class Material extends CI_Controller {
 			$data['status_reservasi_list'] = ['Sudah', 'Belum'];
 			$data['status_terpakai_list'] = $this->Material_model->get_status_terpakai();
 			$data['status_pengiriman_list'] = ['Dalam Pengiriman', 'On Loc'];
+
+			// compute total used qty per material from pemakaian table if exists
+			$data['used_sums'] = [];
+			$ptable = $this->get_pemakaian_table();
+			if ($ptable) {
+				$this->db->select('idMaterial, SUM(qty) as used');
+				$this->db->from($ptable);
+				$this->db->group_by('idMaterial');
+				$rows = $this->db->get()->result();
+				foreach ($rows as $r) {
+					$data['used_sums'][$r->idMaterial] = (int)$r->used;
+				}
+			}
 
 			$this->load->view('navbar', $title);
 			$this->load->view('material', $data);

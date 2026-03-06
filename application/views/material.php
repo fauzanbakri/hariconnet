@@ -190,6 +190,13 @@
                                             if(!empty($materials)) {
                                                 foreach ($materials as $material) {
                                                     $count = $count + 1;
+                                                    // compute used qty (from pemakaian) and available
+                                                    $used = 0;
+                                                    if (isset($used_sums) && isset($used_sums[$material->idmaterial])) {
+                                                        $used = (int)$used_sums[$material->idmaterial];
+                                                    }
+                                                    $available = $material->qty - $used;
+                                                    if ($available < 0) $available = 0;
                                                     echo "
                                                     <tr>
                                                         <td>".$count."</td>
@@ -201,7 +208,7 @@
                                                         <td>".(($material->kategori == 'FOC') ? '' : $material->kode_material_terpakai)."</td>
                                                         <td>".$material->merk."</td>
                                                         <td>".$material->nama."</td>
-                                                        <td>".$material->qty."</td>
+                                                        <td>".$available."</td>
                                                         <td>".$material->satuan."</td>
                                                         <td class='text-center'>".(( $material->status_reservasi == 'Sudah') ? "<span class='badge bg-success'>".$material->status_reservasi."</span>" : "<span class='badge bg-danger'>".$material->status_reservasi."</span>")."</td>
                                                          <td class='text-center'>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
