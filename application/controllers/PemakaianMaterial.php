@@ -15,12 +15,32 @@ class PemakaianMaterial extends CI_Controller {
         $data = [];
         // materials for lookup
         $data['materials'] = $this->db->get('material')->result();
-        // pemakaian records
+
+        // filters from query params
+        $start_date = $this->input->get('start_date');
+        $end_date = $this->input->get('end_date');
+        $filter_material = $this->input->get('idmaterial');
+
+        $data['usages'] = [];
         if ($this->db->table_exists('pemakaian_material')) {
-            $data['usages'] = $this->db->order_by('tanggal_penggunaan', 'DESC')->get('pemakaian_material')->result();
-        } else {
-            $data['usages'] = [];
+            // Select usages and join material to get kode_material and nama
+            $this->db->select('pemakaian_material.*, material.kode_material, material.nama, material.sn_terpakai');
+            $this->db->from('pemakaian_material');
+            $this->db->join('material', 'pemakaian_material.idMaterial = material.idmaterial', 'left');
+
+            if ($start_date) {
+                $this->db->where('DATE(pemakaian_material.tanggal) >=', $start_date);
+            }
+            if ($end_date) {
+                $this->db->where('DATE(pemakaian_material.tanggal) <=', $end_date);
+            }
+            if ($filter_material) {
+                $this->db->where('pemakaian_material.idMaterial', $filter_material);
+            }
+            $this->db->order_by('pemakaian_material.tanggal', 'DESC');
+            $data['usages'] = $this->db->get()->result();
         }
+
         $this->load->view('pemakaian_material', $data);
     }
 

@@ -16,18 +16,18 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-3">
                             <label class="form-label">Tanggal Mulai</label>
-                            <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
+                            <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo htmlentities($this->input->get('start_date') ?: date('Y-m-d')); ?>">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Tanggal Akhir</label>
-                            <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo date('Y-m-d'); ?>">
+                            <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo htmlentities($this->input->get('end_date') ?: date('Y-m-d')); ?>">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Filter Material</label>
                             <select id="filterMaterial" class="form-select form-select-sm">
                                 <option value="">Semua</option>
                                 <?php foreach (($materials ?? []) as $m) { ?>
-                                <option value="<?php echo $m->idmaterial; ?>"><?php echo $m->kode_material.' - '.$m->nama; ?></option>
+                                <option value="<?php echo $m->idmaterial; ?>" <?php echo ($this->input->get('idmaterial') == $m->idmaterial) ? 'selected' : ''; ?>><?php echo $m->kode_material.' - '.$m->nama; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -41,29 +41,26 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Tanggal Penggunaan</th>
-                                <th>Incident</th>
+                                <th>ID Pemakaian</th>
                                 <th>Kode Material</th>
-                                <th>SN</th>
-                                <th>QTY Terpakai</th>
-                                <th>Material</th>
+                                <th>Nama Material</th>
+                                <th>SN Terpakai</th>
+                                <th>Incident</th>
+                                <th>Tanggal</th>
+                                <th>QTY</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i=0; foreach (($usages ?? []) as $u) { $i++;
-                                $mat = null;
-                                if (!empty($materials)) {
-                                    foreach ($materials as $mm) if ($mm->idmaterial == $u->idmaterial) { $mat = $mm; break; }
-                                }
-                            ?>
+                            <?php $i=0; foreach (($usages ?? []) as $u) { $i++; ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo isset($u->tanggal) ? $u->tanggal : (isset($u->tanggal_penggunaan) ? $u->tanggal_penggunaan : '-'); ?></td>
+                                <td><?php echo isset($u->idPemakaianMaterial) ? $u->idPemakaianMaterial : (isset($u->idPemakaian) ? $u->idPemakaian : '-'); ?></td>
+                                <td><?php echo isset($u->kode_material) ? $u->kode_material : '-'; ?></td>
+                                <td><?php echo isset($u->nama) ? $u->nama : '-'; ?></td>
+                                <td><?php echo isset($u->sn_terpakai) ? $u->sn_terpakai : (isset($u->sn) ? $u->sn : '-'); ?></td>
                                 <td><?php echo isset($u->incident) ? $u->incident : '-'; ?></td>
-                                <td><?php echo $mat ? $mat->kode_material : '-'; ?></td>
-                                <td><?php echo $mat ? $mat->sn_terpakai : '-'; ?></td>
+                                <td><?php echo isset($u->tanggal) ? $u->tanggal : (isset($u->tanggal_penggunaan) ? $u->tanggal_penggunaan : '-'); ?></td>
                                 <td><?php echo isset($u->qty) ? $u->qty : (isset($u->qty_terpakai) ? $u->qty_terpakai : '-'); ?></td>
-                                <td><?php echo $mat ? $mat->nama : '-'; ?></td>
                             </tr>
                             <?php } ?>
                         </tbody>
@@ -79,11 +76,11 @@
 $(document).ready(function(){
     $('#pemakaianTable').DataTable({
         responsive:true,
-        order:[]
+        order:[],
+        lengthMenu: [[-1,10,25,50], ['All',10,25,50]]
     });
 
     $('#applyFilters').on('click', function(){
-        // simple client-side filter: reload page with query params (server-side can handle later)
         const s = $('#filterStartDate').val();
         const e = $('#filterEndDate').val();
         const m = $('#filterMaterial').val();
