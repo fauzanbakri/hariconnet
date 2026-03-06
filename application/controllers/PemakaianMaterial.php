@@ -40,12 +40,12 @@ class PemakaianMaterial extends CI_Controller {
         }
 
         // insert into pemakaian_material (create table beforehand if needed)
+        // table uses columns: idPemakaianMaterial, idMaterial, incident, tanggal, qty
         $insert = [
-            'idmaterial' => $idmaterial,
-            'tanggal_penggunaan' => $tanggal,
+            'idMaterial' => $idmaterial,
+            'tanggal' => $tanggal,
             'incident' => $incident,
-            'qty_terpakai' => $qty,
-            'created_at' => date('Y-m-d H:i:s')
+            'qty' => $qty
         ];
         $this->db->insert('pemakaian_material', $insert);
 
