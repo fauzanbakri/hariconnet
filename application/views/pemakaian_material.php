@@ -58,11 +58,11 @@
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo $u->tanggal_penggunaan; ?></td>
-                                <td><?php echo $u->incident; ?></td>
+                                <td><?php echo isset($u->tanggal) ? $u->tanggal : (isset($u->tanggal_penggunaan) ? $u->tanggal_penggunaan : '-'); ?></td>
+                                <td><?php echo isset($u->incident) ? $u->incident : '-'; ?></td>
                                 <td><?php echo $mat ? $mat->kode_material : '-'; ?></td>
                                 <td><?php echo $mat ? $mat->sn_terpakai : '-'; ?></td>
-                                <td><?php echo $u->qty_terpakai; ?></td>
+                                <td><?php echo isset($u->qty) ? $u->qty : (isset($u->qty_terpakai) ? $u->qty_terpakai : '-'); ?></td>
                                 <td><?php echo $mat ? $mat->nama : '-'; ?></td>
                             </tr>
                             <?php } ?>
