@@ -47,7 +47,9 @@
                                 <th>No</th>
                                 <th>ID Pemakaian</th>
                                 <th>Kode Material</th>
+                                <th>Kode Material Terpakai</th>
                                 <th>Nama Basecamp</th>
+                                <th>SN</th>
                                 <th>SN Terpakai</th>
                                 <th>Incident</th>
                                 <th>Tanggal</th>
@@ -60,8 +62,10 @@
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo isset($u->idPemakaianMaterial) ? $u->idPemakaianMaterial : (isset($u->idPemakaian) ? $u->idPemakaian : '-'); ?></td>
                                 <td><?php echo isset($u->kode_material) ? $u->kode_material : '-'; ?></td>
+                                <td><?php echo isset($u->kode_material_terpakai) ? $u->kode_material_terpakai : (isset($u->kode_material_terpakai) ? $u->kode_material_terpakai : '-'); ?></td>
                                 <td><?php echo isset($u->nama) ? $u->nama : '-'; ?></td>
-                                <td><?php echo isset($u->sn_terpakai) ? $u->sn_terpakai : (isset($u->sn) ? $u->sn : '-'); ?></td>
+                                <td><?php echo isset($u->sn_original) ? $u->sn_original : (isset($u->sn) ? $u->sn : '-'); ?></td>
+                                <td><?php echo isset($u->sn_terpakai) ? $u->sn_terpakai : '-'; ?></td>
                                 <td><?php echo isset($u->incident) ? $u->incident : '-'; ?></td>
                                 <td><?php echo isset($u->tanggal) ? $u->tanggal : (isset($u->tanggal_penggunaan) ? $u->tanggal_penggunaan : '-'); ?></td>
                                 <td><?php echo isset($u->qty) ? $u->qty : (isset($u->qty_terpakai) ? $u->qty_terpakai : '-'); ?></td>

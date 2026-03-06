@@ -48,9 +48,10 @@ class PemakaianMaterial extends CI_Controller {
             // Select usages and join material and either tim or basecamp to get kode_material and team/basecamp nama
             $material_fields = $this->db->list_fields('material');
             if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
-                $this->db->select("{$ptable}.*, material.kode_material, material.sn_terpakai, b.namaAkun as nama");
+                // select kode_material, kode_material_terpakai, sn (original), sn_terpakai (used), and basecamp name
+                $this->db->select("{$ptable}.*, material.kode_material, material.kode_material_terpakai, material.sn as sn_original, material.sn_terpakai, b.namaAkun as nama");
             } else {
-                $this->db->select("{$ptable}.*, material.kode_material, material.sn_terpakai, tim.nama as nama");
+                $this->db->select("{$ptable}.*, material.kode_material, material.kode_material_terpakai, material.sn as sn_original, material.sn_terpakai, tim.nama as nama");
             }
             $this->db->from($ptable);
             $this->db->join('material', "{$ptable}.idMaterial = material.idmaterial", 'left');
