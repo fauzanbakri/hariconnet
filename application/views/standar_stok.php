@@ -103,7 +103,9 @@
                                                         <option value="">Pilih Basecamp</option>
                                                         <?php if (!empty($basecamp)) {
                                                             foreach ($basecamp as $bc) {
-                                                                echo '<option value="'.htmlspecialchars($bc->idBc).'">'.htmlspecialchars($bc->sloc).'</option>';
+                                                                $label = htmlspecialchars(isset($bc->namaAkun)?$bc->namaAkun:$bc->sloc);
+                                                                if (!empty($bc->sloc)) $label .= ' ('.htmlspecialchars($bc->sloc).')';
+                                                                echo '<option value="'.htmlspecialchars($bc->idBc).'">'.$label.'</option>';
                                                             }
                                                         } else {
                                                             echo '<option value="" disabled>Tidak ada Basecamp (SLOC) — tambahkan di menu Basecamp</option>';
