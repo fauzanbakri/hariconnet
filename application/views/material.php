@@ -171,7 +171,7 @@
                                                         if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
                                                             echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
                                                         } else {
-                                                            echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
+                                                            echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Input Penggunaan</button></td>";
                                                         }
 
                                                         if(
