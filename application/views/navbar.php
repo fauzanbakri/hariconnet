@@ -675,7 +675,12 @@
                             <a class="nav-link menu-link" href="Material" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-archive-plus-outline"></i> <span data-key="t-layouts">Input Material</span>
                             </a>
-                        </li> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="Material/pemakaian" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                <i class="mdi mdi-archive-minus-outline"></i> <span data-key="t-layouts">Pemakaian Material</span>
+                            </a>
+                        </li>
                         <?php
                         if(
                             $_SESSION['role']=='Superadmin' || 
