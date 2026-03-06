@@ -9,23 +9,13 @@
 
                     <!-- start page title -->
                     <div class="row">
-                    // Open input penggunaan modal or confirm
-                    $(document).on('click', '.input-penggunaan-btn', function() {
-                        var idmaterial = $(this).data('idmaterial');
-                        var kategori = $(this).data('kategori');
-
-                        // Build and show modal for FOT, otherwise show prompt to input usage without incident
-                        $('#inputPenggunaanIdMaterial').val(idmaterial);
-                        $('#inputPenggunaanTanggal').val(new Date().toISOString().slice(0,10));
-                        $('#inputPenggunaanIncident').val('');
-                        $('#inputPenggunaanQty').val('1');
-
-                        var modal = new bootstrap.Modal(document.getElementById('inputPenggunaanModal'));
-                        modal.show();
-                    });
-                                                    ){
-                                                        echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
-                                                    }
+                                            <?php
+                                            if(
+                                                $_SESSION['role']=='Superadmin' ||
+                                                $_SESSION['role']=='Team Leader'
+                                                ){
+                                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
+                                            }
                                             ?>
                                             <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                         </div>
@@ -528,6 +518,27 @@ $('#simpanTandaiTerpakai').on('click', function() {
         }
     });
 });
+// Input Penggunaan button handler — opens modal if present, otherwise alerts
+$(document).on('click', '.input-penggunaan-btn', function() {
+    var idmaterial = $(this).data('idmaterial');
+    var kategori = $(this).data('kategori');
+    try {
+        $('#inputPenggunaanIdMaterial').val(idmaterial);
+        $('#inputPenggunaanTanggal').val(new Date().toISOString().slice(0,10));
+        $('#inputPenggunaanIncident').val('');
+        $('#inputPenggunaanQty').val('1');
+        var modalEl = document.getElementById('inputPenggunaanModal');
+        if (modalEl) {
+            var modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        } else {
+            Swal.fire('Info', 'Modal input penggunaan belum tersedia.', 'info');
+        }
+    } catch (e) {
+        console.error('input-penggunaan handler error', e);
+    }
+});
+
 const button = document.getElementById('toast');
 
 function resetForm() {
