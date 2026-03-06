@@ -27,6 +27,9 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
+                                    <?php if (isset($_GET['debug']) && $_GET['debug']=='1') {
+                                        echo '<div class="alert alert-warning">DEBUG: rendering view <strong>application/views/standar_stok.php</strong> — '.date('Y-m-d H:i:s').'</div>';
+                                    } ?>
                                     <table id="standarStokTable" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
                                             <tr>
