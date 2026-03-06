@@ -12,7 +12,7 @@ class StandarStok extends CI_Controller {
     public function index()
     {
         $title['title'] = "Standar Stok";
-
+		session_start();
         // Fetch rows from standarStok table (assumes table exists)
         $data['rows'] = [];
         if ($this->db->table_exists('standarStok')) {

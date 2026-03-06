@@ -30,6 +30,7 @@ class PemakaianMaterial extends CI_Controller {
 
     public function index()
     {
+        session_start();
         // load data for view
         $data = [];
         // materials for lookup
