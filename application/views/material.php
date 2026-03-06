@@ -9,62 +9,20 @@
 
                     <!-- start page title -->
                     <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Inventory Material</h4>
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Material</a></li>
-                                        <li class="breadcrumb-item active">Input Material</li>
-                                    </ol>
-                                </div>
-                                <!-- Modal Tandai Terpakai -->
-                                <div class="modal fade" id="tandaiTerpakaiModal" tabindex="-1" aria-labelledby="tandaiTerpakaiModalLabel" aria-modal="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="tandaiTerpakaiModalLabel">Tandai Material Terpakai</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="tandaiTerpakaiForm">
-                                                    <input type="hidden" id="tandaiIdMaterial">
-                                                    <div class="mb-3">
-                                                        <label for="tandaiKodeMaterialTerpakai" class="form-label">Kode Material Terpakai</label>
-                                                        <input type="text" class="form-control" id="tandaiKodeMaterialTerpakai" placeholder="Kode Material Terpakai">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="tandaiSnTerpakai" class="form-label">SN Terpakai</label>
-                                                        <input type="text" class="form-control" id="tandaiSnTerpakai" placeholder="SN Terpakai">
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <button type="button" class="btn btn-primary" id="simpanTandaiTerpakai">Simpan</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end page title -->
+                    // Open input penggunaan modal or confirm
+                    $(document).on('click', '.input-penggunaan-btn', function() {
+                        var idmaterial = $(this).data('idmaterial');
+                        var kategori = $(this).data('kategori');
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">Daftar Material</h5>
-                                </div>
+                        // Build and show modal for FOT, otherwise show prompt to input usage without incident
+                        $('#inputPenggunaanIdMaterial').val(idmaterial);
+                        $('#inputPenggunaanTanggal').val(new Date().toISOString().slice(0,10));
+                        $('#inputPenggunaanIncident').val('');
+                        $('#inputPenggunaanQty').val('1');
 
-                                <div class="card-header">
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <?php
-                                                if(
-                                                    $_SESSION['role']=='Superadmin' ||
-                                                    $_SESSION['role']=='Team Leader'
+                        var modal = new bootstrap.Modal(document.getElementById('inputPenggunaanModal'));
+                        modal.show();
+                    });
                                                     ){
                                                         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
                                                     }
@@ -171,7 +129,7 @@
                                                         if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
                                                             echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
                                                         } else {
-                                                            echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
+                                                            echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Input Penggunaan</button></td>";
                                                         }
 
                                                         if(
