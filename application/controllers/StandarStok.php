@@ -36,6 +36,21 @@ class StandarStok extends CI_Controller {
     
     public function insertData()
     {
+        // log incoming request for diagnostics
+        @file_put_contents('/tmp/standar_stok_debug.log', date('Y-m-d H:i:s') . " INSERT ATTEMPT\n" . print_r($_POST, true) . "\n", FILE_APPEND);
+
+        // detect actual table name (support variants)
+        $candidates = ['standarStok','standar_stok','standarstok','standar_stoks','standarstok'];
+        $table = null;
+        foreach ($candidates as $t) {
+            if ($this->db->table_exists($t)) { $table = $t; break; }
+        }
+        if (!$table) {
+            @file_put_contents('/tmp/standar_stok_debug.log', date('Y-m-d H:i:s') . " TABLE MISSING\n", FILE_APPEND);
+            echo 'Tabel standarStok tidak ditemukan pada database';
+            return;
+        }
+
         // minimal server-side validation
         $idBc = $this->input->post('idBc');
         if (!$idBc) {
@@ -62,10 +77,11 @@ class StandarStok extends CI_Controller {
             'adss_96c' => $this->input->post('adss_96c') ?: 0
         ];
 
-        if ($this->db->insert('standarStok', $payload)) {
+        if ($this->db->insert($table, $payload)) {
             echo 'success';
         } else {
             $e = $this->db->error();
+            @file_put_contents('/tmp/standar_stok_debug.log', date('Y-m-d H:i:s') . " DB ERROR: " . print_r($e, true) . "\n", FILE_APPEND);
             echo isset($e['message']) ? $e['message'] : 'Gagal menyimpan';
         }
     }
