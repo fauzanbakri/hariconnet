@@ -8,18 +8,24 @@
                 <div class="container-fluid">
 
                     <!-- start page title -->
-                    <div class="row">
-                                            <?php
-                                            if(
-                                                $_SESSION['role']=='Superadmin' ||
-                                                $_SESSION['role']=='Team Leader'
-                                                ){
-                                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
-                                            }
-                                            ?>
-                                            <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
-                                        </div>
-                                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12 d-flex align-items-center justify-content-between">
+                            <div>
+                                <h4 class="mb-0">Material</h4>
+                            </div>
+                            <div>
+                                <?php
+                                if(
+                                    $_SESSION['role']=='Superadmin' ||
+                                    $_SESSION['role']=='Team Leader'
+                                    ){
+                                        echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
+                                }
+                                ?>
+                                <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
+                            </div>
+                        </div>
+                    </div>
 
                                     <div class="row g-3 mb-3">
                                         <div class="col-md-3">
