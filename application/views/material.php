@@ -119,7 +119,7 @@
                                                         if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
                                                             echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
                                                         } else {
-                                                            echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Input Penggunaan</button></td>";
+                                                            echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
                                                         }
 
                                                         if(
@@ -518,26 +518,7 @@ $('#simpanTandaiTerpakai').on('click', function() {
         }
     });
 });
-// Input Penggunaan button handler — opens modal if present, otherwise alerts
-$(document).on('click', '.input-penggunaan-btn', function() {
-    var idmaterial = $(this).data('idmaterial');
-    var kategori = $(this).data('kategori');
-    try {
-        $('#inputPenggunaanIdMaterial').val(idmaterial);
-        $('#inputPenggunaanTanggal').val(new Date().toISOString().slice(0,10));
-        $('#inputPenggunaanIncident').val('');
-        $('#inputPenggunaanQty').val('1');
-        var modalEl = document.getElementById('inputPenggunaanModal');
-        if (modalEl) {
-            var modal = new bootstrap.Modal(modalEl);
-            modal.show();
-        } else {
-            Swal.fire('Info', 'Modal input penggunaan belum tersedia.', 'info');
-        }
-    } catch (e) {
-        console.error('input-penggunaan handler error', e);
-    }
-});
+// (No inline input-penggunaan handler — use existing tandai-terpakai handlers)
 
 const button = document.getElementById('toast');
 
