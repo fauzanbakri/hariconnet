@@ -32,7 +32,7 @@ class StandarStok extends CI_Controller {
         $this->load->view('navbar', $title);
         $this->load->view('standar_stok', $data);
     }
-}
+
     
     public function insertData()
     {
@@ -69,3 +69,4 @@ class StandarStok extends CI_Controller {
             echo isset($e['message']) ? $e['message'] : 'Gagal menyimpan';
         }
     }
+}
