@@ -214,19 +214,20 @@
                                                         <td>".$available."</td>
                                                         <td>".$material->satuan."</td>
                                                         <td class='text-center'>".(( $material->status_reservasi == 'Sudah') ? "<span class='badge bg-success'>".$material->status_reservasi."</span>" : "<span class='badge bg-danger'>".$material->status_reservasi."</span>")."</td>
-                                                         <td class='text-center'>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
+                                                        <?php
+                                                            // display terpakai status based on available qty: 0 -> Terpakai, otherwise Ready
+                                                            $status_display = ($available == 0) ? 'Terpakai' : 'Ready';
+                                                            $status_class = ($available == 0) ? 'bg-success' : 'bg-info';
+                                                        ?>
+                                                        <td class='text-center'><span class='badge <?php echo $status_class; ?>'><?php echo $status_display; ?></span></td>
                                                         <td class='text-center'>".(( $material->status_pengiriman == 'On Loc') ? "<span class='badge bg-primary'>".$material->status_pengiriman."</span>" : "<span class='badge bg-info'>".$material->status_pengiriman."</span>")."</td>
                                                         <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
 
-                                                        if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
+                                                        // Determine Input Penggunaan button based on available
+                                                        if ($available <= 0) {
                                                             echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
                                                         } else {
-                                                            // disable Input Penggunaan when available qty is zero
-                                                            if (isset($available) && $available <= 0) {
-                                                                echo "<td><button class='btn btn-secondary btn-sm' disabled>Kosong</button></td>";
-                                                            } else {
-                                                                echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."' data-available='".$available."'>Input Penggunaan</button></td>";
-                                                            }
+                                                            echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."' data-available='".$available."'>Input Penggunaan</button></td>";
                                                         }
 
                                                         if(
