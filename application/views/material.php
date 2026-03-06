@@ -312,6 +312,18 @@
                                 <input type="text" class="form-control" name="kode_material" id="kode_material" autocomplete="off" placeholder="Kode Material">
                             </div>
                             <div class="col-xxl-6">
+                                <label class="form-label">Deskripsi Material</label>
+                                <p id="displayDeskripsiMaterial">-</p>
+                            </div>
+                            <div class="col-xxl-6 d-none">
+                                <label class="form-label">Kode Material (lookup)</label>
+                                <p id="displayKodeMaterial">-</p>
+                            </div>
+                            <div class="col-xxl-6 d-none">
+                                <label class="form-label">Deskripsi Material Terpakai</label>
+                                <p id="displayDeskripsiMaterialTerpakai">-</p>
+                            </div>
+                            <div class="col-xxl-6">
                                 <label class="form-label">SN</label>
                                 <input type="text" class="form-control" name="sn" id="sn" autocomplete="off" placeholder="SN">
                             </div>
