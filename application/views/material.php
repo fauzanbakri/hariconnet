@@ -164,7 +164,7 @@
                                                         <td>".$material->qty."</td>
                                                         <td>".$material->satuan."</td>
                                                         <td class='text-center'>".(( $material->status_reservasi == 'Sudah') ? "<span class='badge bg-success'>".$material->status_reservasi."</span>" : "<span class='badge bg-danger'>".$material->status_reservasi."</span>")."</td>
-                                                        <td class='text-center'>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
+                                                         <td class='text-center'>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
                                                         <td class='text-center'>".(( $material->status_pengiriman == 'On Loc') ? "<span class='badge bg-primary'>".$material->status_pengiriman."</span>" : "<span class='badge bg-info'>".$material->status_pengiriman."</span>")."</td>
                                                         <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
 
@@ -468,8 +468,8 @@
     <script src="assets/js/app.js"></script>
 
 <script>
-// Modal & tombol Tandai Terpakai
-$(document).on('click', '.tandai-terpakai-btn', function() {
+// Modal & tombol Tandai Terpakai / Input Penggunaan
+$(document).on('click', '.tandai-terpakai-btn, .input-penggunaan-btn', function() {
     var idmaterial = $(this).data('idmaterial');
     var kategori = $(this).data('kategori');
     if (kategori === 'FOT') {
@@ -505,12 +505,12 @@ $(document).on('click', '.tandai-terpakai-btn', function() {
                     },
                     success: function(res) {
                         if (res.status && res.status === 'success') {
-                            var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                            var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "'], button.input-penggunaan-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
                             // Kode Material Terpakai (td index 6) dan SN Terpakai (td index 7)
                             row.children('td').eq(6).text('');
                             row.children('td').eq(7).text('');
                             row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
-                            var btn = row.find('.tandai-terpakai-btn');
+                            var btn = row.find('.tandai-terpakai-btn, .input-penggunaan-btn');
                             btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
                             Swal.fire('Berhasil', 'Material telah ditandai terpakai.', 'success');
                         } else {
@@ -548,7 +548,7 @@ $('#simpanTandaiTerpakai').on('click', function() {
         success: function(res) {
             if (res.status && res.status === 'success') {
                 // Update row in table
-                var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "'], button.input-penggunaan-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
                 // Kode Material Terpakai (td index 6)
                 row.children('td').eq(6).text(kode_material_terpakai);
                 // SN Terpakai (td index 7)
@@ -556,7 +556,7 @@ $('#simpanTandaiTerpakai').on('click', function() {
                 // Status Terpakai badge (td index 13)
                 row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
                 // Disable button
-                var btn = row.find('.tandai-terpakai-btn');
+                var btn = row.find('.tandai-terpakai-btn, .input-penggunaan-btn');
                 btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
 
                 $('#tandaiTerpakaiModal').modal('hide');
