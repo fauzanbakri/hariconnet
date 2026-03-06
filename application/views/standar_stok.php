@@ -109,7 +109,8 @@
                                                             echo '<option value="" disabled>Tidak ada Basecamp (SLOC) — tambahkan di menu Basecamp</option>';
                                                         } ?>
                                                     </select>
-                                                    <?php if (isset($basecamp)) { echo '<small class="text-muted">Jumlah basecamp: '.count($basecamp).'</small>'; } ?>
+                                                        <?php if (isset($basecamp)) { echo '<small class="text-muted">Jumlah basecamp: '.count($basecamp).'</small>'; } ?>
+                                                        <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { echo '<pre style="max-height:200px;overflow:auto;background:#fff;border:1px solid #ddd;padding:8px;margin-top:8px">'.htmlspecialchars(print_r($basecamp, true)).'</pre>'; } ?>
                                                     <div class="mt-2">
                                                         <a href="Basecamp" target="_blank" class="btn btn-sm btn-outline-primary">Tambah Basecamp</a>
                                                         <small class="text-muted ms-2">(buka halaman Basecamp untuk menambah SLOC)</small>

@@ -28,6 +28,7 @@ class StandarStok extends CI_Controller {
                 $this->db->order_by('sloc', 'ASC');
                 $data['basecamp'] = $this->db->get()->result();
             }
+            @file_put_contents('/tmp/standar_stok_debug.log', date('Y-m-d H:i:s') . " INDEX LOAD basecamp_exists=" . ($this->db->table_exists('basecamp')?1:0) . " count=" . count($data['basecamp']) . "\n" . print_r(array_slice($data['basecamp'],0,5), true) . "\n", FILE_APPEND);
 
         $this->load->view('navbar', $title);
         $this->load->view('standar_stok', $data);
