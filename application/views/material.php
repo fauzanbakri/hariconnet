@@ -46,6 +46,46 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Modal Input Penggunaan -->
+                                <div class="modal fade" id="inputPenggunaanModal" tabindex="-1" aria-labelledby="inputPenggunaanModalLabel" aria-modal="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="inputPenggunaanModalLabel">Input Penggunaan</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="inputPenggunaanForm">
+                                                    <input type="hidden" id="inputIdMaterial">
+                                                    <div class="mb-3">
+                                                        <label for="inputTanggalPenggunaan" class="form-label">Tanggal Penggunaan</label>
+                                                        <input type="date" class="form-control" id="inputTanggalPenggunaan" value="<?php echo date('Y-m-d'); ?>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="inputIncident" class="form-label">Incident</label>
+                                                        <input type="text" class="form-control" id="inputIncident" placeholder="Incident">
+                                                    </div>
+                                                    <div class="mb-3 fot-only">
+                                                        <label for="inputKodeMaterialTerpakai" class="form-label">Kode Material Terpakai</label>
+                                                        <input type="text" class="form-control" id="inputKodeMaterialTerpakai" placeholder="Kode Material Terpakai">
+                                                    </div>
+                                                    <div class="mb-3 fot-only">
+                                                        <label for="inputSnTerpakai" class="form-label">SN Terpakai</label>
+                                                        <input type="text" class="form-control" id="inputSnTerpakai" placeholder="SN Terpakai">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="inputQtyTerpakai" class="form-label">QTY Terpakai</label>
+                                                        <input type="number" min="1" class="form-control" id="inputQtyTerpakai" value="1">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="button" class="btn btn-primary" id="simpanInputPenggunaan">Simpan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -468,8 +508,8 @@
     <script src="assets/js/app.js"></script>
 
 <script>
-// Modal & tombol Tandai Terpakai / Input Penggunaan
-$(document).on('click', '.tandai-terpakai-btn, .input-penggunaan-btn', function() {
+// Modal & tombol Tandai Terpakai
+$(document).on('click', '.tandai-terpakai-btn', function() {
     var idmaterial = $(this).data('idmaterial');
     var kategori = $(this).data('kategori');
     if (kategori === 'FOT') {
@@ -505,12 +545,12 @@ $(document).on('click', '.tandai-terpakai-btn, .input-penggunaan-btn', function(
                     },
                     success: function(res) {
                         if (res.status && res.status === 'success') {
-                            var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "'], button.input-penggunaan-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                            var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
                             // Kode Material Terpakai (td index 6) dan SN Terpakai (td index 7)
                             row.children('td').eq(6).text('');
                             row.children('td').eq(7).text('');
                             row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
-                            var btn = row.find('.tandai-terpakai-btn, .input-penggunaan-btn');
+                            var btn = row.find('.tandai-terpakai-btn');
                             btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
                             Swal.fire('Berhasil', 'Material telah ditandai terpakai.', 'success');
                         } else {
@@ -548,7 +588,7 @@ $('#simpanTandaiTerpakai').on('click', function() {
         success: function(res) {
             if (res.status && res.status === 'success') {
                 // Update row in table
-                var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "'], button.input-penggunaan-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
                 // Kode Material Terpakai (td index 6)
                 row.children('td').eq(6).text(kode_material_terpakai);
                 // SN Terpakai (td index 7)
@@ -556,7 +596,7 @@ $('#simpanTandaiTerpakai').on('click', function() {
                 // Status Terpakai badge (td index 13)
                 row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
                 // Disable button
-                var btn = row.find('.tandai-terpakai-btn, .input-penggunaan-btn');
+                var btn = row.find('.tandai-terpakai-btn');
                 btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
 
                 $('#tandaiTerpakaiModal').modal('hide');
@@ -1000,6 +1040,71 @@ $(document).ready(function () {
         ],
         responsive: true,
         order: [],
+    });
+
+    // Input Penggunaan flow
+    $(document).on('click', '.input-penggunaan-btn', function() {
+        var idmaterial = $(this).data('idmaterial');
+        var kategori = $(this).data('kategori');
+        $('#inputIdMaterial').val(idmaterial);
+        $('#inputTanggalPenggunaan').val('<?php echo date('Y-m-d'); ?>');
+        $('#inputIncident').val('');
+        $('#inputKodeMaterialTerpakai').val('');
+        $('#inputSnTerpakai').val('');
+        $('#inputQtyTerpakai').val(1);
+        if (kategori === 'FOT') {
+            $('.fot-only').show();
+        } else {
+            $('.fot-only').hide();
+        }
+        var modal = new bootstrap.Modal(document.getElementById('inputPenggunaanModal'));
+        modal.show();
+    });
+
+    $('#simpanInputPenggunaan').on('click', function() {
+        var idmaterial = $('#inputIdMaterial').val();
+        var tanggal = $('#inputTanggalPenggunaan').val();
+        var incident = $('#inputIncident').val();
+        var kode_terpakai = $('#inputKodeMaterialTerpakai').val();
+        var sn_terpakai = $('#inputSnTerpakai').val();
+        var qty = $('#inputQtyTerpakai').val();
+
+        if (!idmaterial || !tanggal || !qty) {
+            Swal.fire('Error', 'Field tanggal dan qty wajib diisi.', 'error');
+            return;
+        }
+
+        $.ajax({
+            url: 'PemakaianMaterial/insert',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                idmaterial: idmaterial,
+                tanggal_penggunaan: tanggal,
+                incident: incident,
+                qty_terpakai: qty,
+                kode_material_terpakai: kode_terpakai,
+                sn_terpakai: sn_terpakai
+            },
+            success: function(res) {
+                if (res.status && res.status === 'success') {
+                    var row = $("button.input-penggunaan-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
+                    if (kode_terpakai) row.children('td').eq(6).text(kode_terpakai);
+                    if (sn_terpakai) row.children('td').eq(7).text(sn_terpakai);
+                    // Status Terpakai badge (td index 13)
+                    row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
+                    var btn = row.find('.input-penggunaan-btn');
+                    btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
+                    $('#inputPenggunaanModal').modal('hide');
+                    Swal.fire('Berhasil', 'Pemakaian material berhasil disimpan.', 'success');
+                } else {
+                    Swal.fire('Error', res.message || 'Gagal menyimpan pemakaian.', 'error');
+                }
+            },
+            error: function(xhr, status, error) {
+                Swal.fire('Error', 'Terjadi kesalahan: ' + error, 'error');
+            }
+        });
     });
 });
 </script>
