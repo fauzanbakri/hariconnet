@@ -29,7 +29,11 @@ class Material_model extends CI_Model {
 
 		$this->db->select('m.*' . ( $select_extra ? ', ' . $select_extra : '' ));
 		$this->db->from('material m');
-		if ($join_table) $this->db->join('', $join_table, '');
+		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+			$this->db->join('basecamp b', 'm.idBc = b.idBc', 'left');
+		} else {
+			$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
+		}
 		$this->db->order_by('m.idmaterial', 'DESC');
 		return $this->db->get()->result();
 	}
@@ -50,7 +54,11 @@ class Material_model extends CI_Model {
 
 		$this->db->select('m.*' . ( $select_extra ? ', ' . $select_extra : '' ));
 		$this->db->from('material m');
-		if ($join_table) $this->db->join('', $join_table, '');
+		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+			$this->db->join('basecamp b', 'm.idBc = b.idBc', 'left');
+		} else {
+			$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
+		}
 
 		if ($start_date && $end_date) {
 			$this->db->where('DATE(m.tanggal) >=', $start_date);
@@ -89,7 +97,11 @@ class Material_model extends CI_Model {
 
 		$this->db->select('m.*' . ( $select_extra ? ', ' . $select_extra : '' ));
 		$this->db->from('material m');
-		if ($join_table) $this->db->join('', $join_table, '');
+		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+			$this->db->join('basecamp b', 'm.idBc = b.idBc', 'left');
+		} else {
+			$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
+		}
 		$this->db->where('m.idmaterial', $id);
 		return $this->db->get()->row();
 	}
