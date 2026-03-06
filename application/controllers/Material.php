@@ -90,6 +90,7 @@ class Material extends CI_Controller {
 		// incident removed from material table schema
 		$tanggal = $this->input->post('tanggal');
 		$kategori = $this->input->post('kategori');
+		$tipeMaterial = $this->input->post('tipeMaterial');
 		$kode_material = $this->input->post('kode_material');
 		$sn = $this->input->post('sn');
 		$sn_terpakai = $this->input->post('sn_terpakai');
@@ -106,6 +107,7 @@ class Material extends CI_Controller {
 		// Validation
 		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
 				$data = array(
+				'tipeMaterial' => $tipeMaterial,
 				'tanggal' => $tanggal,
 				'kategori' => $kategori,
 				'kode_material' => $kode_material,
@@ -155,6 +157,7 @@ class Material extends CI_Controller {
 		// incident removed from material table schema
 		$tanggal = $this->input->post('tanggal');
 		$kategori = $this->input->post('kategori');
+		$tipeMaterial = $this->input->post('editTipeMaterial');
 		$kode_material = $this->input->post('kode_material');
 		$sn = $this->input->post('sn');
 		$sn_terpakai = $this->input->post('sn_terpakai');
@@ -171,6 +174,7 @@ class Material extends CI_Controller {
 		// Validation
 		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
 				$data = array(
+				'tipeMaterial' => $tipeMaterial,
 				'tanggal' => $tanggal,
 				'kategori' => $kategori,
 				'kode_material' => $kode_material,

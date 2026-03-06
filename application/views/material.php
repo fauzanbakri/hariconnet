@@ -238,7 +238,7 @@
                                                                 </button>
                                                                 <ul class='dropdown-menu dropdown-menu-end'>
                                                                     <li>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."'>
+                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."' data-tipeMaterial='".(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:'')) ."'>
                                                                             <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                         </a>
                                                                     </li>
@@ -316,6 +316,28 @@
                             <div class="col-xxl-6">
                                 <label class="form-label">Merk</label>
                                 <input type="text" class="form-control" name="merk" id="merk" autocomplete="off" placeholder="Merk">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Tipe Material</label>
+                                <select class="form-select" name="tipeMaterial" id="tipeMaterial" aria-label="Default select example">
+                                    <option value="">Pilih Tipe Material</option>
+                                    <option>ONT HUAWEI</option>
+                                    <option>ONT FIBERHOME</option>
+                                    <option>ONT ZTE</option>
+                                    <option>ONT RAISECOM</option>
+                                    <option>DW 50</option>
+                                    <option>DW 100</option>
+                                    <option>DW 150</option>
+                                    <option>DW 250</option>
+                                    <option>DW 300</option>
+                                    <option>DW 1000</option>
+                                    <option>DW 6F 100</option>
+                                    <option>ADSS 24F 100 SS</option>
+                                    <option>DW 48F 100</option>
+                                    <option>DW 96F 100</option>
+                                    <option>DW 144F 100</option>
+                                    <option>KABEL POTONGAN</option>
+                                </select>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Tim</label>
@@ -410,6 +432,28 @@
                             <div class="col-xxl-6">
                                 <label class="form-label">SN Terpakai</label>
                                 <input type="text" class="form-control" name="editSnTerpakai" id="editSnTerpakai" autocomplete="off" placeholder="SN Terpakai">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">Tipe Material</label>
+                                <select class="form-select" name="editTipeMaterial" id="editTipeMaterial" aria-label="Default select example">
+                                    <option value="">Pilih Tipe Material</option>
+                                    <option>ONT HUAWEI</option>
+                                    <option>ONT FIBERHOME</option>
+                                    <option>ONT ZTE</option>
+                                    <option>ONT RAISECOM</option>
+                                    <option>DW 50</option>
+                                    <option>DW 100</option>
+                                    <option>DW 150</option>
+                                    <option>DW 250</option>
+                                    <option>DW 300</option>
+                                    <option>DW 1000</option>
+                                    <option>DW 6F 100</option>
+                                    <option>ADSS 24F 100 SS</option>
+                                    <option>DW 48F 100</option>
+                                    <option>DW 96F 100</option>
+                                    <option>DW 144F 100</option>
+                                    <option>KABEL POTONGAN</option>
+                                </select>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Kode Material Terpakai</label>
@@ -784,6 +828,14 @@ $(document).ready(function () {
         document.getElementById('editSnTerpakai').value = data.sn_terpakai;
         document.getElementById('editKodeMaterialTerpakai').value = data.kode_material_terpakai;
         document.getElementById('editMerk').value = data.merk;
+        // set tipe material if provided
+        if (data.tipematerial !== undefined) {
+            $('#editTipeMaterial').val(data.tipematerial);
+        } else if (data.tipeMaterial !== undefined) {
+            $('#editTipeMaterial').val(data.tipeMaterial);
+        } else {
+            $('#editTipeMaterial').val('');
+        }
         document.getElementById('editIdtim').value = data.idtim;
         document.getElementById('editSatuan').value = data.satuan;
         document.getElementById('editQty').value = data.qty;
