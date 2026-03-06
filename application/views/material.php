@@ -218,7 +218,12 @@
                                                         if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
                                                             echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
                                                         } else {
-                                                            echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Input Penggunaan</button></td>";
+                                                            // disable Input Penggunaan when available qty is zero
+                                                            if (isset($available) && $available <= 0) {
+                                                                echo "<td><button class='btn btn-secondary btn-sm' disabled>Kosong</button></td>";
+                                                            } else {
+                                                                echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Input Penggunaan</button></td>";
+                                                            }
                                                         }
 
                                                         if(
