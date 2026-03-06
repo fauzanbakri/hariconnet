@@ -61,6 +61,7 @@
                                                         <label for="inputTanggalPenggunaan" class="form-label">Tanggal Penggunaan</label>
                                                         <input type="date" class="form-control" id="inputTanggalPenggunaan" value="<?php echo date('Y-m-d'); ?>">
                                                     </div>
+                                                    <input type="hidden" id="inputAvailable" />
                                                     <div class="mb-3">
                                                         <label for="inputIncident" class="form-label">Incident</label>
                                                         <input type="text" class="form-control" id="inputIncident" placeholder="Incident">
@@ -222,7 +223,7 @@
                                                             if (isset($available) && $available <= 0) {
                                                                 echo "<td><button class='btn btn-secondary btn-sm' disabled>Kosong</button></td>";
                                                             } else {
-                                                                echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Input Penggunaan</button></td>";
+                                                                echo "<td><button class='btn btn-success btn-sm input-penggunaan-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."' data-available='".$available."'>Input Penggunaan</button></td>";
                                                             }
                                                         }
 
