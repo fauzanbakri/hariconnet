@@ -31,8 +31,8 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>ID</th>
-                                                <th>ID BC</th>
+                                                <th>Nama Basecamp</th>
+                                                <th>SLOC</th>
                                                 <th>ONT HUAWEI</th>
                                                 <th>ONT FIBERHOME</th>
                                                 <th>ONT ZTE</th>
@@ -52,14 +52,33 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            // Build basecamp lookup map: idBc => ['nama'=>..., 'sloc'=>...]
+                                            $bc_map = [];
+                                            if (!empty($basecamp)) {
+                                                foreach ($basecamp as $b) {
+                                                    $bid = isset($b->idBc) ? $b->idBc : (isset($b->id) ? $b->id : null);
+                                                    if ($bid === null) continue;
+                                                    $bc_map[$bid] = [
+                                                        'nama' => isset($b->namaAkun) ? $b->namaAkun : (isset($b->nama) ? $b->nama : ''),
+                                                        'sloc' => isset($b->sloc) ? $b->sloc : ''
+                                                    ];
+                                                }
+                                            }
+
                                             if (!empty($rows)) {
                                                 $i = 0;
                                                 foreach ($rows as $r) {
                                                     $i++;
+                                                    $bc_name = '-';
+                                                    $bc_sloc = '-';
+                                                    if (isset($r->idBc) && isset($bc_map[$r->idBc])) {
+                                                        $bc_name = $bc_map[$r->idBc]['nama'] ?: '-';
+                                                        $bc_sloc = $bc_map[$r->idBc]['sloc'] ?: '-';
+                                                    }
                                                     echo '<tr>';
                                                     echo '<td>'.$i.'</td>';
-                                                    echo '<td>'.(isset($r->idStandarStok)?$r->idStandarStok:'-').'</td>';
-                                                    echo '<td>'.(isset($r->idBc)?$r->idBc:'-').'</td>';
+                                                    echo '<td>'.htmlspecialchars($bc_name).'</td>';
+                                                    echo '<td>'.htmlspecialchars($bc_sloc).'</td>';
                                                     echo '<td>'.(isset($r->ont_huawei)?$r->ont_huawei:'-').'</td>';
                                                     echo '<td>'.(isset($r->ont_fiberhome)?$r->ont_fiberhome:'-').'</td>';
                                                     echo '<td>'.(isset($r->ont_zte)?$r->ont_zte:'-').'</td>';
