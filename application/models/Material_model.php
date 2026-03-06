@@ -68,6 +68,7 @@ class Material_model extends CI_Model {
 	 */
 	public function insert_material($data)
 	{
+		$data = $this->filter_material_fields($data);
 		return $this->db->insert('material', $data);
 	}
 
@@ -76,8 +77,20 @@ class Material_model extends CI_Model {
 	 */
 	public function update_material($id, $data)
 	{
+		$data = $this->filter_material_fields($data);
 		$this->db->where('idmaterial', $id);
 		return $this->db->update('material', $data);
+	}
+
+	/**
+	 * Filter input array to only include columns that exist in `material` table
+	 */
+	private function filter_material_fields($data)
+	{
+		$fields = $this->db->list_fields('material');
+		if (!is_array($data)) return [];
+		$allowed = array_flip($fields);
+		return array_intersect_key($data, $allowed);
 	}
 
 	/**
