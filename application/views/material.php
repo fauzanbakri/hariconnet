@@ -199,29 +199,28 @@
                                                     }
                                                     $available = $material->qty - $used;
                                                     if ($available < 0) $available = 0;
-                                                    echo "
-                                                    <tr>
-                                                        <td>".$count."</td>
-                                                        <td>".date('d-m-Y', strtotime($material->tanggal))."</td>
-                                                        <td class='text-center'>".(( $material->kategori == 'FOT') ? "<span class='badge bg-primary'>".$material->kategori."</span>" : "<span class='badge bg-info'>".$material->kategori."</span>")."</td>
-                                                        <td>".$material->kode_material."</td>
-                                                        <td>".$material->sn."</td>
-                                                        <td>".(($material->kategori == 'FOC') ? '' : $material->sn_terpakai)."</td>
-                                                        <td>".(($material->kategori == 'FOC') ? '' : $material->kode_material_terpakai)."</td>
-                                                        <td>".$material->merk."</td>
-                                                        <td>".(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:''))."</td>
-                                                        <td>".$material->nama."</td>
-                                                        <td>".$available."</td>
-                                                        <td>".$material->satuan."</td>
-                                                        <td class='text-center'>".(( $material->status_reservasi == 'Sudah') ? "<span class='badge bg-success'>".$material->status_reservasi."</span>" : "<span class='badge bg-danger'>".$material->status_reservasi."</span>")."</td>
-                                                        <?php
-                                                            // display terpakai status based on available qty: 0 -> Terpakai, otherwise Ready
-                                                            $status_display = ($available == 0) ? 'Terpakai' : 'Ready';
-                                                            $status_class = ($available == 0) ? 'bg-success' : 'bg-info';
-                                                        ?>
-                                                        <td class='text-center'><span class='badge <?php echo $status_class; ?>'><?php echo $status_display; ?></span></td>
-                                                        <td class='text-center'>".(( $material->status_pengiriman == 'On Loc') ? "<span class='badge bg-primary'>".$material->status_pengiriman."</span>" : "<span class='badge bg-info'>".$material->status_pengiriman."</span>")."</td>
-                                                        <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
+                                                    $row_html = '';
+                                                    $row_html .= '<tr>';
+                                                    $row_html .= '<td>'.$count.'</td>';
+                                                    $row_html .= '<td>'.date('d-m-Y', strtotime($material->tanggal)).'</td>';
+                                                    $row_html .= '<td class="text-center">'.(( $material->kategori == 'FOT') ? '<span class="badge bg-primary">'.$material->kategori.'</span>' : '<span class="badge bg-info">'.$material->kategori.'</span>').'</td>';
+                                                    $row_html .= '<td>'.$material->kode_material.'</td>';
+                                                    $row_html .= '<td>'.$material->sn.'</td>';
+                                                    $row_html .= '<td>'.(($material->kategori == 'FOC') ? '' : $material->sn_terpakai).'</td>';
+                                                    $row_html .= '<td>'.(($material->kategori == 'FOC') ? '' : $material->kode_material_terpakai).'</td>';
+                                                    $row_html .= '<td>'.$material->merk.'</td>';
+                                                    $row_html .= '<td>'.(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:'')).'</td>';
+                                                    $row_html .= '<td>'.$material->nama.'</td>';
+                                                    $row_html .= '<td>'.$available.'</td>';
+                                                    $row_html .= '<td>'.$material->satuan.'</td>';
+                                                    $row_html .= '<td class="text-center">'.(( $material->status_reservasi == 'Sudah') ? '<span class="badge bg-success">'.$material->status_reservasi.'</span>' : '<span class="badge bg-danger">'.$material->status_reservasi.'</span>').'</td>';
+                                                    // display terpakai status based on available qty: 0 -> Terpakai, otherwise Ready
+                                                    $status_display = ($available == 0) ? 'Terpakai' : 'Ready';
+                                                    $status_class = ($available == 0) ? 'bg-success' : 'bg-info';
+                                                    $row_html .= '<td class="text-center"><span class="badge '.$status_class.'">'.$status_display.'</span></td>';
+                                                    $row_html .= '<td class="text-center">'.(( $material->status_pengiriman == 'On Loc') ? '<span class="badge bg-primary">'.$material->status_pengiriman.'</span>' : '<span class="badge bg-info">'.$material->status_pengiriman.'</span>').'</td>';
+                                                    $row_html .= '<td>'.substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '').'</td>';
+                                                    echo $row_html;
 
                                                         // Determine Input Penggunaan button based on available
                                                         if ($available <= 0) {
