@@ -681,6 +681,11 @@
                                 <i class="mdi mdi-archive-minus-outline"></i> <span data-key="t-layouts">Pemakaian Material</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="StandarStok" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                <i class="mdi mdi-clipboard-list-outline"></i> <span data-key="t-layouts">Standar Stok</span>
+                            </a>
+                        </li>
                         <?php
                         if(
                             $_SESSION['role']=='Superadmin' || 
