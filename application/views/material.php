@@ -175,13 +175,13 @@
                                                 <th>Status Terpakai</th>
                                                 <th>Status Pengiriman</th>
                                                 <th>Keterangan</th>
-                                                <th>Tandai Terpakai</th>
+                                                <th class="all">Tandai Terpakai</th>
                                                 <?php
-                                                if(
-                                                    $_SESSION['role']=='Superadmin' ||
-                                                    $_SESSION['role']=='Team Leader'
-                                                    ){
-                                                        echo "<th>Action</th>";
+                                                        if(
+                                                            $_SESSION['role']=='Superadmin' ||
+                                                            $_SESSION['role']=='Team Leader'
+                                                            ){
+                                                        echo "<th class='all'>Action</th>";
                                                 }
                                                 ?>
                                             </tr>
@@ -1109,6 +1109,10 @@ $(document).ready(function () {
         ],
         responsive: true,
         order: [],
+        columnDefs: [
+            { responsivePriority: 1, targets: -1 }, // Action (last column)
+            { responsivePriority: 2, targets: -2 }  // Tandai Terpakai (second last)
+        ],
     });
 
     // Input Penggunaan flow
