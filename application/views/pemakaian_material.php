@@ -8,12 +8,13 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="mb-sm-0">Pemakaian Material</h4>
+                    <p class="text-muted">Lihat dan filter catatan pemakaian material. Gunakan filter tanggal dan material untuk menyaring data.</p>
                 </div>
             </div>
 
             <div class="card mt-3">
                 <div class="card-body">
-                    <div class="row g-3 mb-3">
+                    <div class="row g-3 mb-3 align-items-end">
                         <div class="col-md-3">
                             <label class="form-label">Tanggal Mulai</label>
                             <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo htmlentities($this->input->get('start_date') ?: date('Y-m-d')); ?>">
@@ -31,13 +32,16 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-3 align-self-end">
-                            <button class="btn btn-sm btn-primary" id="applyFilters">Filter</button>
-                            <button class="btn btn-sm btn-secondary" id="resetFilters">Reset</button>
+                        <div class="col-md-3 text-end">
+                            <div class="btn-group" role="group" aria-label="actions">
+                                <button class="btn btn-sm btn-primary" id="applyFilters">Filter</button>
+                                <button class="btn btn-sm btn-secondary" id="resetFilters">Reset</button>
+                            </div>
                         </div>
                     </div>
 
-                    <table id="pemakaianTable" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                    <div class="table-responsive">
+                    <table id="pemakaianTable" class="table table-bordered table-hover nowrap table-striped align-middle" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -74,10 +78,17 @@
 
 <script>
 $(document).ready(function(){
-    $('#pemakaianTable').DataTable({
+    var table = $('#pemakaianTable').DataTable({
         responsive:true,
         order:[],
-        lengthMenu: [[-1,10,25,50], ['All',10,25,50]]
+        lengthMenu: [[-1,10,25,50], ['All',10,25,50]],
+        dom: 'Bfrtip',
+        buttons: [
+            { extend: 'copy', className: 'btn btn-sm btn-outline-secondary' },
+            { extend: 'csv', className: 'btn btn-sm btn-outline-secondary' },
+            { extend: 'excel', className: 'btn btn-sm btn-outline-secondary' },
+            { extend: 'print', className: 'btn btn-sm btn-outline-secondary' }
+        ]
     });
 
     $('#applyFilters').on('click', function(){
