@@ -3,72 +3,71 @@
         <!-- Start right Content here -->
         <!-- ============================================================== -->
         <div class="main-content">
-            <!-- MATERIAL VIEW UPDATED 2026-03-06 -->
 
             <div class="page-content">
                 <div class="container-fluid">
 
                     <!-- start page title -->
                     <div class="row">
-                        <?php
-                                            $count = 0;
-                                            if(!empty($materials)) {
-                                                foreach ($materials as $material) {
-                                                    $count = $count + 1;
-                                                    echo "
-                                                    <tr>
-                                                        <td>".$count."</td>
-                                                        <td>".date('d-m-Y', strtotime($material->tanggal))."</td>
-                                                        <td class='text-center'>".(( $material->kategori == 'FOT') ? "<span class='badge bg-primary'>".$material->kategori."</span>" : "<span class='badge bg-info'>".$material->kategori."</span>")."</td>
-                                                        <td>".$material->kode_material."</td>
-                                                        <td>".$material->sn."</td>
-                                                        <td>".(($material->kategori == 'FOC') ? '' : $material->sn_terpakai)."</td>
-                                                        <td>".(($material->kategori == 'FOC') ? '' : $material->kode_material_terpakai)."</td>
-                                                        <td>".$material->merk."</td>
-                                                        <td>".$material->nama."</td>
-                                                        <td>".$material->qty."</td>
-                                                        <td>".$material->satuan."</td>
-                                                        <td class='text-center'>".(( $material->status_reservasi == 'Sudah') ? "<span class='badge bg-success'>".$material->status_reservasi."</span>" : "<span class='badge bg-danger'>".$material->status_reservasi."</span>")."</td>
-                                                        <td class='text-center'>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
-                                                        <td class='text-center'>".(( $material->status_pengiriman == 'On Loc') ? "<span class='badge bg-primary'>".$material->status_pengiriman."</span>" : "<span class='badge bg-info'>".$material->status_pengiriman."</span>")."</td>
-                                                        <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
-                                                        // Tombol Tandai Terpakai (disable jika sudah 'Sudah')
-                                                        if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
-                                                            echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
-                                                        } else {
-                                                            echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
-                                                        }
-                                                        if(
-                                                            $_SESSION['role']=='Superadmin' ||
-                                                            $_SESSION['role']=='Team Leader'
-                                                        ){
-                                                            echo "<td>
-                                                            <div class='dropdown d-inline-block'>
-                                                                <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                                                                    <i class='ri-more-fill align-middle'></i>
-                                                                </button>
-                                                                <ul class='dropdown-menu dropdown-menu-end'>
-                                                                    <li>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."'>
-                                                                            <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href='#' class='dropdown-item remove-item-btn' data-id='".$material->idmaterial."'>
-                                                                            <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>";
-                                                        }
-                                                        echo "
-                                                    </tr>
-                                                    ";
-                                                }
-                                            }
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Inventory Material</h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Material</a></li>
+                                        <li class="breadcrumb-item active">Input Material</li>
+                                    </ol>
+                                </div>
+                                <!-- Modal Tandai Terpakai -->
+                                <div class="modal fade" id="tandaiTerpakaiModal" tabindex="-1" aria-labelledby="tandaiTerpakaiModalLabel" aria-modal="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="tandaiTerpakaiModalLabel">Tandai Material Terpakai</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="tandaiTerpakaiForm">
+                                                    <input type="hidden" id="tandaiIdMaterial">
+                                                    <div class="mb-3">
+                                                        <label for="tandaiKodeMaterialTerpakai" class="form-label">Kode Material Terpakai</label>
+                                                        <input type="text" class="form-control" id="tandaiKodeMaterialTerpakai" placeholder="Kode Material Terpakai">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="tandaiSnTerpakai" class="form-label">SN Terpakai</label>
+                                                        <input type="text" class="form-control" id="tandaiSnTerpakai" placeholder="SN Terpakai">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="button" class="btn btn-primary" id="simpanTandaiTerpakai">Simpan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Daftar Material</h5>
+                                </div>
+
+                                <div class="card-header">
+                                    <div class="row mb-3">
+                                        <div class="col-md-3">
+                                            <?php
+                                                if(
+                                                    $_SESSION['role']=='Superadmin' ||
+                                                    $_SESSION['role']=='Team Leader'
+                                                    ){
                                                         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
-                                                    
+                                                    }
                                             ?>
                                             <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                         </div>
@@ -120,6 +119,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>No Incident</th>
                                                 <th>Tanggal</th>
                                                 <th>Kategori</th>
                                                 <th>Kode Material</th>
@@ -154,6 +154,7 @@
                                                     echo "
                                                     <tr>
                                                         <td>".$count."</td>
+                                                        <td>".$material->incident."</td>
                                                         <td>".date('d-m-Y', strtotime($material->tanggal))."</td>
                                                         <td class='text-center'>".(( $material->kategori == 'FOT') ? "<span class='badge bg-primary'>".$material->kategori."</span>" : "<span class='badge bg-info'>".$material->kategori."</span>")."</td>
                                                         <td>".$material->kode_material."</td>
@@ -168,13 +169,12 @@
                                                         <td class='text-center'>".(( $material->status_terpakai == 'Sudah') ? "<span class='badge bg-success'>".$material->status_terpakai."</span>" : "<span class='badge bg-danger'>".$material->status_terpakai."</span>")."</td>
                                                         <td class='text-center'>".(( $material->status_pengiriman == 'On Loc') ? "<span class='badge bg-primary'>".$material->status_pengiriman."</span>" : "<span class='badge bg-info'>".$material->status_pengiriman."</span>")."</td>
                                                         <td>".substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '')."</td>";
-
+                                                        // Tombol Tandai Terpakai (disable jika sudah 'Sudah')
                                                         if (isset($material->status_terpakai) && $material->status_terpakai == 'Sudah') {
                                                             echo "<td><button class='btn btn-secondary btn-sm' disabled>Terpakai</button></td>";
                                                         } else {
                                                             echo "<td><button class='btn btn-success btn-sm tandai-terpakai-btn' data-idmaterial='".$material->idmaterial."' data-kategori='".$material->kategori."'>Tandai Terpakai</button></td>";
                                                         }
-
                                                         if(
                                                             $_SESSION['role']=='Superadmin' ||
                                                             $_SESSION['role']=='Team Leader'
@@ -186,7 +186,7 @@
                                                                 </button>
                                                                 <ul class='dropdown-menu dropdown-menu-end'>
                                                                     <li>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."'>
+                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-incident='".$material->incident."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."'>
                                                                             <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                         </a>
                                                                     </li>
@@ -240,7 +240,10 @@
                     </div>
                     <div class="modal-body">
                         <div class="row g-3">
-                            
+                            <div class="col-xxl-6">
+                                <label class="form-label">No Incident</label>
+                                <input type="text" class="form-control" name="incident" id="incident" autocomplete="off" placeholder="No Incident">
+                            </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Tanggal</label>
                                 <input type="date" class="form-control" name="tanggal" id="tanggal" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
@@ -334,6 +337,10 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <input type="hidden" id="editIdmaterial" name="editIdmaterial" value="">
+                            <div class="col-xxl-6">
+                                <label class="form-label">No Incident</label>
+                                <input type="text" class="form-control" name="editIncident" id="editIncident" autocomplete="off" placeholder="No Incident">
+                            </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Tanggal</label>
                                 <input type="date" class="form-control" name="editTanggal" id="editTanggal" autocomplete="off">
@@ -506,10 +513,10 @@ $(document).on('click', '.tandai-terpakai-btn', function() {
                     success: function(res) {
                         if (res.status && res.status === 'success') {
                             var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
-                            // Kode Material Terpakai (td index 5) dan SN Terpakai (td index 6)
-                            row.children('td').eq(5).text('');
+                            // Kode Material Terpakai (td index 6) dan SN Terpakai (td index 7)
                             row.children('td').eq(6).text('');
-                            row.children('td').eq(12).html("<span class='badge bg-success'>Sudah</span>");
+                            row.children('td').eq(7).text('');
+                            row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
                             var btn = row.find('.tandai-terpakai-btn');
                             btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
                             Swal.fire('Berhasil', 'Material telah ditandai terpakai.', 'success');
@@ -549,12 +556,12 @@ $('#simpanTandaiTerpakai').on('click', function() {
             if (res.status && res.status === 'success') {
                 // Update row in table
                 var row = $("button.tandai-terpakai-btn[data-idmaterial='" + idmaterial + "']").closest('tr');
-                // Kode Material Terpakai (td index 5)
-                row.children('td').eq(5).text(kode_material_terpakai);
-                // SN Terpakai (td index 6)
-                row.children('td').eq(6).text(sn_terpakai);
-                // Status Terpakai badge (td index 12)
-                row.children('td').eq(12).html("<span class='badge bg-success'>Sudah</span>");
+                // Kode Material Terpakai (td index 6)
+                row.children('td').eq(6).text(kode_material_terpakai);
+                // SN Terpakai (td index 7)
+                row.children('td').eq(7).text(sn_terpakai);
+                // Status Terpakai badge (td index 13)
+                row.children('td').eq(13).html("<span class='badge bg-success'>Sudah</span>");
                 // Disable button
                 var btn = row.find('.tandai-terpakai-btn');
                 btn.removeClass('btn-success').addClass('btn-secondary').text('Terpakai').prop('disabled', true);
@@ -574,6 +581,7 @@ const button = document.getElementById('toast');
 
 function resetForm() {
     document.getElementById('idmaterial').value = '';
+    document.getElementById('incident').value = '';
     document.getElementById('tanggal').value = '<?php echo date('Y-m-d'); ?>';
     document.getElementById('kategori').value = '';
     document.getElementById('kode_material').value = '';
@@ -596,6 +604,7 @@ function resetForm() {
 
 function saveMaterial() {
     const formData = {
+        incident: $('#incident').val(),
         tanggal: $('#tanggal').val(),
         kategori: $('#kategori').val(),
         kode_material: $('#kode_material').val(),
@@ -644,6 +653,7 @@ function saveMaterial() {
 function editSaveMaterial() {
     const formData = {
         idmaterial: $('#editIdmaterial').val(),
+        incident: $('#editIncident').val(),
         tanggal: $('#editTanggal').val(),
         kategori: $('#editKategori').val(),
         kode_material: $('#editKodeMaterial').val(),
@@ -724,7 +734,7 @@ $(document).ready(function () {
         e.preventDefault();
         const data = this.dataset;
         document.getElementById('editIdmaterial').value = data.idmaterial;
-        
+        document.getElementById('editIncident').value = data.incident;
         document.getElementById('editTanggal').value = data.tanggal;
         document.getElementById('editKategori').value = data.kategori;
         document.getElementById('editKodeMaterial').value = data.kode_material;
