@@ -697,6 +697,7 @@ function saveMaterial() {
     const formData = {
         tanggal: $('#tanggal').val(),
         kategori: $('#kategori').val(),
+        tipeMaterial: $('#tipeMaterial').val(),
         kode_material: $('#kode_material').val(),
         sn: $('#sn').val(),
         sn_terpakai: $('#sn_terpakai').val(),
@@ -745,6 +746,7 @@ function editSaveMaterial() {
         idmaterial: $('#editIdmaterial').val(),
         tanggal: $('#editTanggal').val(),
         kategori: $('#editKategori').val(),
+        editTipeMaterial: $('#editTipeMaterial').val(),
         kode_material: $('#editKodeMaterial').val(),
         sn: $('#editSn').val(),
         sn_terpakai: $('#editSnTerpakai').val(),
