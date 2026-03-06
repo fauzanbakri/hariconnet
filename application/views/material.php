@@ -309,7 +309,10 @@
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Kode Material</label>
-                                <input type="text" class="form-control" name="kode_material" id="kode_material" autocomplete="off" placeholder="Kode Material">
+                                <select class="form-select" name="kode_material" id="kode_material" aria-label="Pilih Kode Material">
+                                    <option value="">Pilih Kode Material</option>
+                                    <?php foreach (($kode_materials ?? []) as $km) { $k = is_object($km)?$km->kode_material:(is_array($km)?$km['kode_material']:$km); $d = is_object($km)?(isset($km->deskripsi_material)?$km->deskripsi_material:''):(is_array($km)?($km['deskripsi_material'] ?? ''):''); echo '<option value="'.htmlspecialchars($k).'">'.htmlspecialchars($k.' - '. $d).'</option>'; } ?>
+                                </select>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Deskripsi Material</label>
@@ -436,7 +439,10 @@
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">Kode Material</label>
-                                <input type="text" class="form-control" name="editKodeMaterial" id="editKodeMaterial" autocomplete="off" placeholder="Kode Material">
+                                <select class="form-select" name="editKodeMaterial" id="editKodeMaterial" aria-label="Pilih Kode Material">
+                                    <option value="">Pilih Kode Material</option>
+                                    <?php foreach (($kode_materials ?? []) as $km) { $k = is_object($km)?$km->kode_material:(is_array($km)?$km['kode_material']:$km); $d = is_object($km)?(isset($km->deskripsi_material)?$km->deskripsi_material:''):(is_array($km)?($km['deskripsi_material'] ?? ''):''); echo '<option value="'.htmlspecialchars($k).'">'.htmlspecialchars($k.' - '. $d).'</option>'; } ?>
+                                </select>
                             </div>
                             <div class="col-xxl-6">
                                 <label class="form-label">SN</label>

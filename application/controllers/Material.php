@@ -54,6 +54,13 @@ class Material extends CI_Controller {
 			}
 
 			$data['tims'] = $this->Material_model->get_all_tim();
+			// load kode_material lookup for descriptions
+			if ($this->db->table_exists('kode_material')) {
+				$this->db->select('kode_material, deskripsi_material');
+				$data['kode_materials'] = $this->db->from('kode_material')->order_by('kode_material','ASC')->get()->result();
+			} else {
+				$data['kode_materials'] = [];
+			}
 			$data['status_reservasi_list'] = ['Sudah', 'Belum'];
 			$data['status_terpakai_list'] = $this->Material_model->get_status_terpakai();
 			$data['status_pengiriman_list'] = ['Dalam Pengiriman', 'On Loc'];
