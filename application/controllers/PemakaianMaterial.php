@@ -33,6 +33,7 @@ class PemakaianMaterial extends CI_Controller {
         session_start();
         // load data for view
         $data = [];
+        $title['title']="Pemakaian Material";
         // materials for lookup
         $data['materials'] = $this->db->get('material')->result();
 
@@ -62,7 +63,7 @@ class PemakaianMaterial extends CI_Controller {
             $this->db->order_by("{$ptable}.tanggal", 'DESC');
             $data['usages'] = $this->db->get()->result();
         }
-
+        $this->load->view('navbar', $title);
         $this->load->view('pemakaian_material', $data);
     }
 
