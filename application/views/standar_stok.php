@@ -101,8 +101,15 @@
                                                     <label class="form-label">Basecamp (SLOC)</label>
                                                     <select id="inputIdBc" class="form-select">
                                                         <option value="">Pilih Basecamp</option>
-                                                        <?php foreach (($basecamp ?? []) as $bc) { echo '<option value="'.$bc->idBc.'">'.htmlspecialchars($bc->sloc).'</option>'; } ?>
+                                                        <?php if (!empty($basecamp)) {
+                                                            foreach ($basecamp as $bc) {
+                                                                echo '<option value="'.htmlspecialchars($bc->idBc).'">'.htmlspecialchars($bc->sloc).'</option>';
+                                                            }
+                                                        } else {
+                                                            echo '<option value="" disabled>Tidak ada Basecamp (SLOC) — tambahkan di menu Basecamp</option>';
+                                                        } ?>
                                                     </select>
+                                                    <?php if (isset($basecamp)) { echo '<small class="text-muted">Jumlah basecamp: '.count($basecamp).'</small>'; } ?>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label class="form-label">ONT HUAWEI</label>
