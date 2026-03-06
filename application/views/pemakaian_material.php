@@ -24,42 +24,42 @@
                             <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo htmlentities($this->input->get('end_date') ?: date('Y-m-d')); ?>">
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Filter Material</label>
-                            <select id="filterMaterial" class="form-select form-select-sm">
+                            <label class="form-label">Filter Basecamp</label>
+                            <select id="filterBasecamp" class="form-select form-select-sm">
                                 <option value="">Semua</option>
                                 <?php
-                                $mat_list = [];
-                                if (!empty($materials)) {
-                                    if (is_object($materials) && method_exists($materials, 'result')) {
-                                        $mat_list = $materials->result();
-                                    } elseif (is_array($materials)) {
-                                        $mat_list = $materials;
-                                    } elseif (is_object($materials)) {
-                                        try { $mat_list = iterator_to_array($materials); } catch (Exception $e) { $mat_list = [(object)$materials]; }
+                                $bc_list = [];
+                                if (!empty($basecamp)) {
+                                    if (is_object($basecamp) && method_exists($basecamp, 'result')) {
+                                        $bc_list = $basecamp->result();
+                                    } elseif (is_array($basecamp)) {
+                                        $bc_list = $basecamp;
+                                    } elseif (is_object($basecamp)) {
+                                        try { $bc_list = iterator_to_array($basecamp); } catch (Exception $e) { $bc_list = [(object)$basecamp]; }
                                     } else {
-                                        $mat_list = (array)$materials;
+                                        $bc_list = (array)$basecamp;
                                     }
                                 }
 
-                                foreach ($mat_list as $m) {
-                                    $mid = '';
-                                    $kode = '';
+                                foreach ($bc_list as $bc) {
+                                    $id = '';
                                     $name = '';
-                                    if (is_object($m)) {
-                                        $mid = isset($m->idmaterial) ? $m->idmaterial : (isset($m->id) ? $m->id : '');
-                                        $kode = isset($m->kode_material) ? $m->kode_material : (isset($m->kode) ? $m->kode : '');
-                                        $name = isset($m->nama) ? $m->nama : (isset($m->namaAkun) ? $m->namaAkun : '');
-                                    } elseif (is_array($m)) {
-                                        $mid = isset($m['idmaterial']) ? $m['idmaterial'] : (isset($m['id']) ? $m['id'] : '');
-                                        $kode = isset($m['kode_material']) ? $m['kode_material'] : (isset($m['kode']) ? $m['kode'] : '');
-                                        $name = isset($m['nama']) ? $m['nama'] : (isset($m['namaAkun']) ? $m['namaAkun'] : '');
+                                    $sloc = '';
+                                    if (is_object($bc)) {
+                                        $id = isset($bc->idBc) ? $bc->idBc : (isset($bc->id) ? $bc->id : '');
+                                        $name = isset($bc->namaAkun) ? $bc->namaAkun : (isset($bc->nama) ? $bc->nama : '');
+                                        $sloc = isset($bc->sloc) ? $bc->sloc : '';
+                                    } elseif (is_array($bc)) {
+                                        $id = isset($bc['idBc']) ? $bc['idBc'] : (isset($bc['id']) ? $bc['id'] : '');
+                                        $name = isset($bc['namaAkun']) ? $bc['namaAkun'] : (isset($bc['nama']) ? $bc['nama'] : '');
+                                        $sloc = isset($bc['sloc']) ? $bc['sloc'] : '';
                                     } else {
-                                        $mid = (string)$m;
+                                        $id = (string)$bc;
                                     }
-                                    $mid_esc = htmlspecialchars($mid);
-                                    $selected = ($this->input->get('idmaterial') == $mid) ? 'selected' : '';
-                                    $label = trim(($kode ?: $mid_esc) . ' - ' . ($name ?: '-'));
-                                    echo '<option value="'.$mid_esc.'" '.$selected.'>'.htmlspecialchars($label).'</option>';
+                                    $selected = ($this->input->get('idbc') == $id || $this->input->get('idBc') == $id) ? 'selected' : '';
+                                    $label = htmlspecialchars($name ?: $sloc ?: $id);
+                                    if (!empty($sloc)) $label .= ' ('.htmlspecialchars($sloc).')';
+                                    echo '<option value="'.htmlspecialchars($id).'" '.$selected.'>'.$label.'</option>';
                                 }
                                 ?>
                             </select>
@@ -155,11 +155,11 @@ $(document).ready(function(){
     $('#applyFilters').on('click', function(){
         const s = $('#filterStartDate').val();
         const e = $('#filterEndDate').val();
-        const m = $('#filterMaterial').val();
+        const bc = $('#filterBasecamp').val();
         let url = 'PemakaianMaterial?';
         if (s) url += 'start_date='+s+'&';
         if (e) url += 'end_date='+e+'&';
-        if (m) url += 'idmaterial='+m+'&';
+        if (bc) url += 'idbc='+bc+'&';
         window.location.href = url;
     });
     $('#resetFilters').on('click', function(){ location.href='PemakaianMaterial'; });

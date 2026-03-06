@@ -36,11 +36,19 @@ class PemakaianMaterial extends CI_Controller {
         $title['title']="Pemakaian Material";
         // materials for lookup
         $data['materials'] = $this->db->get('material')->result();
+        // basecamp list (if table exists) for filtering by basecamp
+        if ($this->db->table_exists('basecamp')) {
+            $data['basecamp'] = $this->db->get('basecamp')->result();
+        } else {
+            $data['basecamp'] = [];
+        }
 
         // filters from query params
         $start_date = $this->input->get('start_date');
         $end_date = $this->input->get('end_date');
         $filter_material = $this->input->get('idmaterial');
+        // support filtering by basecamp id (idbc) as well
+        $filter_basecamp = $this->input->get('idbc') ?: $this->input->get('idBc');
 
         $data['usages'] = [];
         $ptable = $this->get_pemakaian_table();
@@ -69,6 +77,16 @@ class PemakaianMaterial extends CI_Controller {
             }
             if ($filter_material) {
                 $this->db->where("{$ptable}.idMaterial", $filter_material);
+            }
+            // if user filtered by basecamp, apply filter on material.idBc (or material.idtim if legacy)
+            if ($filter_basecamp) {
+                $material_fields = $this->db->list_fields('material');
+                if (in_array('idBc', $material_fields)) {
+                    $this->db->where('material.idBc', $filter_basecamp);
+                } elseif (in_array('idtim', $material_fields)) {
+                    // try to match with tim id if basecamp passed a tim id instead
+                    $this->db->where('material.idtim', $filter_basecamp);
+                }
             }
             $this->db->order_by("{$ptable}.tanggal", 'DESC');
             $data['usages'] = $this->db->get()->result();
