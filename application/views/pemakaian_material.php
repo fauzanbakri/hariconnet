@@ -76,23 +76,21 @@
                     <table id="pemakaianTable" class="table table-bordered table-hover nowrap table-striped align-middle" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>ID Pemakaian</th>
-                                <th>Kode Material</th>
-                                <th>Kode Material Terpakai</th>
-                                <th>Nama Basecamp</th>
-                                <th>SN</th>
-                                <th>SN Terpakai</th>
-                                <th>Incident</th>
-                                <th>Tanggal</th>
-                                <th>QTY</th>
-                            </tr>
+                                    <th>No</th>
+                                    <th>Kode Material</th>
+                                    <th>Kode Material Terpakai</th>
+                                    <th>Nama Basecamp</th>
+                                    <th>SN</th>
+                                    <th>SN Terpakai</th>
+                                    <th>Incident</th>
+                                    <th>Tanggal</th>
+                                    <th>QTY</th>
+                                </tr>
                         </thead>
                         <tbody>
                             <?php $i=0; foreach (($usages ?? []) as $u) { $i++; ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo isset($u->idPemakaianMaterial) ? $u->idPemakaianMaterial : (isset($u->idPemakaian) ? $u->idPemakaian : '-'); ?></td>
                                 <td><?php echo isset($u->kode_material) ? $u->kode_material : '-'; ?></td>
                                 <td><?php echo isset($u->kode_material_terpakai) ? $u->kode_material_terpakai : (isset($u->kode_material_terpakai) ? $u->kode_material_terpakai : '-'); ?></td>
                                 <td><?php echo isset($u->nama) ? $u->nama : '-'; ?></td>
