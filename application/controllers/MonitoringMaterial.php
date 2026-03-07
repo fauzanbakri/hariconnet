@@ -63,6 +63,8 @@ class MonitoringMaterial extends CI_Controller {
         $bc_field = in_array('idBc', $mat_fields) ? 'idBc' : (in_array('idtim', $mat_fields) ? 'idtim' : null);
         // detect tipe field name
         $tipe_field = in_array('tipeMaterial', $mat_fields) ? 'tipeMaterial' : (in_array('tipematerial', $mat_fields)?'tipematerial':'tipeMaterial');
+        $has_basecamp_col = in_array('basecamp', $mat_fields);
+        $has_sloc_col = in_array('sloc', $mat_fields);
 
         // detect pemakaian table for used quantities
         $pem_candidates = ['pemakaian_material','pemakaianMaterial','pemakaianmaterial','pemakaian_materials','pemakaianmaterials'];
@@ -93,6 +95,35 @@ class MonitoringMaterial extends CI_Controller {
                 $tot_sql = $this->db->last_query();
                 $total_qty = isset($tot_row->total_qty) ? (int)$tot_row->total_qty : 0;
 
+                // fallback: try matching by material.basecamp name or sloc, and normalize tipe text, if nothing found
+                $used_fallback = false;
+                if ($total_qty === 0 && ($has_basecamp_col || $has_sloc_col)) {
+                    // try matching by basecamp name
+                    if ($has_basecamp_col && !empty($bc->namaAkun)) {
+                        $this->db->select('COALESCE(SUM(material.qty),0) as total_qty', false);
+                        $this->db->from('material');
+                        $this->db->where("UPPER(TRIM(material.basecamp)) = '".strtoupper(trim($bc->namaAkun))."'", NULL, FALSE);
+                        $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
+                        $this->db->limit(1);
+                        $r = $this->db->get()->row();
+                        $fallback_sql = $this->db->last_query();
+                        $fq = isset($r->total_qty)?(int)$r->total_qty:0;
+                        if ($fq > 0) { $total_qty = $fq; $used_fallback = true; $tot_sql = $fallback_sql; }
+                    }
+                    // try matching by sloc
+                    if (!$used_fallback && $has_sloc_col && isset($bc->sloc) && $bc->sloc !== '') {
+                        $this->db->select('COALESCE(SUM(material.qty),0) as total_qty', false);
+                        $this->db->from('material');
+                        $this->db->where('material.sloc', $bc->sloc);
+                        $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
+                        $this->db->limit(1);
+                        $r2 = $this->db->get()->row();
+                        $fallback_sql2 = $this->db->last_query();
+                        $fq2 = isset($r2->total_qty)?(int)$r2->total_qty:0;
+                        if ($fq2 > 0) { $total_qty = $fq2; $used_fallback = true; $tot_sql = $fallback_sql2; }
+                    }
+                }
+
                 // total used from pemakaian table (if available)
                 $total_used = 0;
                 if ($ptable) {
@@ -104,6 +135,31 @@ class MonitoringMaterial extends CI_Controller {
                     $usedRow = $this->db->get()->row();
                     $used_sql = $this->db->last_query();
                     $total_used = isset($usedRow->used) ? (int)$usedRow->used : 0;
+                    // fallback for pemakaian: if used==0, try joining with basecamp name / sloc
+                    if ($total_used === 0 && ($has_basecamp_col || $has_sloc_col)) {
+                        if ($has_basecamp_col && !empty($bc->namaAkun)) {
+                            $this->db->select('COALESCE(SUM('.$ptable.'.qty),0) as used', false);
+                            $this->db->from($ptable);
+                            $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'inner');
+                            $this->db->where("UPPER(TRIM(material.basecamp)) = '".strtoupper(trim($bc->namaAkun))."'", NULL, FALSE);
+                            $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
+                            $rused = $this->db->get()->row();
+                            $used_sql2 = $this->db->last_query();
+                            $tu = isset($rused->used)?(int)$rused->used:0;
+                            if ($tu > 0) { $total_used = $tu; $used_sql = $used_sql2; }
+                        }
+                        if ($total_used === 0 && $has_sloc_col && isset($bc->sloc) && $bc->sloc !== '') {
+                            $this->db->select('COALESCE(SUM('.$ptable.'.qty),0) as used', false);
+                            $this->db->from($ptable);
+                            $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'inner');
+                            $this->db->where('material.sloc', $bc->sloc);
+                            $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
+                            $rused2 = $this->db->get()->row();
+                            $used_sql3 = $this->db->last_query();
+                            $tu2 = isset($rused2->used)?(int)$rused2->used:0;
+                            if ($tu2 > 0) { $total_used = $tu2; $used_sql = $used_sql3; }
+                        }
+                    }
                 }
 
                 // debug samples
