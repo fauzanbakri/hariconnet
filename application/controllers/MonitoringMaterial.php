@@ -90,6 +90,7 @@ class MonitoringMaterial extends CI_Controller {
                 if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
                 $this->db->where('material.'.$tipe_field, $tipe_label);
                 $tot_row = $this->db->get()->row();
+                $tot_sql = $this->db->last_query();
                 $total_qty = isset($tot_row->total_qty) ? (int)$tot_row->total_qty : 0;
 
                 // total used from pemakaian table (if available)
@@ -101,6 +102,7 @@ class MonitoringMaterial extends CI_Controller {
                     if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
                     $this->db->where('material.'.$tipe_field, $tipe_label);
                     $usedRow = $this->db->get()->row();
+                    $used_sql = $this->db->last_query();
                     $total_used = isset($usedRow->used) ? (int)$usedRow->used : 0;
                 }
 
@@ -123,7 +125,18 @@ class MonitoringMaterial extends CI_Controller {
                         $this->db->where('material.'.$tipe_field, $tipe_label);
                         $this->db->limit(10);
                         $pemakaian_sample = $this->db->get()->result();
+                        $pemakaian_sql = $this->db->last_query();
                     }
+                }
+
+                if ($debug) {
+                    $log = "[".date('c')."] basecamp=".$bid." tipe=".str_replace("\n"," ",$tipe_label)." total_qty=".$total_qty." total_used=".$total_used.PHP_EOL;
+                    $log .= "SQL_TOTAL: ".trim(preg_replace('/\s+/', ' ', $tot_sql)).PHP_EOL;
+                    if (isset($used_sql)) $log .= "SQL_USED: ".trim(preg_replace('/\s+/', ' ', $used_sql)).PHP_EOL;
+                    if (isset($pemakaian_sql)) $log .= "SQL_PEMAKAIAN_SAMPLE: ".trim(preg_replace('/\s+/', ' ', $pemakaian_sql)).PHP_EOL;
+                    $log .= "MATERIAL_SAMPLE_COUNT: ".count($materials_sample)." PEMAKAIAN_SAMPLE_COUNT: ".count($pemakaian_sample).PHP_EOL;
+                    $log .= "---\n";
+                    @file_put_contents('/tmp/monitor_debug.log', $log, FILE_APPEND | LOCK_EX);
                 }
 
                 $actual = $total_qty - $total_used;
