@@ -24,6 +24,12 @@
                                     <th>Standar</th>
                                     <th>Aktual</th>
                                     <th>Status</th>
+                                    <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { ?>
+                                    <th>Total Qty</th>
+                                    <th>Total Used</th>
+                                    <th>Material Sample</th>
+                                    <th>Pemakaian Sample</th>
+                                    <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,6 +53,8 @@
                                     <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { ?>
                                     <td><?php echo htmlspecialchars($it['total_qty']); ?></td>
                                     <td><?php echo htmlspecialchars($it['total_used']); ?></td>
+                                    <td><pre style="max-height:120px;overflow:auto"><?php echo htmlspecialchars(json_encode($it['materials_sample'], JSON_PRETTY_PRINT)); ?></pre></td>
+                                    <td><pre style="max-height:120px;overflow:auto"><?php echo htmlspecialchars(json_encode($it['pemakaian_sample'], JSON_PRETTY_PRINT)); ?></pre></td>
                                     <?php } ?>
                                 </tr>
                                 <?php } } ?>

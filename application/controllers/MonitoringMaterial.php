@@ -70,6 +70,7 @@ class MonitoringMaterial extends CI_Controller {
         foreach ($pem_candidates as $t) { if ($this->db->table_exists($t)) { $ptable = $t; break; } }
 
         $monitor = [];
+        $debug = $this->input->get('debug') == '1';
         foreach ($data['basecamp'] as $bc) {
             $bid = isset($bc->idBc) ? $bc->idBc : (isset($bc->id) ? $bc->id : null);
             if ($bid === null) continue;
@@ -103,6 +104,28 @@ class MonitoringMaterial extends CI_Controller {
                     $total_used = isset($usedRow->used) ? (int)$usedRow->used : 0;
                 }
 
+                // debug samples
+                $materials_sample = [];
+                $pemakaian_sample = [];
+                if ($debug) {
+                    $this->db->select('material.*');
+                    $this->db->from('material');
+                    if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
+                    $this->db->where('material.'.$tipe_field, $tipe_label);
+                    $this->db->limit(10);
+                    $materials_sample = $this->db->get()->result();
+
+                    if ($ptable) {
+                        $this->db->select($ptable.'.*, material.kode_material, material.idmaterial');
+                        $this->db->from($ptable);
+                        $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'inner');
+                        if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
+                        $this->db->where('material.'.$tipe_field, $tipe_label);
+                        $this->db->limit(10);
+                        $pemakaian_sample = $this->db->get()->result();
+                    }
+                }
+
                 $actual = $total_qty - $total_used;
                 if ($actual < 0) $actual = 0;
 
@@ -120,6 +143,8 @@ class MonitoringMaterial extends CI_Controller {
                     'standard' => $standard,
                     'total_qty' => $total_qty,
                     'total_used' => $total_used,
+                    'materials_sample' => $materials_sample,
+                    'pemakaian_sample' => $pemakaian_sample,
                     'actual' => $actual,
                     'status' => $status
                 ];
