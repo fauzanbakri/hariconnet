@@ -87,10 +87,11 @@ class MonitoringMaterial extends CI_Controller {
                 // compute actual stock at this basecamp for this tipe:
                 // actual = SUM(material.qty) - SUM(pemakaian.qty)
                 // total material quantity
-                $this->db->select('COALESCE(SUM(material.qty),0) as total_qty', false);
+                $this->db->select("COALESCE(SUM(CAST(material.qty AS UNSIGNED)),0) as total_qty", false);
                 $this->db->from('material');
                 if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
-                $this->db->where('material.'.$tipe_field, $tipe_label);
+                // normalize tipe comparison to avoid case/space mismatches
+                $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
                 $tot_row = $this->db->get()->row();
                 $tot_sql = $this->db->last_query();
                 $total_qty = isset($tot_row->total_qty) ? (int)$tot_row->total_qty : 0;
@@ -127,11 +128,11 @@ class MonitoringMaterial extends CI_Controller {
                 // total used from pemakaian table (if available)
                 $total_used = 0;
                 if ($ptable) {
-                    $this->db->select('COALESCE(SUM('.$ptable.'.qty),0) as used', false);
+                    $this->db->select("COALESCE(SUM(CAST(".$ptable.".qty AS UNSIGNED)),0) as used", false);
                     $this->db->from($ptable);
                     $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'inner');
                     if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
-                    $this->db->where('material.'.$tipe_field, $tipe_label);
+                    $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
                     $usedRow = $this->db->get()->row();
                     $used_sql = $this->db->last_query();
                     $total_used = isset($usedRow->used) ? (int)$usedRow->used : 0;
