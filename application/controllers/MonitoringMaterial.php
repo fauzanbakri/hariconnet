@@ -64,6 +64,11 @@ class MonitoringMaterial extends CI_Controller {
         // detect tipe field name
         $tipe_field = in_array('tipeMaterial', $mat_fields) ? 'tipeMaterial' : (in_array('tipematerial', $mat_fields)?'tipematerial':'tipeMaterial');
 
+        // detect pemakaian table for used quantities
+        $pem_candidates = ['pemakaian_material','pemakaianMaterial','pemakaianmaterial','pemakaian_materials','pemakaianmaterials'];
+        $ptable = null;
+        foreach ($pem_candidates as $t) { if ($this->db->table_exists($t)) { $ptable = $t; break; } }
+
         $monitor = [];
         foreach ($data['basecamp'] as $bc) {
             $bid = isset($bc->idBc) ? $bc->idBc : (isset($bc->id) ? $bc->id : null);
@@ -76,13 +81,30 @@ class MonitoringMaterial extends CI_Controller {
                 }
                 if ($standard <= 0) continue; // skip as requested
 
-                // compute actual stock at this basecamp for this tipe
-                $this->db->select('COALESCE(SUM(qty),0) as actual');
+                // compute actual stock at this basecamp for this tipe:
+                // actual = SUM(material.qty) - SUM(pemakaian.qty)
+                // total material quantity
+                $this->db->select('COALESCE(SUM(material.qty),0) as total_qty', false);
                 $this->db->from('material');
                 if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
                 $this->db->where('material.'.$tipe_field, $tipe_label);
-                $row = $this->db->get()->row();
-                $actual = isset($row->actual) ? (int)$row->actual : 0;
+                $tot_row = $this->db->get()->row();
+                $total_qty = isset($tot_row->total_qty) ? (int)$tot_row->total_qty : 0;
+
+                // total used from pemakaian table (if available)
+                $total_used = 0;
+                if ($ptable) {
+                    $this->db->select('COALESCE(SUM('.$ptable.'.qty),0) as used', false);
+                    $this->db->from($ptable);
+                    $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'inner');
+                    if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
+                    $this->db->where('material.'.$tipe_field, $tipe_label);
+                    $usedRow = $this->db->get()->row();
+                    $total_used = isset($usedRow->used) ? (int)$usedRow->used : 0;
+                }
+
+                $actual = $total_qty - $total_used;
+                if ($actual < 0) $actual = 0;
 
                 // determine status
                 if ($actual < $standard) {
