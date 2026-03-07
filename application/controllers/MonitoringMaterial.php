@@ -11,6 +11,7 @@ class MonitoringMaterial extends CI_Controller {
 
     public function index()
     {
+        session_start();
         $title['title'] = 'Monitoring Material';
         // load basecamp list
         $data['basecamp'] = [];
