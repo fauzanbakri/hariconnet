@@ -74,3 +74,14 @@
         }
     });
 </script>
+
+<?php if (isset($_GET['debug']) && $_GET['debug']=='1') { ?>
+<script>
+    try {
+        console.groupCollapsed('MonitoringMaterial debug');
+        console.log('monitor data:', <?php echo json_encode($monitor ?? [], JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP); ?>);
+        console.log('Note: material/pemakaian samples are included per item as `materials_sample` and `pemakaian_sample`.');
+        console.groupEnd();
+    } catch (e) { console.error('Debug JSON error', e); }
+</script>
+<?php } ?>
