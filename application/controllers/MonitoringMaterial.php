@@ -118,6 +118,8 @@ class MonitoringMaterial extends CI_Controller {
                 $items[] = [
                     'tipe' => $tipe_label,
                     'standard' => $standard,
+                    'total_qty' => $total_qty,
+                    'total_used' => $total_used,
                     'actual' => $actual,
                     'status' => $status
                 ];

@@ -44,6 +44,10 @@
                                             <span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:#2ecc71"></span>
                                         <?php } ?>
                                     </td>
+                                    <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { ?>
+                                    <td><?php echo htmlspecialchars($it['total_qty']); ?></td>
+                                    <td><?php echo htmlspecialchars($it['total_used']); ?></td>
+                                    <?php } ?>
                                 </tr>
                                 <?php } } ?>
                             </tbody>
