@@ -170,16 +170,27 @@ class MonitoringMaterial extends CI_Controller {
                     $this->db->select('material.*');
                     $this->db->from('material');
                     if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
-                    $this->db->where('material.'.$tipe_field, $tipe_label);
+                    $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
                     $this->db->limit(10);
                     $materials_sample = $this->db->get()->result();
+
+                    if (empty($materials_sample)) {
+                        // fallback debug: return any material rows for this basecamp so we can inspect
+                        $this->db->select('material.*');
+                        $this->db->from('material');
+                        if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
+                        $this->db->limit(10);
+                        $materials_any = $this->db->get()->result();
+                    } else {
+                        $materials_any = [];
+                    }
 
                     if ($ptable) {
                         $this->db->select($ptable.'.*, material.kode_material, material.idmaterial');
                         $this->db->from($ptable);
                         $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'inner');
                         if ($bc_field) $this->db->where('material.'.$bc_field, $bid);
-                        $this->db->where('material.'.$tipe_field, $tipe_label);
+                        $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
                         $this->db->limit(10);
                         $pemakaian_sample = $this->db->get()->result();
                         $pemakaian_sql = $this->db->last_query();
@@ -217,6 +228,7 @@ class MonitoringMaterial extends CI_Controller {
                     'total_qty' => $total_qty,
                     'total_used' => $total_used,
                     'materials_sample' => $materials_sample,
+                    'materials_any' => isset($materials_any)?$materials_any:[],
                     'pemakaian_sample' => $pemakaian_sample,
                     'actual' => $actual,
                     'status' => $status
