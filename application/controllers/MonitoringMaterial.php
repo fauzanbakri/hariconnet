@@ -193,6 +193,9 @@ class MonitoringMaterial extends CI_Controller {
                     $log .= "MATERIAL_SAMPLE_COUNT: ".count($materials_sample)." PEMAKAIAN_SAMPLE_COUNT: ".count($pemakaian_sample).PHP_EOL;
                     $log .= "---\n";
                     @file_put_contents('/tmp/monitor_debug.log', $log, FILE_APPEND | LOCK_EX);
+                    // also write to application logs so hosted environments without /tmp access can read it via File Manager / FTP
+                    $app_log = APPPATH . 'logs' . DIRECTORY_SEPARATOR . 'monitor_debug.log';
+                    @file_put_contents($app_log, $log, FILE_APPEND | LOCK_EX);
                 }
 
                 $actual = $total_qty - $total_used;
