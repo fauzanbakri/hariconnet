@@ -116,7 +116,6 @@
                                     if (!$id_field) { $id_field = 'id'; }
                                     $id_val = isset($rowVars[$id_field]) ? $rowVars[$id_field] : (isset($u->$id_field) ? $u->$id_field : '');
                                 ?>
-                                <td class="text-center priority-cell"><?php echo isset($u->priority) ? htmlspecialchars($u->priority) : '-'; ?></td>
                                 <td class="text-center">
                                     <div class='dropdown d-inline-block'>
                                         <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
