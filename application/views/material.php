@@ -240,7 +240,7 @@
                                                                 </button>
                                                                 <ul class='dropdown-menu dropdown-menu-end'>
                                                                     <li>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idtim='".$material->idtim."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."' data-tipeMaterial='".(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:'')) ."'>
+                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idbc='".$material->idBc."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."' data-tipeMaterial='".(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:'')) ."'>
                                                                             <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                         </a>
                                                                     </li>
@@ -356,11 +356,11 @@
                                 </select>
                             </div>
                             <div class="col-xxl-6">
-                                <label class="form-label">Tim</label>
-                                <select class="form-select" name="idtim" id="idtim" aria-label="Default select example">
-                                    <option value="">Pilih Tim</option>
-                                    <?php foreach ($tims as $tim) { ?>
-                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
+                                <label class="form-label">Basecamp</label>
+                                <select class="form-select" name="idBc" id="idBc" aria-label="Default select example">
+                                    <option value="">Pilih Basecamp</option>
+                                    <?php foreach ($basecamps as $bc) { ?>
+                                    <option value="<?php echo $bc->idBc; ?>"><?php echo $bc->namaAkun; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -483,11 +483,11 @@
                                 <input type="text" class="form-control" name="editMerk" id="editMerk" autocomplete="off" placeholder="Merk">
                             </div>
                             <div class="col-xxl-6">
-                                <label class="form-label">Tim</label>
-                                <select class="form-select" name="editIdtim" id="editIdtim" aria-label="Default select example">
-                                    <option value="">Pilih Tim</option>
-                                    <?php foreach ($tims as $tim) { ?>
-                                    <option value="<?php echo $tim->idTim; ?>"><?php echo $tim->nama; ?></option>
+                                <label class="form-label">Basecamp</label>
+                                <select class="form-select" name="editIdBc" id="editIdBc" aria-label="Default select example">
+                                    <option value="">Pilih Basecamp</option>
+                                    <?php foreach ($basecamps as $bc) { ?>
+                                    <option value="<?php echo $bc->idBc; ?>"><?php echo $bc->namaAkun; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -697,7 +697,7 @@ function resetForm() {
     document.getElementById('sn_terpakai').value = '';
     document.getElementById('kode_material_terpakai').value = '';
     document.getElementById('merk').value = '';
-    document.getElementById('idtim').value = '';
+    document.getElementById('idBc').value = '';
     document.getElementById('satuan').value = '';
     document.getElementById('qty').value = '';
     document.getElementById('status_reservasi').value = '';
@@ -720,7 +720,7 @@ function saveMaterial() {
         sn_terpakai: $('#sn_terpakai').val(),
         kode_material_terpakai: $('#kode_material_terpakai').val(),
         merk: $('#merk').val(),
-        idtim: $('#idtim').val(),
+        idBc: $('#idBc').val(),
         satuan: $('#satuan').val(),
         qty: $('#qty').val(),
         status_reservasi: $('#status_reservasi').val(),
@@ -729,7 +729,7 @@ function saveMaterial() {
         ket: $('#ket').val()
     };
 
-    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
+    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idBc || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
         button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
         button.click();
         return;
@@ -769,7 +769,7 @@ function editSaveMaterial() {
         sn_terpakai: $('#editSnTerpakai').val(),
         kode_material_terpakai: $('#editKodeMaterialTerpakai').val(),
         merk: $('#editMerk').val(),
-        idtim: $('#editIdtim').val(),
+        idBc: $('#editIdBc').val(),
         satuan: $('#editSatuan').val(),
         qty: $('#editQty').val(),
         status_reservasi: $('#editStatusReservasi').val(),
@@ -778,7 +778,7 @@ function editSaveMaterial() {
         ket: $('#editKet').val()
     };
 
-    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idtim || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
+    if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idBc || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
         button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
         button.click();
         return;
@@ -857,7 +857,8 @@ $(document).ready(function () {
         } else {
             $('#editTipeMaterial').val('');
         }
-        document.getElementById('editIdtim').value = data.idtim;
+        // set basecamp id
+        document.getElementById('editIdBc').value = data.idbc || data.idBc || '';
         document.getElementById('editSatuan').value = data.satuan;
         document.getElementById('editQty').value = data.qty;
         document.getElementById('editStatusReservasi').value = data.status_reservasi;

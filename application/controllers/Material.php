@@ -53,7 +53,14 @@ class Material extends CI_Controller {
 				$data['materials'] = $this->Material_model->get_all_materials();
 			}
 
-			$data['tims'] = $this->Material_model->get_all_tim();
+			// load basecamp list for selection
+			$data['basecamps'] = [];
+			if ($this->db->table_exists('basecamp')) {
+				$this->db->select('idBc, namaAkun, sloc');
+				$this->db->from('basecamp');
+				$this->db->order_by('namaAkun','ASC');
+				$data['basecamps'] = $this->db->get()->result();
+			}
 			// load kode_material lookup for descriptions
 			if ($this->db->table_exists('kode_material')) {
 				$this->db->select('kode_material, deskripsi_material');
@@ -103,7 +110,7 @@ class Material extends CI_Controller {
 		$sn_terpakai = $this->input->post('sn_terpakai');
 		$kode_material_terpakai = $this->input->post('kode_material_terpakai');
 		$merk = $this->input->post('merk');
-		$idtim = $this->input->post('idtim');
+		$idBc = $this->input->post('idBc');
 		$satuan = $this->input->post('satuan');
 		$qty = $this->input->post('qty');
 		$status_reservasi = $this->input->post('status_reservasi');
@@ -112,7 +119,7 @@ class Material extends CI_Controller {
 		$ket = $this->input->post('ket');
 
 		// Validation
-		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
+		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idBc != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
 				$data = array(
 				'tipeMaterial' => $tipeMaterial,
 				'tanggal' => $tanggal,
@@ -122,7 +129,7 @@ class Material extends CI_Controller {
 				'sn_terpakai' => $sn_terpakai,
 				'kode_material_terpakai' => $kode_material_terpakai,
 				'merk' => $merk,
-				'idtim' => $idtim,
+				'idBc' => $idBc,
 				'satuan' => $satuan,
 				'qty' => $qty,
 				'status_reservasi' => $status_reservasi,
@@ -170,7 +177,7 @@ class Material extends CI_Controller {
 		$sn_terpakai = $this->input->post('sn_terpakai');
 		$kode_material_terpakai = $this->input->post('kode_material_terpakai');
 		$merk = $this->input->post('merk');
-		$idtim = $this->input->post('idtim');
+		$idBc = $this->input->post('idBc');
 		$satuan = $this->input->post('satuan');
 		$qty = $this->input->post('qty');
 		$status_reservasi = $this->input->post('status_reservasi');
@@ -179,7 +186,7 @@ class Material extends CI_Controller {
 		$ket = $this->input->post('ket');
 
 		// Validation
-		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idtim != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
+		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idBc != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
 				$data = array(
 				'tipeMaterial' => $tipeMaterial,
 				'tanggal' => $tanggal,
@@ -189,7 +196,7 @@ class Material extends CI_Controller {
 				'sn_terpakai' => $sn_terpakai,
 				'kode_material_terpakai' => $kode_material_terpakai,
 				'merk' => $merk,
-				'idtim' => $idtim,
+				'idBc' => $idBc,
 				'satuan' => $satuan,
 				'qty' => $qty,
 				'status_reservasi' => $status_reservasi,
