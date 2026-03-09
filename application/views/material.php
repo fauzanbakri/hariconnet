@@ -185,14 +185,7 @@
                                                 <th>No GI</th>
                                                 <th>Keterangan</th>
                                                 <th class="all">Tandai Terpakai</th>
-                                                <?php
-                                                        if(
-                                                            $_SESSION['role']=='Superadmin' ||
-                                                            $_SESSION['role']=='Team Leader'
-                                                            ){
-                                                        echo "<th class='all'>Action</th>";
-                                                }
-                                                ?>
+                                                <th class='all'>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -263,6 +256,8 @@
                                                                 </ul>
                                                             </div>
                                                         </td>";
+                                                        } else {
+                                                            echo '<td></td>';
                                                         }
                                                         echo "
                                                     </tr>
