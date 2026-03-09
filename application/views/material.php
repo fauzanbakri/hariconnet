@@ -224,9 +224,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <div>
-                                        <div>
-                                        <!-- Modal Edit Material -->
+                                        <div class="col-md-3">
+                                            <!-- Filter: Tanggal Mulai -->
                                             <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
                                             <input type="date" id="filterStartDate" class="form-control form-control-sm" value="">
                                         </div>
