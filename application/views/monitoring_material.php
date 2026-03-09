@@ -6,20 +6,36 @@
         <div class="container-fluid">
             <style>
                 /* compact monitoring cards */
-                .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,0.03)}
-                .card .progress {background:#e9ecef}
-                .monitor-card .card-header {padding:0.5rem 0.75rem}
-                .monitor-card .card-body {padding:0.5rem 0.75rem}
-                .monitor-card .card-footer {padding:0.4rem 0.75rem;font-size:0.8rem}
-                .monitor-card .card-title {font-size:0.9rem;margin:0}
-                .monitor-card .small {font-size:0.72rem}
-                .monitor-item {margin-bottom:0.4rem}
-                .monitor-item .progress {height:6px}
+                .status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,0.03);vertical-align:middle}
+                .card .progress {background:#eef2f6}
+                .monitor-card {min-height:160px}
+                .monitor-card .card-header {padding:0.6rem 0.9rem}
+                .monitor-card .card-body {padding:0.6rem 0.9rem}
+                .monitor-card .card-footer {padding:0.5rem 0.9rem;font-size:0.78rem}
+                .monitor-card .card-title {font-size:0.95rem;margin:0}
+                .monitor-card .small {font-size:0.75rem}
+                .monitor-item {margin-bottom:0.55rem;padding-bottom:0.25rem;border-bottom:1px solid #f4f6f8}
+                .monitor-item:last-child{border-bottom:0;margin-bottom:0}
+                .monitor-item .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+                .monitor-item .meta .left .type{font-weight:600}
+                .monitor-item .meta .left .meta-small{font-size:0.78rem;color:#6c757d}
+                .monitor-item .meta .right{display:flex;align-items:center;gap:8px}
+                .monitor-item .meta .percent{font-weight:700;font-size:0.88rem}
+                .monitor-item .progress{height:10px;border-radius:6px}
+                .monitor-item .progress .progress-bar{border-radius:6px;transition:width .5s ease;background:#2ecc71}
+                .monitor-legend{display:flex;gap:12px;align-items:center;margin-top:6px;margin-bottom:10px}
+                .monitor-legend .legend-item{display:flex;align-items:center;gap:6px;font-size:0.85rem;color:#495057}
+                .monitor-legend .legend-dot{width:12px;height:12px;border-radius:50%}
             </style>
             <div class="row">
                 <div class="col-12">
                     <h4 class="mb-sm-0">Monitoring Material</h4>
                     <p class="text-muted">Perbandingan stok aktual di Basecamp dengan Standar Stok per tipe material.</p>
+                    <div class="monitor-legend">
+                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#2ecc71;border:1px solid rgba(0,0,0,0.05)"></div> <div>>= Standar (OK)</div></div>
+                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#f1c40f;border:1px solid rgba(0,0,0,0.05)"></div> <div>< Standard (Perhatian)</div></div>
+                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#e74c3c;border:1px solid rgba(0,0,0,0.05)"></div> <div>= 0 (Kritis)</div></div>
+                    </div>
                 </div>
             </div>
 
@@ -52,36 +68,37 @@
                                 <?php foreach ($m['items'] as $it) {
                                     $standard = isset($it['standard']) ? floatval($it['standard']) : 0;
                                     $actual = isset($it['actual']) ? floatval($it['actual']) : 0;
-                                    // determine ratio for progress bar
                                     if ($standard > 0) {
                                         $ratio = round(min(100, ($actual / $standard) * 100));
                                     } else {
                                         $ratio = ($actual > 0) ? 100 : 0;
                                     }
-
-                                    // determine status: 0 -> red, >= standard -> green, below standard -> yellow
                                     if ($actual == 0) {
                                         $status = 'red';
                                         $dot_color = '#e74c3c';
                                         $bar_color = '#e74c3c';
+                                        $status_label = 'Kritis';
                                     } elseif ($standard > 0 && $actual >= $standard) {
                                         $status = 'green';
                                         $dot_color = '#2ecc71';
                                         $bar_color = '#2ecc71';
+                                        $status_label = 'OK';
                                     } else {
                                         $status = 'yellow';
                                         $dot_color = '#f1c40f';
                                         $bar_color = '#f1c40f';
+                                        $status_label = 'Perhatian';
                                     }
                                 ?>
                                 <div class="monitor-item">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <div>
-                                            <strong class="small"><?php echo htmlspecialchars($it['tipe']); ?></strong>
-                                            <div class="small text-muted">S: <?php echo htmlspecialchars($it['standard']); ?> • A: <?php echo htmlspecialchars($it['actual']); ?></div>
+                                    <div class="meta">
+                                        <div class="left">
+                                            <div class="type"><?php echo htmlspecialchars($it['tipe']); ?></div>
+                                            <div class="meta-small">S: <?php echo htmlspecialchars($it['standard']); ?> • A: <?php echo htmlspecialchars($it['actual']); ?></div>
                                         </div>
-                                        <div class="text-end">
-                                            <span class="status-dot" style="background:<?php echo $dot_color; ?>" title="<?php echo ucfirst($status); ?>"></span>
+                                        <div class="right">
+                                            <div class="percent"><?php echo $ratio; ?>%</div>
+                                            <div style="display:flex;align-items:center;gap:6px"><span class="status-dot" style="background:<?php echo $dot_color; ?>" title="<?php echo $status_label; ?>"></span><small class="text-muted"><?php echo $status_label; ?></small></div>
                                         </div>
                                     </div>
                                     <div class="progress">
