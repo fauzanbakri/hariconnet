@@ -75,7 +75,7 @@
                     <div class="table-responsive">
                     <table id="pemakaianTable" class="table table-bordered table-hover nowrap table-striped align-middle" style="width:100%">
                         <thead>
-                            <tr>
+                                <tr>
                                     <th>No</th>
                                     <th>Kode Material</th>
                                     <th>Kode Material Terpakai</th>
@@ -83,9 +83,9 @@
                                     <th>SN</th>
                                     <th>SN Terpakai</th>
                                     <th>Incident</th>
-                                    <th>Action</th>
                                     <th>Tanggal</th>
                                     <th>QTY</th>
+                                    <th>Action</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -98,6 +98,8 @@
                                 <td><?php echo isset($u->sn_original) ? $u->sn_original : (isset($u->sn) ? $u->sn : '-'); ?></td>
                                 <td><?php echo isset($u->sn_terpakai) ? $u->sn_terpakai : '-'; ?></td>
                                 <td><?php echo isset($u->incident) ? $u->incident : '-'; ?></td>
+                                <td><?php echo isset($u->tanggal) ? $u->tanggal : (isset($u->tanggal_penggunaan) ? $u->tanggal_penggunaan : '-'); ?></td>
+                                <td><?php echo isset($u->qty) ? $u->qty : (isset($u->qty_terpakai) ? $u->qty_terpakai : '-'); ?></td>
                                 <?php
                                     // detect primary id field for this usage row (e.g., idPemakaianMaterial)
                                     $rowVars = get_object_vars($u);
@@ -127,8 +129,6 @@
                                         </ul>
                                     </div>
                                 </td>
-                                <td><?php echo isset($u->tanggal) ? $u->tanggal : (isset($u->tanggal_penggunaan) ? $u->tanggal_penggunaan : '-'); ?></td>
-                                <td><?php echo isset($u->qty) ? $u->qty : (isset($u->qty_terpakai) ? $u->qty_terpakai : '-'); ?></td>
                             </tr>
                             <?php } ?>
                         </tbody>
