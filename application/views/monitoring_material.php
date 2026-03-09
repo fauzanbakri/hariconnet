@@ -16,7 +16,16 @@
             </div>
 
             <div class="row g-3 mt-3">
-                <?php $card_i = 0; foreach (($monitor ?? []) as $m) { $card_i++; ?>
+                <?php $card_i = 0; foreach (($monitor ?? []) as $m) { 
+                    // skip basecamp cards that have no standar values (all items standar empty or zero)
+                    $has_standard = false;
+                    if (!empty($m['items']) && is_array($m['items'])) {
+                        foreach ($m['items'] as $it_check) {
+                            if (isset($it_check['standard']) && $it_check['standard'] !== '' && $it_check['standard'] !== null && floatval($it_check['standard']) > 0) { $has_standard = true; break; }
+                        }
+                    }
+                    if (!$has_standard) continue;
+                    $card_i++; ?>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100">
                         <div class="card-header d-flex justify-content-between align-items-center">
