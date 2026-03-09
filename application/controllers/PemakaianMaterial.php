@@ -56,13 +56,18 @@ class PemakaianMaterial extends CI_Controller {
             // Select usages and join material and either tim or basecamp to get kode_material and team/basecamp nama
             $material_fields = $this->db->list_fields('material');
             if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
-                // select kode_material, kode_material_terpakai, sn (original), sn_terpakai (used), and basecamp name
-                $this->db->select("{$ptable}.*, material.kode_material, material.kode_material_terpakai, material.sn as sn_original, material.sn_terpakai, b.namaAkun as nama");
+                // select kode_material, kode_material_terpakai, descriptions from kode_material, sn (original), sn_terpakai (used), and basecamp name
+                $this->db->select("{$ptable}.*, material.kode_material, material.kode_material_terpakai, material.sn as sn_original, material.sn_terpakai, b.namaAkun as nama, km.deskripsi_material as deskripsi_kode_material, kmt.deskripsi_material as deskripsi_kode_material_terpakai");
             } else {
-                $this->db->select("{$ptable}.*, material.kode_material, material.kode_material_terpakai, material.sn as sn_original, material.sn_terpakai, tim.nama as nama");
+                $this->db->select("{$ptable}.*, material.kode_material, material.kode_material_terpakai, material.sn as sn_original, material.sn_terpakai, tim.nama as nama, km.deskripsi_material as deskripsi_kode_material, kmt.deskripsi_material as deskripsi_kode_material_terpakai");
             }
             $this->db->from($ptable);
             $this->db->join('material', "{$ptable}.idMaterial = material.idmaterial", 'left');
+            // join kode_material table to fetch descriptions for material codes (if exists)
+            if ($this->db->table_exists('kode_material')) {
+                $this->db->join('kode_material km', 'material.kode_material = km.kode_material', 'left');
+                $this->db->join('kode_material kmt', 'material.kode_material_terpakai = kmt.kode_material', 'left');
+            }
             if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
                 $this->db->join('basecamp b', 'material.idBc = b.idBc', 'left');
             } else {
@@ -93,6 +98,67 @@ class PemakaianMaterial extends CI_Controller {
         }
         $this->load->view('navbar', $title);
         $this->load->view('pemakaian_material', $data);
+    }
+
+    /**
+     * Update a pemakaian usage row
+     * Expects POST: id, id_field, tanggal, incident, qty, kode_material_terpakai (optional), sn_terpakai (optional)
+     */
+    public function updateUsage()
+    {
+        $id = $this->input->post('id');
+        $id_field = $this->input->post('id_field');
+        $tanggal = $this->input->post('tanggal');
+        $incident = $this->input->post('incident');
+        $qty = $this->input->post('qty');
+        $kode_terpakai = $this->input->post('kode_material_terpakai');
+        $sn_terpakai = $this->input->post('sn_terpakai');
+
+        if (!$id || !$id_field) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing id or id_field']);
+            return;
+        }
+
+        $ptable = $this->get_pemakaian_table();
+        if (!$ptable) {
+            echo json_encode(['status' => 'error', 'message' => 'Pemakaian table not found']);
+            return;
+        }
+
+        $fields = $this->db->list_fields($ptable);
+        if (!in_array($id_field, $fields)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid id_field']);
+            return;
+        }
+
+        $update = [];
+        if ($tanggal !== null) $update['tanggal'] = $tanggal;
+        if ($incident !== null) $update['incident'] = $incident;
+        if ($qty !== null) $update['qty'] = $qty;
+
+        $this->db->where($id_field, $id);
+        $ok = $this->db->update($ptable, $update);
+        if (!$ok) {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update usage row']);
+            return;
+        }
+
+        // If kode_material_terpakai or sn_terpakai provided, try to update the related material row
+        if ($kode_terpakai || $sn_terpakai) {
+            // fetch the usage row to determine idMaterial
+            $this->db->where($id_field, $id);
+            $usage = $this->db->get($ptable)->row();
+            if ($usage && isset($usage->idMaterial) && $usage->idMaterial) {
+                $mat_update = [];
+                if ($kode_terpakai) $mat_update['kode_material_terpakai'] = $kode_terpakai;
+                if ($sn_terpakai) $mat_update['sn_terpakai'] = $sn_terpakai;
+                if (!empty($mat_update)) {
+                    $this->db->where('idmaterial', $usage->idMaterial)->update('material', $mat_update);
+                }
+            }
+        }
+
+        echo json_encode(['status' => 'success']);
     }
 
     public function insert()

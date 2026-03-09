@@ -78,7 +78,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Kode Material</th>
+                                    <th>Deskripsi Material</th>
                                     <th>Kode Material Terpakai</th>
+                                    <th>Deskripsi Material Terpakai</th>
                                     <th>Nama Basecamp</th>
                                     <th>SN</th>
                                     <th>SN Terpakai</th>
@@ -93,7 +95,9 @@
                             <tr>
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo isset($u->kode_material) ? $u->kode_material : '-'; ?></td>
+                                <td><?php echo isset($u->deskripsi_kode_material) ? $u->deskripsi_kode_material : '-'; ?></td>
                                 <td><?php echo isset($u->kode_material_terpakai) ? $u->kode_material_terpakai : (isset($u->kode_material_terpakai) ? $u->kode_material_terpakai : '-'); ?></td>
+                                <td><?php echo isset($u->deskripsi_kode_material_terpakai) ? $u->deskripsi_kode_material_terpakai : '-'; ?></td>
                                 <td><?php echo isset($u->nama) ? $u->nama : '-'; ?></td>
                                 <td><?php echo isset($u->sn_original) ? $u->sn_original : (isset($u->sn) ? $u->sn : '-'); ?></td>
                                 <td><?php echo isset($u->sn_terpakai) ? $u->sn_terpakai : '-'; ?></td>
@@ -124,7 +128,20 @@
                                             <i class='ri-more-fill align-middle'></i>
                                         </button>
                                         <ul class='dropdown-menu dropdown-menu-end'>
-                                            <li><a href='#' class='dropdown-item edit-usage-btn' data-idfield='<?php echo htmlspecialchars($id_field); ?>' data-id='<?php echo htmlspecialchars($id_val); ?>'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>
+                                            <li>
+                                                <a href='#' class='dropdown-item edit-usage-btn'
+                                                   data-idfield='<?php echo htmlspecialchars($id_field); ?>'
+                                                   data-id='<?php echo htmlspecialchars($id_val); ?>'
+                                                   data-tanggal='<?php echo htmlspecialchars(isset($u->tanggal)?$u->tanggal:(isset($u->tanggal_penggunaan)?$u->tanggal_penggunaan:'')); ?>'
+                                                   data-incident='<?php echo htmlspecialchars(isset($u->incident)?$u->incident:''); ?>'
+                                                   data-qty='<?php echo htmlspecialchars(isset($u->qty)?$u->qty:(isset($u->qty_terpakai)?$u->qty_terpakai:'')); ?>'
+                                                   data-kode_material='<?php echo htmlspecialchars(isset($u->kode_material)?$u->kode_material:''); ?>'
+                                                   data-kode_material_terpakai='<?php echo htmlspecialchars(isset($u->kode_material_terpakai)?$u->kode_material_terpakai:''); ?>'
+                                                   data-sn='<?php echo htmlspecialchars(isset($u->sn_original)?$u->sn_original:(isset($u->sn)?$u->sn:'')); ?>'
+                                                   data-sn_terpakai='<?php echo htmlspecialchars(isset($u->sn_terpakai)?$u->sn_terpakai:''); ?>'
+                                                   data-idmaterial='<?php echo htmlspecialchars(isset($u->idMaterial)?$u->idMaterial:''); ?>'
+                                                ><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a>
+                                            </li>
                                             <li><a href='#' class='dropdown-item delete-usage-btn' data-idfield='<?php echo htmlspecialchars($id_field); ?>' data-id='<?php echo htmlspecialchars($id_val); ?>'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>
                                         </ul>
                                     </div>
@@ -136,6 +153,52 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<!-- Edit Usage Modal -->
+<div class="modal fade" id="editUsageModal" tabindex="-1" aria-labelledby="editUsageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUsageModalLabel">Edit Pemakaian</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editUsageForm">
+                    <input type="hidden" id="edit_id" />
+                    <input type="hidden" id="edit_id_field" />
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal</label>
+                        <input type="date" id="edit_tanggal" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Incident</label>
+                        <input type="text" id="edit_incident" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">QTY</label>
+                        <input type="number" id="edit_qty" class="form-control" min="1" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kode Material Terpakai</label>
+                        <input type="text" id="edit_kode_material_terpakai" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Deskripsi Kode Material Terpakai</label>
+                        <input type="text" id="edit_deskripsi_kode_material_terpakai" class="form-control" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">SN Terpakai</label>
+                        <input type="text" id="edit_sn_terpakai" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary" id="saveEditUsage">Simpan</button>
+            </div>
         </div>
     </div>
 </div>
@@ -170,6 +233,10 @@ $(document).ready(function(){
     var table = $('#pemakaianTable').DataTable({
         responsive:true,
         order:[],
+        columnDefs: [
+            { responsivePriority: 1, targets: -1 }, // Action stays last
+            { responsivePriority: 2, targets: 0 }
+        ],
         lengthMenu: [[-1,10,25,50], ['All',10,25,50]],
         dom: 'Bfrtip',
         buttons: [
@@ -198,7 +265,46 @@ $(function(){
     // edit handler placeholder
     $(document).on('click', '.edit-usage-btn', function(e){
         e.preventDefault();
-        alert('Edit pemakaian belum diimplementasikan.');
+        var $a = $(this);
+        var id = $a.data('id');
+        var idfield = $a.data('idfield');
+        var tanggal = $a.data('tanggal') || '';
+        var incident = $a.data('incident') || '';
+        var qty = $a.data('qty') || '';
+        var kode_terpakai = $a.data('kode_material_terpakai') || '';
+        var sn_terpakai = $a.data('sn_terpakai') || '';
+
+        $('#edit_id').val(id);
+        $('#edit_id_field').val(idfield);
+        $('#edit_tanggal').val(tanggal.split(' ')[0] || tanggal);
+        $('#edit_incident').val(incident);
+        $('#edit_qty').val(qty);
+        $('#edit_kode_material_terpakai').val(kode_terpakai);
+        $('#edit_sn_terpakai').val(sn_terpakai);
+
+        // fetch description for kode_material_terpakai if endpoint exists
+        if (kode_terpakai) {
+            $.ajax({
+                url: 'Material/getKodeMaterialDetail?kode=' + encodeURIComponent(kode_terpakai),
+                method: 'GET',
+                success: function(resp) {
+                    try {
+                        var d = JSON.parse(resp);
+                        if (d && d.deskripsi_material) {
+                            $('#edit_deskripsi_kode_material_terpakai').val(d.deskripsi_material);
+                        } else {
+                            $('#edit_deskripsi_kode_material_terpakai').val('');
+                        }
+                    } catch (e) { $('#edit_deskripsi_kode_material_terpakai').val(''); }
+                },
+                error: function() { $('#edit_deskripsi_kode_material_terpakai').val(''); }
+            });
+        } else {
+            $('#edit_deskripsi_kode_material_terpakai').val('');
+        }
+
+        var modal = new bootstrap.Modal(document.getElementById('editUsageModal'));
+        modal.show();
     });
 
     // delete usage from dropdown
@@ -223,6 +329,42 @@ $(function(){
             },
             error: function(xhr){ alert('Error: '+xhr.responseText); }
         });
+    });
+});
+// save edit
+$(document).on('click', '#saveEditUsage', function(e){
+    e.preventDefault();
+    var id = $('#edit_id').val();
+    var id_field = $('#edit_id_field').val();
+    var tanggal = $('#edit_tanggal').val();
+    var incident = $('#edit_incident').val();
+    var qty = $('#edit_qty').val();
+    var kode_terpakai = $('#edit_kode_material_terpakai').val();
+    var sn_terpakai = $('#edit_sn_terpakai').val();
+
+    if (!id || !id_field) { alert('Invalid id'); return; }
+
+    $.ajax({
+        url: 'PemakaianMaterial/updateUsage',
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            id: id,
+            id_field: id_field,
+            tanggal: tanggal,
+            incident: incident,
+            qty: qty,
+            kode_material_terpakai: kode_terpakai,
+            sn_terpakai: sn_terpakai
+        },
+        success: function(res){
+            if (res.status && res.status === 'success') {
+                location.reload();
+            } else {
+                alert(res.message || 'Gagal menyimpan perubahan');
+            }
+        },
+        error: function(xhr){ alert('Error: '+xhr.responseText); }
     });
 });
 </script>
