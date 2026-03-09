@@ -843,6 +843,7 @@ function editSaveMaterial() {
 function applyFilters() {
     const startDate = document.getElementById('filterStartDate').value;
     const endDate = document.getElementById('filterEndDate').value;
+    const filterTim = document.getElementById('filterTim') ? document.getElementById('filterTim').value : '';
     const statusReservasi = document.getElementById('filterReservasi').value;
     const statusTerpakai = document.getElementById('filterTerpakai').value;
     const statusPengiriman = document.getElementById('filterPengiriman').value;
@@ -850,6 +851,7 @@ function applyFilters() {
     let url = 'Material?';
     if (startDate) url += 'start_date=' + startDate + '&';
     if (endDate) url += 'end_date=' + endDate + '&';
+    if (filterTim) url += 'filter_tim=' + filterTim + '&';
     if (statusReservasi) url += 'status_reservasi=' + statusReservasi + '&';
     if (statusTerpakai) url += 'status_terpakai=' + statusTerpakai + '&';
     if (statusPengiriman) url += 'status_pengiriman=' + statusPengiriman;
@@ -858,11 +860,12 @@ function applyFilters() {
 }
 
 function resetFilters() {
-    document.getElementById('filterStartDate').value = '<?php echo date('Y-m-d'); ?>';
-    document.getElementById('filterEndDate').value = '<?php echo date('Y-m-d'); ?>';
+    document.getElementById('filterStartDate').value = '';
+    document.getElementById('filterEndDate').value = '';
     document.getElementById('filterReservasi').value = '';
     document.getElementById('filterTerpakai').value = '';
     document.getElementById('filterPengiriman').value = '';
+    if (document.getElementById('filterTim')) document.getElementById('filterTim').value = '';
 
     window.location.href = 'Material';
 }
