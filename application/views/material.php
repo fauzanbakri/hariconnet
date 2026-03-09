@@ -279,7 +279,7 @@
                                             <button class="btn btn-sm btn-secondary" onclick="resetFilters()">Reset</button>
                                         </div>
                                     </div>
-</div>
+
                                 </div>
 
                                 <div class="card-body">
