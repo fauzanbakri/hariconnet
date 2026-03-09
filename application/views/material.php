@@ -713,6 +713,8 @@ $('#simpanTandaiTerpakai').on('click', function() {
     });
 });
 const button = document.getElementById('toast');
+var savingMaterial = false;
+var editingMaterial = false;
 
 function resetForm() {
     document.getElementById('idmaterial').value = '';
@@ -743,6 +745,10 @@ function resetForm() {
 }
 
 function saveMaterial() {
+    if (savingMaterial) return;
+    savingMaterial = true;
+    $('#submitBtn').prop('disabled', true);
+
     const formData = {
         tanggal: $('#tanggal').val(),
         kategori: $('#kategori').val(),
@@ -766,6 +772,8 @@ function saveMaterial() {
     if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idBc || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
         button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
         button.click();
+        savingMaterial = false;
+        $('#submitBtn').prop('disabled', false);
         return;
     }
 
@@ -781,11 +789,17 @@ function saveMaterial() {
                     location.reload();
                 }, 1000);
             }else{
+                // re-enable on failure
+                savingMaterial = false;
+                $('#submitBtn').prop('disabled', false);
                 button.setAttribute('data-toast-text', response);
                 button.click();
             }
         },
         error: function(xhr, status, error) {
+            // re-enable on error
+            savingMaterial = false;
+            $('#submitBtn').prop('disabled', false);
             button.setAttribute('data-toast-text', error);
             button.click();
         }
@@ -793,6 +807,10 @@ function saveMaterial() {
 }
 
 function editSaveMaterial() {
+    if (editingMaterial) return;
+    editingMaterial = true;
+    $('#editsubmitBtn').prop('disabled', true);
+
     const formData = {
         idmaterial: $('#editIdmaterial').val(),
         tanggal: $('#editTanggal').val(),
@@ -817,6 +835,8 @@ function editSaveMaterial() {
     if (!formData.kode_material || !formData.sn || !formData.merk || !formData.kategori || !formData.idBc || !formData.status_reservasi || !formData.status_pengiriman || !formData.tanggal || !formData.satuan || !formData.qty) {
         button.setAttribute('data-toast-text', 'Semua field yang wajib harus diisi!');
         button.click();
+        editingMaterial = false;
+        $('#editsubmitBtn').prop('disabled', false);
         return;
     }
 
@@ -832,11 +852,17 @@ function editSaveMaterial() {
                     location.reload();
                 }, 1000);
             }else{
+                // re-enable on failure
+                editingMaterial = false;
+                $('#editsubmitBtn').prop('disabled', false);
                 button.setAttribute('data-toast-text', response);
                 button.click();
             }
         },
         error: function(xhr, status, error) {
+            // re-enable on error
+            editingMaterial = false;
+            $('#editsubmitBtn').prop('disabled', false);
             button.setAttribute('data-toast-text', error);
             button.click();
         }
