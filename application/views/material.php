@@ -131,6 +131,14 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2">
+                                            <label for="filterKategori" class="form-label">Kategori</label>
+                                            <select id="filterKategori" class="form-select form-select-sm">
+                                                <option value="">Semua</option>
+                                                <option value="FOC">FOC</option>
+                                                <option value="FOT">FOT</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
                                             <label for="filterReservasi" class="form-label">Status Reservasi</label>
                                             <select id="filterReservasi" class="form-select form-select-sm">
                                                 <option value="">Semua</option>
@@ -710,12 +718,16 @@ function resetForm() {
     document.getElementById('idmaterial').value = '';
     document.getElementById('tanggal').value = '<?php echo date('Y-m-d'); ?>';
     document.getElementById('kategori').value = '';
-    document.getElementById('kode_material').value = '';
+    if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+        $('#kode_material').val(null).trigger('change');
+    } else { document.getElementById('kode_material').value = ''; }
     document.getElementById('sn').value = '';
     document.getElementById('sn_terpakai').value = '';
     document.getElementById('kode_material_terpakai').value = '';
     document.getElementById('merk').value = '';
-    document.getElementById('idBc').value = '';
+    if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+        $('#idBc').val(null).trigger('change');
+    } else { document.getElementById('idBc').value = ''; }
     document.getElementById('satuan').value = '';
     document.getElementById('qty').value = '';
     document.getElementById('no_reservasi').value = '';
@@ -835,6 +847,7 @@ function applyFilters() {
     const startDate = document.getElementById('filterStartDate').value;
     const endDate = document.getElementById('filterEndDate').value;
     const filterTim = document.getElementById('filterTim') ? document.getElementById('filterTim').value : '';
+    const filterKategori = document.getElementById('filterKategori') ? document.getElementById('filterKategori').value : '';
     const statusReservasi = document.getElementById('filterReservasi').value;
     const statusTerpakai = document.getElementById('filterTerpakai').value;
     const statusPengiriman = document.getElementById('filterPengiriman').value;
@@ -843,6 +856,7 @@ function applyFilters() {
     if (startDate) url += 'start_date=' + startDate + '&';
     if (endDate) url += 'end_date=' + endDate + '&';
     if (filterTim) url += 'filter_tim=' + filterTim + '&';
+    if (filterKategori) url += 'kategori=' + filterKategori + '&';
     if (statusReservasi) url += 'status_reservasi=' + statusReservasi + '&';
     if (statusTerpakai) url += 'status_terpakai=' + statusTerpakai + '&';
     if (statusPengiriman) url += 'status_pengiriman=' + statusPengiriman;
@@ -857,6 +871,7 @@ function resetFilters() {
     document.getElementById('filterTerpakai').value = '';
     document.getElementById('filterPengiriman').value = '';
     if (document.getElementById('filterTim')) document.getElementById('filterTim').value = '';
+    if (document.getElementById('filterKategori')) document.getElementById('filterKategori').value = '';
 
     window.location.href = 'Material';
 }
@@ -893,21 +908,35 @@ $(document).ready(function () {
         document.getElementById('editIdmaterial').value = data.idmaterial;
         document.getElementById('editTanggal').value = data.tanggal;
         document.getElementById('editKategori').value = data.kategori;
-        document.getElementById('editKodeMaterial').value = data.kode_material;
+        if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+            $('#editKodeMaterial').val(data.kode_material || null).trigger('change');
+        } else { document.getElementById('editKodeMaterial').value = data.kode_material; }
         document.getElementById('editSn').value = data.sn;
         document.getElementById('editSnTerpakai').value = data.sn_terpakai;
         document.getElementById('editKodeMaterialTerpakai').value = data.kode_material_terpakai;
         document.getElementById('editMerk').value = data.merk;
         // set tipe material if provided
-        if (data.tipematerial !== undefined) {
-            $('#editTipeMaterial').val(data.tipematerial);
-        } else if (data.tipeMaterial !== undefined) {
-            $('#editTipeMaterial').val(data.tipeMaterial);
+        if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+            if (data.tipematerial !== undefined) {
+                $('#editTipeMaterial').val(data.tipematerial).trigger('change');
+            } else if (data.tipeMaterial !== undefined) {
+                $('#editTipeMaterial').val(data.tipeMaterial).trigger('change');
+            } else {
+                $('#editTipeMaterial').val(null).trigger('change');
+            }
         } else {
-            $('#editTipeMaterial').val('');
+            if (data.tipematerial !== undefined) {
+                document.getElementById('editTipeMaterial').value = data.tipematerial;
+            } else if (data.tipeMaterial !== undefined) {
+                document.getElementById('editTipeMaterial').value = data.tipeMaterial;
+            } else {
+                document.getElementById('editTipeMaterial').value = '';
+            }
         }
         // set basecamp id
-        document.getElementById('editIdBc').value = data.idbc || data.idBc || '';
+        if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+            $('#editIdBc').val(data.idbc || data.idBc || null).trigger('change');
+        } else { document.getElementById('editIdBc').value = data.idbc || data.idBc || ''; }
         document.getElementById('editSatuan').value = data.satuan;
         document.getElementById('editQty').value = data.qty;
         document.getElementById('editStatusReservasi').value = data.status_reservasi;

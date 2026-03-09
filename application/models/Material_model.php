@@ -41,7 +41,7 @@ class Material_model extends CI_Model {
 	/**
 	 * Get materials by filters
 	 */
-	public function get_materials_filtered($start_date = null, $end_date = null, $status_reservasi = null, $status_terpakai = null, $status_pengiriman = null, $filter_tim = null)
+	public function get_materials_filtered($start_date = null, $end_date = null, $status_reservasi = null, $status_terpakai = null, $status_pengiriman = null, $filter_tim = null, $filter_kategori = null)
 	{
 		$material_fields = $this->db->list_fields('material');
 		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
@@ -85,6 +85,11 @@ class Material_model extends CI_Model {
 
 		if ($status_pengiriman) {
 			$this->db->where('m.status_pengiriman', $status_pengiriman);
+		}
+
+		// filter by kategori if provided (FOC/FOT)
+		if ($filter_kategori !== null && $filter_kategori !== '') {
+			$this->db->where('m.kategori', $filter_kategori);
 		}
 
 		$this->db->order_by('m.idmaterial', 'DESC');

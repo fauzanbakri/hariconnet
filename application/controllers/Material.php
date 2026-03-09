@@ -44,13 +44,14 @@ class Material extends CI_Controller {
 			$start_date = $this->input->get('start_date');
 			$end_date = $this->input->get('end_date');
 			$filter_tim = $this->input->get('filter_tim');
+			$filter_kategori = $this->input->get('kategori');
 			$status_reservasi = $this->input->get('status_reservasi');
 			$status_terpakai = $this->input->get('status_terpakai');
 			$status_pengiriman = $this->input->get('status_pengiriman');
 
 			// Allow empty dates; only apply filters when any filter present
-			if ($start_date || $end_date || $status_reservasi || $status_terpakai || $status_pengiriman || $filter_tim) {
-				$data['materials'] = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim);
+			if ($start_date || $end_date || $status_reservasi || $status_terpakai || $status_pengiriman || $filter_tim || $filter_kategori) {
+				$data['materials'] = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
 			} else {
 				$data['materials'] = $this->Material_model->get_all_materials();
 			}
