@@ -41,7 +41,7 @@ class Material_model extends CI_Model {
 	/**
 	 * Get materials by filters
 	 */
-	public function get_materials_filtered($start_date = null, $end_date = null, $status_reservasi = null, $status_terpakai = null, $status_pengiriman = null)
+	public function get_materials_filtered($start_date = null, $end_date = null, $status_reservasi = null, $status_terpakai = null, $status_pengiriman = null, $filter_tim = null)
 	{
 		$material_fields = $this->db->list_fields('material');
 		if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
@@ -63,6 +63,16 @@ class Material_model extends CI_Model {
 		if ($start_date && $end_date) {
 			$this->db->where('DATE(m.tanggal) >=', $start_date);
 			$this->db->where('DATE(m.tanggal) <=', $end_date);
+		}
+
+		// filter by tim/basecamp if provided
+		if ($filter_tim !== null && $filter_tim !== '') {
+			$material_fields = $this->db->list_fields('material');
+			if (in_array('idBc', $material_fields) && $this->db->table_exists('basecamp')) {
+				$this->db->where('m.idBc', $filter_tim);
+			} else {
+				$this->db->where('m.idtim', $filter_tim);
+			}
 		}
 
 		if ($status_reservasi) {
