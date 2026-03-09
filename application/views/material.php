@@ -224,7 +224,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </div>
+                                    
 
                                         <!-- Modal Edit Material -->
                                             <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
@@ -279,6 +279,7 @@
                                             <button class="btn btn-sm btn-secondary" onclick="resetFilters()">Reset</button>
                                         </div>
                                     </div>
+</div>
                                 </div>
 
                                 <div class="card-body">
