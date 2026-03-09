@@ -280,8 +280,7 @@
                                         </div>
                                     </div>
 
-                                </div>
-
+                              
                                 <div class="card-body">
                                     <table id="example2" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
