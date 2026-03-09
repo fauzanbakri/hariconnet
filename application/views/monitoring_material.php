@@ -49,8 +49,30 @@
                             <?php if (empty($m['items'])) { ?>
                                 <p class="text-muted">Tidak ada data tipe material untuk basecamp ini.</p>
                             <?php } else { ?>
-                                <?php foreach ($m['items'] as $it) { 
-                                    $ratio = 0; if ($it['standard'] > 0) { $ratio = round(min(100, ($it['actual'] / $it['standard']) * 100)); }
+                                <?php foreach ($m['items'] as $it) {
+                                    $standard = isset($it['standard']) ? floatval($it['standard']) : 0;
+                                    $actual = isset($it['actual']) ? floatval($it['actual']) : 0;
+                                    // determine ratio for progress bar
+                                    if ($standard > 0) {
+                                        $ratio = round(min(100, ($actual / $standard) * 100));
+                                    } else {
+                                        $ratio = ($actual > 0) ? 100 : 0;
+                                    }
+
+                                    // determine status: 0 -> red, >= standard -> green, below standard -> yellow
+                                    if ($actual == 0) {
+                                        $status = 'red';
+                                        $dot_color = '#e74c3c';
+                                        $bar_color = '#e74c3c';
+                                    } elseif ($standard > 0 && $actual >= $standard) {
+                                        $status = 'green';
+                                        $dot_color = '#2ecc71';
+                                        $bar_color = '#2ecc71';
+                                    } else {
+                                        $status = 'yellow';
+                                        $dot_color = '#f1c40f';
+                                        $bar_color = '#f1c40f';
+                                    }
                                 ?>
                                 <div class="monitor-item">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
@@ -59,17 +81,11 @@
                                             <div class="small text-muted">S: <?php echo htmlspecialchars($it['standard']); ?> • A: <?php echo htmlspecialchars($it['actual']); ?></div>
                                         </div>
                                         <div class="text-end">
-                                            <?php if ($it['status']=='red') { ?>
-                                                <span class="status-dot" style="background:#e74c3c" title="Kritis"></span>
-                                            <?php } elseif ($it['status']=='yellow') { ?>
-                                                <span class="status-dot" style="background:#f1c40f" title="Perhatian"></span>
-                                            <?php } else { ?>
-                                                <span class="status-dot" style="background:#2ecc71" title="OK"></span>
-                                            <?php } ?>
+                                            <span class="status-dot" style="background:<?php echo $dot_color; ?>" title="<?php echo ucfirst($status); ?>"></span>
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: <?php echo $ratio; ?>%;" aria-valuenow="<?php echo $ratio; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: <?php echo $ratio; ?>%; background: <?php echo $bar_color; ?>;" aria-valuenow="<?php echo $ratio; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { ?>
                                         <details class="mt-1">

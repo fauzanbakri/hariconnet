@@ -107,15 +107,125 @@
                                                     $_SESSION['role']=='Superadmin' ||
                                                     $_SESSION['role']=='Team Leader'
                                                     ){
+                                                        echo '<div class="btn-group" role="group">';
                                                         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#materialModal" onclick="resetForm()">Tambah Material</button>';
+                                                        echo '<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#materialMultipleModal" onclick="resetFormMultiple()">Tambah Multiple</button>';
+                                                        echo '</div>';
                                                     }
                                             ?>
                                             <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
                                         </div>
                                     </div>
 
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-md-3">
+
+                                        <!-- Modal Add Multiple Material -->
+                                        <div class="modal fade" id="materialMultipleModal" tabindex="-1" aria-labelledby="materialMultipleModalLabel" aria-modal="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="materialMultipleModalLabel">Tambah Multiple Material</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Tanggal</label>
+                                                                <input type="date" class="form-control" name="mm_tanggal" id="mm_tanggal" autocomplete="off" value="<?php echo date('Y-m-d'); ?>">
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Kategori</label>
+                                                                <select class="form-select" name="mm_kategori" id="mm_kategori" aria-label="Default select example">
+                                                                    <option value="">Pilih Kategori</option>
+                                                                    <option value="FOC">FOC</option>
+                                                                    <option value="FOT">FOT</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Kode Material</label>
+                                                                <select class="form-select" name="mm_kode_material" id="mm_kode_material" aria-label="Pilih Kode Material">
+                                                                    <option value="">Pilih Kode Material</option>
+                                                                    <?php foreach (($kode_materials ?? []) as $km) { $k = is_object($km)?$km->kode_material:(is_array($km)?$km['kode_material']:$km); $d = is_object($km)?(isset($km->deskripsi_material)?$km->deskripsi_material:''):(is_array($km)?($km['deskripsi_material'] ?? ''):''); echo '<option value="'.htmlspecialchars($k).'">'.htmlspecialchars($k.' - '. $d).'</option>'; } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">SN (satu per baris)</label>
+                                                                <textarea class="form-control" id="mm_sn_list" rows="5" placeholder="Masukkan satu SN per baris"></textarea>
+                                                                <div class="form-text">Contoh: masukkan 5 SN pada 5 baris untuk membuat 5 baris material.</div>
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Merk</label>
+                                                                <input type="text" class="form-control" name="mm_merk" id="mm_merk" autocomplete="off" placeholder="Merk">
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Tipe Material</label>
+                                                                <select class="form-select" name="mm_tipeMaterial" id="mm_tipeMaterial" aria-label="Default select example">
+                                                                    <option value="">Pilih Tipe Material</option>
+                                                                    <option>ONT HUAWEI</option>
+                                                                    <option>ONT FIBERHOME</option>
+                                                                    <option>ONT ZTE</option>
+                                                                    <option>ONT RAISECOM</option>
+                                                                    <option>DW 50</option>
+                                                                    <option>DW 100</option>
+                                                                    <option>DW 150</option>
+                                                                    <option>DW 250</option>
+                                                                    <option>DW 300</option>
+                                                                    <option>DW 1000</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Basecamp</label>
+                                                                <select class="form-select" name="mm_idBc" id="mm_idBc" aria-label="Default select example">
+                                                                    <option value="">Pilih Basecamp</option>
+                                                                    <?php foreach ($basecamps as $bc) { ?>
+                                                                    <option value="<?php echo $bc->idBc; ?>"><?php echo $bc->namaAkun; ?></option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">No Reservasi</label>
+                                                                <input type="text" class="form-control" name="mm_no_reservasi" id="mm_no_reservasi" autocomplete="off" placeholder="No Reservasi">
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">No GI</label>
+                                                                <input type="text" class="form-control" name="mm_no_gi" id="mm_no_gi" autocomplete="off" placeholder="No GI">
+                                                            </div>
+                                                            <div class="col-xxl-3">
+                                                                <label class="form-label">Satuan</label>
+                                                                <input type="text" class="form-control" name="mm_satuan" id="mm_satuan" autocomplete="off" placeholder="Satuan">
+                                                            </div>
+                                                            <div class="col-xxl-3">
+                                                                <label class="form-label">Status Reservasi</label>
+                                                                <select class="form-select" name="mm_status_reservasi" id="mm_status_reservasi" aria-label="Default select example">
+                                                                    <option value="">Pilih Status</option>
+                                                                    <option value="Sudah">Sudah</option>
+                                                                    <option value="Belum">Belum</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Status Pengiriman</label>
+                                                                <select class="form-select" name="mm_status_pengiriman" id="mm_status_pengiriman" aria-label="Default select example">
+                                                                    <option value="">Pilih Status</option>
+                                                                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                                                                    <option value="On Loc">On Loc</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xxl-6">
+                                                                <label class="form-label">Keterangan</label>
+                                                                <textarea type="text" class="form-control" name="mm_ket" id="mm_ket" autocomplete="off" placeholder="Keterangan"></textarea>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="hstack gap-2 justify-content-end">
+                                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                    <button class="btn btn-primary" id="submitMultipleBtn" onclick="saveMaterialMultiple()">Submit Multiple</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Edit Material -->
                                             <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
                                             <input type="date" id="filterStartDate" class="form-control form-control-sm" value="">
                                         </div>
@@ -744,6 +854,25 @@ function resetForm() {
     document.getElementById('displayDeskripsiMaterialTerpakai').textContent = '-';
 }
 
+function resetFormMultiple() {
+    if (typeof $ !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+        $('#mm_kode_material, #mm_tipeMaterial, #mm_idBc').val(null).trigger('change');
+    } else {
+        document.getElementById('mm_kode_material').value = '';
+        document.getElementById('mm_tipeMaterial').value = '';
+        document.getElementById('mm_idBc').value = '';
+    }
+    document.getElementById('mm_tanggal').value = '<?php echo date('Y-m-d'); ?>';
+    document.getElementById('mm_sn_list').value = '';
+    document.getElementById('mm_merk').value = '';
+    document.getElementById('mm_no_reservasi').value = '';
+    document.getElementById('mm_no_gi').value = '';
+    document.getElementById('mm_satuan').value = '';
+    document.getElementById('mm_status_reservasi').value = '';
+    document.getElementById('mm_status_pengiriman').value = '';
+    document.getElementById('mm_ket').value = '';
+}
+
 function saveMaterial() {
     if (savingMaterial) return;
     savingMaterial = true;
@@ -802,6 +931,69 @@ function saveMaterial() {
             $('#submitBtn').prop('disabled', false);
             button.setAttribute('data-toast-text', error);
             button.click();
+        }
+    });
+}
+
+var savingMultiple = false;
+function saveMaterialMultiple() {
+    if (savingMultiple) return;
+    savingMultiple = true;
+    $('#submitMultipleBtn').prop('disabled', true);
+
+    var sn_list_raw = document.getElementById('mm_sn_list').value || '';
+    // split by newlines, comma or semicolon
+    var sn_items = sn_list_raw.split(/\r?\n|,|;/).map(function(s){ return s.trim(); }).filter(function(s){ return s.length>0; });
+    if (sn_items.length === 0) {
+        alert('Masukkan minimal 1 SN (satu per baris).');
+        savingMultiple = false;
+        $('#submitMultipleBtn').prop('disabled', false);
+        return;
+    }
+
+    var payload = {
+        tanggal: $('#mm_tanggal').val(),
+        kategori: $('#mm_kategori').val(),
+        kode_material: $('#mm_kode_material').val(),
+        sn_list: JSON.stringify(sn_items),
+        merk: $('#mm_merk').val(),
+        tipeMaterial: $('#mm_tipeMaterial').val(),
+        idBc: $('#mm_idBc').val(),
+        no_reservasi: $('#mm_no_reservasi').val(),
+        no_gi: $('#mm_no_gi').val(),
+        satuan: $('#mm_satuan').val(),
+        status_reservasi: $('#mm_status_reservasi').val(),
+        status_pengiriman: $('#mm_status_pengiriman').val(),
+        ket: $('#mm_ket').val()
+    };
+
+    // Basic validation
+    if (!payload.kode_material || !payload.merk || !payload.kategori || !payload.idBc || !payload.status_reservasi || !payload.status_pengiriman || !payload.tanggal || !payload.satuan) {
+        alert('Harap isi semua field wajib (kode material, merk, kategori, basecamp, status reservasi, status pengiriman, tanggal, satuan).');
+        savingMultiple = false;
+        $('#submitMultipleBtn').prop('disabled', false);
+        return;
+    }
+
+    $.ajax({
+        url: 'Material/insertMultipleData',
+        type: 'POST',
+        data: payload,
+        success: function(response) {
+            try { var res = (typeof response === 'string') ? JSON.parse(response) : response; } catch (e) { res = { status: 'error', message: 'Invalid server response' }; }
+            if (res.status && res.status === 'success') {
+                alert('Berhasil menambahkan ' + (res.inserted_count || sn_items.length) + ' baris.');
+                location.reload();
+            } else {
+                savingMultiple = false;
+                $('#submitMultipleBtn').prop('disabled', false);
+                alert(res.message || 'Gagal menyimpan multiple');
+            }
+        },
+        error: function(xhr) {
+            savingMultiple = false;
+            $('#submitMultipleBtn').prop('disabled', false);
+            alert('Error: ' + xhr.responseText);
         }
     });
 }

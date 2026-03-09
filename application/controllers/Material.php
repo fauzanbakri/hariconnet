@@ -163,6 +163,86 @@ class Material extends CI_Controller {
 	}
 
 	/**
+	 * Insert multiple materials using a list of SNs (one SN per item).
+	 * Expects POST: kode_material, sn_list (JSON array or newline-separated), merk, kategori, idBc, satuan, status_reservasi, status_pengiriman, tanggal, tipeMaterial (optional), no_reservasi/no_gi (optional), ket (optional)
+	 */
+	public function insertMultipleData()
+	{
+		date_default_timezone_set('Asia/Makassar');
+		session_start();
+
+		$kode_material = $this->input->post('kode_material');
+		$sn_list_raw = $this->input->post('sn_list');
+		$merk = $this->input->post('merk');
+		$kategori = $this->input->post('kategori');
+		$idBc = $this->input->post('idBc');
+		$satuan = $this->input->post('satuan');
+		$status_reservasi = $this->input->post('status_reservasi');
+		$status_pengiriman = $this->input->post('status_pengiriman');
+		$tanggal = $this->input->post('tanggal');
+		$tipeMaterial = $this->input->post('tipeMaterial');
+		$no_reservasi = $this->input->post('no_reservasi');
+		$no_gi = $this->input->post('no_gi');
+		$ket = $this->input->post('ket');
+
+		if (!$kode_material || !$merk || !$kategori || !$idBc || !$satuan || !$status_reservasi || !$status_pengiriman || !$tanggal) {
+			echo json_encode(['status' => 'error', 'message' => 'Missing required fields for multiple insert']);
+			return;
+		}
+
+		$sn_items = [];
+		// accept JSON array or newline/comma/semicolon separated string
+		if ($sn_list_raw) {
+			// try json decode
+			$json = json_decode($sn_list_raw, true);
+			if (is_array($json)) {
+				foreach ($json as $s) { $s = trim($s); if ($s !== '') $sn_items[] = $s; }
+			} else {
+				// split by newline, comma, semicolon
+				$parts = preg_split('/[\r\n,;]+/', $sn_list_raw);
+				foreach ($parts as $p) { $p = trim($p); if ($p !== '') $sn_items[] = $p; }
+			}
+		}
+
+		if (empty($sn_items)) {
+			echo json_encode(['status' => 'error', 'message' => 'No SN provided']);
+			return;
+		}
+
+		$inserted = 0;
+		foreach ($sn_items as $sn) {
+			$data = [
+				'tipeMaterial' => $tipeMaterial,
+				'tanggal' => $tanggal,
+				'kategori' => $kategori,
+				'kode_material' => $kode_material,
+				'sn' => $sn,
+				'merk' => $merk,
+				'idBc' => $idBc,
+				// per-SN item, set qty = 1
+				'satuan' => $satuan,
+				'qty' => 1,
+				'status_reservasi' => $status_reservasi,
+				'status_pengiriman' => $status_pengiriman,
+				'ket' => $ket
+			];
+			if ($no_reservasi !== null) $data['no_reservasi'] = $no_reservasi;
+			if ($no_gi !== null) $data['no_gi'] = $no_gi;
+
+			// use model to insert (it will filter fields)
+			if ($this->Material_model->insert_material($data)) {
+				$inserted++;
+			}
+		}
+
+		if ($inserted > 0) {
+			echo json_encode(['status' => 'success', 'inserted_count' => $inserted]);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Failed to insert items']);
+		}
+	}
+
+	/**
 	 * Get material data for edit
 	 */
 	public function getData()
