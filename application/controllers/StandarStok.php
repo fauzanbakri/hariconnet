@@ -87,4 +87,75 @@ class StandarStok extends CI_Controller {
             echo isset($e['message']) ? $e['message'] : 'Gagal menyimpan';
         }
     }
+
+    /**
+     * Get single standar row by id (for edit)
+     */
+    public function getData()
+    {
+        $id = $this->input->get('id');
+        if (!$id) { echo json_encode(null); return; }
+        $candidates = ['standarStok','standar_stok','standarstok','standar_stoks','standarstok'];
+        $table = null;
+        foreach ($candidates as $t) { if ($this->db->table_exists($t)) { $table = $t; break; } }
+        if (!$table) { echo json_encode(null); return; }
+        $row = $this->db->get_where($table, ['idStandarStok' => $id])->row();
+        echo json_encode($row);
+    }
+
+    /**
+     * Update an existing standar row
+     */
+    public function updateData()
+    {
+        $id = $this->input->post('id');
+        if (!$id) { echo 'ID tidak valid'; return; }
+        $candidates = ['standarStok','standar_stok','standarstok','standar_stoks','standarstok'];
+        $table = null;
+        foreach ($candidates as $t) { if ($this->db->table_exists($t)) { $table = $t; break; } }
+        if (!$table) { echo 'Tabel standarStok tidak ditemukan'; return; }
+
+        $payload = [
+            'idBc' => $this->input->post('idBc'),
+            'ont_huawei' => $this->input->post('ont_huawei') ?: 0,
+            'ont_fiberhome' => $this->input->post('ont_fiberhome') ?: 0,
+            'ont_zte' => $this->input->post('ont_zte') ?: 0,
+            'ont_raisecom' => $this->input->post('ont_raisecom') ?: 0,
+            'ont_bdcom' => $this->input->post('ont_bdcom') ?: 0,
+            'dw_50' => $this->input->post('dw_50') ?: 0,
+            'dw_100' => $this->input->post('dw_100') ?: 0,
+            'dw_150' => $this->input->post('dw_150') ?: 0,
+            'dw_250' => $this->input->post('dw_250') ?: 0,
+            'dw_300' => $this->input->post('dw_300') ?: 0,
+            'dw_1000' => $this->input->post('dw_1000') ?: 0,
+            'adss_6c' => $this->input->post('adss_6c') ?: 0,
+            'adss_24c' => $this->input->post('adss_24c') ?: 0,
+            'adss_48c' => $this->input->post('adss_48c') ?: 0,
+            'adss_96c' => $this->input->post('adss_96c') ?: 0
+        ];
+
+        $this->db->where('idStandarStok', $id);
+        if ($this->db->update($table, $payload)) {
+            echo 'success';
+        } else {
+            $e = $this->db->error();
+            echo isset($e['message']) ? $e['message'] : 'Gagal memperbarui';
+        }
+    }
+
+    /**
+     * Delete standar row
+     */
+    public function deleteData()
+    {
+        $id = $this->input->get('id');
+        if (!$id) { echo json_encode(['status'=>'error','message'=>'ID tidak valid']); return; }
+        $candidates = ['standarStok','standar_stok','standarstok','standar_stoks','standarstok'];
+        $table = null;
+        foreach ($candidates as $t) { if ($this->db->table_exists($t)) { $table = $t; break; } }
+        if (!$table) { echo json_encode(['status'=>'error','message'=>'Tabel tidak ditemukan']); return; }
+        $this->db->where('idStandarStok', $id);
+        if ($this->db->delete($table)) echo json_encode(['status'=>'success']);
+        else echo json_encode(['status'=>'error','message'=>'Gagal menghapus']);
+    }
 }

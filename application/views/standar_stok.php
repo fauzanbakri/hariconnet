@@ -51,6 +51,7 @@
                                                 <th>ADSS 24C</th>
                                                 <th>ADSS 48C</th>
                                                 <th>ADSS 96C</th>
+                                                <th class="all">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -97,7 +98,15 @@
                                                     echo '<td>'.(isset($r->adss_24c)?$r->adss_24c:'-').'</td>';
                                                     echo '<td>'.(isset($r->adss_48c)?$r->adss_48c:'-').'</td>';
                                                     echo '<td>'.(isset($r->adss_96c)?$r->adss_96c:'-').'</td>';
-                                                    echo '</tr>';
+                                                        // action buttons
+                                                        $idval = isset($r->idStandarStok)?$r->idStandarStok:(isset($r->id)?$r->id:'');
+                                                        echo '<td class="text-center">';
+                                                        echo '<div class="btn-group">';
+                                                        echo '<button class="btn btn-sm btn-outline-primary editStandarBtn" data-id="'.htmlspecialchars($idval).'">Edit</button>';
+                                                        echo '<button class="btn btn-sm btn-outline-danger deleteStandarBtn" data-id="'.htmlspecialchars($idval).'">Delete</button>';
+                                                        echo '</div>';
+                                                        echo '</td>';
+                                                        echo '</tr>';
                                                 }
                                             }
                                             ?>
@@ -118,6 +127,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form id="formInputStandar">
+                                            <input type="hidden" id="editingStandarId" value="" />
                                             <div class="row g-2">
                                                 <div class="col-md-6">
                                                     <label class="form-label">Basecamp (SLOC)</label>
@@ -320,11 +330,16 @@
     $(function(){
         $('#btnAddStandar').on('click', function(){
             var modal = new bootstrap.Modal(document.getElementById('modalInputStandar'));
+            // ensure modal is in create mode
+            $('#editingStandarId').val('');
+            $('#inputIdBc').val('').trigger('change');
+            $('#ont_huawei,#ont_fiberhome,#ont_zte,#ont_raisecom,#ont_bdcom,#dw_50,#dw_100,#dw_150,#dw_250,#dw_300,#dw_1000,#adss_6c,#adss_24c,#adss_48c,#adss_96c').val(0);
             modal.show();
         });
 
         $('#saveStandarBtn').on('click', function(){
             var payload = {
+                id: $('#editingStandarId').val(),
                 idBc: $('#inputIdBc').val(),
                 ont_huawei: $('#ont_huawei').val(),
                 ont_fiberhome: $('#ont_fiberhome').val(),
@@ -348,8 +363,10 @@
                 return;
             }
 
+            var editingId = $('#editingStandarId').val();
+            var url = editingId ? 'StandarStok/updateData' : 'StandarStok/insertData';
             $.ajax({
-                url: 'StandarStok/insertData',
+                url: url,
                 type: 'POST',
                 data: payload,
                 success: function(resp){
@@ -358,6 +375,57 @@
                     } else {
                         alert('Gagal: ' + resp);
                     }
+                },
+                error: function(xhr){ alert('Error: ' + xhr.responseText); }
+            });
+        });
+        
+        // edit button handler
+        $(document).on('click', '.editStandarBtn', function(){
+            var id = $(this).data('id');
+            if (!id) return;
+            $.ajax({
+                url: 'StandarStok/getData?id=' + encodeURIComponent(id),
+                method: 'GET',
+                success: function(res){
+                    try { var data = JSON.parse(res); } catch(e) { var data = res; }
+                    if (!data) { alert('Data tidak ditemukan'); return; }
+                    $('#editingStandarId').val(id);
+                    $('#inputIdBc').val(data.idBc).trigger('change');
+                    $('#ont_huawei').val(data.ont_huawei || 0);
+                    $('#ont_fiberhome').val(data.ont_fiberhome || 0);
+                    $('#ont_zte').val(data.ont_zte || 0);
+                    $('#ont_raisecom').val(data.ont_raisecom || 0);
+                    $('#ont_bdcom').val(data.ont_bdcom || 0);
+                    $('#dw_50').val(data.dw_50 || 0);
+                    $('#dw_100').val(data.dw_100 || 0);
+                    $('#dw_150').val(data.dw_150 || 0);
+                    $('#dw_250').val(data.dw_250 || 0);
+                    $('#dw_300').val(data.dw_300 || 0);
+                    $('#dw_1000').val(data.dw_1000 || 0);
+                    $('#adss_6c').val(data.adss_6c || 0);
+                    $('#adss_24c').val(data.adss_24c || 0);
+                    $('#adss_48c').val(data.adss_48c || 0);
+                    $('#adss_96c').val(data.adss_96c || 0);
+                    var modal = new bootstrap.Modal(document.getElementById('modalInputStandar'));
+                    modal.show();
+                },
+                error: function(){ alert('Gagal mengambil data'); }
+            });
+        });
+
+        // delete handler
+        $(document).on('click', '.deleteStandarBtn', function(){
+            var id = $(this).data('id');
+            if (!id) return;
+            if (!confirm('Hapus standar stok ini?')) return;
+            $.ajax({
+                url: 'StandarStok/deleteData?id=' + encodeURIComponent(id),
+                method: 'GET',
+                dataType: 'json',
+                success: function(res){
+                    if (res.status && res.status === 'success') location.reload();
+                    else alert(res.message || 'Gagal menghapus');
                 },
                 error: function(xhr){ alert('Error: ' + xhr.responseText); }
             });
