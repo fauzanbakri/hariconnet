@@ -559,10 +559,6 @@
                                 <p id="editDisplayKodeMaterial">-</p>
                             </div>
                             <div class="col-xxl-6">
-                                <label class="form-label">Deskripsi Material</label>
-                                <p id="editDisplayDeskripsiMaterial">-</p>
-                            </div>
-                            <div class="col-xxl-6">
                                 <label class="form-label">Kode Material Terpakai</label>
                                 <p id="editDisplayKodeMaterialTerpakai">-</p>
                             </div>
