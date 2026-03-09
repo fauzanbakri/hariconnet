@@ -5,8 +5,16 @@
     <div class="page-content">
         <div class="container-fluid">
             <style>
-                .status-dot{display:inline-block;width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 3px rgba(0,0,0,0.03)}
+                /* compact monitoring cards */
+                .status-dot{display:inline-block;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,0.03)}
                 .card .progress {background:#e9ecef}
+                .monitor-card .card-header {padding:0.5rem 0.75rem}
+                .monitor-card .card-body {padding:0.5rem 0.75rem}
+                .monitor-card .card-footer {padding:0.4rem 0.75rem;font-size:0.8rem}
+                .monitor-card .card-title {font-size:0.9rem;margin:0}
+                .monitor-card .small {font-size:0.72rem}
+                .monitor-item {margin-bottom:0.4rem}
+                .monitor-item .progress {height:6px}
             </style>
             <div class="row">
                 <div class="col-12">
@@ -26,12 +34,12 @@
                     }
                     if (!$has_standard) continue;
                     $card_i++; ?>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100">
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card h-100 monitor-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="card-title mb-0" style="font-size:1rem"><?php echo htmlspecialchars($m['nama'] ?: '-'); ?></h5>
-                                <small class="text-muted"><?php echo htmlspecialchars($m['sloc'] ?: ''); ?></small>
+                                <h5 class="card-title mb-0"><?php echo htmlspecialchars($m['nama'] ?: '-'); ?></h5>
+                                <small class="text-muted small"><?php echo htmlspecialchars($m['sloc'] ?: ''); ?></small>
                             </div>
                             <div>
                                 <span class="badge bg-light text-dark">Items: <?php echo count($m['items']); ?></span>
@@ -44,11 +52,11 @@
                                 <?php foreach ($m['items'] as $it) { 
                                     $ratio = 0; if ($it['standard'] > 0) { $ratio = round(min(100, ($it['actual'] / $it['standard']) * 100)); }
                                 ?>
-                                <div class="mb-3">
+                                <div class="monitor-item">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                         <div>
-                                            <strong><?php echo htmlspecialchars($it['tipe']); ?></strong>
-                                            <div class="small text-muted">Standar: <?php echo htmlspecialchars($it['standard']); ?> &nbsp;•&nbsp; Aktual: <?php echo htmlspecialchars($it['actual']); ?></div>
+                                            <strong class="small"><?php echo htmlspecialchars($it['tipe']); ?></strong>
+                                            <div class="small text-muted">S: <?php echo htmlspecialchars($it['standard']); ?> • A: <?php echo htmlspecialchars($it['actual']); ?></div>
                                         </div>
                                         <div class="text-end">
                                             <?php if ($it['status']=='red') { ?>
@@ -60,19 +68,15 @@
                                             <?php } ?>
                                         </div>
                                     </div>
-                                    <div class="progress" style="height:8px">
+                                    <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: <?php echo $ratio; ?>%;" aria-valuenow="<?php echo $ratio; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <?php if (isset($_GET['debug']) && $_GET['debug']=='1') { ?>
                                         <details class="mt-1">
-                                            <summary class="small">Debug: show samples</summary>
+                                            <summary class="small">Debug</summary>
                                             <div class="small mt-2">
                                                 <strong>Total Qty:</strong> <?php echo htmlspecialchars($it['total_qty']); ?><br>
                                                 <strong>Total Used:</strong> <?php echo htmlspecialchars($it['total_used']); ?><br>
-                                                <strong>Materials:</strong>
-                                                <pre style="max-height:150px;overflow:auto;background:#f8f9fa;padding:8px;border-radius:4px"><?php echo htmlspecialchars(json_encode($it['materials_sample'], JSON_PRETTY_PRINT)); ?></pre>
-                                                <strong>Pemakaian:</strong>
-                                                <pre style="max-height:150px;overflow:auto;background:#f8f9fa;padding:8px;border-radius:4px"><?php echo htmlspecialchars(json_encode($it['pemakaian_sample'], JSON_PRETTY_PRINT)); ?></pre>
                                             </div>
                                         </details>
                                     <?php } ?>
