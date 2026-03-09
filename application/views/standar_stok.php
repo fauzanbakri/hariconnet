@@ -292,6 +292,9 @@
     <script src="assets/js/pages/datatables.init.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/app.js"></script>
+    <!-- Select2 for searchable selects -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         new DataTable('#standarStokTable', {
@@ -299,6 +302,18 @@
             responsive: true,
             order: []
         });
+    });
+</script>
+<script>
+    // initialize Select2 for Basecamp select inside modal
+    $(document).ready(function(){
+        if (typeof $.fn.select2 !== 'undefined') {
+            $('#inputIdBc').select2({
+                placeholder: 'Pilih Basecamp (SLOC)',
+                allowClear: true,
+                dropdownParent: $('#modalInputStandar')
+            });
+        }
     });
 </script>
 <script>

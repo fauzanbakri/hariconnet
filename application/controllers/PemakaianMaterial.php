@@ -165,4 +165,76 @@ class PemakaianMaterial extends CI_Controller {
 
         echo json_encode(['status' => 'success']);
     }
+
+    /**
+     * Update priority for a usage row
+     * Expects POST: id, id_field, priority
+     */
+    public function updatePriority()
+    {
+        $id = $this->input->post('id');
+        $id_field = $this->input->post('id_field');
+        $priority = $this->input->post('priority');
+
+        if (!$id || !$id_field) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing id or id_field']);
+            return;
+        }
+
+        $ptable = $this->get_pemakaian_table();
+        if (!$ptable) {
+            echo json_encode(['status' => 'error', 'message' => 'Pemakaian table not found']);
+            return;
+        }
+
+        // ensure id_field exists in the table
+        $fields = $this->db->list_fields($ptable);
+        if (!in_array($id_field, $fields)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid id_field']);
+            return;
+        }
+
+        // add priority column if it doesn't exist? we'll refuse and return error
+        if (!in_array('priority', $fields)) {
+            echo json_encode(['status' => 'error', 'message' => 'Column `priority` not found in pemakaian table']);
+            return;
+        }
+
+        $this->db->where($id_field, $id);
+        $ok = $this->db->update($ptable, ['priority' => $priority]);
+        if ($ok) echo json_encode(['status' => 'success']);
+        else echo json_encode(['status' => 'error', 'message' => 'Failed to update']);
+    }
+
+    /**
+     * Delete a pemakaian usage row
+     * Accepts GET or POST: id and id_field
+     */
+    public function deleteUsage()
+    {
+        $id = $this->input->get_post('id');
+        $id_field = $this->input->get_post('id_field');
+
+        if (!$id || !$id_field) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing id or id_field']);
+            return;
+        }
+
+        $ptable = $this->get_pemakaian_table();
+        if (!$ptable) {
+            echo json_encode(['status' => 'error', 'message' => 'Pemakaian table not found']);
+            return;
+        }
+
+        $fields = $this->db->list_fields($ptable);
+        if (!in_array($id_field, $fields)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid id_field']);
+            return;
+        }
+
+        $this->db->where($id_field, $id);
+        $ok = $this->db->delete($ptable);
+        if ($ok) echo json_encode(['status' => 'success']);
+        else echo json_encode(['status' => 'error', 'message' => 'Failed to delete']);
+    }
 }

@@ -83,6 +83,8 @@
                                     <th>SN</th>
                                     <th>SN Terpakai</th>
                                     <th>Incident</th>
+                                    <th>Priority</th>
+                                    <th>Action</th>
                                     <th>Tanggal</th>
                                     <th>QTY</th>
                                 </tr>
@@ -97,6 +99,31 @@
                                 <td><?php echo isset($u->sn_original) ? $u->sn_original : (isset($u->sn) ? $u->sn : '-'); ?></td>
                                 <td><?php echo isset($u->sn_terpakai) ? $u->sn_terpakai : '-'; ?></td>
                                 <td><?php echo isset($u->incident) ? $u->incident : '-'; ?></td>
+                                <?php
+                                    // detect primary id field for this usage row (e.g., idPemakaianMaterial)
+                                    $rowVars = get_object_vars($u);
+                                    $id_field = null;
+                                    foreach ($rowVars as $k => $v) {
+                                        if (preg_match('/^id(?!Material)/i', $k) || preg_match('/^idPemakaian/i', $k) || (stripos($k, 'pemakaian') !== false && stripos($k, 'id') !== false)) {
+                                            $id_field = $k; break;
+                                        }
+                                    }
+                                    // fallback: find first property that starts with id and isn't idMaterial
+                                    if (!$id_field) {
+                                        foreach ($rowVars as $k => $v) {
+                                            if (preg_match('/^id/i', $k) && strtolower($k) !== 'idmaterial') { $id_field = $k; break; }
+                                        }
+                                    }
+                                    if (!$id_field) { $id_field = 'id'; }
+                                    $id_val = isset($rowVars[$id_field]) ? $rowVars[$id_field] : (isset($u->$id_field) ? $u->$id_field : '');
+                                ?>
+                                <td class="text-center priority-cell"><?php echo isset($u->priority) ? htmlspecialchars($u->priority) : '-'; ?></td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-primary set-priority-btn" data-idfield="<?php echo htmlspecialchars($id_field); ?>" data-id="<?php echo htmlspecialchars($id_val); ?>" data-priority="<?php echo isset($u->priority)?htmlspecialchars($u->priority):''; ?>">Set Priority</button>
+                                        <button class="btn btn-sm btn-outline-danger delete-usage-btn" data-idfield="<?php echo htmlspecialchars($id_field); ?>" data-id="<?php echo htmlspecialchars($id_val); ?>">Delete</button>
+                                    </div>
+                                </td>
                                 <td><?php echo isset($u->tanggal) ? $u->tanggal : (isset($u->tanggal_penggunaan) ? $u->tanggal_penggunaan : '-'); ?></td>
                                 <td><?php echo isset($u->qty) ? $u->qty : (isset($u->qty_terpakai) ? $u->qty_terpakai : '-'); ?></td>
                             </tr>
@@ -161,5 +188,95 @@ $(document).ready(function(){
         window.location.href = url;
     });
     $('#resetFilters').on('click', function(){ location.href='PemakaianMaterial'; });
+});
+</script>
+<!-- Set Priority modal -->
+<div class="modal fade" id="modalSetPriority" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Set Priority</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="sp_id" />
+                <input type="hidden" id="sp_id_field" />
+                <div class="mb-3">
+                    <label class="form-label">Priority</label>
+                    <select id="sp_priority" class="form-select">
+                        <option value="">-- Pilih Priority --</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary" id="sp_save">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function(){
+    // open set priority modal
+    $(document).on('click', '.set-priority-btn', function(){
+        var id = $(this).data('id');
+        var id_field = $(this).data('idfield');
+        var priority = $(this).data('priority') || '';
+        $('#sp_id').val(id);
+        $('#sp_id_field').val(id_field);
+        $('#sp_priority').val(priority);
+        var modal = new bootstrap.Modal(document.getElementById('modalSetPriority'));
+        modal.show();
+    });
+
+    // save priority
+    $('#sp_save').on('click', function(){
+        var id = $('#sp_id').val();
+        var id_field = $('#sp_id_field').val();
+        var priority = $('#sp_priority').val();
+        if (!id || !id_field) { alert('ID invalid'); return; }
+        $.ajax({
+            url: 'PemakaianMaterial/updatePriority',
+            method: 'POST',
+            dataType: 'json',
+            data: { id: id, id_field: id_field, priority: priority },
+            success: function(res){
+                if (res.status && res.status === 'success') {
+                    // update table cell
+                    var btn = $('.set-priority-btn[data-id="'+id+'"][data-idfield="'+id_field+'"]');
+                    btn.closest('tr').find('.priority-cell').text(priority || '-');
+                    $('#modalSetPriority').modal('hide');
+                } else {
+                    alert(res.message || 'Gagal menyimpan priority');
+                }
+            },
+            error: function(xhr){ alert('Error: '+xhr.responseText); }
+        });
+    });
+
+    // delete usage
+    $(document).on('click', '.delete-usage-btn', function(){
+        var id = $(this).data('id');
+        var id_field = $(this).data('idfield');
+        if (!confirm('Hapus pemakaian ini?')) return;
+        $.ajax({
+            url: 'PemakaianMaterial/deleteUsage',
+            method: 'POST',
+            dataType: 'json',
+            data: { id: id, id_field: id_field },
+            success: function(res){
+                if (res.status && res.status === 'success') {
+                    $('.delete-usage-btn[data-id="'+id+''][data-idfield="'+id_field+'"]').closest('tr').remove();
+                } else {
+                    alert(res.message || 'Gagal menghapus');
+                }
+            },
+            error: function(xhr){ alert('Error: '+xhr.responseText); }
+        });
+    });
 });
 </script>
