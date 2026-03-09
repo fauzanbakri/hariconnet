@@ -117,6 +117,12 @@ class Material extends CI_Controller {
 		$status_terpakai = $this->input->post('status_terpakai');
 		$status_pengiriman = $this->input->post('status_pengiriman');
 		$ket = $this->input->post('ket');
+		// new fields
+		$no_reservasi = $this->input->post('no_reservasi');
+		$no_gi = $this->input->post('no_gi');
+		// new fields
+		$no_reservasi = $this->input->post('no_reservasi');
+		$no_gi = $this->input->post('no_gi');
 
 		// Validation
 		if($kode_material != '' && $sn != '' && $merk != '' && $kategori != '' && $idBc != '' && $status_reservasi != '' && $status_pengiriman != '' && $tanggal != '' && $satuan != '' && $qty != ''){
@@ -137,6 +143,11 @@ class Material extends CI_Controller {
 				'status_pengiriman' => $status_pengiriman,
 				'ket' => $ket
 			);
+			if ($no_reservasi !== null) $data['no_reservasi'] = $no_reservasi;
+			if ($no_gi !== null) $data['no_gi'] = $no_gi;
+			// include new fields only if provided (model will filter by actual table fields)
+			if ($no_reservasi !== null) $data['no_reservasi'] = $no_reservasi;
+			if ($no_gi !== null) $data['no_gi'] = $no_gi;
 
 			if ($this->Material_model->insert_material($data)) {
 				echo 'success';

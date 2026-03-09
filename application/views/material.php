@@ -174,6 +174,8 @@
                                                 <th>Status Reservasi</th>
                                                 <th>Status Terpakai</th>
                                                 <th>Status Pengiriman</th>
+                                                <th>No Reservasi</th>
+                                                <th>No GI</th>
                                                 <th>Keterangan</th>
                                                 <th class="all">Tandai Terpakai</th>
                                                 <?php
@@ -219,7 +221,9 @@
                                                     $status_class = ($available == 0) ? 'bg-success' : 'bg-info';
                                                     $row_html .= '<td class="text-center"><span class="badge '.$status_class.'">'.$status_display.'</span></td>';
                                                     $row_html .= '<td class="text-center">'.(( $material->status_pengiriman == 'On Loc') ? '<span class="badge bg-primary">'.$material->status_pengiriman.'</span>' : '<span class="badge bg-info">'.$material->status_pengiriman.'</span>').'</td>';
-                                                    $row_html .= '<td>'.substr($material->ket, 0, 30).(strlen($material->ket) > 30 ? '...' : '').'</td>';
+                                                    $row_html .= '<td>'.(isset($material->no_reservasi)?$material->no_reservasi:'').'</td>';
+                                                    $row_html .= '<td>'.(isset($material->no_gi)?$material->no_gi:'').'</td>';
+                                                    $row_html .= '<td>'.substr((isset($material->ket)?$material->ket:''), 0, 30).(strlen((isset($material->ket)?$material->ket:'')) > 30 ? '...' : '').'</td>';
                                                     echo $row_html;
 
                                                         // Determine Input Penggunaan button based on available
@@ -240,7 +244,7 @@
                                                                 </button>
                                                                 <ul class='dropdown-menu dropdown-menu-end'>
                                                                     <li>
-                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idbc='".$material->idBc."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."' data-tipeMaterial='".(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:'')) ."'>
+                                                                        <a href='#' class='dropdown-item edit-item-btn' data-idmaterial='".$material->idmaterial."' data-tanggal='".$material->tanggal."' data-kategori='".$material->kategori."' data-kode_material='".$material->kode_material."' data-sn='".$material->sn."' data-sn_terpakai='".$material->sn_terpakai."' data-kode_material_terpakai='".$material->kode_material_terpakai."' data-merk='".$material->merk."' data-idbc='".$material->idBc."' data-satuan='".$material->satuan."' data-qty='".$material->qty."' data-status_reservasi='".$material->status_reservasi."' data-status_terpakai='".$material->status_terpakai."' data-status_pengiriman='".$material->status_pengiriman."' data-ket='".$material->ket."' data-no_reservasi='".(isset($material->no_reservasi)?$material->no_reservasi:'')."' data-no_gi='".(isset($material->no_gi)?$material->no_gi:'')."' data-tipeMaterial='".(isset($material->tipeMaterial)?$material->tipeMaterial:(isset($material->tipematerial)?$material->tipematerial:'')) ."'>
                                                                             <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                         </a>
                                                                     </li>
@@ -363,6 +367,14 @@
                                     <option value="<?php echo $bc->idBc; ?>"><?php echo $bc->namaAkun; ?></option>
                                     <?php } ?>
                                 </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">No Reservasi</label>
+                                <input type="text" class="form-control" name="no_reservasi" id="no_reservasi" autocomplete="off" placeholder="No Reservasi">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">No GI</label>
+                                <input type="text" class="form-control" name="no_gi" id="no_gi" autocomplete="off" placeholder="No GI">
                             </div>
                             <div class="col-xxl-3">
                                 <label class="form-label">QTY</label>
@@ -490,6 +502,14 @@
                                     <option value="<?php echo $bc->idBc; ?>"><?php echo $bc->namaAkun; ?></option>
                                     <?php } ?>
                                 </select>
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">No Reservasi</label>
+                                <input type="text" class="form-control" name="editNoReservasi" id="editNoReservasi" autocomplete="off" placeholder="No Reservasi">
+                            </div>
+                            <div class="col-xxl-6">
+                                <label class="form-label">No GI</label>
+                                <input type="text" class="form-control" name="editNoGi" id="editNoGi" autocomplete="off" placeholder="No GI">
                             </div>
                             <div class="col-xxl-3">
                                 <label class="form-label">Satuan</label>
@@ -700,6 +720,8 @@ function resetForm() {
     document.getElementById('idBc').value = '';
     document.getElementById('satuan').value = '';
     document.getElementById('qty').value = '';
+    document.getElementById('no_reservasi').value = '';
+    document.getElementById('no_gi').value = '';
     document.getElementById('status_reservasi').value = '';
     document.getElementById('status_terpakai').value = '';
     document.getElementById('status_pengiriman').value = '';
@@ -721,6 +743,8 @@ function saveMaterial() {
         kode_material_terpakai: $('#kode_material_terpakai').val(),
         merk: $('#merk').val(),
         idBc: $('#idBc').val(),
+            no_reservasi: $('#no_reservasi').val(),
+            no_gi: $('#no_gi').val(),
         satuan: $('#satuan').val(),
         qty: $('#qty').val(),
         status_reservasi: $('#status_reservasi').val(),
@@ -770,6 +794,8 @@ function editSaveMaterial() {
         kode_material_terpakai: $('#editKodeMaterialTerpakai').val(),
         merk: $('#editMerk').val(),
         idBc: $('#editIdBc').val(),
+            no_reservasi: $('#editNoReservasi').val(),
+            no_gi: $('#editNoGi').val(),
         satuan: $('#editSatuan').val(),
         qty: $('#editQty').val(),
         status_reservasi: $('#editStatusReservasi').val(),
@@ -865,6 +891,9 @@ $(document).ready(function () {
         document.getElementById('editStatusTerpakai').value = data.status_terpakai;
         document.getElementById('editStatusPengiriman').value = data.status_pengiriman;
         document.getElementById('editKet').value = data.ket;
+        // populate new fields if present
+        document.getElementById('editNoReservasi').value = data.no_reservasi || '';
+        document.getElementById('editNoGi').value = data.no_gi || '';
 
         // Hide SN Terpakai and Kode Material Terpakai fields if kategori is FOC
         if (data.kategori === 'FOC') {
