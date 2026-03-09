@@ -593,6 +593,10 @@
 
     <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+    <!-- Select2 for searchable selects -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!--datatable js-->
     <script src="js/cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="js/cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -873,6 +877,28 @@ function resetFilters() {
 $(document).ready(function () {
     const modalElement = document.getElementById('editMaterialModal');
     const modal = new bootstrap.Modal(modalElement);
+
+        // initialize select2 for material modal selects
+        if (typeof $.fn.select2 !== 'undefined') {
+            $('#kode_material, #tipeMaterial, #idBc').select2({
+                placeholder: '-- Pilih --',
+                allowClear: true,
+                dropdownParent: $('#materialModal')
+            });
+            $('#editKodeMaterial, #editTipeMaterial, #editIdBc').select2({
+                placeholder: '-- Pilih --',
+                allowClear: true,
+                dropdownParent: $('#editMaterialModal')
+            });
+            // filter select
+            if ($('#filterTim').length) {
+                $('#filterTim').select2({
+                    placeholder: 'Semua',
+                    allowClear: true,
+                    minimumResultsForSearch: 0
+                });
+            }
+        }
 
     $(document).on('click', '.edit-item-btn', function(e) {
         e.preventDefault();
