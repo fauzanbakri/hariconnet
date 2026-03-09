@@ -98,13 +98,18 @@
                                                     echo '<td>'.(isset($r->adss_24c)?$r->adss_24c:'-').'</td>';
                                                     echo '<td>'.(isset($r->adss_48c)?$r->adss_48c:'-').'</td>';
                                                     echo '<td>'.(isset($r->adss_96c)?$r->adss_96c:'-').'</td>';
-                                                        // action buttons
+                                                        // action dropdown like Material page
                                                         $idval = isset($r->idStandarStok)?$r->idStandarStok:(isset($r->id)?$r->id:'');
                                                         echo '<td class="text-center">';
-                                                        echo '<div class="btn-group">';
-                                                        echo '<button class="btn btn-sm btn-outline-primary editStandarBtn" data-id="'.htmlspecialchars($idval).'">Edit</button>';
-                                                        echo '<button class="btn btn-sm btn-outline-danger deleteStandarBtn" data-id="'.htmlspecialchars($idval).'">Delete</button>';
-                                                        echo '</div>';
+                                                        echo "<div class='dropdown d-inline-block'>";
+                                                        echo "  <button class='btn btn-soft-secondary btn-sm' type='button' data-bs-toggle='dropdown' aria-expanded='false'>";
+                                                        echo "    <i class='ri-more-fill align-middle'></i>";
+                                                        echo "  </button>";
+                                                        echo "  <ul class='dropdown-menu dropdown-menu-end'>";
+                                                        echo "    <li><a href='#' class='dropdown-item editStandarBtn' data-id='".htmlspecialchars($idval)."'><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>";
+                                                        echo "    <li><a href='#' class='dropdown-item deleteStandarBtn' data-id='".htmlspecialchars($idval)."'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>";
+                                                        echo "  </ul>";
+                                                        echo "</div>";
                                                         echo '</td>';
                                                         echo '</tr>';
                                                 }
