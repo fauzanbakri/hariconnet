@@ -325,10 +325,6 @@
                                     <?php foreach (($kode_materials ?? []) as $km) { $k = is_object($km)?$km->kode_material:(is_array($km)?$km['kode_material']:$km); $d = is_object($km)?(isset($km->deskripsi_material)?$km->deskripsi_material:''):(is_array($km)?($km['deskripsi_material'] ?? ''):''); echo '<option value="'.htmlspecialchars($k).'">'.htmlspecialchars($k.' - '. $d).'</option>'; } ?>
                                 </select>
                             </div>
-                            <div class="col-xxl-6">
-                                <label class="form-label">Deskripsi Material</label>
-                                <p id="displayDeskripsiMaterial">-</p>
-                            </div>
                             <div class="col-xxl-6 d-none">
                                 <label class="form-label">Kode Material (lookup)</label>
                                 <p id="displayKodeMaterial">-</p>
