@@ -389,6 +389,28 @@
         });
     </script>
     <script>
+        // Ensure datatim is initialized even if datatables.init.js didn't catch it
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                if (window.jQuery && $.fn.DataTable) {
+                    if (!$.fn.DataTable.isDataTable('#datatim')) {
+                        $('#datatim').DataTable({
+                            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
+                            responsive: true
+                        });
+                    }
+                } else if (window.DataTable) {
+                    // Simple-DataTables fallback
+                    if (!document.querySelector('#datatim').dataset.simpleDatatable) {
+                        new DataTable('#datatim', { perPage: 10, responsive: true });
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to init datatim', e);
+            }
+        });
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             const deleteButtons = document.querySelectorAll('.remove-item-btn');
             deleteButtons.forEach(button => {
