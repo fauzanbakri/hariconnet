@@ -145,7 +145,7 @@ function initializeTables() {
         ],
         columnDefs: [
             {
-                targets: 5,
+                targets: -1,
                 className: 'priority-column',
                 responsivePriority: 1,
                 visible: true
