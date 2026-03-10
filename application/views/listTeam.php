@@ -392,12 +392,19 @@
         // Ensure datatim is initialized even if datatables.init.js didn't catch it
         document.addEventListener('DOMContentLoaded', function () {
             try {
-                if (window.jQuery && $.fn.DataTable) {
-                    if (!$.fn.DataTable.isDataTable('#datatim')) {
-                        $('#datatim').DataTable({
-                            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
-                            responsive: true
-                        });
+                if (window.jQuery && (typeof $.fn.DataTable !== 'undefined' || typeof $.fn.dataTable !== 'undefined')) {
+                    var isInitialized = false;
+                    if (typeof $.fn.dataTable !== 'undefined' && typeof $.fn.dataTable.isDataTable === 'function') {
+                        isInitialized = $.fn.dataTable.isDataTable('#datatim');
+                    } else if (typeof $.fn.DataTable !== 'undefined' && typeof $.fn.DataTable.isDataTable === 'function') {
+                        isInitialized = $.fn.DataTable.isDataTable('#datatim');
+                    }
+                    if (!isInitialized) {
+                        if (typeof $('#datatim').DataTable === 'function') {
+                            $('#datatim').DataTable({ lengthMenu: [[10,25,50,-1],[10,25,50,'All']], responsive: true });
+                        } else if (typeof $('#datatim').dataTable === 'function') {
+                            $('#datatim').dataTable({ lengthMenu: [[10,25,50,-1],[10,25,50,'All']], responsive: true });
+                        }
                     }
                 } else if (window.DataTable) {
                     // Simple-DataTables fallback

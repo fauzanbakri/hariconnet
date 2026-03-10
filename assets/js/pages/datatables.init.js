@@ -17,11 +17,19 @@ function initializeTables() {
     function createDataTable(selector, options) {
         // Prefer jQuery DataTables if present, otherwise fallback to Simple-DataTables
         try {
-            if (window.jQuery && $.fn.DataTable) {
+            if (window.jQuery && (typeof $.fn.DataTable !== 'undefined' || typeof $.fn.dataTable !== 'undefined')) {
                 // merge defaults
                 var defaults = { responsive: true };
                 var cfg = Object.assign({}, defaults, options || {});
-                return $(selector).DataTable(cfg);
+                // prefer the newer API if available
+                if (typeof $(selector).DataTable === 'function') {
+                    return $(selector).DataTable(cfg);
+                }
+                // fallback to older dataTable API
+                if (typeof $(selector).dataTable === 'function') {
+                    return $(selector).dataTable(cfg);
+                }
+                return null;
             } else if (window.DataTable) {
                 return new DataTable(selector, options || {});
             } else {
