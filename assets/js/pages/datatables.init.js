@@ -14,14 +14,34 @@ function initializeTables() {
         $('#filterKabupaten').append(`<option value="${kabupaten}">${kabupaten}</option>`);
     });
 
-    new DataTable('#tiketclosetable', {
+    function createDataTable(selector, options) {
+        // Prefer jQuery DataTables if present, otherwise fallback to Simple-DataTables
+        try {
+            if (window.jQuery && $.fn.DataTable) {
+                // merge defaults
+                var defaults = { responsive: true };
+                var cfg = Object.assign({}, defaults, options || {});
+                return $(selector).DataTable(cfg);
+            } else if (window.DataTable) {
+                return new DataTable(selector, options || {});
+            } else {
+                console.warn('No DataTable implementation found for', selector);
+                return null;
+            }
+        } catch (e) {
+            console.error('Failed to initialize datatable for', selector, e);
+            return null;
+        }
+    }
+
+    createDataTable('#tiketclosetable', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
         ],
         responsive: true 
     });
-    new DataTable('#tabelpermohonan', {
+    createDataTable('#tabelpermohonan', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
@@ -35,7 +55,7 @@ function initializeTables() {
         ],
         responsive: true 
     });
-    new DataTable('#tabelbursa', {
+    createDataTable('#tabelbursa', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
@@ -49,7 +69,7 @@ function initializeTables() {
         ],
         responsive: true 
     });
-    new DataTable('#kakintable', {
+    createDataTable('#kakintable', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
@@ -63,7 +83,7 @@ function initializeTables() {
         ],
         responsive: true 
     });
-    new DataTable('#feederclosetable', {
+    createDataTable('#feederclosetable', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
@@ -110,7 +130,7 @@ function initializeTables() {
     //     ],
     //     responsive: true 
     // });
-    new DataTable('#datatim', {
+    createDataTable('#datatim', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
