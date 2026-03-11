@@ -432,20 +432,21 @@
                                                     <td>".$row->alamat."</td>
                                                     <td>".$row->createby."</td>  
                                                     <td>".$row->timestamp."</td>  
-                                                    <td  ".$hide.">
+                                                    <td  " .$hide. ">
                                                         <div class='dropdown d-inline-block'>
-                                                            <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                                            <button class='btn btn-soft-secondary btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                                 <i class='ri-more-fill align-middle'></i>
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li><a href='#' class='dropdown-item copy-btn' data-row='".htmlspecialchars(json_encode($row))."'><i class='ri-file-fill align-bottom me-2 text-muted'></i> Copy</a></li>
                                                                 <li><a href='#' class='dropdown-item telegram-btn' data-id='".htmlspecialchars(json_encode($row))."'><i class='ri-send-plane-fill align-bottom me-2 text-muted'></i> Telegram</a></li>
                                                                 <li>
-                                                                    <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-editincident='".$row->idInsiden."' data-edittiket='".$row->idTiket."' data-edittanggal='".$row->tanggal."' data-editsid='".$row->sid."' data-edittelepon='".$row->telepon."' data-editnama='".$row->nama."' data-editkeluhan='".$row->keluhan."' data-editalamat='".$row->alamat."' data-editOlt='".$row->idOlt."' data-editsn='".$row->sn."' data-editketerangan='".$row->keterangan."' data-editprioritas='".$row->prioritas."' data-edittim='".$row->tim."' data-editcreateby='".$row->createby."' data-editkabupaten='".$row->kabupaten."' data-editkec='".$row->kecamatan."' data-editprovinsi='".$row->provinsi."' data-urutan='".$row->urutan."' data-timestamp='".$row->timestamp."' data-editstatus='".$row->status."'>
+                                                                    <a href='#' class='dropdown-item edit-item-btn' data-id='".$row->idTiket."' data-editincident='".$row->idInsiden."' data-edittiket='".$row->idTiket."' data-edittanggal='".$row->tanggal."' data-editsid='".$row->sid."' data-edittelepon='".$row->telepon."' data-editnama='".$row->nama."' data-editkeluhan='".$row->keluhan."' data-editalamat='".$row->alamat."' data-editolt='".$row->idOlt."' data-editsn='".$row->sn."' data-editketerangan='".$row->keterangan."' data-editprioritas='".$row->prioritas."' data-edittim='".$row->tim."' data-editcreateby='".$row->createby."' data-editkabupaten='".$row->kabupaten."' data-editkec='".$row->kecamatan."' data-editprovinsi='".$row->provinsi."' data-editurutan='".$row->urutan."' data-edittimestamp='".$row->timestamp."' data-editstatus='".$row->status."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
-                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id=".$row->idTiket.">
+                                                                <li>
+                                                                    <a href='#' class='dropdown-item remove-item-btn' data-id='".$row->idTiket."'>
                                                                         <i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete
                                                                     </a>
                                                                 </li>
