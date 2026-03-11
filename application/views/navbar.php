@@ -376,7 +376,7 @@
                             <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"><?php echo $_SESSION['nama'];?></span>
-                                <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text"></span>
+                                <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text"><?php echo $_SESSION['role'];?></span>
                             </span>
                         </span>
                     </button>
@@ -392,7 +392,6 @@
                         <a class="dropdown-item" href="pages-profile-settings.html"><span class="badge bg-success-subtle text-success mt-1 float-end">New</span><i class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Settings</span></a> -->
                         <a class="dropdown-item" href="ChangePass"><i class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Change Password</span></a>
                         <a class="dropdown-item" href="Login/logout"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
-                    </div>
                     </div>
                 </div>
             </div>
