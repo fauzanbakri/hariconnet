@@ -1035,6 +1035,83 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+<script>
+// Delegated handlers and dropdown-toggle fixes to survive DataTable redraws
+$(document).ready(function(){
+    // Ensure dropdown buttons have the correct class
+    function ensureDropdownToggles(){
+        $('button[data-bs-toggle="dropdown"]').each(function(){
+            if(!$(this).hasClass('dropdown-toggle')) $(this).addClass('dropdown-toggle');
+        });
+    }
+
+    ensureDropdownToggles();
+
+    // Re-apply after DataTable redraw
+    $('#example1').on('draw.dt', function(){
+        ensureDropdownToggles();
+    });
+
+    // Delegated edit handler
+    $(document).on('click', '.edit-item-btn', function(e){
+        e.preventDefault();
+        const ticketData = this.dataset || {};
+        const fields = [
+            'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
+            'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
+        ];
+        fields.forEach(function(field){
+            const el = document.getElementById(field);
+            if(el) el.value = ticketData[field] || '';
+        });
+        const kp = ticketData['editkp'] || '';
+        const selectedTim = ticketData['edittim'] || '';
+        loadTeamsByKP(kp, $('#edittim'), selectedTim);
+        var modalEl = document.getElementById('exampleModalgrid1');
+        if(modalEl){ new bootstrap.Modal(modalEl).show(); }
+    });
+
+    // Delegated remove handler
+    $(document).on('click', '.remove-item-btn', function(e){
+        e.preventDefault();
+        const idTiket = $(this).data('id');
+        if(!idTiket) return;
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            customClass: {
+                confirmButton: "btn btn-primary w-xs me-2 mt-2",
+                cancelButton: "btn btn-danger w-xs mt-2"
+            },
+            confirmButtonText: "Yes, Delete it!",
+            buttonsStyling: false,
+            showCloseButton: true
+        }).then(function(result){
+            if(result.value){
+                $.ajax({
+                    url: 'Feeder/deleteRow?id='+encodeURIComponent(idTiket),
+                    type: 'GET',
+                    success: function(response){
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "The data has been deleted.",
+                            icon: "success",
+                            customClass: { confirmButton: "btn btn-primary w-xs mt-2" },
+                            buttonsStyling: false
+                        }).then(function(){ location.reload(); });
+                    },
+                    error: function(){
+                        Swal.fire({ title: "Error!", text: "Failed to delete.", icon: "error", customClass: { confirmButton: "btn btn-primary w-xs mt-2" }, buttonsStyling: false });
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+
     <style>
         /* allow table cells to wrap onto multiple lines and break long words */
         #example1 td, #example1 th {
