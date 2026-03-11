@@ -645,32 +645,7 @@
             });
         });
 
-        // populate edit modal teams when opening
-        document.addEventListener('DOMContentLoaded', function () {
-            const modalElement = document.getElementById('exampleModalgrid1');
-            const modal = new bootstrap.Modal(modalElement);
-            document.querySelectorAll('.edit-item-btn').forEach(btn => {
-                btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const ticketData = this.dataset;
-                    const fields = [
-                        'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
-                        'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
-                    ];
-                    fields.forEach(field => {
-                        const inputElement = document.getElementById(field);
-                        if (inputElement) {
-                            inputElement.value = ticketData[field] || '';
-                        }
-                    });
-                    // load teams for editkp then set selected
-                    const kp = ticketData['editkp'] || '';
-                    const selectedTim = ticketData['edittim'] || '';
-                    loadTeamsByKP(kp, $('#edittim'), selectedTim);
-                    modal.show();
-                });
-            });
-        });
+        // handled by delegated click listener below (works after table redraws)
     </script>
 
     <script>
@@ -958,28 +933,34 @@
         });
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalElement = document.getElementById('exampleModalgrid1');
-        const modal = new bootstrap.Modal(modalElement);
-        document.querySelectorAll('.edit-item-btn').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const ticketData = this.dataset;
-                console.log(ticketData);
-                const fields = [
-                    'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
-                    'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
-                ];
-                fields.forEach(field => {
-                    const inputElement = document.getElementById(field);
-                    if (inputElement) {
-                        console.log(`Setting ${field} with value:`, ticketData[field]);
-                        inputElement.value = ticketData[field] || '';
-                    }
-                });
-                modal.show();
-            });
+    // Delegated handler for edit buttons — survives table redraws
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.edit-item-btn');
+        if (!btn) return;
+        e.preventDefault();
+        const ticketData = btn.dataset || {};
+        const fields = [
+            'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
+            'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
+        ];
+        fields.forEach(field => {
+            const inputElement = document.getElementById(field);
+            if (inputElement) {
+                inputElement.value = ticketData[field] || '';
+            }
         });
+        // load teams for editkp then set selected (if function available)
+        try {
+            const kp = ticketData['editkp'] || '';
+            const selectedTim = ticketData['edittim'] || '';
+            if (typeof loadTeamsByKP === 'function') {
+                loadTeamsByKP(kp, $('#edittim'), selectedTim);
+            }
+        } catch (err) {}
+        const modalEl = document.getElementById('exampleModalgrid1');
+        if (modalEl && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            try { bootstrap.Modal.getOrCreateInstance(modalEl).show(); } catch (err) {}
+        }
     });
     </script>
     <script>
