@@ -508,9 +508,7 @@
     <script src="assets/libs/node-waves/waves.min.js"></script>
     <script src="assets/libs/feather-icons/feather.min.js"></script>
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
-    <!-- <script src="assets/js/plugins.js"></script> -->
 
-    <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!--datatable js-->
     <script src="js/cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -531,9 +529,7 @@
     <!-- autocomplete js -->
     <script src="assets/libs/%40tarekraafat/autocomplete.js/autoComplete.min.js"></script>
     <script src="assets/js/pages/datatables.init.js"></script>
-    <script src="assets/js/plugins.js"></script>
-
-    <script src="assets/js/app.js"></script>   
+    <!-- core scripts (plugins/app) are included from navbar template -->
 
 
     <script>
