@@ -744,6 +744,7 @@
     <script src="assets/js/pages/datatables.init.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/fix-navbar.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function(){
         try{
