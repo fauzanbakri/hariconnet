@@ -1123,6 +1123,39 @@ $(document).ready(function(){
         }
     </style>
 
+    <script>
+    // Fallback: force dropdown-menu visible if Bootstrap toggle doesn't display it
+    (function(){
+        $(document).on('click', 'button[data-bs-toggle="dropdown"]', function(e){
+            var btn = this;
+            var menu = btn.nextElementSibling;
+            // allow Bootstrap to run first
+            setTimeout(function(){
+                if(!menu) return;
+                // if menu still hidden, force it
+                var disp = window.getComputedStyle(menu).display;
+                if(disp === 'none' || !menu.classList.contains('show')){
+                    menu.classList.add('show');
+                    menu.style.display = 'block';
+                    menu.style.zIndex = '1055';
+                    btn.setAttribute('aria-expanded','true');
+                }
+            }, 50);
+        });
+
+        // When hiding, ensure we clean up forced styles
+        $(document).on('hidden.bs.dropdown', 'button[data-bs-toggle="dropdown"]', function(e){
+            var btn = this;
+            var menu = btn.nextElementSibling;
+            if(!menu) return;
+            menu.classList.remove('show');
+            menu.style.display = '';
+            menu.style.zIndex = '';
+            btn.setAttribute('aria-expanded','false');
+        });
+    })();
+    </script>
+
 </body>
 
 
