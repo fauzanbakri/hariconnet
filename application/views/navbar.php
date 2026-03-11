@@ -752,11 +752,33 @@
             var toggles = document.querySelectorAll('[data-bs-toggle="dropdown"]');
             toggles.forEach(function(btn){
                 if (!btn.classList.contains('dropdown-toggle')) btn.classList.add('dropdown-toggle');
-                // initialize via Bootstrap's JS API
                 if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
                     try { new bootstrap.Dropdown(btn); } catch(e){}
                 }
             });
+
+            // Initialize collapse toggles to ensure proper open/close behavior
+            if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
+                var collapseToggles = document.querySelectorAll('[data-bs-toggle="collapse"]');
+                collapseToggles.forEach(function(t){
+                    var targetSelector = t.getAttribute('data-bs-target') || t.getAttribute('href');
+                    if (!targetSelector) return;
+                    try{
+                        // normalize href values like '#id'
+                        if (targetSelector.indexOf('#') === 0) {
+                            var targetEl = document.querySelector(targetSelector);
+                            if (!targetEl) return;
+                            // create instance but do not toggle immediately
+                            bootstrap.Collapse.getOrCreateInstance(targetEl, {toggle:false});
+                            // attach click handler to toggle using the API (prevents duplicate behavior)
+                            t.addEventListener('click', function(e){
+                                e.preventDefault();
+                                try{ bootstrap.Collapse.getOrCreateInstance(targetEl).toggle(); }catch(err){}
+                            });
+                        }
+                    }catch(e){}
+                });
+            }
         }catch(e){}
     });
     </script>
