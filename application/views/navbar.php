@@ -453,9 +453,9 @@
             <div id="scrollbar">
                 <div class="container-fluid">
                     <?php 
-                    echo isset($_SESSION['role']);
-                    if(isset($_SESSION['role'])!=1){
-                        header('location:Login');
+                    if (!isset($_SESSION['role'])) {
+                        header('Location: Login');
+                        exit;
                     }
                     ?>
                     <div id="two-column-menu">
