@@ -986,6 +986,28 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+    <script>
+    // Ensure dropdown toggles inside the DataTable work even after redraws
+    (function(){
+        // Add dropdown-toggle class when an element with data-bs-toggle appears
+        $(document).on('mouseenter', '#example1 [data-bs-toggle="dropdown"]', function(){
+            $(this).addClass('dropdown-toggle');
+        });
+
+        // Fallback click handler that uses the Bootstrap Dropdown API to toggle menus
+        $(document).on('click', '#example1 button[data-bs-toggle="dropdown"], #example1 .dropdown', function(e){
+            // only handle clicks coming from the toggle button
+            var btn = this;
+            try{
+                if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+                    e.preventDefault();
+                    try{ bootstrap.Dropdown.getOrCreateInstance(btn).toggle(); }catch(err){}
+                }
+            }catch(err){}
+        });
+    })();
+    </script>
+
     <style>
         /* allow table cells to wrap onto multiple lines and break long words */
         #example1 td, #example1 th {
