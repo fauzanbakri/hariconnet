@@ -1100,6 +1100,11 @@ document.addEventListener("DOMContentLoaded", function() {
             white-space: normal !important;
             word-break: break-word;
             max-width: 120px;
+            overflow: visible; /* allow dropdowns to escape cell */
+        }
+        /* ensure dropdown menu appears above table and is not clipped */
+        #example .dropdown-menu {
+            z-index: 3000 !important;
         }
     </style>
 
