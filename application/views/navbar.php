@@ -782,5 +782,34 @@
         }catch(e){}
     });
     </script>
+    <script>
+    // Fallback hamburger toggle: ensures sidebar toggles even if main handler didn't run
+    (function(){
+        var el = document.getElementById('topnav-hamburger-icon');
+        if (!el) return;
+        el.addEventListener('click', function(ev){
+            try{
+                console.debug('fallback: hamburger clicked');
+                var ham = document.querySelector('.hamburger-icon');
+                if (ham) ham.classList.toggle('open');
+                var w = document.documentElement.clientWidth;
+                if (document.documentElement.getAttribute('data-layout')==='vertical'){
+                    if (w<=767){
+                        document.body.classList.add('vertical-sidebar-enable');
+                        document.documentElement.setAttribute('data-sidebar-size','lg');
+                    }else{
+                        document.body.classList.toggle('vertical-sidebar-enable');
+                        var cur = document.documentElement.getAttribute('data-sidebar-size')||'lg';
+                        document.documentElement.setAttribute('data-sidebar-size', cur==='lg'?'sm':'lg');
+                    }
+                } else if (document.documentElement.getAttribute('data-layout')==='horizontal'){
+                    document.body.classList.toggle('menu');
+                } else {
+                    document.body.classList.toggle('twocolumn-panel');
+                }
+            }catch(e){console.warn('hamburger fallback failed', e);}        
+        });
+    })();
+    </script>
 </body>
 </html>
