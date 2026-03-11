@@ -1060,6 +1060,40 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     </script>
 
+    <script>
+        // DEBUG: delegated jQuery handler as a fallback and verbose logging
+        $(function(){
+            $(document).on('click', '.edit-item-btn', function(e){
+                e.preventDefault();
+                console.groupCollapsed('DEBUG: edit-item-btn clicked');
+                console.log('this (element):', this);
+                console.log('attributes:');
+                $.each(this.attributes, function() { if(this.name && this.value) console.log(this.name+": "+this.value); });
+                // read raw data attributes to avoid jQuery camelCase mapping issues
+                var $btn = $(this);
+                var read = function(name){ return $btn.attr('data-'+name) || ''; };
+                var fields = ['editincident','edittiket','edittanggal','editsid','edittelepon','editnama','editkeluhan','editalamat','editolt','editsn','editketerangan','editprioritas','edittim','editstatus','editkabupaten','editkec','editprovinsi','editurutan','edittimestamp'];
+                fields.forEach(function(field){
+                    var el = document.getElementById(field);
+                    var val = read(field);
+                    console.log(field, '=>', val);
+                    if(el) el.value = val || '';
+                });
+                // ensure teams loaded then set selected
+                var selectedTim = read('edittim') || '';
+                console.log('selectedTim =>', selectedTim);
+                try{ loadAllTeams($('#edittim'), selectedTim); }catch(err){ console.warn('loadAllTeams error', err); }
+                try{ var modalEl = document.getElementById('exampleModalgrid1'); var modal = new bootstrap.Modal(modalEl); modal.show(); }catch(err){ console.error('modal show error', err); }
+                console.groupEnd();
+            });
+
+            // extra logging for dropdown interactions
+            $(document).on('click', '.dropdown-toggle, .dropdown-item', function(e){
+                console.log('DEBUG: dropdown interaction', this.className, $(this).text().trim());
+            });
+        });
+    </script>
+
     <style>
         /* allow table cells to wrap onto multiple lines and break long words */
         #example td, #example th {
