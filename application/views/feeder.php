@@ -689,9 +689,11 @@
             placeHolder: "Search for Tim...",
             data: {
                 src: [
-                    <?php 
-                        foreach ($tim as $row){
-                            echo "'".$row->nama."',";
+                    <?php
+                        if (!empty($tim) && is_array($tim)) {
+                            foreach ($tim as $row) {
+                                echo "'" . addslashes($row->nama) . "',";
+                            }
                         }
                     ?>
                 ],
