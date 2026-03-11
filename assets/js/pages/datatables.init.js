@@ -33,23 +33,33 @@ function initializeTables() {
                     try {
                         // avoid reinitialising an already-initialised table
                         if ($.fn.DataTable && $.fn.DataTable.isDataTable && $.fn.DataTable.isDataTable(selector)) {
-                            return $(selector).DataTable();
+                            var existing = $(selector).DataTable();
+                            try { document.querySelector(selector).dataset.dtInitialized = '1'; } catch(e){}
+                            return existing;
                         }
                     } catch (e) {}
-                    return $(selector).DataTable(cfg);
+                    var dt = $(selector).DataTable(cfg);
+                    try { document.querySelector(selector).dataset.dtInitialized = '1'; } catch(e){}
+                    return dt;
                 }
                 // fallback to older dataTable API
                 if (typeof $(selector).dataTable === 'function') {
                     try {
                         if ($.fn.dataTable && $.fn.dataTable.isDataTable && $.fn.dataTable.isDataTable(selector)) {
-                            return $(selector).dataTable();
+                            var existingOld = $(selector).dataTable();
+                            try { document.querySelector(selector).dataset.dtInitialized = '1'; } catch(e){}
+                            return existingOld;
                         }
                     } catch (e) {}
-                    return $(selector).dataTable(cfg);
+                    var dtOld = $(selector).dataTable(cfg);
+                    try { document.querySelector(selector).dataset.dtInitialized = '1'; } catch(e){}
+                    return dtOld;
                 }
                 return null;
             } else if (window.DataTable) {
-                return new DataTable(selector, options || {});
+                var dtSimple = new DataTable(selector, options || {});
+                try { document.querySelector(selector).dataset.dtInitialized = '1'; } catch(e){}
+                return dtSimple;
             } else {
                 console.warn('No DataTable implementation found for', selector);
                 return null;

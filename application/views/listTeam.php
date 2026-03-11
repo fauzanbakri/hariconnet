@@ -399,7 +399,9 @@
                     } else if (typeof $.fn.DataTable !== 'undefined' && typeof $.fn.DataTable.isDataTable === 'function') {
                         isInitialized = $.fn.DataTable.isDataTable('#datatim');
                     }
-                    if (!isInitialized) {
+                    var dtEl = document.querySelector('#datatim');
+                    var marked = dtEl && dtEl.dataset && dtEl.dataset.dtInitialized === '1';
+                    if (!isInitialized && !marked) {
                         if (typeof $('#datatim').DataTable === 'function') {
                             $('#datatim').DataTable({ lengthMenu: [[10,25,50,-1],[10,25,50,'All']], responsive: true });
                         } else if (typeof $('#datatim').dataTable === 'function') {
