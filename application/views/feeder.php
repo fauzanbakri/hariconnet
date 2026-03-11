@@ -660,9 +660,14 @@
             placeHolder: "Search for Tim...",
             data: {
                 src: [
-                    <?php 
-                        foreach ($tim as $row){
-                            echo "'".$row->nama."',";
+                    <?php
+                        // Defensive: if controller didn't provide $tim, avoid PHP notice
+                        if (!empty($tim) && is_array($tim)){
+                            foreach ($tim as $row){
+                                // escape single quotes to avoid breaking JS
+                                $name = isset($row->nama) ? addslashes($row->nama) : '';
+                                if ($name !== '') echo "'".$name."',";
+                            }
                         }
                     ?>
                 ],
