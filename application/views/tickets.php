@@ -515,6 +515,27 @@
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <!-- <script src="assets/js/plugins.js"></script> -->
 
+    <script>
+    (function(){
+        // Ensure any leftover modal backdrops are removed when modals are hidden
+        document.addEventListener('hidden.bs.modal', function(){
+            try{
+                var backdrops = document.querySelectorAll('.modal-backdrop');
+                backdrops.forEach(function(b){ b.remove(); });
+                document.body.classList.remove('modal-open');
+                document.body.style.paddingRight = '';
+            }catch(e){ console.warn('modal cleanup failed', e); }
+        });
+        // Defensive cleanup on page show in case a backdrop was left behind
+        window.addEventListener('pageshow', function(){
+            var backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(function(b){ b.remove(); });
+            document.body.classList.remove('modal-open');
+            document.body.style.paddingRight = '';
+        });
+    })();
+    </script>
+
     <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!--datatable js-->
