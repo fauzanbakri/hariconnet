@@ -1,3 +1,4 @@
+
 /*!
  * Toastify js 1.12.0
  * https://github.com/apvarun/toastify-js

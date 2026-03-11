@@ -864,102 +864,76 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const deleteButtons = document.querySelectorAll('.remove-item-btn');
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const idTiket = this.getAttribute('data-id');
-                    console.log(idTiket);
-                    Swal.fire({
-                        title: "Are you sure?",
-                        text: "This action cannot be undone!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        customClass: {
-                            confirmButton: "btn btn-primary w-xs me-2 mt-2",
-                            cancelButton: "btn btn-danger w-xs mt-2"
-                        },
-                        confirmButtonText: "Yes, Delete it!",
-                        buttonsStyling: false,
-                        showCloseButton: true
-                    }).then(function(result) {
-                        if (result.value) {
-                            $.ajax({
-                                url: 'Feeder/deleteRow?id='+idTiket,
-                                type: 'GET',
-                                success: function(response) {
-                                    console.log(response.success);
-                                    if (response) {
-                                        Swal.fire({
-                                            title: "Deleted!",
-                                            text: "The data has been deleted.",
-                                            icon: "success",
-                                            customClass: {
-                                                confirmButton: "btn btn-primary w-xs mt-2"
-                                            },
-                                            buttonsStyling: false
-                                        }).then(() => {
-                                            location.reload(); 
-                                        });
-                                    } else {
-                                        Swal.fire({
-                                            title: "Error!",
-                                            text: response.message || "Failed to delete the data.",
-                                            icon: "error",
-                                            customClass: {
-                                                confirmButton: "btn btn-primary w-xs mt-2"
-                                            },
-                                            buttonsStyling: false
-                                        });
-                                    }
-                                },
-                                error: function() {
-                                    Swal.fire({
-                                        title: "Error!",
-                                        text: "An error occurred while processing the request.",
-                                        icon: "error",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary w-xs mt-2"
-                                        },
-                                        buttonsStyling: false
-                                    });
-                                }
-                            });
-                        }
-                    });
-                });
+    // Delegated jQuery handlers for edit and delete actions (survive DataTable redraws)
+    $(document).on('click', '.remove-item-btn', function(e){
+        e.preventDefault();
+        var idTiket = $(this).attr('data-id') || $(this).data('id');
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            customClass: {
+                confirmButton: "btn btn-primary w-xs me-2 mt-2",
+                cancelButton: "btn btn-danger w-xs mt-2"
+            },
+            confirmButtonText: "Yes, Delete it!",
+            buttonsStyling: false,
+            showCloseButton: true
+        }).then(function(result){
+            if (!result.value) return;
+            $.ajax({
+                url: 'Feeder/deleteRow?id='+encodeURIComponent(idTiket),
+                type: 'GET',
+                success: function(response){
+                    var res = response;
+                    try { if (typeof response === 'string') res = JSON.parse(response); } catch(err) {}
+                    if (res === 'success' || (res && (res.success || res.status === 'success'))) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "The data has been deleted.",
+                            icon: "success",
+                            customClass: { confirmButton: "btn btn-primary w-xs mt-2" },
+                            buttonsStyling: false
+                        }).then(function(){ location.reload(); });
+                    } else {
+                        Swal.fire({ title: "Error!", text: (res && (res.message || res.error)) || 'Failed to delete the data.', icon: 'error', customClass: { confirmButton: 'btn btn-primary w-xs mt-2' }, buttonsStyling: false });
+                    }
+                },
+                error: function(){
+                    Swal.fire({ title: "Error!", text: "An error occurred while processing the request.", icon: "error", customClass: { confirmButton: "btn btn-primary w-xs mt-2" }, buttonsStyling: false });
+                }
             });
         });
-    </script>
-    <script>
-    // Delegated handler for edit buttons — survives table redraws
-    document.addEventListener('click', function (e) {
-        const btn = e.target.closest('.edit-item-btn');
-        if (!btn) return;
+    });
+
+    $(document).on('click', '.edit-item-btn', function(e){
         e.preventDefault();
-        const ticketData = btn.dataset || {};
-        const fields = [
-            'idfeeder', 'editincident', 'editdowntime', 'edittipe', 'editkp', 'editolt', 'editarea', 'editdeskripsi', 'edittim',
-            'editstatus', 'editjumlahtiket', 'edittipepenyebab', 'editketerangan'
-        ];
-        fields.forEach(field => {
-            const inputElement = document.getElementById(field);
-            if (inputElement) {
-                inputElement.value = ticketData[field] || '';
+        var $btn = $(this);
+        var fields = ['idfeeder','editincident','editdowntime','edittipe','editkp','editolt','editarea','editdeskripsi','edittim','editstatus','editjumlahtiket','edittipepenyebab','editketerangan'];
+        fields.forEach(function(field){
+            var attr = $btn.attr('data-' + field);
+            if (typeof attr !== 'undefined') {
+                var $inp = $('#' + field);
+                if ($inp.length) $inp.val(attr);
+            } else {
+                // try camelCase data-* access as fallback
+                var d = $btn.data(field);
+                if (typeof d !== 'undefined') {
+                    var $inp2 = $('#' + field);
+                    if ($inp2.length) $inp2.val(d);
+                }
             }
         });
-        // load teams for editkp then set selected (if function available)
+        // load teams for editkp then set selected
         try {
-            const kp = ticketData['editkp'] || '';
-            const selectedTim = ticketData['edittim'] || '';
-            if (typeof loadTeamsByKP === 'function') {
-                loadTeamsByKP(kp, $('#edittim'), selectedTim);
-            }
-        } catch (err) {}
-        const modalEl = document.getElementById('exampleModalgrid1');
+            var kp = $btn.attr('data-editkp') || $btn.data('editkp') || '';
+            var selectedTim = $btn.attr('data-edittim') || $btn.data('edittim') || '';
+            if (typeof loadTeamsByKP === 'function') loadTeamsByKP(kp, $('#edittim'), selectedTim);
+        } catch(err) {}
+        var modalEl = document.getElementById('exampleModalgrid1');
         if (modalEl && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-            try { bootstrap.Modal.getOrCreateInstance(modalEl).show(); } catch (err) {}
+            try { bootstrap.Modal.getOrCreateInstance(modalEl).show(); } catch(err) {}
         }
     });
     </script>
