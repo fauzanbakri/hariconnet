@@ -1,5 +1,6 @@
 (function(){
-	var need = document.querySelector("[toast-list]") || document.querySelector("[data-choices]") || document.querySelector("[data-provider]");
+	// include [data-toast] so Toastify is loaded when elements use data-toast attributes
+	var need = document.querySelector("[toast-list]") || document.querySelector("[data-toast]") || document.querySelector("[data-choices]") || document.querySelector("[data-provider]");
 	if (!need) return;
 
 	function loadScript(src, onload, onerror){
