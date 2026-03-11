@@ -15,6 +15,13 @@ function initializeTables() {
     });
 
     function createDataTable(selector, options) {
+        // ensure the selector exists on the page
+        try {
+            if (window.jQuery && $(selector).length === 0) return null;
+            if (!window.jQuery && typeof document.querySelector === 'function' && !document.querySelector(selector)) return null;
+        } catch (e) {
+            return null;
+        }
         // Prefer jQuery DataTables if present, otherwise fallback to Simple-DataTables
         try {
             if (window.jQuery && (typeof $.fn.DataTable !== 'undefined' || typeof $.fn.dataTable !== 'undefined')) {
@@ -153,7 +160,7 @@ function initializeTables() {
         ],
         responsive: true 
     });
-    new DataTable('#dataolt', {
+    createDataTable('#dataolt', {
         lengthMenu: [
             [-1, 10, 25, 50],
             ['All', 10, 25, 50]
