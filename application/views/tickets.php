@@ -1031,29 +1031,30 @@ document.addEventListener("DOMContentLoaded", function() {
             loadAllTeams($('#tim'));
         });
 
-        // when opening edit modal, populate teams and set selected
+        // when opening edit modal, populate teams and set selected (use delegated handler to survive table redraws)
         document.addEventListener('DOMContentLoaded', function () {
             const modalElement = document.getElementById('exampleModalgrid1');
             const modal = new bootstrap.Modal(modalElement);
-            document.querySelectorAll('.edit-item-btn').forEach(btn => {
-                btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const ticketData = this.dataset;
-                    const fields = [
-                        'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
-                        'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editkec', 'editprovinsi', 'editurutan', 'edittimestamp'
-                    ];
-                    fields.forEach(field => {
-                        const inputElement = document.getElementById(field);
-                        if (inputElement) {
-                            inputElement.value = ticketData[field] || '';
-                        }
-                    });
-                    // load teams then set selected
-                    const selectedTim = ticketData['edittim'] || '';
-                    loadAllTeams($('#edittim'), selectedTim);
-                    modal.show();
+
+            document.addEventListener('click', function (e) {
+                const btn = e.target.closest('.edit-item-btn');
+                if (!btn) return;
+                e.preventDefault();
+                const ticketData = btn.dataset || {};
+                const fields = [
+                    'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',
+                    'editolt', 'editsn', 'editketerangan', 'editprioritas', 'edittim', 'editstatus', 'editkabupaten', 'editkec', 'editprovinsi', 'editurutan', 'edittimestamp'
+                ];
+                fields.forEach(field => {
+                    const inputElement = document.getElementById(field);
+                    if (inputElement) {
+                        inputElement.value = ticketData[field] || '';
+                    }
                 });
+                // load teams then set selected
+                const selectedTim = ticketData['edittim'] || '';
+                try { loadAllTeams($('#edittim'), selectedTim); } catch (err) {}
+                modal.show();
             });
         });
     </script>
