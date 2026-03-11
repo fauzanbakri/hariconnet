@@ -578,7 +578,8 @@
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='NOC Ritel' || 
                             $_SESSION['role']=='Team Leader' || 
-                            $_SESSION['role']=='Pemeliharaan Ritel'
+                            $_SESSION['role']=='Pemeliharaan Ritel' ||
+                            $_SESSION['role']=='Inventory'
                             ){
                                 echo '
                                  <li class="nav-item">
