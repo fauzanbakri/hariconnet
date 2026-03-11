@@ -1094,6 +1094,63 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     </script>
 
+    <script>
+    // Fallback: detach dropdown-menu from table cells and position in body to avoid clipping
+    (function(){
+        function showDetachedMenu(btn, menu){
+            if(!btn || !menu) return;
+            if(menu.dataset.detached==='1') return; // already detached
+            // store original parent and sibling
+            menu.dataset.originalParent = menu.parentNode ? '1' : '0';
+            menu.dataset.originalHTML = '';
+            menu.dataset.detached = '1';
+            document.body.appendChild(menu);
+            menu.style.position = 'absolute';
+            menu.style.minWidth = (btn.offsetWidth + 20) + 'px';
+            var rect = btn.getBoundingClientRect();
+            menu.style.top = (rect.bottom + window.scrollY) + 'px';
+            menu.style.left = (rect.left + window.scrollX) + 'px';
+            menu.classList.add('show');
+        }
+
+        function hideDetachedMenu(menu){
+            if(!menu || menu.dataset.detached!=='1') return;
+            menu.classList.remove('show');
+            // move back into its original container: try to find a cell at stored position
+            // simplest: append back to nearest .dropdown in table if exists
+            var dropdowns = document.querySelectorAll('#example .dropdown');
+            for(var i=0;i<dropdowns.length;i++){
+                var d = dropdowns[i];
+                // if dropdown has no menu child, append here
+                if(!d.querySelector('.dropdown-menu')){ d.appendChild(menu); menu.style.position=''; menu.style.top=''; menu.style.left=''; delete menu.dataset.detached; return; }
+            }
+            // fallback: append to first dropdown
+            if(dropdowns[0]){ dropdowns[0].appendChild(menu); menu.style.position=''; menu.style.top=''; menu.style.left=''; delete menu.dataset.detached; }
+        }
+
+        document.addEventListener('click', function(e){
+            var toggle = e.target.closest('#example .dropdown-toggle');
+            if(toggle){
+                var menu = toggle.parentElement.querySelector('.dropdown-menu');
+                if(menu){
+                    e.preventDefault();
+                    // hide any other detached menus
+                    document.querySelectorAll('.dropdown-menu[data-detached="1"]').forEach(function(m){ if(m!==menu) hideDetachedMenu(m); });
+                    showDetachedMenu(toggle, menu);
+                }
+            } else {
+                // click outside: hide detached menus
+                document.querySelectorAll('.dropdown-menu[data-detached="1"]').forEach(function(m){
+                    if(!e.target.closest('.dropdown-menu')) hideDetachedMenu(m);
+                });
+            }
+        }, true);
+        // reposition on scroll/resize
+        window.addEventListener('scroll', function(){ document.querySelectorAll('.dropdown-menu[data-detached="1"]').forEach(function(m){ m.style.display='none'; setTimeout(function(){ m.style.display=''; },1); }); });
+        window.addEventListener('resize', function(){ document.querySelectorAll('.dropdown-menu[data-detached="1"]').forEach(function(m){ m.style.display='none'; setTimeout(function(){ m.style.display=''; },1); }); });
+    })();
+    </script>
+
     <style>
         /* allow table cells to wrap onto multiple lines and break long words */
         #example td, #example th {
