@@ -30,10 +30,21 @@ function initializeTables() {
                 var cfg = Object.assign({}, defaults, options || {});
                 // prefer the newer API if available
                 if (typeof $(selector).DataTable === 'function') {
+                    try {
+                        // avoid reinitialising an already-initialised table
+                        if ($.fn.DataTable && $.fn.DataTable.isDataTable && $.fn.DataTable.isDataTable(selector)) {
+                            return $(selector).DataTable();
+                        }
+                    } catch (e) {}
                     return $(selector).DataTable(cfg);
                 }
                 // fallback to older dataTable API
                 if (typeof $(selector).dataTable === 'function') {
+                    try {
+                        if ($.fn.dataTable && $.fn.dataTable.isDataTable && $.fn.dataTable.isDataTable(selector)) {
+                            return $(selector).dataTable();
+                        }
+                    } catch (e) {}
                     return $(selector).dataTable(cfg);
                 }
                 return null;
