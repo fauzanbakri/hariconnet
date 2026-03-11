@@ -95,7 +95,7 @@
 
 
                 <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen">
+                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-bs-toggle="fullscreen">
                         <i class='bx bx-fullscreen fs-22'></i>
                     </button>
                 </div>
@@ -747,6 +747,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function(){
         try{
+            console.log('navbar scripts: bootstrap', typeof bootstrap !== 'undefined', 'jQuery', typeof window.jQuery !== 'undefined');
             // Ensure dropdown toggles have the proper class and are initialized
             var toggles = document.querySelectorAll('[data-bs-toggle="dropdown"]');
             toggles.forEach(function(btn){
