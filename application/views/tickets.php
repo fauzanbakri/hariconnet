@@ -1040,6 +1040,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const btn = e.target.closest('.edit-item-btn');
                 if (!btn) return;
                 e.preventDefault();
+                console.log('Edit button clicked', btn);
                 const ticketData = btn.dataset || {};
                 const fields = [
                     'editincident', 'edittiket', 'edittanggal', 'editsid', 'edittelepon', 'editnama', 'editkeluhan', 'editalamat',

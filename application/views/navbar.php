@@ -465,6 +465,7 @@
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                                 <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-dashboards">Dashboards</span>
+                                <?php echo  $_SESSION['role']; ?>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarDashboards">
                                 <ul class="nav nav-sm flex-column">
@@ -744,7 +745,6 @@
     <script src="assets/js/pages/datatables.init.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/app.js"></script>
-    <script src="assets/js/fix-navbar.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function(){
         try{
