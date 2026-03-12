@@ -45,13 +45,7 @@
                                                         <input type="text" class="form-control" name="deskripsi_material" id="deskripsi_material" autocomplete="off" placeholder="Deskripsi">
                                                     </div>
                                                 </div>
-                                                <div class="col-xxl-6">
-                                                    <div>
-                                                        <label class="form-label">Kategori</label>
-                                                        <input type="text" class="form-control" name="kategori" id="kategori" autocomplete="off" placeholder="Kategori">
-                                                    </div>
-                                                </div>
-
+                                                
                                                 <div class="col-xxl-6">
                                                     <div>
                                                         <label class="form-label">Tipe Material</label>
@@ -111,13 +105,7 @@
                                                         <input type="text" class="form-control" name="editdeskripsi_material" id="editdeskripsi_material" autocomplete="off" placeholder="Deskripsi">
                                                     </div>
                                                 </div>
-                                                <div class="col-xxl-6">
-                                                    <div>
-                                                        <label class="form-label">Kategori</label>
-                                                        <input type="text" class="form-control" name="editkategori" id="editkategori" autocomplete="off" placeholder="Kategori">
-                                                    </div>
-                                                </div>
-
+                                                
                                                 <div class="col-xxl-6">
                                                     <div>
                                                         <label class="form-label">Tipe Material</label>
@@ -158,25 +146,21 @@
                         <div class="card-body">
                             <table id="datakm" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                 <thead>
-                                    <tr>
+                                        <tr>
                                         <th>Kode</th>
                                         <th>Deskripsi</th>
-                                        <th>Kategori</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach($kode_material as $row){
                                         $escDesc = htmlspecialchars($row->deskripsi_material, ENT_QUOTES);
-                                        $escKat = htmlspecialchars($row->kategori, ENT_QUOTES);
                                         echo "<tr>";
                                         echo "<td>" . $row->kode_material . "</td>";
                                         echo "<td>" . $escDesc . "</td>";
-                                        echo "<td>" . $escKat . "</td>";
                                         $escTipe = htmlspecialchars((isset($row->tipe_material)?$row->tipe_material:(isset($row->tipeMaterial)?$row->tipeMaterial:'')), ENT_QUOTES);
                                         $dataAttrs = "data-kode_material='" . htmlspecialchars($row->kode_material, ENT_QUOTES) . "' " .
                                                      "data-deskripsi_material='" . $escDesc . "' " .
-                                                     "data-kategori='" . $escKat . "' " .
                                                      "data-tipe_material='" . $escTipe . "'";
                                         echo "<td>\n  <div class='dropdown d-inline-block'>\n    <button class='btn btn-soft-secondary btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n      <i class='ri-more-fill align-middle'></i>\n    </button>\n    <ul class='dropdown-menu dropdown-menu-end'>\n      <li><a href='#' class='dropdown-item edit-item-btn ' " . $dataAttrs . "><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>\n      <li><a href='#' class='dropdown-item remove-item-btn' data-id='" . $row->kode_material . "'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n    </ul>\n  </div>\n</td>";
                                         echo "</tr>";
@@ -231,21 +215,13 @@ $(document).ready(function(){
         responsive: true
     });
 
-    // keep kategori field equal to tipe material selection
-    $('#tipe_material').on('change', function(){
-        $('#kategori').val($(this).val());
-    });
-    $('#edit_tipe_material').on('change', function(){
-        $('#editkategori').val($(this).val());
-    });
+    // no kategori field; keep only tipe_material
 
     $('#submitBtn').on('click', function(e){
         e.preventDefault();
         var formData = {
             kode_material: $('#kode_material').val(),
             deskripsi_material: $('#deskripsi_material').val(),
-            // kategori is set equal to tipe material
-            kategori: $('#tipe_material').val(),
             tipe_material: $('#tipe_material').val()
         };
         if(!formData.kode_material){ alert('Kode wajib diisi'); return; }
@@ -258,18 +234,13 @@ $(document).ready(function(){
         $('#editkode_material').val(d.kode_material);
         $('#editkode_material_display').val(d.kode_material);
         $('#editdeskripsi_material').val(d.deskripsi_material);
-        // set kategori from tipe material as well
-        $('#editkategori').val(d.kategori);
         // populate tipe material if provided
         if(typeof d.tipe_material !== 'undefined'){
             $('#edit_tipe_material').val(d.tipe_material);
-            $('#editkategori').val(d.tipe_material);
         } else if(typeof d.tipeMaterial !== 'undefined'){
             $('#edit_tipe_material').val(d.tipeMaterial);
-            $('#editkategori').val(d.tipeMaterial);
         } else {
             $('#edit_tipe_material').val('');
-            $('#editkategori').val('');
         }
         new bootstrap.Modal(document.getElementById('exampleModalgridEdit')).show();
     });
@@ -279,8 +250,6 @@ $(document).ready(function(){
         var formData = {
             kode_material: $('#editkode_material').val(),
             deskripsi_material: $('#editdeskripsi_material').val(),
-            // kategori is set equal to tipe material
-            kategori: $('#edit_tipe_material').val(),
             tipe_material: $('#edit_tipe_material').val()
         };
         if(!formData.kode_material){ alert('Invalid id'); return; }
