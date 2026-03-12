@@ -20,7 +20,13 @@ class KodeMaterial extends CI_Controller {
     public function insertData()
     {
         $post = $this->input->post();
-        $ok = $this->Kode_material_model->insert($post);
+        $data = [
+            'kode_material' => $post['kode_material'] ?? null,
+            'deskripsi_material' => $post['deskripsi_material'] ?? null,
+            // store tipe_material into existing 'kategori' column
+            'kategori' => $post['tipe_material'] ?? ($post['tipeMaterial'] ?? null)
+        ];
+        $ok = $this->Kode_material_model->insert($data);
         echo $ok ? 'success' : 'error';
     }
 
@@ -31,7 +37,7 @@ class KodeMaterial extends CI_Controller {
         if(!$id){ echo 'error'; return; }
         $data = [
             'deskripsi_material' => $post['deskripsi_material'] ?? '',
-            'kategori' => $post['kategori'] ?? null
+            'kategori' => $post['tipe_material'] ?? ($post['tipeMaterial'] ?? null)
         ];
         $ok = $this->Kode_material_model->update($id, $data);
         echo $ok ? 'success' : 'error';
