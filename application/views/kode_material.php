@@ -149,6 +149,7 @@
                                         <tr>
                                         <th>Kode</th>
                                         <th>Deskripsi</th>
+                                        <th>Tipe Material</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -159,6 +160,7 @@
                                         echo "<td>" . $row->kode_material . "</td>";
                                         echo "<td>" . $escDesc . "</td>";
                                         $escTipe = htmlspecialchars((isset($row->tipe_material)?$row->tipe_material:(isset($row->tipeMaterial)?$row->tipeMaterial:'')), ENT_QUOTES);
+                                        echo "<td>" . $escTipe . "</td>";
                                         $dataAttrs = "data-kode_material='" . htmlspecialchars($row->kode_material, ENT_QUOTES) . "' " .
                                                      "data-deskripsi_material='" . $escDesc . "' " .
                                                      "data-tipe_material='" . $escTipe . "'";
