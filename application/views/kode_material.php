@@ -119,18 +119,18 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach($kode_material as $row){
-+                                        $escDesc = htmlspecialchars($row->deskripsi_material, ENT_QUOTES);
-+                                        $escKat = htmlspecialchars($row->kategori, ENT_QUOTES);
-+                                        echo "<tr>";
-+                                        echo "<td>". $row->kode_material ."</td>";
-+                                        echo "<td>". $escDesc ."</td>";
-+                                        echo "<td>". $escKat ."</td>";
-+                                        $dataAttrs = "data-kode_material='".htmlspecialchars($row->kode_material, ENT_QUOTES)."' " .
-+                                                     "data-deskripsi_material='".$escDesc."' " .
-+                                                     "data-kategori='".$escKat."'";
-+                                        echo "<td>\n  <div class='dropdown d-inline-block'>\n    <button class='btn btn-soft-secondary btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n      <i class='ri-more-fill align-middle'></i>\n    </button>\n    <ul class='dropdown-menu dropdown-menu-end'>\n      <li><a href='#' class='dropdown-item edit-item-btn' " . $dataAttrs . "><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>\n      <li><a href='#' class='dropdown-item remove-item-btn' data-id='".$row->kode_material."'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n    </ul>\n  </div>\n</td>";
-+                                        echo "</tr>";
-+                                    } ?>
+                                        $escDesc = htmlspecialchars($row->deskripsi_material, ENT_QUOTES);
+                                        $escKat = htmlspecialchars($row->kategori, ENT_QUOTES);
+                                        echo "<tr>";
+                                        echo "<td>" . $row->kode_material . "</td>";
+                                        echo "<td>" . $escDesc . "</td>";
+                                        echo "<td>" . $escKat . "</td>";
+                                        $dataAttrs = "data-kode_material='" . htmlspecialchars($row->kode_material, ENT_QUOTES) . "' " .
+                                                     "data-deskripsi_material='" . $escDesc . "' " .
+                                                     "data-kategori='" . $escKat . "'";
+                                        echo "<td>\n  <div class='dropdown d-inline-block'>\n    <button class='btn btn-soft-secondary btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n      <i class='ri-more-fill align-middle'></i>\n    </button>\n    <ul class='dropdown-menu dropdown-menu-end'>\n      <li><a href='#' class='dropdown-item edit-item-btn ' " . $dataAttrs . "><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>\n      <li><a href='#' class='dropdown-item remove-item-btn' data-id='" . $row->kode_material . "'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n    </ul>\n  </div>\n</td>";
+                                        echo "</tr>";
+                                    } ?>
                                 </tbody>
                             </table>
                         </div>
