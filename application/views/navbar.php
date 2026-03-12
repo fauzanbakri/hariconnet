@@ -595,6 +595,11 @@
                                         <i class="mdi mdi-city"></i> <span data-key="t-layouts">List Basecamp</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="ListOlt" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="mdi mdi-city"></i> <span data-key="t-layouts">List OLT</span>
+                                    </a>
+                                </li>
                                 ';
                         }
 
