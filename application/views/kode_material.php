@@ -52,6 +52,30 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="col-xxl-6">
+                                                    <div>
+                                                        <label class="form-label">Tipe Material</label>
+                                                        <select class="form-select" name="tipe_material" id="tipe_material" aria-label="Pilih Tipe Material">
+                                                            <option value="">Pilih Tipe Material</option>
+                                                            <option>ONT HUAWEI</option>
+                                                            <option>ONT FIBERHOME</option>
+                                                            <option>ONT ZTE</option>
+                                                            <option>ONT RAISECOM</option>
+                                                            <option>ONT BDCOM</option>
+                                                            <option>DW 50</option>
+                                                            <option>DW 100</option>
+                                                            <option>DW 150</option>
+                                                            <option>DW 250</option>
+                                                            <option>DW 300</option>
+                                                            <option>DW 1000</option>
+                                                            <option>ADSS 6C</option>
+                                                            <option>ADSS 24C</option>
+                                                            <option>ADSS 48C</option>
+                                                            <option>ADSS 96C</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="hstack gap-2 justify-content-end">
                                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -94,6 +118,30 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="col-xxl-6">
+                                                    <div>
+                                                        <label class="form-label">Tipe Material</label>
+                                                        <select class="form-select" name="edit_tipe_material" id="edit_tipe_material" aria-label="Pilih Tipe Material">
+                                                            <option value="">Pilih Tipe Material</option>
+                                                            <option>ONT HUAWEI</option>
+                                                            <option>ONT FIBERHOME</option>
+                                                            <option>ONT ZTE</option>
+                                                            <option>ONT RAISECOM</option>
+                                                            <option>ONT BDCOM</option>
+                                                            <option>DW 50</option>
+                                                            <option>DW 100</option>
+                                                            <option>DW 150</option>
+                                                            <option>DW 250</option>
+                                                            <option>DW 300</option>
+                                                            <option>DW 1000</option>
+                                                            <option>ADSS 6C</option>
+                                                            <option>ADSS 24C</option>
+                                                            <option>ADSS 48C</option>
+                                                            <option>ADSS 96C</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="hstack gap-2 justify-content-end">
                                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -125,9 +173,11 @@
                                         echo "<td>" . $row->kode_material . "</td>";
                                         echo "<td>" . $escDesc . "</td>";
                                         echo "<td>" . $escKat . "</td>";
+                                        $escTipe = htmlspecialchars((isset($row->tipe_material)?$row->tipe_material:(isset($row->tipeMaterial)?$row->tipeMaterial:'')), ENT_QUOTES);
                                         $dataAttrs = "data-kode_material='" . htmlspecialchars($row->kode_material, ENT_QUOTES) . "' " .
                                                      "data-deskripsi_material='" . $escDesc . "' " .
-                                                     "data-kategori='" . $escKat . "'";
+                                                     "data-kategori='" . $escKat . "' " .
+                                                     "data-tipe_material='" . $escTipe . "'";
                                         echo "<td>\n  <div class='dropdown d-inline-block'>\n    <button class='btn btn-soft-secondary btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>\n      <i class='ri-more-fill align-middle'></i>\n    </button>\n    <ul class='dropdown-menu dropdown-menu-end'>\n      <li><a href='#' class='dropdown-item edit-item-btn ' " . $dataAttrs . "><i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit</a></li>\n      <li><a href='#' class='dropdown-item remove-item-btn' data-id='" . $row->kode_material . "'><i class='ri-delete-bin-fill align-bottom me-2 text-muted'></i> Delete</a></li>\n    </ul>\n  </div>\n</td>";
                                         echo "</tr>";
                                     } ?>
@@ -186,7 +236,8 @@ $(document).ready(function(){
         var formData = {
             kode_material: $('#kode_material').val(),
             deskripsi_material: $('#deskripsi_material').val(),
-            kategori: $('#kategori').val()
+            kategori: $('#kategori').val(),
+            tipe_material: $('#tipe_material').val()
         };
         if(!formData.kode_material){ alert('Kode wajib diisi'); return; }
         $.post('KodeMaterial/insertData', formData, function(res){ if(res=='success'){ location.reload(); } else { alert('Gagal menyimpan'); } });
@@ -199,6 +250,14 @@ $(document).ready(function(){
         $('#editkode_material_display').val(d.kode_material);
         $('#editdeskripsi_material').val(d.deskripsi_material);
         $('#editkategori').val(d.kategori);
+        // populate tipe material if provided
+        if(typeof d.tipe_material !== 'undefined'){
+            $('#edit_tipe_material').val(d.tipe_material);
+        } else if(typeof d.tipeMaterial !== 'undefined'){
+            $('#edit_tipe_material').val(d.tipeMaterial);
+        } else {
+            $('#edit_tipe_material').val('');
+        }
         new bootstrap.Modal(document.getElementById('exampleModalgridEdit')).show();
     });
 
@@ -207,7 +266,8 @@ $(document).ready(function(){
         var formData = {
             kode_material: $('#editkode_material').val(),
             deskripsi_material: $('#editdeskripsi_material').val(),
-            kategori: $('#editkategori').val()
+            kategori: $('#editkategori').val(),
+            tipe_material: $('#edit_tipe_material').val()
         };
         if(!formData.kode_material){ alert('Invalid id'); return; }
         $.post('KodeMaterial/editData', formData, function(res){ if(res=='success'){ location.reload(); } else { alert('Gagal update'); } });
