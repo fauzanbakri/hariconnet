@@ -935,8 +935,8 @@ TERMINATING: ${rowData.idOlt}/${rowData.sn}
     </script>
 
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const table = new DataTable('#example', {
+    document.addEventListener("DOMContentLoaded", function() {
+    const table = $('#example').DataTable({
         // show entries options including 'All' (uses -1 value for all)
         lengthMenu: [
             [10, 25, 50, -1],
