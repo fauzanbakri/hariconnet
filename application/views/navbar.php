@@ -724,7 +724,6 @@
         <!-- Vertical Overlay-->
         <div class="vertical-overlay"></div>
 </div>
-</div>
 
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/libs/simplebar/simplebar.min.js"></script>
@@ -744,78 +743,76 @@
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
-
     <script src="assets/js/pages/datatables.init.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function(){
-        try{
-            console.log('navbar scripts: bootstrap', typeof bootstrap !== 'undefined', 'jQuery', typeof window.jQuery !== 'undefined');
-            // Ensure dropdown toggles have the proper class and are initialized
-            var toggles = document.querySelectorAll('[data-bs-toggle="dropdown"]');
-            toggles.forEach(function(btn){
-                if (!btn.classList.contains('dropdown-toggle')) btn.classList.add('dropdown-toggle');
-                if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
-                    try { new bootstrap.Dropdown(btn); } catch(e){}
-                }
-            });
+    // document.addEventListener('DOMContentLoaded', function(){
+    //     try{
+    //         console.log('navbar scripts: bootstrap', typeof bootstrap !== 'undefined', 'jQuery', typeof window.jQuery !== 'undefined');
+    //         // Ensure dropdown toggles have the proper class and are initialized
+    //         var toggles = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+    //         toggles.forEach(function(btn){
+    //             if (!btn.classList.contains('dropdown-toggle')) btn.classList.add('dropdown-toggle');
+    //             if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+    //                 try { new bootstrap.Dropdown(btn); } catch(e){}
+    //             }
+    //         });
 
-            // Initialize collapse toggles to ensure proper open/close behavior
-            if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
-                var collapseToggles = document.querySelectorAll('[data-bs-toggle="collapse"]');
-                collapseToggles.forEach(function(t){
-                    var targetSelector = t.getAttribute('data-bs-target') || t.getAttribute('href');
-                    if (!targetSelector) return;
-                    try{
-                        // normalize href values like '#id'
-                        if (targetSelector.indexOf('#') === 0) {
-                            var targetEl = document.querySelector(targetSelector);
-                            if (!targetEl) return;
-                            // create instance but do not toggle immediately
-                            bootstrap.Collapse.getOrCreateInstance(targetEl, {toggle:false});
-                            // attach click handler to toggle using the API (prevents duplicate behavior)
-                            t.addEventListener('click', function(e){
-                                e.preventDefault();
-                                try{ bootstrap.Collapse.getOrCreateInstance(targetEl).toggle(); }catch(err){}
-                            });
-                        }
-                    }catch(e){}
-                });
-            }
-        }catch(e){}
-    });
+    //         // Initialize collapse toggles to ensure proper open/close behavior
+    //         if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
+    //             var collapseToggles = document.querySelectorAll('[data-bs-toggle="collapse"]');
+    //             collapseToggles.forEach(function(t){
+    //                 var targetSelector = t.getAttribute('data-bs-target') || t.getAttribute('href');
+    //                 if (!targetSelector) return;
+    //                 try{
+    //                     // normalize href values like '#id'
+    //                     if (targetSelector.indexOf('#') === 0) {
+    //                         var targetEl = document.querySelector(targetSelector);
+    //                         if (!targetEl) return;
+    //                         // create instance but do not toggle immediately
+    //                         bootstrap.Collapse.getOrCreateInstance(targetEl, {toggle:false});
+    //                         // attach click handler to toggle using the API (prevents duplicate behavior)
+    //                         t.addEventListener('click', function(e){
+    //                             e.preventDefault();
+    //                             try{ bootstrap.Collapse.getOrCreateInstance(targetEl).toggle(); }catch(err){}
+    //                         });
+    //                     }
+    //                 }catch(e){}
+    //             });
+    //         }
+    //     }catch(e){}
+    // });
     </script>
     <script>
     // Fallback hamburger toggle: ensures sidebar toggles even if main handler didn't run
-    (function(){
-        var el = document.getElementById('topnav-hamburger-icon');
-        if (!el) return;
-        el.addEventListener('click', function(ev){
-            try{
-                console.debug('fallback: hamburger clicked');
-                var ham = document.querySelector('.hamburger-icon');
-                if (ham) ham.classList.toggle('open');
-                var w = document.documentElement.clientWidth;
-                if (document.documentElement.getAttribute('data-layout')==='vertical'){
-                    if (w<=767){
-                        document.body.classList.add('vertical-sidebar-enable');
-                        document.documentElement.setAttribute('data-sidebar-size','lg');
-                    }else{
-                        document.body.classList.toggle('vertical-sidebar-enable');
-                        var cur = document.documentElement.getAttribute('data-sidebar-size')||'lg';
-                        document.documentElement.setAttribute('data-sidebar-size', cur==='lg'?'sm':'lg');
-                    }
-                } else if (document.documentElement.getAttribute('data-layout')==='horizontal'){
-                    document.body.classList.toggle('menu');
-                } else {
-                    document.body.classList.toggle('twocolumn-panel');
-                }
-            }catch(e){console.warn('hamburger fallback failed', e);}        
-        });
-    })();
+    // (function(){
+    //     var el = document.getElementById('topnav-hamburger-icon');
+    //     if (!el) return;
+    //     el.addEventListener('click', function(ev){
+    //         try{
+    //             console.debug('fallback: hamburger clicked');
+    //             var ham = document.querySelector('.hamburger-icon');
+    //             if (ham) ham.classList.toggle('open');
+    //             var w = document.documentElement.clientWidth;
+    //             if (document.documentElement.getAttribute('data-layout')==='vertical'){
+    //                 if (w<=767){
+    //                     document.body.classList.add('vertical-sidebar-enable');
+    //                     document.documentElement.setAttribute('data-sidebar-size','lg');
+    //                 }else{
+    //                     document.body.classList.toggle('vertical-sidebar-enable');
+    //                     var cur = document.documentElement.getAttribute('data-sidebar-size')||'lg';
+    //                     document.documentElement.setAttribute('data-sidebar-size', cur==='lg'?'sm':'lg');
+    //                 }
+    //             } else if (document.documentElement.getAttribute('data-layout')==='horizontal'){
+    //                 document.body.classList.toggle('menu');
+    //             } else {
+    //                 document.body.classList.toggle('twocolumn-panel');
+    //             }
+    //         }catch(e){console.warn('hamburger fallback failed', e);}        
+    //     });
+    // })();
     </script>
 </body>
 </html>
