@@ -10,6 +10,7 @@ class KodeMaterial extends CI_Controller {
 
     public function index()
     {
+        session_start();
         $data['title'] = 'Kode Material';
         $data['kode_material'] = $this->Kode_material_model->getAll();
         $this->load->view('kode_material', $data);
