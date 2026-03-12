@@ -231,12 +231,21 @@ $(document).ready(function(){
         responsive: true
     });
 
+    // keep kategori field equal to tipe material selection
+    $('#tipe_material').on('change', function(){
+        $('#kategori').val($(this).val());
+    });
+    $('#edit_tipe_material').on('change', function(){
+        $('#editkategori').val($(this).val());
+    });
+
     $('#submitBtn').on('click', function(e){
         e.preventDefault();
         var formData = {
             kode_material: $('#kode_material').val(),
             deskripsi_material: $('#deskripsi_material').val(),
-            kategori: $('#kategori').val(),
+            // kategori is set equal to tipe material
+            kategori: $('#tipe_material').val(),
             tipe_material: $('#tipe_material').val()
         };
         if(!formData.kode_material){ alert('Kode wajib diisi'); return; }
@@ -249,14 +258,18 @@ $(document).ready(function(){
         $('#editkode_material').val(d.kode_material);
         $('#editkode_material_display').val(d.kode_material);
         $('#editdeskripsi_material').val(d.deskripsi_material);
+        // set kategori from tipe material as well
         $('#editkategori').val(d.kategori);
         // populate tipe material if provided
         if(typeof d.tipe_material !== 'undefined'){
             $('#edit_tipe_material').val(d.tipe_material);
+            $('#editkategori').val(d.tipe_material);
         } else if(typeof d.tipeMaterial !== 'undefined'){
             $('#edit_tipe_material').val(d.tipeMaterial);
+            $('#editkategori').val(d.tipeMaterial);
         } else {
             $('#edit_tipe_material').val('');
+            $('#editkategori').val('');
         }
         new bootstrap.Modal(document.getElementById('exampleModalgridEdit')).show();
     });
@@ -266,7 +279,8 @@ $(document).ready(function(){
         var formData = {
             kode_material: $('#editkode_material').val(),
             deskripsi_material: $('#editdeskripsi_material').val(),
-            kategori: $('#editkategori').val(),
+            // kategori is set equal to tipe material
+            kategori: $('#edit_tipe_material').val(),
             tipe_material: $('#edit_tipe_material').val()
         };
         if(!formData.kode_material){ alert('Invalid id'); return; }
