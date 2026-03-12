@@ -654,21 +654,7 @@
             });
         });
     </script>
-    <script>
-        $(document).ready(function() {
-        var table = $('#example').DataTable();
-        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-            var selectedHari = $('#filterDurasi').val();
-            var durasiText = data[4] || '';
-            var match = durasiText.match(/^(\d+)\s+Hari/);
-            var hari = match ? match[1] : "";
-            return selectedHari === "" || hari === selectedHari;
-        });
-        $('#filterDurasi').on('change', function() {
-            table.draw();
-        });
-    });
-    </script>
+    <!-- moved custom duration filter into main DataTable initialization below -->
     <script>
         // $('#filterKabupaten').on('change', function() {
         //     var table = $('#example').DataTable();
@@ -958,6 +944,9 @@ document.addEventListener("DOMContentLoaded", function() {
         ],
         // default to show all rows
         pageLength: -1,
+        // ensure the search input is shown and filtering enabled
+        dom: 'frtip',
+        searching: true,
         order: [[19, 'desc']],
         columnDefs: [
             {
@@ -969,8 +958,17 @@ document.addEventListener("DOMContentLoaded", function() {
         scrollX: false,
         autoWidth: false
     });
+    // integrate custom duration filter (moved here)
+    $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        var selectedHari = $('#filterDurasi').val();
+        var durasiText = data[4] || '';
+        var match = durasiText.match(/^(\d+)\s+Hari/);
+        var hari = match ? match[1] : "";
+        return selectedHari === "" || hari === selectedHari;
+    });
+    $('#filterDurasi').on('change', function() { table.draw(); });
 
-    // Event filtering
+    // Event filtering for other selectors
     $('#filterProvinsi, #filterKabupaten, #filterTim, #filterStatus').on('change', function () {
         table.column(15).search($('#filterProvinsi').val(), false, false);
         table.column(11).search($('#filterKabupaten').val(), false, false);
