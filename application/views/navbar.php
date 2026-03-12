@@ -667,7 +667,7 @@
                         ?>
                         <li class="menu-title"><span data-key="t-menu">Material Monitoring</span></li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <a class="nav-link menu-link" href="MonitoringMaterial" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-archive-search-outline"></i> <span data-key="t-layouts">Monitoring Material</span>
                             </a>
                         </li> 
