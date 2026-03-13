@@ -526,8 +526,6 @@
     <script src="js/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
         <!-- prismjs plugin -->
-    <script src="assets/libs/prismjs/prism.js"></script>
-    <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script>
     (function(){
