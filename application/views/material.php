@@ -312,12 +312,20 @@
                                             if(!empty($materials)) {
                                                 foreach ($materials as $material) {
                                                     $count = $count + 1;
-                                                    // compute used qty (from pemakaian) and available
+                                                    // compute used qty (from pemakaian)
+                                                    // NOTE: material is counted as reduced only when both
+                                                    // status_reservasi == 'Sudah' AND status_terpakai == 'Sudah'
                                                     $used = 0;
                                                     if (isset($used_sums) && isset($used_sums[$material->idmaterial])) {
                                                         $used = (int)$used_sums[$material->idmaterial];
                                                     }
-                                                    $available = $material->qty - $used;
+                                                    if (isset($material->status_reservasi) && isset($material->status_terpakai) &&
+                                                        $material->status_reservasi == 'Sudah' && $material->status_terpakai == 'Sudah') {
+                                                        $available = $material->qty - $used;
+                                                    } else {
+                                                        // not yet reserved-and-used, count full qty as available
+                                                        $available = $material->qty;
+                                                    }
                                                     if ($available < 0) $available = 0;
                                                     $row_html = '';
                                                     $row_html .= '<tr>';
