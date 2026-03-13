@@ -1110,6 +1110,13 @@ $(document).ready(function () {
                 allowClear: true,
                 dropdownParent: $('#editMaterialModal')
             });
+            // select2 for multiple-add modal
+            $('#mm_kode_material, #mm_tipeMaterial, #mm_idBc').select2({
+                placeholder: '-- Pilih --',
+                allowClear: true,
+                dropdownParent: $('#materialMultipleModal'),
+                width: '100%'
+            });
             // filter select
             if ($('#filterTim').length) {
                 $('#filterTim').select2({
