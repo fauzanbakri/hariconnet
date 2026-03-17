@@ -91,12 +91,23 @@ $(function(){
                 var btnOn = '<button class="btn btn-sm btn-success btn-onprogress" data-id="'+row.idTiket+'" '+(canOnProgress?'':'disabled')+'>On Progress</button>';
                 var btnAn = '<button class="btn btn-sm btn-secondary btn-antrian" data-id="'+row.idTiket+'" '+(canAntrian?'':'disabled')+'>Antrian</button>';
 
+                function renderStatusBadge(statusText){
+                    var s = (statusText||'').toUpperCase();
+                    var cls = 'bg-light text-dark';
+                    if (s.indexOf('SOLVED')>=0 || s.indexOf('CLOSED')>=0) cls = 'bg-success';
+                    else if (s.indexOf('ON PROGRESS')>=0) cls = 'bg-warning';
+                    else if (s === 'OPEN') cls = 'bg-primary';
+                    else if (s.indexOf('EARLY')>=0) cls = 'bg-secondary';
+                    else if (s === 'NEW' || s === 'STOPCLOCK') cls = 'bg-info';
+                    return $('<span>').addClass('badge '+cls).text(statusText);
+                }
+
                 var tr = $('<tr>');
                 tr.append($('<td>').text(row.idInsiden));
                 tr.append($('<td>').text(row.idTiket));
                 tr.append($('<td>').text(row.tanggal));
                 tr.append($('<td>').text(row.duration));
-                tr.append($('<td>').text(row.status));
+                tr.append($('<td>').append(renderStatusBadge(status)));
                 tr.append($('<td>').html(btnOn+' '+btnAn));
                 tbody.append(tr);
             });
