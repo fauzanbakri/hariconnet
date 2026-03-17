@@ -17,11 +17,13 @@
                             <ul class="list-group" id="team-summary">
                                 <?php foreach($summary as $s){ ?>
                                     <li class="list-group-item d-flex justify-content-between align-items-center team-item" data-team="<?php echo htmlspecialchars($s->tim); ?>">
-                                        <div>
-                                            <?php echo htmlspecialchars($s->tim); ?>
-                                            <?php if(!empty($s->provinsi)){ ?>
-                                                <small class="text-muted ms-2">&middot; <?php echo htmlspecialchars($s->provinsi); ?></small>
-                                            <?php } ?>
+                                        <div class="d-flex align-items-center" style="gap:.5rem; min-width:0;">
+                                            <span class="text-muted" style="width:140px;min-width:100px;display:inline-block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                <?php echo htmlspecialchars($s->provinsi ?: ''); ?>
+                                            </span>
+                                            <span class="team-name" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                <?php echo htmlspecialchars($s->tim); ?>
+                                            </span>
                                         </div>
                                         <span class="badge bg-primary rounded-pill"><?php echo $s->total_incidents; ?></span>
                                     </li>
