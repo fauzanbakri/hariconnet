@@ -17,7 +17,12 @@
                             <ul class="list-group" id="team-summary">
                                 <?php foreach($summary as $s){ ?>
                                     <li class="list-group-item d-flex justify-content-between align-items-center team-item" data-team="<?php echo htmlspecialchars($s->tim); ?>">
-                                        <?php echo htmlspecialchars($s->tim); ?>
+                                        <div>
+                                            <?php echo htmlspecialchars($s->tim); ?>
+                                            <?php if(!empty($s->provinsi)){ ?>
+                                                <small class="text-muted ms-2">&middot; <?php echo htmlspecialchars($s->provinsi); ?></small>
+                                            <?php } ?>
+                                        </div>
                                         <span class="badge bg-primary rounded-pill"><?php echo $s->total_incidents; ?></span>
                                     </li>
                                 <?php } ?>
