@@ -19,7 +19,10 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center team-item" data-team="<?php echo htmlspecialchars($s->tim); ?>">
                                         <div class="me-2" style="display:grid;grid-template-columns:190px minmax(0,1fr);column-gap:.5rem;align-items:center;min-width:0;flex:1;">
                                             <span class="text-muted" style="display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-                                                <?php echo htmlspecialchars(trim(($s->provinsi ?: '') . (empty($s->kabupaten)?'':(' / ' . $s->kabupaten)))); ?>
+                                                <?php echo htmlspecialchars(trim(($s->provinsi ?: ''))); ?>
+                                            </span>
+                                            <span class="text-muted" style="display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                                <?php echo htmlspecialchars(trim((empty($s->kabupaten)?'':(' / ' . $s->kabupaten)))); ?>
                                             </span>
                                             <span class="team-name" style="display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
                                                 <?php echo htmlspecialchars($s->tim); ?>
