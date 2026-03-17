@@ -95,9 +95,9 @@ $(function(){
                     var s = (statusText||'').toUpperCase();
                     var cls = 'bg-light text-dark';
                     if (s.indexOf('SOLVED')>=0 || s.indexOf('CLOSED')>=0) cls = 'bg-success';
-                    else if (s.indexOf('ON PROGRESS')>=0) cls = 'bg-warning';
+                    else if (s.indexOf('ON PROGRESS')>=0) cls = 'bg-secondary';
                     else if (s === 'OPEN') cls = 'bg-primary';
-                    else if (s.indexOf('EARLY')>=0) cls = 'bg-secondary';
+                    else if (s.indexOf('EARLY')>=0) cls = 'bg-warning';
                     else if (s === 'NEW' || s === 'STOPCLOCK') cls = 'bg-info';
                     return $('<span>').addClass('badge '+cls).text(statusText);
                 }
