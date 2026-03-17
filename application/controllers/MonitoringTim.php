@@ -14,11 +14,11 @@ class MonitoringTim extends CI_Controller {
         $data['title'] = 'Monitoring Tim';
         // summary: count distinct idInsiden per tim
         // join tiket -> tim (by name) -> basecamp to get province
-        $sql = "SELECT IFNULL(t.tnama, IFNULL(tiket.tim,'UNKNOWN')) AS tim, COUNT(DISTINCT tiket.idInsiden) AS total_incidents, COALESCE(b.provinsi,'') AS provinsi
+        $sql = "SELECT IFNULL(t.tnama, IFNULL(tiket.tim,'UNKNOWN')) AS tim, COUNT(DISTINCT tiket.idInsiden) AS total_incidents, COALESCE(b.provinsi,'') AS provinsi, COALESCE(b.kabupaten,'') AS kabupaten
             FROM tiket
             LEFT JOIN (SELECT nama AS tnama, idBc FROM tim) t ON tiket.tim = t.tnama
             LEFT JOIN basecamp b ON t.idBc = b.idBc
-            GROUP BY t.tnama, tiket.tim, b.provinsi
+            GROUP BY t.tnama, tiket.tim, b.provinsi, b.kabupaten
             ORDER BY total_incidents DESC";
         $data['summary'] = $this->db->query($sql)->result();
 
