@@ -37,16 +37,22 @@ class MonitoringTim extends CI_Controller {
                 WHERE tim = ?
                 ORDER BY TIMESTAMPDIFF(SECOND, tanggal, NOW()) DESC";
         $rows = $this->db->query($sql, [$team])->result();
-        // compute duration in human readable and seconds
+        // compute duration in human readable and seconds (UTC+8)
         $result = [];
+        $tz = new DateTimeZone('Asia/Jakarta');
         foreach ($rows as $r) {
-            $ts = strtotime($r->tanggal);
-            $now = time();
-            $diff = $now - $ts;
-            $days = floor($diff / 86400);
-            $hours = floor(($diff % 86400) / 3600);
-            $mins = floor(($diff % 3600) / 60);
-            $human = sprintf('%02d Hari %02d Jam %02d Menit', $days, $hours, $mins);
+            try {
+                $tsObj = new DateTime($r->tanggal, $tz);
+                $nowObj = new DateTime('now', $tz);
+                $diff = $nowObj->getTimestamp() - $tsObj->getTimestamp();
+                $days = floor($diff / 86400);
+                $hours = floor(($diff % 86400) / 3600);
+                $mins = floor(($diff % 3600) / 60);
+                $human = sprintf('%02d Hari %02d Jam %02d Menit', $days, $hours, $mins);
+            } catch (Exception $e) {
+                $diff = 0;
+                $human = '00 Hari 00 Jam 00 Menit';
+            }
             $result[] = [
                 'idInsiden' => $r->idInsiden,
                 'idTiket' => $r->idTiket,
