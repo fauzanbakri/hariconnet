@@ -10,6 +10,7 @@ class MonitoringTim extends CI_Controller {
 
     public function index()
     {
+        session_start();
         $data['title'] = 'Monitoring Tim';
         // summary: count distinct idInsiden per tim
         $sql = "SELECT IFNULL(tim, 'UNKNOWN') as tim, COUNT(DISTINCT idInsiden) as total_incidents
