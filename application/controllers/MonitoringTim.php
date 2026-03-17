@@ -40,9 +40,10 @@ class MonitoringTim extends CI_Controller {
             $ts = strtotime($r->tanggal);
             $now = time();
             $diff = $now - $ts;
-            $hours = floor($diff / 3600);
+            $days = floor($diff / 86400);
+            $hours = floor(($diff % 86400) / 3600);
             $mins = floor(($diff % 3600) / 60);
-            $human = sprintf('%02dh %02dm', $hours, $mins);
+            $human = sprintf('%02d Hari %02d Jam %02d Menit', $days, $hours, $mins);
             $result[] = [
                 'idInsiden' => $r->idInsiden,
                 'idTiket' => $r->idTiket,
