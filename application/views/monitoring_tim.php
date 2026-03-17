@@ -17,11 +17,11 @@
                             <ul class="list-group" id="team-summary">
                                 <?php foreach($summary as $s){ ?>
                                     <li class="list-group-item d-flex justify-content-between align-items-center team-item" data-team="<?php echo htmlspecialchars($s->tim); ?>">
-                                        <div class="d-flex align-items-center" style="gap:.5rem; min-width:0;">
-                                            <span class="text-muted" style="width:180px;min-width:120px;display:inline-block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                        <div class="me-2" style="display:grid;grid-template-columns:190px minmax(0,1fr);column-gap:.5rem;align-items:center;min-width:0;flex:1;">
+                                            <span class="text-muted" style="display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
                                                 <?php echo htmlspecialchars(trim(($s->provinsi ?: '') . (empty($s->kabupaten)?'':(' / ' . $s->kabupaten)))); ?>
                                             </span>
-                                            <span class="team-name" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                                            <span class="team-name" style="display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
                                                 <?php echo htmlspecialchars($s->tim); ?>
                                             </span>
                                         </div>
