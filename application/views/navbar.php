@@ -484,6 +484,9 @@
                                              <li class="nav-item">
                                                 <a href="DashboardNoc" class="nav-link" data-key="t-analytics"> NOC </a>
                                             </li>
+                                             <li class="nav-item">
+                                                <a href="MonitoringTim" class="nav-link" data-key="t-crm"> Monitoring Tim </a>
+                                            </li>
                                             ';   
                                     }
 
