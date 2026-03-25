@@ -22,8 +22,24 @@
                 </div>
             <?php } ?>
 
+            <?php
+                $totalRows = count($rows ?? []);
+                $uniqueNames = [];
+                $segmentCounts = [];
+                foreach (($rows ?? []) as $summaryRow) {
+                    $summaryName = trim((string)($summaryRow->nama ?? ''));
+                    $summarySegmen = trim((string)($summaryRow->segmen ?? ''));
+                    if ($summaryName !== '') {
+                        $uniqueNames[$summaryName] = true;
+                    }
+                    if ($summarySegmen !== '') {
+                        $segmentCounts[$summarySegmen] = ($segmentCounts[$summarySegmen] ?? 0) + 1;
+                    }
+                }
+                arsort($segmentCounts);
+            ?>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="card-title mb-0">Data Monitoring Internal</h5>
@@ -72,6 +88,51 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="card-title mb-0">Ringkasan</h5>
+                            <button type="button" class="btn btn-soft-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">Input Baru</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3 mb-3">
+                                <div class="col-6">
+                                    <div class="p-3 rounded border bg-light">
+                                        <div class="text-muted small">Total Data</div>
+                                        <div class="fs-4 fw-semibold"><?php echo (int)$totalRows; ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3 rounded border bg-light">
+                                        <div class="text-muted small">Total Nama</div>
+                                        <div class="fs-4 fw-semibold"><?php echo count($uniqueNames); ?></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="text-uppercase text-muted fs-12 mb-2">Segmen Terbanyak</h6>
+                            <?php if (!empty($segmentCounts)) { ?>
+                                <div class="list-group list-group-flush mb-3">
+                                    <?php $segmentShown = 0; foreach ($segmentCounts as $segmentLabel => $segmentTotal) { if ($segmentShown >= 5) break; ?>
+                                        <div class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                            <span><?php echo htmlspecialchars($segmentLabel); ?></span>
+                                            <span class="badge bg-primary rounded-pill"><?php echo (int)$segmentTotal; ?></span>
+                                        </div>
+                                    <?php $segmentShown++; } ?>
+                                </div>
+                            <?php } else { ?>
+                                <p class="text-muted mb-3">Belum ada data segmen untuk ditampilkan.</p>
+                            <?php } ?>
+
+                            <h6 class="text-uppercase text-muted fs-12 mb-2">Petunjuk Input</h6>
+                            <ul class="ps-3 mb-0 text-muted">
+                                <li>Pilih beberapa nama sekaligus di form tambah data.</li>
+                                <li>Isi incident satu per baris untuk membuat banyak kombinasi data.</li>
+                                <li>Gunakan tombol action pada tabel untuk edit atau hapus data.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
