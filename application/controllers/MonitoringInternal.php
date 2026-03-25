@@ -76,14 +76,65 @@ class MonitoringInternal extends CI_Controller {
             return;
         }
 
-        $data = $this->buildPayloadFromPost($table);
-        if (empty($data['nama']) || empty($data['segmen']) || empty($data['incident']) || empty($data['tanggal'])) {
+        $segmen = trim((string)$this->input->post('segmen'));
+        $tanggal = trim((string)$this->input->post('tanggal'));
+        $fields = $this->db->list_fields($table);
+
+        // Multi input support
+        $namaList = $this->input->post('nama_list');
+        if (!is_array($namaList)) {
+            $namaList = [];
+        }
+        $namaList = array_values(array_filter(array_map('trim', $namaList), function($v){ return $v !== ''; }));
+
+        $incidentRaw = (string)$this->input->post('incident_list');
+        $incidentLines = preg_split('/\r\n|\r|\n/', $incidentRaw);
+        $incidentList = array_values(array_filter(array_map('trim', (array)$incidentLines), function($v){ return $v !== ''; }));
+
+        // Fallback to single input mode for compatibility
+        if (empty($namaList)) {
+            $singleNama = trim((string)$this->input->post('nama'));
+            if ($singleNama !== '') {
+                $namaList = [$singleNama];
+            }
+        }
+        if (empty($incidentList)) {
+            $singleIncident = trim((string)$this->input->post('incident'));
+            if ($singleIncident !== '') {
+                $incidentList = [$singleIncident];
+            }
+        }
+
+        if (empty($namaList) || empty($incidentList) || $segmen === '' || $tanggal === '') {
             echo 'Harap isi semua field';
             return;
         }
 
-        $ok = $this->db->insert($table, $data);
-        echo $ok ? 'success' : 'Gagal menambahkan data';
+        $okAll = true;
+        $inserted = 0;
+        foreach ($namaList as $nama) {
+            foreach ($incidentList as $incident) {
+                $data = [
+                    'nama' => $nama,
+                    'segmen' => $segmen,
+                    'incident' => $incident,
+                    'tanggal' => $tanggal,
+                ];
+                $data = array_intersect_key($data, array_flip($fields));
+                $ok = $this->db->insert($table, $data);
+                if ($ok) {
+                    $inserted++;
+                } else {
+                    $okAll = false;
+                }
+            }
+        }
+
+        if ($okAll && $inserted > 0) {
+            echo 'success';
+            return;
+        }
+        echo $inserted > 0 ? 'Sebagian data gagal disimpan' : 'Gagal menambahkan data';
     }
 
     public function editData()

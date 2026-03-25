@@ -89,15 +89,38 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="addNama" placeholder="Nama">
+                    <select class="form-select" id="addNama" multiple size="8">
+                        <option value="Jibrail Husbar">Jibrail Husbar</option>
+                        <option value="Birman">Birman</option>
+                        <option value="Tahir">Tahir</option>
+                        <option value="Zulkifli">Zulkifli</option>
+                        <option value="Asril">Asril</option>
+                        <option value="M. Rifki Irwansyah">M. Rifki Irwansyah</option>
+                        <option value="Ihdinamsyah">Ihdinamsyah</option>
+                        <option value="Hasrianto Nurlang">Hasrianto Nurlang</option>
+                        <option value="Nurhadi">Nurhadi</option>
+                        <option value="Rizal Dg Tinri">Rizal Dg Tinri</option>
+                        <option value="Ady">Ady</option>
+                    </select>
+                    <small class="text-muted">Bisa pilih lebih dari satu nama (Ctrl/Cmd + klik).</small>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Segmen</label>
-                    <input type="text" class="form-control" id="addSegmen" placeholder="Segmen">
+                    <select class="form-select" id="addSegmen">
+                        <option value="">Pilih Segmen</option>
+                        <option value="FTTH AKSES">FTTH AKSES</option>
+                        <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
+                        <option value="FTTH FEEDER">FTTH FEEDER</option>
+                        <option value="FTTH BACKBONE">FTTH BACKBONE</option>
+                        <option value="AKSES">AKSES</option>
+                        <option value="DISTRIBUSI">DISTRIBUSI</option>
+                        <option value="BACKBONE">BACKBONE</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Incident</label>
-                    <input type="text" class="form-control" id="addIncident" placeholder="Incident">
+                    <textarea class="form-control" id="addIncident" rows="4" placeholder="Satu incident per baris"></textarea>
+                    <small class="text-muted">Pisahkan incident dengan Enter (baris baru).</small>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tanggal</label>
@@ -127,7 +150,16 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Segmen</label>
-                    <input type="text" class="form-control" id="editSegmen" placeholder="Segmen">
+                    <select class="form-select" id="editSegmen">
+                        <option value="">Pilih Segmen</option>
+                        <option value="FTTH AKSES">FTTH AKSES</option>
+                        <option value="FTTH DISTRIBUSI">FTTH DISTRIBUSI</option>
+                        <option value="FTTH FEEDER">FTTH FEEDER</option>
+                        <option value="FTTH BACKBONE">FTTH BACKBONE</option>
+                        <option value="AKSES">AKSES</option>
+                        <option value="DISTRIBUSI">DISTRIBUSI</option>
+                        <option value="BACKBONE">BACKBONE</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Incident</label>
@@ -192,15 +224,19 @@
         return payload.nama && payload.segmen && payload.incident && payload.tanggal;
     }
 
+    function validateAddPayload(payload){
+        return (payload.nama_list && payload.nama_list.length > 0) && payload.segmen && payload.incident_list && payload.tanggal;
+    }
+
     $('#saveAddBtn').on('click', function(){
         var payload = {
-            nama: $('#addNama').val().trim(),
+            nama_list: $('#addNama').val() || [],
             segmen: $('#addSegmen').val().trim(),
-            incident: $('#addIncident').val().trim(),
+            incident_list: $('#addIncident').val(),
             tanggal: $('#addTanggal').val()
         };
 
-        if (!validatePayload(payload)) {
+        if (!validateAddPayload(payload)) {
             alert('Harap isi semua field.');
             return;
         }
