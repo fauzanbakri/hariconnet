@@ -487,6 +487,9 @@
                                              <li class="nav-item">
                                                 <a href="MonitoringTim" class="nav-link" data-key="t-crm"> Monitoring Tim </a>
                                             </li>
+                                             <li class="nav-item">
+                                                <a href="MonitoringInternal" class="nav-link" data-key="t-crm"> Monitoring Internal </a>
+                                            </li>
                                             ';   
                                     }
 
