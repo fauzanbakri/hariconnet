@@ -48,10 +48,20 @@ class MonitoringInternal extends CI_Controller {
             $data['table_name'] = $table;
             $data['table_missing'] = ($table === false);
             $data['rows'] = [];
+            $data['filter_start_date'] = trim((string)$this->input->get('start_date'));
+            $data['filter_end_date'] = trim((string)$this->input->get('end_date'));
 
             if ($table !== false) {
-                $this->db->from($table);
                 $fields = $this->db->list_fields($table);
+                $this->db->from($table);
+                if (in_array('tanggal', $fields, true)) {
+                    if ($data['filter_start_date'] !== '') {
+                        $this->db->where('tanggal >=', $data['filter_start_date']);
+                    }
+                    if ($data['filter_end_date'] !== '') {
+                        $this->db->where('tanggal <=', $data['filter_end_date']);
+                    }
+                }
                 if (in_array('tanggal', $fields, true)) {
                     $this->db->order_by('tanggal', 'DESC');
                 }

@@ -26,17 +26,25 @@
                 $totalRows = count($rows ?? []);
                 $uniqueNames = [];
                 $segmentCounts = [];
+                $nameIncidentCounts = [];
                 foreach (($rows ?? []) as $summaryRow) {
                     $summaryName = trim((string)($summaryRow->nama ?? ''));
                     $summarySegmen = trim((string)($summaryRow->segmen ?? ''));
                     if ($summaryName !== '') {
                         $uniqueNames[$summaryName] = true;
+                        $nameIncidentCounts[$summaryName] = ($nameIncidentCounts[$summaryName] ?? 0) + 1;
                     }
                     if ($summarySegmen !== '') {
                         $segmentCounts[$summarySegmen] = ($segmentCounts[$summarySegmen] ?? 0) + 1;
                     }
                 }
                 arsort($segmentCounts);
+                arsort($nameIncidentCounts);
+                $chartCategories = array_slice(array_keys($nameIncidentCounts), 0, 10);
+                $chartSeries = [];
+                foreach ($chartCategories as $chartName) {
+                    $chartSeries[] = $nameIncidentCounts[$chartName];
+                }
             ?>
             <div class="row">
                 <div class="col-md-8">
@@ -98,6 +106,21 @@
                             <button type="button" class="btn btn-soft-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">Input Baru</button>
                         </div>
                         <div class="card-body">
+                            <form method="get" class="row g-2 mb-3">
+                                <div class="col-12">
+                                    <label class="form-label mb-1">Tanggal Dari</label>
+                                    <input type="date" class="form-control" name="start_date" value="<?php echo htmlspecialchars($filter_start_date ?? ''); ?>">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label mb-1">Sampai Tanggal</label>
+                                    <input type="date" class="form-control" name="end_date" value="<?php echo htmlspecialchars($filter_end_date ?? ''); ?>">
+                                </div>
+                                <div class="col-12 d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1">Filter</button>
+                                    <a href="MonitoringInternal" class="btn btn-light btn-sm flex-grow-1">Reset</a>
+                                </div>
+                            </form>
+
                             <div class="row g-3 mb-3">
                                 <div class="col-6">
                                     <div class="p-3 rounded border bg-light">
@@ -112,6 +135,9 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <h6 class="text-uppercase text-muted fs-12 mb-2">Incident per Nama</h6>
+                            <div id="incidentPerNameChart" style="min-height: 320px;"></div>
 
                             <h6 class="text-uppercase text-muted fs-12 mb-2">Segmen Terbanyak</h6>
                             <?php if (!empty($segmentCounts)) { ?>
@@ -261,6 +287,7 @@
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="js/cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
     
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <!-- <script src="assets/js/pages/sweetalerts.init.js"></script> -->
@@ -276,11 +303,57 @@
 
 <script>
 (function($){
+    var chartCategories = <?php echo json_encode($chartCategories); ?>;
+    var chartSeries = <?php echo json_encode($chartSeries); ?>;
+
     if ($.fn.select2) {
         $('#addNama').select2({
             placeholder: 'Pilih Nama',
             width: '100%'
         });
+    }
+
+    if (document.querySelector('#incidentPerNameChart')) {
+        if (chartCategories.length > 0) {
+            var chartOptions = {
+                chart: {
+                    type: 'bar',
+                    height: Math.max(320, chartCategories.length * 38),
+                    toolbar: { show: false }
+                },
+                series: [{
+                    name: 'Jumlah Incident',
+                    data: chartSeries
+                }],
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                        borderRadius: 4,
+                        barHeight: '60%'
+                    }
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                xaxis: {
+                    categories: chartCategories,
+                    title: { text: 'Jumlah Incident' }
+                },
+                yaxis: {
+                    title: { text: 'Nama' }
+                },
+                colors: ['#405189'],
+                grid: {
+                    borderColor: '#e9ebec'
+                },
+                noData: {
+                    text: 'Tidak ada data'
+                }
+            };
+            new ApexCharts(document.querySelector('#incidentPerNameChart'), chartOptions).render();
+        } else {
+            document.querySelector('#incidentPerNameChart').innerHTML = '<div class="text-muted small">Tidak ada data untuk grafik pada rentang tanggal ini.</div>';
+        }
     }
 
     if ($.fn.DataTable) {
