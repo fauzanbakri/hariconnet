@@ -10,7 +10,7 @@ class MonitoringInternal extends CI_Controller {
 
     private function resolveTableName()
     {
-        $candidates = ['monitoring_internal', 'monitoringinternal', 'internal'];
+        $candidates = ['pencapaianInternal', 'monitoring_internal', 'monitoringinternal', 'internal'];
         foreach ($candidates as $table) {
             if ($this->db->table_exists($table)) {
                 return $table;
