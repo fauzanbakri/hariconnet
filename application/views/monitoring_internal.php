@@ -301,7 +301,8 @@
             </div>
         </div>
     </div>
-    <footer class="footer">
+</div>
+<footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
@@ -315,7 +316,6 @@
                     </div>
                 </div>
             </footer>
-</div>
 
     <!-- JAVASCRIPT -->
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
