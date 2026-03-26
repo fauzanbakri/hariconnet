@@ -32,9 +32,9 @@
                     <h4 class="mb-sm-0">Monitoring Material</h4>
                     <p class="text-muted">Perbandingan stok aktual di Basecamp dengan Standar Stok per tipe material.</p>
                     <div class="monitor-legend">
-                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#2ecc71;border:1px solid rgba(0,0,0,0.05)"></div> <div>>= Standar (OK)</div></div>
-                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#f1c40f;border:1px solid rgba(0,0,0,0.05)"></div> <div>< Standard (Perhatian)</div></div>
-                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#e74c3c;border:1px solid rgba(0,0,0,0.05)"></div> <div>= 0 (Kritis)</div></div>
+                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#2ecc71;border:1px solid rgba(0,0,0,0.05)"></div> <div>> Standar</div></div>
+                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#f1c40f;border:1px solid rgba(0,0,0,0.05)"></div> <div>= Standar</div></div>
+                        <div class="legend-item"><div class="monitor-legend-dot legend-dot" style="background:#e74c3c;border:1px solid rgba(0,0,0,0.05)"></div> <div>< Standar</div></div>
                     </div>
                 </div>
             </div>
@@ -73,21 +73,21 @@
                                     } else {
                                         $ratio = ($actual > 0) ? 100 : 0;
                                     }
-                                    if ($actual == 0) {
-                                        $status = 'red';
-                                        $dot_color = '#e74c3c';
-                                        $bar_color = '#e74c3c';
-                                        $status_label = 'Kritis';
-                                    } elseif ($standard > 0 && $actual >= $standard) {
+                                    if ($actual > $standard) {
                                         $status = 'green';
                                         $dot_color = '#2ecc71';
                                         $bar_color = '#2ecc71';
-                                        $status_label = 'OK';
-                                    } else {
+                                        $status_label = 'Di Atas Standar';
+                                    } elseif ($actual == $standard) {
                                         $status = 'yellow';
                                         $dot_color = '#f1c40f';
                                         $bar_color = '#f1c40f';
-                                        $status_label = 'Perhatian';
+                                        $status_label = 'Sesuai Standar';
+                                    } else {
+                                        $status = 'red';
+                                        $dot_color = '#e74c3c';
+                                        $bar_color = '#e74c3c';
+                                        $status_label = 'Di Bawah Standar';
                                     }
                                 ?>
                                 <div class="monitor-item">
