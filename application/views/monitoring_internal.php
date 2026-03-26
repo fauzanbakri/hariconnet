@@ -23,13 +23,18 @@
             <?php } ?>
 
             <?php
-                $totalRows = count($rows ?? []);
+                $totalRows = 0;
                 $uniqueNames = [];
                 $segmentCounts = [];
                 $nameIncidentCounts = [];
                 foreach (($rows ?? []) as $summaryRow) {
                     $summaryName = trim((string)($summaryRow->nama ?? ''));
                     $summarySegmen = trim((string)($summaryRow->segmen ?? ''));
+                    $summaryStatus = strtolower(trim((string)($summaryRow->status ?? 'not yet')));
+                    if ($summaryStatus !== 'done') {
+                        continue;
+                    }
+                    $totalRows++;
                     if ($summaryName !== '') {
                         $uniqueNames[$summaryName] = true;
                         $nameIncidentCounts[$summaryName] = ($nameIncidentCounts[$summaryName] ?? 0) + 1;
@@ -54,6 +59,29 @@
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Tambah Data</button>
                         </div>
                         <div class="card-body">
+                            <form method="get" class="row g-2 mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label mb-1">Tanggal Dari</label>
+                                    <input type="date" class="form-control" name="start_date" value="<?php echo htmlspecialchars($filter_start_date ?? ''); ?>">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label mb-1">Sampai Tanggal</label>
+                                    <input type="date" class="form-control" name="end_date" value="<?php echo htmlspecialchars($filter_end_date ?? ''); ?>">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label mb-1">Status</label>
+                                    <select class="form-select" name="status">
+                                        <option value="" <?php echo (($filter_status ?? '') === '') ? 'selected' : ''; ?>>Semua Status</option>
+                                        <option value="not yet" <?php echo (($filter_status ?? '') === 'not yet') ? 'selected' : ''; ?>>Not Yet</option>
+                                        <option value="done" <?php echo (($filter_status ?? '') === 'done') ? 'selected' : ''; ?>>Done</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                                    <a href="MonitoringInternal" class="btn btn-light btn-sm">Reset</a>
+                                </div>
+                            </form>
+
                             <div class="table-responsive">
                                 <table id="monitoringInternalTable" class="table table-bordered table-striped align-middle" style="width:100%">
                                     <thead>
@@ -62,7 +90,7 @@
                                             <th>Nama</th>
                                             <th>Segmen</th>
                                             <th>Incident</th>
-                                            <th>Status</th>
+                                            <th class="text-center">Status</th>
                                             <th>Tanggal</th>
                                             <th style="width:120px;">Action</th>
                                         </tr>
@@ -74,7 +102,7 @@
                                                 <td><?php echo htmlspecialchars($row->nama ?? ''); ?></td>
                                                 <td><?php echo htmlspecialchars($row->segmen ?? ''); ?></td>
                                                 <td><?php echo htmlspecialchars($row->incident ?? ''); ?></td>
-                                                <td>
+                                                <td class="text-center align-middle">
                                                     <?php $statusVal = strtolower(trim((string)($row->status ?? 'not yet'))); ?>
                                                     <?php if ($statusVal === 'done') { ?>
                                                         <span class="badge bg-success">Done</span>
@@ -116,31 +144,16 @@
                             <button type="button" class="btn btn-soft-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">Input Baru</button>
                         </div>
                         <div class="card-body">
-                            <form method="get" class="row g-2 mb-3">
-                                <div class="col-12">
-                                    <label class="form-label mb-1">Tanggal Dari</label>
-                                    <input type="date" class="form-control" name="start_date" value="<?php echo htmlspecialchars($filter_start_date ?? ''); ?>">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label mb-1">Sampai Tanggal</label>
-                                    <input type="date" class="form-control" name="end_date" value="<?php echo htmlspecialchars($filter_end_date ?? ''); ?>">
-                                </div>
-                                <div class="col-12 d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1">Filter</button>
-                                    <a href="MonitoringInternal" class="btn btn-light btn-sm flex-grow-1">Reset</a>
-                                </div>
-                            </form>
-
                             <div class="row g-3 mb-3">
                                 <div class="col-6">
                                     <div class="p-3 rounded border bg-light">
-                                        <div class="text-muted small">Total Data</div>
+                                        <div class="text-muted small">Total Done</div>
                                         <div class="fs-4 fw-semibold"><?php echo (int)$totalRows; ?></div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="p-3 rounded border bg-light">
-                                        <div class="text-muted small">Total Nama</div>
+                                        <div class="text-muted small">Nama Done</div>
                                         <div class="fs-4 fw-semibold"><?php echo count($uniqueNames); ?></div>
                                     </div>
                                 </div>
