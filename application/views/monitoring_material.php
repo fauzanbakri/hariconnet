@@ -129,6 +129,7 @@
             </div>
         </div>
     </div>
+    <br>
     <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
