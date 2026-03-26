@@ -25,6 +25,7 @@ class MonitoringInternal extends CI_Controller {
             'nama' => trim((string)$this->input->post('nama')),
             'segmen' => trim((string)$this->input->post('segmen')),
             'incident' => trim((string)$this->input->post('incident')),
+            'status' => trim((string)$this->input->post('status')),
             'tanggal' => trim((string)$this->input->post('tanggal')),
         ];
 
@@ -87,8 +88,16 @@ class MonitoringInternal extends CI_Controller {
         }
 
         $segmen = trim((string)$this->input->post('segmen'));
+        $status = strtolower(trim((string)$this->input->post('status')));
         $tanggal = trim((string)$this->input->post('tanggal'));
         $fields = $this->db->list_fields($table);
+        if ($status === '') {
+            $status = 'not yet';
+        }
+        if (!in_array($status, ['not yet', 'done'], true)) {
+            echo 'Status tidak valid';
+            return;
+        }
 
         // Multi input support
         $namaList = $this->input->post('nama_list');
@@ -115,7 +124,7 @@ class MonitoringInternal extends CI_Controller {
             }
         }
 
-        if (empty($namaList) || empty($incidentList) || $segmen === '' || $tanggal === '') {
+        if (empty($namaList) || empty($incidentList) || $segmen === '' || $status === '' || $tanggal === '') {
             echo 'Harap isi semua field';
             return;
         }
@@ -128,6 +137,7 @@ class MonitoringInternal extends CI_Controller {
                     'nama' => $nama,
                     'segmen' => $segmen,
                     'incident' => $incident,
+                    'status' => $status,
                     'tanggal' => $tanggal,
                 ];
                 $data = array_intersect_key($data, array_flip($fields));
@@ -162,7 +172,14 @@ class MonitoringInternal extends CI_Controller {
         }
 
         $data = $this->buildPayloadFromPost($table);
-        if (empty($data['nama']) || empty($data['segmen']) || empty($data['incident']) || empty($data['tanggal'])) {
+        if (isset($data['status']) && $data['status'] !== '') {
+            $data['status'] = strtolower($data['status']);
+            if (!in_array($data['status'], ['not yet', 'done'], true)) {
+                echo 'Status tidak valid';
+                return;
+            }
+        }
+        if (empty($data['nama']) || empty($data['segmen']) || empty($data['incident']) || empty($data['tanggal']) || (array_key_exists('status', $data) && empty($data['status']))) {
             echo 'Harap isi semua field';
             return;
         }

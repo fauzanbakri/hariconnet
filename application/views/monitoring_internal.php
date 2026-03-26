@@ -62,6 +62,7 @@
                                             <th>Nama</th>
                                             <th>Segmen</th>
                                             <th>Incident</th>
+                                            <th>Status</th>
                                             <th>Tanggal</th>
                                             <th style="width:120px;">Action</th>
                                         </tr>
@@ -73,6 +74,14 @@
                                                 <td><?php echo htmlspecialchars($row->nama ?? ''); ?></td>
                                                 <td><?php echo htmlspecialchars($row->segmen ?? ''); ?></td>
                                                 <td><?php echo htmlspecialchars($row->incident ?? ''); ?></td>
+                                                <td>
+                                                    <?php $statusVal = strtolower(trim((string)($row->status ?? 'not yet'))); ?>
+                                                    <?php if ($statusVal === 'done') { ?>
+                                                        <span class="badge bg-success">Done</span>
+                                                    <?php } else { ?>
+                                                        <span class="badge bg-warning text-dark">Not Yet</span>
+                                                    <?php } ?>
+                                                </td>
                                                 <td><?php echo htmlspecialchars($row->tanggal ?? ''); ?></td>
                                                 <td>
                                                     <div class="dropdown d-inline-block">
@@ -85,6 +94,7 @@
                                                                 data-nama="<?php echo htmlspecialchars($row->nama ?? '', ENT_QUOTES); ?>"
                                                                 data-segmen="<?php echo htmlspecialchars($row->segmen ?? '', ENT_QUOTES); ?>"
                                                                 data-incident="<?php echo htmlspecialchars($row->incident ?? '', ENT_QUOTES); ?>"
+                                                                data-status="<?php echo htmlspecialchars($row->status ?? 'not yet', ENT_QUOTES); ?>"
                                                                 data-tanggal="<?php echo htmlspecialchars($row->tanggal ?? '', ENT_QUOTES); ?>"
                                                             ><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
                                                             <li><a href="#" class="dropdown-item remove-item-btn" data-id="<?php echo (int)($row->id ?? 0); ?>"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>
@@ -211,6 +221,13 @@
                     <small class="text-muted">Pisahkan incident dengan Enter (baris baru).</small>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="addStatus">
+                        <option value="not yet" selected>Not Yet</option>
+                        <option value="done">Done</option>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Tanggal</label>
                     <input type="date" class="form-control" id="addTanggal" value="<?php echo date('Y-m-d'); ?>">
                 </div>
@@ -252,6 +269,13 @@
                 <div class="mb-3">
                     <label class="form-label">Incident</label>
                     <input type="text" class="form-control" id="editIncident" placeholder="Incident">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="editStatus">
+                        <option value="not yet">Not Yet</option>
+                        <option value="done">Done</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tanggal</label>
@@ -359,16 +383,16 @@
     if ($.fn.DataTable) {
         $('#monitoringInternalTable').DataTable({
             pageLength: 25,
-            order: [[4, 'desc']]
+            order: [[5, 'desc']]
         });
     }
 
     function validatePayload(payload){
-        return payload.nama && payload.segmen && payload.incident && payload.tanggal;
+        return payload.nama && payload.segmen && payload.incident && payload.status && payload.tanggal;
     }
 
     function validateAddPayload(payload){
-        return (payload.nama_list && payload.nama_list.length > 0) && payload.segmen && payload.incident_list && payload.tanggal;
+        return (payload.nama_list && payload.nama_list.length > 0) && payload.segmen && payload.incident_list && payload.status && payload.tanggal;
     }
 
     $('#saveAddBtn').on('click', function(){
@@ -376,6 +400,7 @@
             nama_list: $('#addNama').val() || [],
             segmen: $('#addSegmen').val().trim(),
             incident_list: $('#addIncident').val(),
+            status: ($('#addStatus').val() || '').trim(),
             tanggal: $('#addTanggal').val()
         };
 
@@ -400,6 +425,7 @@
         $('#editNama').val($el.data('nama'));
         $('#editSegmen').val($el.data('segmen'));
         $('#editIncident').val($el.data('incident'));
+        $('#editStatus').val((($el.data('status') || 'not yet')+'').toLowerCase());
         $('#editTanggal').val($el.data('tanggal'));
         new bootstrap.Modal(document.getElementById('editModal')).show();
     });
@@ -410,6 +436,7 @@
             nama: $('#editNama').val().trim(),
             segmen: $('#editSegmen').val().trim(),
             incident: $('#editIncident').val().trim(),
+            status: ($('#editStatus').val() || '').trim(),
             tanggal: $('#editTanggal').val()
         };
 
