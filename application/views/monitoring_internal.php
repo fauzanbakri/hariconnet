@@ -107,7 +107,7 @@
                                                     <?php if ($statusVal === 'done') { ?>
                                                         <span class="badge bg-success">Done</span>
                                                     <?php } else { ?>
-                                                        <span class="badge bg-warning text-dark">Not Yet</span>
+                                                        <span class="badge bg-warning text-white">Not Yet</span>
                                                     <?php } ?>
                                                 </td>
                                                 <td><?php echo htmlspecialchars($row->tanggal ?? ''); ?></td>
