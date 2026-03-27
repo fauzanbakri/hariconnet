@@ -170,6 +170,7 @@ class PemakaianMaterial extends CI_Controller {
         $qty = $this->input->post('qty_terpakai');
         $kode_terpakai = $this->input->post('kode_material_terpakai');
         $sn_terpakai = $this->input->post('sn_terpakai');
+        $status_terpakai = "Sudah";
 
         if (!$idmaterial || !$tanggal || !$qty) {
             echo json_encode(['status' => 'error', 'message' => 'Missing required fields']);
@@ -225,6 +226,7 @@ class PemakaianMaterial extends CI_Controller {
         $update = [];
         if ($kode_terpakai) $update['kode_material_terpakai'] = $kode_terpakai;
         if ($sn_terpakai) $update['sn_terpakai'] = $sn_terpakai;
+        if ($status_terpakai) $update['status_terpakai'] = $status_terpakai;
         if (!empty($update)) {
             $this->db->where('idmaterial', $idmaterial)->update('material', $update);
         }
