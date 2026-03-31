@@ -710,6 +710,7 @@
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='Team Leader' ){
                             echo '
+                            <!-- 
                          <li class="menu-title"><span data-key="t-menu">Customer Exp</span></li>
                          <li class="nav-item">
                             <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
@@ -740,7 +741,9 @@
                             <a class="nav-link menu-link" href="#" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-account-multiple-check-outline"></i> <span data-key="t-layouts">List Permohonan Done</span>
                             </a>
-                        </li>';
+                        </li>
+                            -->
+                        ';
                             }
                         ?>
                     </ul>
