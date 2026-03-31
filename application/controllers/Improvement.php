@@ -7,7 +7,15 @@ class Improvement extends CI_Controller {
 		$title['title']="Improvement";
 		$q['data'] = $this->db->query("
 			SELECT * FROM improvement")->result();
-		$q['tim'] = $this->db->query("SELECT * FROM tim WHERE segmen='Korporat'")->result();
+		$tim_fields = $this->db->list_fields('tim');
+		$this->db->from('tim');
+		if (in_array('segmen', $tim_fields, true)) {
+			$this->db->where('segmen', 'Korporat');
+		}
+		if (in_array('nama', $tim_fields, true)) {
+			$this->db->order_by('nama', 'ASC');
+		}
+		$q['tim'] = $this->db->get()->result();
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		session_start();
 		if(
