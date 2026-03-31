@@ -423,7 +423,7 @@
                 </div>
             </div>
 
-        </div><!-- /.modal-content -->
+        </div>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
         <!-- ========== App Menu ========== -->
@@ -592,11 +592,13 @@
                             $_SESSION['role']=='Pemeliharaan Ritel'
                             ){
                                 echo '
-                                //  <li class="nav-item">
-                                //     <a class="nav-link menu-link" href="MonitoringSLA" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                //         <i class="ri-pie-chart-line"></i> <span data-key="t-layouts">Monitoring SLA</span>
-                                //     </a>
-                                // </li> 
+                                <!--  
+                                 <li class="nav-item">
+                                    <a class="nav-link menu-link" href="MonitoringSLA" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="ri-pie-chart-line"></i> <span data-key="t-layouts">Monitoring SLA</span>
+                                    </a>
+                                </li> 
+                                -->
                                 <li class="nav-item">
                                     <a class="nav-link menu-link" href="ListTeam" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                         <i class="mdi mdi-account-hard-hat"></i> <span data-key="t-layouts">List Team</span>
