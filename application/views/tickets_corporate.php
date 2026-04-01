@@ -78,7 +78,20 @@
                                             <td><?php echo htmlspecialchars($row->segmen ?? ''); ?></td>
                                             <td><?php echo htmlspecialchars($row->kp ?? '-'); ?></td>
                                             <td><?php echo htmlspecialchars($row->tim_nama ?? '-'); ?></td>
-                                            <td><?php echo htmlspecialchars($row->status ?? ''); ?></td>
+                                            <td>
+                                                <?php
+                                                    $statusText = strtoupper(trim((string)($row->status ?? '')));
+                                                    $statusClass = 'bg-secondary';
+                                                    if ($statusText === 'OPEN' || $statusText === 'ANTRIAN' || $statusText === 'NEW') {
+                                                        $statusClass = 'bg-primary';
+                                                    } elseif ($statusText === 'ON PROGRESS' || $statusText === 'STOPCLOCK') {
+                                                        $statusClass = 'bg-warning text-dark';
+                                                    } elseif (strpos($statusText, 'SOLVED') !== false || $statusText === 'CLOSED') {
+                                                        $statusClass = 'bg-success';
+                                                    }
+                                                ?>
+                                                <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($row->status ?? ''); ?></span>
+                                            </td>
                                             <td><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
                                             <td>
                                                 <div class='dropdown d-inline-block'>
