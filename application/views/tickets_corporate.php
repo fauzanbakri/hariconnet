@@ -350,11 +350,14 @@ $(document).ready(function(){
         $('#editketerangan').val(rowKeterangan);
 
         var rawStatus = rowStatusAttr;
-        var normalizedRaw = rawStatus.replace(/\s+/g, ' ').toUpperCase();
+        var normalizeStatus = function(v){
+            return ((v || '') + '').replace(/[\s\u00A0]+/g, ' ').trim().toUpperCase();
+        };
+        var normalizedRaw = normalizeStatus(rawStatus);
         var matchedValue = '';
         $('#editstatus option').each(function(){
             var optVal = (($(this).val() || '') + '').trim();
-            if (optVal.replace(/\s+/g, ' ').toUpperCase() === normalizedRaw) {
+            if (normalizeStatus(optVal) === normalizedRaw) {
                 matchedValue = optVal;
                 return false;
             }
@@ -366,6 +369,11 @@ $(document).ready(function(){
 
         setTimeout(function(){
             $('#editidTim').val(rowIdTim).trigger('change');
+            if (!matchedValue && rawStatus) {
+                if ($('#editstatus option[value="'+ rawStatus.replace(/"/g, '\\"') +'"]').length === 0) {
+                    $('#editstatus').append($('<option>', { value: rawStatus, text: rawStatus }));
+                }
+            }
             $('#editstatus').val(matchedValue || rawStatus).trigger('change');
         }, 0);
     });
