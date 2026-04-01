@@ -340,7 +340,17 @@ $(document).ready(function(){
         $('#editincident').val($(this).data('incident'));
         $('#editidTim').val($(this).data('idtim')).trigger('change');
         $('#editsegmen').val($(this).data('segmen'));
-        $('#editstatus').val($(this).data('status'));
+        var rawStatus = (($(this).data('status') || '') + '').trim();
+        var normalizedRaw = rawStatus.replace(/\s+/g, ' ').toUpperCase();
+        var matchedValue = '';
+        $('#editstatus option').each(function(){
+            var optVal = (($(this).val() || '') + '').trim();
+            if (optVal.replace(/\s+/g, ' ').toUpperCase() === normalizedRaw) {
+                matchedValue = optVal;
+                return false;
+            }
+        });
+        $('#editstatus').val(matchedValue || rawStatus);
         $('#editketerangan').val($(this).data('keterangan'));
         new bootstrap.Modal(document.getElementById('editCorporateModal')).show();
     });
