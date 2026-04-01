@@ -363,18 +363,24 @@ $(document).ready(function(){
             }
         });
 
+        if (!matchedValue && normalizedRaw) {
+            $('#editstatus option').each(function(){
+                var optVal = (($(this).val() || '') + '').trim();
+                var normalizedOpt = normalizeStatus(optVal);
+                if (normalizedOpt.indexOf(normalizedRaw) === 0 || normalizedRaw.indexOf(normalizedOpt) === 0) {
+                    matchedValue = optVal;
+                    return false;
+                }
+            });
+        }
+
         var modalEl = document.getElementById('editCorporateModal');
         var modal = new bootstrap.Modal(modalEl);
         modal.show();
 
         setTimeout(function(){
             $('#editidTim').val(rowIdTim).trigger('change');
-            if (!matchedValue && rawStatus) {
-                if ($('#editstatus option[value="'+ rawStatus.replace(/"/g, '\\"') +'"]').length === 0) {
-                    $('#editstatus').append($('<option>', { value: rawStatus, text: rawStatus }));
-                }
-            }
-            $('#editstatus').val(matchedValue || rawStatus).trigger('change');
+            $('#editstatus').val(matchedValue || '').trigger('change');
         }, 0);
     });
 
