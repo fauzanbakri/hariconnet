@@ -14,8 +14,8 @@ class MonitoringTimSerpo extends CI_Controller {
         $team = trim((string)$teamName);
         if ($team === '') return;
 
-        $status = strtoupper(trim((string)$statusText));
-        $pendingStatuses = ['OPEN', 'NEW', 'ANTRIAN', 'STOPCLOCK'];
+        $status = strtoupper(preg_replace('/\s+/', ' ', trim((string)$statusText)));
+        $closedStatuses = ['CLOSED', 'SOLVED (ICRM OPEN)'];
 
         if (!isset($stats[$team])) {
             $stats[$team] = [
@@ -31,7 +31,7 @@ class MonitoringTimSerpo extends CI_Controller {
             ];
         }
 
-        if (in_array($status, $pendingStatuses, true)) {
+        if (!in_array($status, $closedStatuses, true)) {
             if ($source === 'feeder') $stats[$team]['feeder_pending'] += (int)$count;
             if ($source === 'retail') $stats[$team]['retail_pending'] += (int)$count;
             if ($source === 'corporate') $stats[$team]['corporate_pending'] += (int)$count;
