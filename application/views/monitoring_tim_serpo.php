@@ -25,10 +25,10 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="timSerpoTable" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                                <table id="timSerpoTable" class="table table-bordered dt-responsive nowrap table-striped align-middle text-center" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Tim</th>
+                                            <th class="text-start">Tim</th>
                                             <th>Pending Feeder</th>
                                             <th>Pending Retail</th>
                                             <th>Pending Corporate</th>
@@ -39,7 +39,7 @@
                                     <tbody>
                                         <?php foreach(($rows ?? []) as $r){ ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($r['tim']); ?></td>
+                                                <td class="text-start"><?php echo htmlspecialchars($r['tim']); ?></td>
                                                 <td><?php echo (int)$r['feeder_pending']; ?></td>
                                                 <td><?php echo (int)$r['retail_pending']; ?></td>
                                                 <td><?php echo (int)$r['corporate_pending']; ?></td>
