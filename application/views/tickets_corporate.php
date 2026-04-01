@@ -336,11 +336,20 @@ $(document).ready(function(){
 
     $(document).on('click', '.edit-item-btn', function(e){
         e.preventDefault();
-        $('#editid').val($(this).data('id'));
-        $('#editincident').val($(this).data('incident'));
-        $('#editidTim').val($(this).data('idtim')).trigger('change');
-        $('#editsegmen').val($(this).data('segmen'));
-        var rawStatus = (($(this).data('status') || '') + '').trim();
+        var $btn = $(this);
+        var rowId = ($btn.attr('data-id') || '').trim();
+        var rowIncident = ($btn.attr('data-incident') || '').trim();
+        var rowIdTim = ($btn.attr('data-idtim') || '').trim();
+        var rowSegmen = ($btn.attr('data-segmen') || '').trim();
+        var rowStatusAttr = ($btn.attr('data-status') || '').trim();
+        var rowKeterangan = ($btn.attr('data-keterangan') || '').trim();
+
+        $('#editid').val(rowId);
+        $('#editincident').val(rowIncident);
+        $('#editsegmen').val(rowSegmen);
+        $('#editketerangan').val(rowKeterangan);
+
+        var rawStatus = rowStatusAttr;
         var normalizedRaw = rawStatus.replace(/\s+/g, ' ').toUpperCase();
         var matchedValue = '';
         $('#editstatus option').each(function(){
@@ -350,9 +359,15 @@ $(document).ready(function(){
                 return false;
             }
         });
-        $('#editstatus').val(matchedValue || rawStatus);
-        $('#editketerangan').val($(this).data('keterangan'));
-        new bootstrap.Modal(document.getElementById('editCorporateModal')).show();
+
+        var modalEl = document.getElementById('editCorporateModal');
+        var modal = new bootstrap.Modal(modalEl);
+        modal.show();
+
+        setTimeout(function(){
+            $('#editidTim').val(rowIdTim).trigger('change');
+            $('#editstatus').val(matchedValue || rawStatus).trigger('change');
+        }, 0);
     });
 
     $('#editsubmitBtn').on('click', function(){
