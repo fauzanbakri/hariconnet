@@ -1,4 +1,5 @@
 <div class="main-content">
+    <link href="js/cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -160,7 +161,7 @@
                         <label class="form-label">Tim</label>
                         <select class="form-select" id="idTim">
                             <option value="">Pilih Tim</option>
-                            <?php foreach(($tim ?? []) as $t){ echo '<option value="'.(int)$t->idTim.'">'.htmlspecialchars($t->nama.' ('.($t->kp ?? '-').')').'</option>'; } ?>
+                            <?php foreach(($tim ?? []) as $t){ echo '<option value="'.(int)$t->idTim.'">'.htmlspecialchars($t->nama.' ('.($t->kendaraan ?? '-').')').'</option>'; } ?>
                         </select>
                     </div>
                     <div class="col-12">
@@ -219,7 +220,7 @@
                         <label class="form-label">Tim</label>
                         <select class="form-select" id="editidTim">
                             <option value="">Pilih Tim</option>
-                            <?php foreach(($tim ?? []) as $t){ echo '<option value="'.(int)$t->idTim.'">'.htmlspecialchars($t->nama.' ('.($t->kp ?? '-').')').'</option>'; } ?>
+                            <?php foreach(($tim ?? []) as $t){ echo '<option value="'.(int)$t->idTim.'">'.htmlspecialchars($t->nama.' ('.($t->kendaraan ?? '-').')').'</option>'; } ?>
                         </select>
                     </div>
                     <div class="col-12">
@@ -266,6 +267,7 @@
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="js/cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <!-- <script src="assets/js/pages/sweetalerts.init.js"></script> -->
@@ -280,6 +282,19 @@
     <script src="assets/js/app.js"></script>   
 <script>
 $(document).ready(function(){
+    if ($.fn.select2) {
+        $('#idTim').select2({
+            placeholder: 'Pilih Tim',
+            width: '100%',
+            dropdownParent: $('#addCorporateModal')
+        });
+        $('#editidTim').select2({
+            placeholder: 'Pilih Tim',
+            width: '100%',
+            dropdownParent: $('#editCorporateModal')
+        });
+    }
+
     var table = $('#dataCorporate').DataTable({
         pageLength: 25
     });
@@ -323,7 +338,7 @@ $(document).ready(function(){
         e.preventDefault();
         $('#editid').val($(this).data('id'));
         $('#editincident').val($(this).data('incident'));
-        $('#editidTim').val($(this).data('idtim'));
+        $('#editidTim').val($(this).data('idtim')).trigger('change');
         $('#editsegmen').val($(this).data('segmen'));
         $('#editstatus').val($(this).data('status'));
         $('#editketerangan').val($(this).data('keterangan'));

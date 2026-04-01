@@ -15,7 +15,7 @@ class TicketsCorporate extends CI_Controller {
                                        LEFT JOIN basecamp b ON t.idBc = b.idBc
                                        ORDER BY tc.id DESC")->result();
 
-        $q['tim'] = $this->db->query("SELECT t.idTim, t.nama, b.kp
+        $q['tim'] = $this->db->query("SELECT t.idTim, t.nama, b.kendaraan
                                       FROM tim t
                                       LEFT JOIN basecamp b ON t.idBc = b.idBc
                                       ORDER BY t.nama ASC")->result();
