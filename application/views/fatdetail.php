@@ -77,9 +77,9 @@
                                         $colorClass = $isFilled ? 'bg-danger' : 'bg-success';
                                     ?>
                                     <div class="col-3 col-sm-2">
-                                        <div class="rounded-circle text-white <?php echo $colorClass; ?> d-flex align-items-center justify-content-center mx-auto" style="width: 55px; height: 55px;">
+                                        <button type="button" class="rounded-circle text-white <?php echo $colorClass; ?> d-flex align-items-center justify-content-center mx-auto border-0" style="width: 55px; height: 55px;" data-bs-toggle="modal" data-bs-target="#portModal" data-port="<?php echo $i; ?>" data-value="<?php echo htmlspecialchars($value); ?>">
                                             P<?php echo $i; ?>
-                                        </div>
+                                        </button>
                                         <div class="mt-2 small text-truncate"><?php echo $isFilled ? 'Terisi' : 'Kosong'; ?></div>
                                     </div>
                                     <?php endfor; ?>
