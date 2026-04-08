@@ -99,17 +99,22 @@ class MonitoringTimSerpo extends CI_Controller {
             }
 
             usort($result, function($a, $b){
-                $pendingA = (int)$a['total_pending'];
-                $pendingB = (int)$b['total_pending'];
-                if ($pendingA === $pendingB) {
-                    $onProgressA = (int)$a['total_onprogress'];
-                    $onProgressB = (int)$b['total_onprogress'];
-                    if ($onProgressA === $onProgressB) {
-                        return strcmp($a['tim'], $b['tim']);
+                $feederCorpA = (int)$a['feeder_pending'] + (int)$a['corporate_pending'];
+                $feederCorpB = (int)$b['feeder_pending'] + (int)$b['corporate_pending'];
+                if ($feederCorpA === $feederCorpB) {
+                    $pendingA = (int)$a['total_pending'];
+                    $pendingB = (int)$b['total_pending'];
+                    if ($pendingA === $pendingB) {
+                        $onProgressA = (int)$a['total_onprogress'];
+                        $onProgressB = (int)$b['total_onprogress'];
+                        if ($onProgressA === $onProgressB) {
+                            return strcmp($a['tim'], $b['tim']);
+                        }
+                        return $onProgressB - $onProgressA;
                     }
-                    return $onProgressB - $onProgressA;
+                    return $pendingB - $pendingA;
                 }
-                return $pendingB - $pendingA;
+                return $feederCorpB - $feederCorpA;
             });
 
             $all_teams = array_keys($stats);
