@@ -58,6 +58,23 @@
                                     <span class="badge bg-light text-dark py-1 fs-7">IKR <?php echo (int)$r['retail_pending']; ?></span>
                                     <span class="badge bg-light text-dark py-1 fs-7">Corporate <?php echo (int)$r['corporate_pending']; ?></span>
                                 </div>
+                                <div class="d-flex flex-wrap gap-1 mt-2">
+                                    <?php if ((int)$r['feeder_onprogress'] > 0): ?>
+                                        <span class="badge bg-info text-white py-1 fs-7">Feeder On Progress</span>
+                                    <?php elseif ((int)$r['feeder_pending'] > 0): ?>
+                                        <span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>
+                                    <?php endif; ?>
+                                    <?php if ((int)$r['retail_onprogress'] > 0): ?>
+                                        <span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>
+                                    <?php elseif ((int)$r['retail_pending'] > 0): ?>
+                                        <span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>
+                                    <?php endif; ?>
+                                    <?php if ((int)$r['corporate_onprogress'] > 0): ?>
+                                        <span class="badge bg-info text-white py-1 fs-7">Corporate On Progress</span>
+                                    <?php elseif ((int)$r['corporate_pending'] > 0): ?>
+                                        <span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                             <div class="pt-1 border-top">
                                 <div class="d-flex justify-content-between align-items-center text-muted smaller">
