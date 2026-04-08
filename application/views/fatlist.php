@@ -70,7 +70,7 @@
                                                 <td><?php echo htmlspecialchars($rowAssoc[$col] ?? ''); ?></td>
                                                 <?php endforeach; ?>
                                                 <td>
-                                                    <a href="../fat/detail.php?odp=<?php echo urlencode($rowAssoc['ID ODP'] ?? ''); ?>" class="btn btn-warning btn-sm">
+                                                    <a href="FatDetail?odp=<?php echo urlencode($rowAssoc['ID ODP'] ?? ''); ?>" class="btn btn-warning btn-sm">
                                                         <i class="ri-eye-line"></i> Detail
                                                     </a>
                                                 </td>
