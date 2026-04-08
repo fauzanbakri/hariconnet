@@ -126,11 +126,11 @@ class MonitoringTimSerpo extends CI_Controller {
                 // Get latest on progress incident
                 if ($this->db->table_exists('feeder')) {
                     $feederOnProgress = $this->db->query(
-                        "SELECT idFeeder FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY tglCreate DESC LIMIT 1",
+                        "SELECT id FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY tglCreate DESC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($feederOnProgress) {
-                        $onProgressNo = $feederOnProgress->idFeeder;
+                        $onProgressNo = $feederOnProgress->id;
                     }
                 }
 
@@ -146,7 +146,7 @@ class MonitoringTimSerpo extends CI_Controller {
 
                 if (!$onProgressNo && $this->db->table_exists('tiketCorporate')) {
                     $corpOnProgress = $this->db->query(
-                        "SELECT tc.idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) = 'ON PROGRESS' ORDER BY tc.tglCreate DESC LIMIT 1",
+                        "SELECT idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) = 'ON PROGRESS' ORDER BY tc.tglCreate DESC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($corpOnProgress) {
@@ -157,11 +157,11 @@ class MonitoringTimSerpo extends CI_Controller {
                 // Get oldest pending incident
                 if ($this->db->table_exists('feeder')) {
                     $feederPending = $this->db->query(
-                        "SELECT idFeeder FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY tglCreate ASC LIMIT 1",
+                        "SELECT id FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY tglCreate ASC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($feederPending) {
-                        $oldestPendingNo = $feederPending->idFeeder;
+                        $oldestPendingNo = $feederPending->id;
                     }
                 }
 
@@ -177,7 +177,7 @@ class MonitoringTimSerpo extends CI_Controller {
 
                 if (!$oldestPendingNo && $this->db->table_exists('tiketCorporate')) {
                     $corpPending = $this->db->query(
-                        "SELECT tc.idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(tc.status)) != 'ON PROGRESS' ORDER BY tc.tglCreate ASC LIMIT 1",
+                        "SELECT idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(tc.status)) != 'ON PROGRESS' ORDER BY tc.tglCreate ASC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($corpPending) {
