@@ -58,7 +58,12 @@
                             <div>
                                 <div class="d-flex justify-content-between align-items-start mb-3">
                                     <div>
-                                        <h5 class="card-title mb-1 text-truncate"><?php echo htmlspecialchars($r['tim']); ?></h5>
+                                        <h5 class="card-title mb-1 text-truncate">
+                                            <?php if ($total_pending > 0 && $total_onprogress === 0) { ?>
+                                                <span class="badge bg-danger text-white me-2">!</span>
+                                            <?php } ?>
+                                            <?php echo htmlspecialchars($r['tim']); ?>
+                                        </h5>
                                         <p class="text-muted small mb-0">Tim with active incidents</p>
                                     </div>
                                     <span class="badge <?php echo $badgeClass; ?> py-2 px-3"><?php echo $statusText; ?></span>
