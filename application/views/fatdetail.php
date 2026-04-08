@@ -69,7 +69,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-wrap justify-content-center g-2 mb-4">
+                                <div class="d-flex flex-wrap justify-content-center g-3 mb-4">
                                     <?php for ($i = 1; $i <= $jumlahPort; $i++):
                                         $port = 'PORT '.$i;
                                         $value = strtoupper(trim($data[$port] ?? ''));
