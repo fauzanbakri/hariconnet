@@ -12,7 +12,6 @@
                             </ol>
                         </div>
                     </div>
-                    <p class="text-muted mb-3">Menampilkan tim yang memiliki pending incident (Feeder / Retail / Corporate), termasuk yang juga memiliki incident berstatus <strong>ON PROGRESS</strong>.</p>
                 </div>
             </div>
 
