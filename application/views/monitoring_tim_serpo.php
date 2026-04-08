@@ -75,22 +75,10 @@
                                 </div>
                             </div>
                             <div class="pt-1 border-top">
-                                <?php if ($total_onprogress > 0 && isset($r['latest_onprogress_no'])) { ?>
-                                    <div class="d-flex justify-content-between align-items-center text-muted smaller">
-                                        <span>On Progress #<?php echo htmlspecialchars($r['latest_onprogress_no']); ?></span>
-                                        <strong><?php echo $total_onprogress; ?></strong>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class="d-flex justify-content-between align-items-center text-muted smaller">
-                                        <span>Total Pending</span>
-                                        <strong><?php echo $total_pending; ?></strong>
-                                    </div>
-                                    <?php if ($total_pending > 0 && isset($r['oldest_pending_no'])) { ?>
-                                        <div class="d-flex justify-content-between align-items-center text-muted smaller">
-                                            <span>Oldest #<?php echo htmlspecialchars($r['oldest_pending_no']); ?></span>
-                                        </div>
-                                    <?php } ?>
-                                <?php } ?>
+                                <div class="d-flex justify-content-between align-items-center text-muted smaller">
+                                    <span>Total Pending <strong><?php echo $total_pending; ?></strong></span>
+                                    <span>On Progress <strong><?php echo $total_onprogress; ?></strong></span>
+                                </div>
                             </div>
                         </div>
                     </div>
