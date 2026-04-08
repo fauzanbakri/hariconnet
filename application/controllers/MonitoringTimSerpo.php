@@ -117,6 +117,78 @@ class MonitoringTimSerpo extends CI_Controller {
                 return $feederCorpB - $feederCorpA;
             });
 
+            // Add incident detail for each team
+            foreach ($result as &$team) {
+                $teamName = $team['tim'];
+                $onProgressNo = null;
+                $oldestPendingNo = null;
+
+                // Get latest on progress incident
+                if ($this->db->table_exists('feeder')) {
+                    $feederOnProgress = $this->db->query(
+                        "SELECT idFeeder FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY tglCreate DESC LIMIT 1",
+                        [$teamName]
+                    )->row();
+                    if ($feederOnProgress) {
+                        $onProgressNo = $feederOnProgress->idFeeder;
+                    }
+                }
+
+                if (!$onProgressNo && $this->db->table_exists('tiket')) {
+                    $retailOnProgress = $this->db->query(
+                        "SELECT idTiket FROM tiket WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY tglCreate DESC LIMIT 1",
+                        [$teamName]
+                    )->row();
+                    if ($retailOnProgress) {
+                        $onProgressNo = $retailOnProgress->idTiket;
+                    }
+                }
+
+                if (!$onProgressNo && $this->db->table_exists('tiketCorporate')) {
+                    $corpOnProgress = $this->db->query(
+                        "SELECT tc.idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) = 'ON PROGRESS' ORDER BY tc.tglCreate DESC LIMIT 1",
+                        [$teamName]
+                    )->row();
+                    if ($corpOnProgress) {
+                        $onProgressNo = $corpOnProgress->idTiketCorporate;
+                    }
+                }
+
+                // Get oldest pending incident
+                if ($this->db->table_exists('feeder')) {
+                    $feederPending = $this->db->query(
+                        "SELECT idFeeder FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY tglCreate ASC LIMIT 1",
+                        [$teamName]
+                    )->row();
+                    if ($feederPending) {
+                        $oldestPendingNo = $feederPending->idFeeder;
+                    }
+                }
+
+                if (!$oldestPendingNo && $this->db->table_exists('tiket')) {
+                    $retailPending = $this->db->query(
+                        "SELECT idTiket FROM tiket WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY tglCreate ASC LIMIT 1",
+                        [$teamName]
+                    )->row();
+                    if ($retailPending) {
+                        $oldestPendingNo = $retailPending->idTiket;
+                    }
+                }
+
+                if (!$oldestPendingNo && $this->db->table_exists('tiketCorporate')) {
+                    $corpPending = $this->db->query(
+                        "SELECT tc.idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(tc.status)) != 'ON PROGRESS' ORDER BY tc.tglCreate ASC LIMIT 1",
+                        [$teamName]
+                    )->row();
+                    if ($corpPending) {
+                        $oldestPendingNo = $corpPending->idTiketCorporate;
+                    }
+                }
+
+                $team['latest_onprogress_no'] = $onProgressNo;
+                $team['oldest_pending_no'] = $oldestPendingNo;
+            }
+
             $data['incident_teams'] = $result;
             $data['total_teams'] = count($result);
 
