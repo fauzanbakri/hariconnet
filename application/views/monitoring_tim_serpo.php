@@ -36,36 +36,49 @@
                     $total_onprogress = (int)$r['total_onprogress'];
                     if ($total_onprogress > 0 && $total_pending > 1) {
                         $borderClass = 'border-info';
-                        $badgeClass = 'badge-info';
+                        $badgeClass = 'bg-info text-white';
                         $statusText = 'On Progress';
                     } elseif ($total_onprogress > 0 && $total_pending === 1) {
                         $borderClass = 'border-success';
-                        $badgeClass = 'bg-success';
+                        $badgeClass = 'bg-success text-white';
                         $statusText = 'On Progress';
                     } elseif ($total_pending > 0 && $total_onprogress === 0) {
                         $borderClass = 'border-danger';
-                        $badgeClass = 'bg-danger';
+                        $badgeClass = 'bg-danger text-white';
                         $statusText = 'Pending';
                     } else {
                         $borderClass = 'border-secondary';
-                        $badgeClass = 'bg-secondary';
+                        $badgeClass = 'bg-secondary text-white';
                         $statusText = 'Info';
                     }
                 ?>
                 <div class="col-md-4 col-lg-3 mb-4">
                     <div class="card shadow-sm border-start border-4 <?php echo $borderClass; ?> h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div>
-                                    <h5 class="card-title mb-1 text-truncate"><?php echo htmlspecialchars($r['tim']); ?></h5>
-                                    <p class="text-muted small mb-0">Total Pending <?php echo $total_pending; ?> · On Progress <?php echo $total_onprogress; ?></p>
+                        <div class="card-body d-flex flex-column justify-content-between h-100">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h5 class="card-title mb-1 text-truncate"><?php echo htmlspecialchars($r['tim']); ?></h5>
+                                        <p class="text-muted small mb-0">Tim with active incidents</p>
+                                    </div>
+                                    <span class="badge <?php echo $badgeClass; ?> py-2 px-3"><?php echo $statusText; ?></span>
                                 </div>
-                                <span class="badge <?php echo $badgeClass; ?> text-white py-2 px-3"><?php echo $statusText; ?></span>
+                                <p class="fw-semibold mb-2">Pending Feeder + Corporate: <span class="text-dark"><?php echo (int)$r['feeder_pending'] + (int)$r['corporate_pending']; ?></span></p>
+                                <div class="d-flex flex-wrap gap-2 mb-3">
+                                    <span class="badge bg-light text-dark">Feeder <?php echo (int)$r['feeder_pending']; ?></span>
+                                    <span class="badge bg-light text-dark">Retail <?php echo (int)$r['retail_pending']; ?></span>
+                                    <span class="badge bg-light text-dark">Corporate <?php echo (int)$r['corporate_pending']; ?></span>
+                                </div>
                             </div>
-                            <div class="text-muted small">
-                                <div class="mb-2">Feeder: <strong><?php echo (int)$r['feeder_pending']; ?></strong></div>
-                                <div class="mb-2">Retail: <strong><?php echo (int)$r['retail_pending']; ?></strong></div>
-                                <div>Corporate: <strong><?php echo (int)$r['corporate_pending']; ?></strong></div>
+                            <div class="mt-3 pt-2 border-top">
+                                <div class="d-flex justify-content-between align-items-center text-muted small">
+                                    <span>Total Pending</span>
+                                    <strong><?php echo $total_pending; ?></strong>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center text-muted small">
+                                    <span>On Progress</span>
+                                    <strong><?php echo $total_onprogress; ?></strong>
+                                </div>
                             </div>
                         </div>
                     </div>
