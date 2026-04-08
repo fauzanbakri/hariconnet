@@ -74,10 +74,11 @@
                                         $port = 'PORT '.$i;
                                         $value = strtoupper(trim($data[$port] ?? ''));
                                         $isFilled = $value && $value !== 'IDLE';
-                                        $colorClass = $isFilled ? 'bg-danger' : 'bg-success';
+                                        $borderClass = $isFilled ? 'border-danger' : 'border-success';
+                                        $textClass = $isFilled ? 'text-danger' : 'text-success';
                                     ?>
                                     <div class="col-3 col-sm-2">
-                                        <button type="button" class="port-button rounded-circle text-white <?php echo $colorClass; ?> d-flex align-items-center justify-content-center mx-auto border-0" style="width: 55px; height: 55px;" data-port="<?php echo $i; ?>" data-value="<?php echo htmlspecialchars($value); ?>">
+                                        <button type="button" class="port-button btn border border-3 <?php echo $borderClass; ?> <?php echo $textClass; ?> d-flex align-items-center justify-content-center mx-auto" style="width: 65px; height: 65px; background-color: #fff; border-radius: 0;" data-port="<?php echo $i; ?>" data-value="<?php echo htmlspecialchars($value); ?>">
                                             P<?php echo $i; ?>
                                         </button>
                                         <div class="mt-2 small text-truncate"><?php echo $isFilled ? 'Terisi' : 'Kosong'; ?></div>
