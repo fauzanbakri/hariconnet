@@ -52,35 +52,35 @@
                         $statusText = 'Info';
                     }
                 ?>
-                <div class="col-md-4 col-lg-3 mb-3">
+                <div class="col-md-4 col-lg-3 mb-2">
                     <div class="card shadow-sm border-0 border-top border-4 <?php echo $borderClass; ?> h-100">
-                        <div class="card-body py-2 px-3 d-flex flex-column justify-content-between h-100">
+                        <div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">
                             <div>
-                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
                                     <div>
-                                        <h6 class="card-title mb-1 text-truncate">
+                                        <h6 class="card-title mb-0 text-truncate">
                                             <?php if ($total_pending > 0 && $total_onprogress === 0) { ?>
-                                                <span class="badge bg-danger text-white me-1">!</span>
+                                                <span class="badge bg-danger text-white me-1 py-1 px-2">!</span>
                                             <?php } ?>
                                             <?php echo htmlspecialchars($r['tim']); ?>
                                         </h6>
-                                        <p class="text-muted fst-italic mb-1 small">Active incident</p>
+                                        <p class="text-muted fst-italic mb-0 small">Active incident</p>
                                     </div>
                                     <span class="badge <?php echo $badgeClass; ?> py-1 px-2 fs-7"><?php echo $statusText; ?></span>
                                 </div>
                                 <p class="fw-semibold mb-1 small">Pending Feeder + Corporate: <span class="text-dark"><?php echo (int)$r['feeder_pending'] + (int)$r['corporate_pending']; ?></span></p>
-                                <div class="d-flex flex-wrap gap-1 mb-2">
+                                <div class="d-flex flex-wrap gap-1 mb-1">
                                     <span class="badge bg-light text-dark py-1 fs-7">Feeder <?php echo (int)$r['feeder_pending']; ?></span>
                                     <span class="badge bg-light text-dark py-1 fs-7">IKR <?php echo (int)$r['retail_pending']; ?></span>
                                     <span class="badge bg-light text-dark py-1 fs-7">Corporate <?php echo (int)$r['corporate_pending']; ?></span>
                                 </div>
                             </div>
-                            <div class="pt-2 border-top">
-                                <div class="d-flex justify-content-between align-items-center text-muted small mb-1">
+                            <div class="pt-1 border-top">
+                                <div class="d-flex justify-content-between align-items-center text-muted smaller mb-1">
                                     <span>Total Pending</span>
                                     <strong><?php echo $total_pending; ?></strong>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center text-muted small">
+                                <div class="d-flex justify-content-between align-items-center text-muted smaller">
                                     <span>On Progress</span>
                                     <strong><?php echo $total_onprogress; ?></strong>
                                 </div>
