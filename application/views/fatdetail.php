@@ -69,7 +69,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row g-2 text-center mb-4">
+                                <div class="d-flex flex-wrap justify-content-center g-2 mb-4">
                                     <?php for ($i = 1; $i <= $jumlahPort; $i++):
                                         $port = 'PORT '.$i;
                                         $value = strtoupper(trim($data[$port] ?? ''));
@@ -77,7 +77,7 @@
                                         $borderClass = $isFilled ? 'border-danger' : 'border-success';
                                         $textClass = $isFilled ? 'text-danger' : 'text-success';
                                     ?>
-                                    <div class="col-3 col-sm-2">
+                                    <div class="text-center" style="flex: 0 0 65px;">
                                         <button type="button" class="port-button btn border border-3 <?php echo $borderClass; ?> <?php echo $textClass; ?> d-flex align-items-center justify-content-center mx-auto" style="width: 65px; height: 65px; background-color: #fff; border-radius: 12px;" data-port="<?php echo $i; ?>" data-value="<?php echo htmlspecialchars($value); ?>">
                                             P<?php echo $i; ?>
                                         </button>
