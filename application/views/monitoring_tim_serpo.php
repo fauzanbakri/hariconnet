@@ -64,25 +64,20 @@
                                             <?php } ?>
                                             <?php echo htmlspecialchars($r['tim']); ?>
                                         </h6>
-                                        <p class="text-muted fst-italic mb-0 small">Active incident</p>
                                     </div>
                                     <span class="badge <?php echo $badgeClass; ?> py-1 px-2 fs-7"><?php echo $statusText; ?></span>
                                 </div>
                                 <p class="fw-semibold mb-1 small">Pending Feeder + Corporate: <span class="text-dark"><?php echo (int)$r['feeder_pending'] + (int)$r['corporate_pending']; ?></span></p>
-                                <div class="d-flex flex-wrap gap-1 mb-1">
+                                <div class="d-flex flex-wrap gap-1">
                                     <span class="badge bg-light text-dark py-1 fs-7">Feeder <?php echo (int)$r['feeder_pending']; ?></span>
                                     <span class="badge bg-light text-dark py-1 fs-7">IKR <?php echo (int)$r['retail_pending']; ?></span>
                                     <span class="badge bg-light text-dark py-1 fs-7">Corporate <?php echo (int)$r['corporate_pending']; ?></span>
                                 </div>
                             </div>
                             <div class="pt-1 border-top">
-                                <div class="d-flex justify-content-between align-items-center text-muted smaller mb-1">
-                                    <span>Total Pending</span>
-                                    <strong><?php echo $total_pending; ?></strong>
-                                </div>
                                 <div class="d-flex justify-content-between align-items-center text-muted smaller">
-                                    <span>On Progress</span>
-                                    <strong><?php echo $total_onprogress; ?></strong>
+                                    <span>Total Pending <strong><?php echo $total_pending; ?></strong></span>
+                                    <span>On Progress <strong><?php echo $total_onprogress; ?></strong></span>
                                 </div>
                             </div>
                         </div>
