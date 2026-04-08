@@ -627,6 +627,11 @@
                                         <i class="mdi mdi-router-network"></i> <span data-key="t-layouts">List OLT</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="FatList" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                        <i class="mdi mdi-network-pos"></i> <span data-key="t-layouts">List FAT</span>
+                                    </a>
+                                </li>
                                 ';
                         }
 
