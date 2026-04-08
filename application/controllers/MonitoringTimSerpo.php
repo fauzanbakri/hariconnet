@@ -126,7 +126,7 @@ class MonitoringTimSerpo extends CI_Controller {
                 // Get latest on progress incident
                 if ($this->db->table_exists('feeder')) {
                     $feederOnProgress = $this->db->query(
-                        "SELECT id FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY tglCreate DESC LIMIT 1",
+                        "SELECT id FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY downtime DESC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($feederOnProgress) {
@@ -136,7 +136,7 @@ class MonitoringTimSerpo extends CI_Controller {
 
                 if (!$onProgressNo && $this->db->table_exists('tiket')) {
                     $retailOnProgress = $this->db->query(
-                        "SELECT idTiket FROM tiket WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY tglCreate DESC LIMIT 1",
+                        "SELECT idTiket FROM tiket WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) = 'ON PROGRESS' ORDER BY tanggal DESC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($retailOnProgress) {
@@ -157,7 +157,7 @@ class MonitoringTimSerpo extends CI_Controller {
                 // Get oldest pending incident
                 if ($this->db->table_exists('feeder')) {
                     $feederPending = $this->db->query(
-                        "SELECT id FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY tglCreate ASC LIMIT 1",
+                        "SELECT id FROM feeder WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY downtime ASC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($feederPending) {
@@ -167,7 +167,7 @@ class MonitoringTimSerpo extends CI_Controller {
 
                 if (!$oldestPendingNo && $this->db->table_exists('tiket')) {
                     $retailPending = $this->db->query(
-                        "SELECT idTiket FROM tiket WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY tglCreate ASC LIMIT 1",
+                        "SELECT idTiket FROM tiket WHERE TRIM(tim) = ? AND UPPER(TRIM(status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(status)) != 'ON PROGRESS' ORDER BY tanggal ASC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($retailPending) {
