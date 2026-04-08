@@ -46,6 +46,70 @@ class MonitoringTimSerpo extends CI_Controller {
         }
     }
 
+    private function buildStats()
+    {
+        $stats = [];
+
+        if ($this->db->table_exists('feeder')) {
+            $feederRows = $this->db->query("SELECT TRIM(tim) AS tim, UPPER(TRIM(status)) AS status, COUNT(*) AS jumlah
+                                           FROM feeder
+                                           WHERE tim IS NOT NULL AND TRIM(tim) <> ''
+                                           GROUP BY TRIM(tim), UPPER(TRIM(status))")->result();
+            foreach ($feederRows as $r) {
+                $this->addCount($stats, $r->tim, 'feeder', $r->status, $r->jumlah);
+            }
+        }
+
+        if ($this->db->table_exists('tiket')) {
+            $retailRows = $this->db->query("SELECT TRIM(tim) AS tim, UPPER(TRIM(status)) AS status, COUNT(*) AS jumlah
+                                           FROM tiket
+                                           WHERE tim IS NOT NULL AND TRIM(tim) <> ''
+                                           GROUP BY TRIM(tim), UPPER(TRIM(status))")->result();
+            foreach ($retailRows as $r) {
+                $this->addCount($stats, $r->tim, 'retail', $r->status, $r->jumlah);
+            }
+        }
+
+        if ($this->db->table_exists('tiketCorporate') && $this->db->table_exists('tim')) {
+            $corpRows = $this->db->query("SELECT TRIM(t.nama) AS tim, UPPER(TRIM(tc.status)) AS status, COUNT(*) AS jumlah
+                                         FROM tiketCorporate tc
+                                         LEFT JOIN tim t ON tc.idTim = t.idTim
+                                         WHERE t.nama IS NOT NULL AND TRIM(t.nama) <> ''
+                                         GROUP BY TRIM(t.nama), UPPER(TRIM(tc.status))")->result();
+            foreach ($corpRows as $r) {
+                $this->addCount($stats, $r->tim, 'corporate', $r->status, $r->jumlah);
+            }
+        }
+
+        $result = [];
+        foreach ($stats as $item) {
+            if ((int)$item['total_pending'] > 0 || (int)$item['total_onprogress'] > 0) {
+                $result[] = $item;
+            }
+        }
+
+        usort($result, function($a, $b){
+            $feederCorpA = (int)$a['feeder_pending'] + (int)$a['corporate_pending'];
+            $feederCorpB = (int)$b['feeder_pending'] + (int)$b['corporate_pending'];
+            if ($feederCorpA === $feederCorpB) {
+                $pendingA = (int)$a['total_pending'];
+                $pendingB = (int)$b['total_pending'];
+                if ($pendingA === $pendingB) {
+                    $onProgressA = (int)$a['total_onprogress'];
+                    $onProgressB = (int)$b['total_onprogress'];
+                    if ($onProgressA === $onProgressB) {
+                        return strcmp($a['tim'], $b['tim']);
+                    }
+                    return $onProgressB - $onProgressA;
+                }
+                return $pendingB - $pendingA;
+            }
+            return $feederCorpB - $feederCorpA;
+        });
+
+        return $result;
+    }
+
     public function index()
     {
         session_start();
@@ -58,72 +122,35 @@ class MonitoringTimSerpo extends CI_Controller {
             $_SESSION['role']=='Pemeliharaan Ritel' ||
             $_SESSION['role']=='Guest 1'
         ) {
-            $stats = [];
-
-            if ($this->db->table_exists('feeder')) {
-                $feederRows = $this->db->query("SELECT TRIM(tim) AS tim, UPPER(TRIM(status)) AS status, COUNT(*) AS jumlah
-                                               FROM feeder
-                                               WHERE tim IS NOT NULL AND TRIM(tim) <> ''
-                                               GROUP BY TRIM(tim), UPPER(TRIM(status))")->result();
-                foreach ($feederRows as $r) {
-                    $this->addCount($stats, $r->tim, 'feeder', $r->status, $r->jumlah);
-                }
-            }
-
-            if ($this->db->table_exists('tiket')) {
-                $retailRows = $this->db->query("SELECT TRIM(tim) AS tim, UPPER(TRIM(status)) AS status, COUNT(*) AS jumlah
-                                               FROM tiket
-                                               WHERE tim IS NOT NULL AND TRIM(tim) <> ''
-                                               GROUP BY TRIM(tim), UPPER(TRIM(status))")->result();
-                foreach ($retailRows as $r) {
-                    $this->addCount($stats, $r->tim, 'retail', $r->status, $r->jumlah);
-                }
-            }
-
-            if ($this->db->table_exists('tiketCorporate') && $this->db->table_exists('tim')) {
-                $corpRows = $this->db->query("SELECT TRIM(t.nama) AS tim, UPPER(TRIM(tc.status)) AS status, COUNT(*) AS jumlah
-                                             FROM tiketCorporate tc
-                                             LEFT JOIN tim t ON tc.idTim = t.idTim
-                                             WHERE t.nama IS NOT NULL AND TRIM(t.nama) <> ''
-                                             GROUP BY TRIM(t.nama), UPPER(TRIM(tc.status))")->result();
-                foreach ($corpRows as $r) {
-                    $this->addCount($stats, $r->tim, 'corporate', $r->status, $r->jumlah);
-                }
-            }
-
-            $result = [];
-            foreach ($stats as $item) {
-                if ((int)$item['total_pending'] > 0 || (int)$item['total_onprogress'] > 0) {
-                    $result[] = $item;
-                }
-            }
-
-            usort($result, function($a, $b){
-                $feederCorpA = (int)$a['feeder_pending'] + (int)$a['corporate_pending'];
-                $feederCorpB = (int)$b['feeder_pending'] + (int)$b['corporate_pending'];
-                if ($feederCorpA === $feederCorpB) {
-                    $pendingA = (int)$a['total_pending'];
-                    $pendingB = (int)$b['total_pending'];
-                    if ($pendingA === $pendingB) {
-                        $onProgressA = (int)$a['total_onprogress'];
-                        $onProgressB = (int)$b['total_onprogress'];
-                        if ($onProgressA === $onProgressB) {
-                            return strcmp($a['tim'], $b['tim']);
-                        }
-                        return $onProgressB - $onProgressA;
-                    }
-                    return $pendingB - $pendingA;
-                }
-                return $feederCorpB - $feederCorpA;
-            });
-
-            $data['incident_teams'] = $result;
-            $data['total_teams'] = count($result);
+            $data['incident_teams'] = $this->buildStats();
+            $data['total_teams'] = count($data['incident_teams']);
 
             $this->load->view('navbar', $title);
             $this->load->view('monitoring_tim_serpo', $data);
         } else {
             header('location: ./DashboardNoc');
         }
+    }
+
+    public function stats()
+    {
+        session_start();
+        if (
+            $_SESSION['role']=='Superadmin' ||
+            $_SESSION['role']=='NOC Ritel' ||
+            $_SESSION['role']=='Team Leader' ||
+            $_SESSION['role']=='Pemeliharaan Ritel' ||
+            $_SESSION['role']=='Guest 1'
+        ) {
+            header('Content-Type: application/json');
+            echo json_encode([
+                'incident_teams' => $this->buildStats(),
+                'timestamp' => date('c'),
+            ]);
+            return;
+        }
+
+        header('HTTP/1.1 403 Forbidden');
+        echo json_encode(['error' => 'Forbidden']);
     }
 }

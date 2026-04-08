@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" id="timSerpoCards">
                 <?php foreach(($incident_teams ?? []) as $r){
                     $total_pending = (int)$r['total_pending'];
                     $total_onprogress = (int)$r['total_onprogress'];
@@ -92,6 +92,79 @@
     <!-- Vector map-->
     <script src="assets/libs/jsvectormap/jsvectormap.min.js"></script>
     <script src="assets/libs/jsvectormap/maps/world-merc.js"></script>
+
+    <!-- Realtime Tim Serpo -->
+    <script>
+        (function () {
+            const cardsContainer = document.getElementById('timSerpoCards');
+            const endpoint = 'MonitoringTimSerpo/stats';
+            const refreshMs = 10000;
+
+            function getStatusMeta(item) {
+                const totalPending = parseInt(item.total_pending, 10) || 0;
+                const totalOnprogress = parseInt(item.total_onprogress, 10) || 0;
+                if (totalOnprogress > 0 && totalPending > 1) {
+                    return { border: 'border-info', badge: 'bg-info text-white', text: 'On Progress' };
+                }
+                if (totalOnprogress > 0 && totalPending === 1) {
+                    return { border: 'border-success', badge: 'bg-success text-white', text: 'On Progress' };
+                }
+                if (totalPending > 0 && totalOnprogress === 0) {
+                    return { border: 'border-danger', badge: 'bg-danger text-white', text: 'Pending' };
+                }
+                return { border: 'border-secondary', badge: 'bg-secondary text-white', text: 'Info' };
+            }
+
+            function renderCards(teams) {
+                if (!cardsContainer) return;
+                if (!Array.isArray(teams) || teams.length === 0) {
+                    cardsContainer.innerHTML = '<div class="col-12"><div class="alert alert-warning text-center">Tidak ada data tim.</div></div>';
+                    return;
+                }
+
+                cardsContainer.innerHTML = teams.map(function (r) {
+                    const meta = getStatusMeta(r);
+                    const feederPending = parseInt(r.feeder_pending, 10) || 0;
+                    const retailPending = parseInt(r.retail_pending, 10) || 0;
+                    const corporatePending = parseInt(r.corporate_pending, 10) || 0;
+                    const totalPending = parseInt(r.total_pending, 10) || 0;
+                    const totalOnprogress = parseInt(r.total_onprogress, 10) || 0;
+                    return '\n                <div class="col-md-4 col-lg-3 mb-2">\n                    <div class="card shadow-sm border-0 border-top border-4 ' + meta.border + ' h-100">\n                        <div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">\n                            <div>\n                                <div class="d-flex justify-content-between align-items-start mb-1">\n                                    <div>\n                                        <h6 class="card-title mb-0 text-truncate">' +
+                                            (totalPending > 0 && totalOnprogress === 0 ? '<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>' : '') +
+                                            htmlspecialchars(r.tim) +
+                                        '</h6>\n                                    </div>\n                                    <span class="badge ' + meta.badge + ' py-1 px-2 fs-7">' + meta.text + '</span>\n                                </div>\n                                <p class="fw-semibold mb-1 small">Pending Feeder + Corporate: <span class="text-dark">' + (feederPending + corporatePending) + '</span></p>\n                                <div class="d-flex flex-wrap gap-1">\n                                    <span class="badge bg-light text-dark py-1 fs-7">Feeder ' + feederPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">IKR ' + retailPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">Corporate ' + corporatePending + '</span>\n                                </div>\n                            </div>\n                            <div class="pt-1 border-top">\n                                <div class="d-flex justify-content-between align-items-center text-muted smaller">\n                                    <span>Total Pending <strong>' + totalPending + '</strong></span>\n                                    <span>On Progress <strong>' + totalOnprogress + '</strong></span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>';
+                }).join('');
+            }
+
+            function htmlspecialchars(value) {
+                return String(value)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+
+            function refresh() {
+                fetch(endpoint, {cache: 'no-store'})
+                    .then(function (response) {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        renderCards(data.incident_teams);
+                    })
+                    .catch(function (error) {
+                        console.warn('Monitoring Tim Serpo refresh failed:', error);
+                    });
+            }
+
+            if (cardsContainer) {
+                setTimeout(refresh, 1000);
+                setInterval(refresh, refreshMs);
+            }
+        })();
+    </script>
 
     <!-- Dashboard init -->
     <script src="assets/js/pages/dashboard-analytics.init.js"></script>
