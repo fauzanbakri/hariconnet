@@ -17,20 +17,6 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card mb-4">
-                        <div class="card-body d-flex align-items-center justify-content-between">
-                            <div>
-                                <h5 class="card-title mb-1">List Tim dengan Incident</h5>
-                                <p class="text-muted mb-0">Ringkasan tim yang memiliki pending incident dan status On Progress.</p>
-                            </div>
-                            <span class="badge bg-primary py-2 px-3">Total Tim: <?php echo (int)($total_teams ?? 0); ?></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
                 <?php foreach(($incident_teams ?? []) as $r){
                     $total_pending = (int)$r['total_pending'];
                     $total_onprogress = (int)$r['total_onprogress'];
