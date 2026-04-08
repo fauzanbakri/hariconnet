@@ -69,7 +69,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-wrap justify-content-center g-3 mb-4">
+                                <div class="d-flex flex-wrap justify-content-center mb-4" style="gap: 1.25rem;">
                                     <?php for ($i = 1; $i <= $jumlahPort; $i++):
                                         $port = 'PORT '.$i;
                                         $value = strtoupper(trim($data[$port] ?? ''));
@@ -77,8 +77,8 @@
                                         $borderClass = $isFilled ? 'border-danger' : 'border-success';
                                         $textClass = $isFilled ? 'text-danger' : 'text-success';
                                     ?>
-                                    <div class="text-center" style="flex: 0 0 65px;">
-                                        <button type="button" class="port-button btn border border-3 <?php echo $borderClass; ?> <?php echo $textClass; ?> d-flex align-items-center justify-content-center mx-auto" style="width: 65px; height: 65px; background-color: #fff; border-radius: 12px;" data-port="<?php echo $i; ?>" data-value="<?php echo htmlspecialchars($value); ?>">
+                                    <div class="text-center" style="flex: 0 0 75px;">
+                                        <button type="button" class="port-button btn border border-3 <?php echo $borderClass; ?> <?php echo $textClass; ?> d-flex align-items-center justify-content-center mx-auto" style="width: 75px; height: 75px; background-color: #fff; border-radius: 12px;" data-port="<?php echo $i; ?>" data-value="<?php echo htmlspecialchars($value); ?>">
                                             P<?php echo $i; ?>
                                         </button>
                                         <div class="mt-2 small text-truncate"><?php echo $isFilled ? 'Terisi' : 'Kosong'; ?></div>
