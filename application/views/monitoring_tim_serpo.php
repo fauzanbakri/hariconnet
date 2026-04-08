@@ -53,7 +53,7 @@
                     }
                 ?>
                 <div class="col-md-4 col-lg-3 mb-4">
-                    <div class="card shadow-sm border-top border-4 <?php echo $borderClass; ?> h-100">
+                    <div class="card shadow-sm border-0 border-top border-4 <?php echo $borderClass; ?> h-100">
                         <div class="card-body d-flex flex-column justify-content-between h-100">
                             <div>
                                 <div class="d-flex justify-content-between align-items-start mb-3">
