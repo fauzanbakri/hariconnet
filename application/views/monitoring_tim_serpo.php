@@ -143,9 +143,11 @@
                     const meta = getStatusMeta(r);
                     const feederPending = parseInt(r.feeder_pending, 10) || 0;
                     const retailPending = parseInt(r.retail_pending, 10) || 0;
-                    const corporatePending = parseInt(r.corporate_pending, 10) || 0;                        const feederOnprogress = parseInt(r.feeder_onprogress, 10) || 0;
-                        const retailOnprogress = parseInt(r.retail_onprogress, 10) || 0;
-                        const corporateOnprogress = parseInt(r.corporate_onprogress, 10) || 0;                    const totalPending = parseInt(r.total_pending, 10) || 0;
+                    const corporatePending = parseInt(r.corporate_pending, 10) || 0;
+                    const feederOnprogress = parseInt(r.feeder_onprogress, 10) || 0;
+                    const retailOnprogress = parseInt(r.retail_onprogress, 10) || 0;
+                    const corporateOnprogress = parseInt(r.corporate_onprogress, 10) || 0;
+                    const totalPending = parseInt(r.total_pending, 10) || 0;
                     const totalOnprogress = parseInt(r.total_onprogress, 10) || 0;
                     return '\n                <div class="col-md-4 col-lg-3 mb-2">\n                    <div class="card shadow-sm border-0 border-top border-4 ' + meta.border + ' h-100">\n                        <div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">\n                            <div>\n                                <div class="d-flex justify-content-between align-items-start mb-1">\n                                    <div>\n                                        <h6 class="card-title mb-0 text-truncate">' +
                                             (totalPending > 0 && totalOnprogress === 0 ? '<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>' : '') +
