@@ -129,6 +129,22 @@
                 return { border: 'border-secondary', badge: 'bg-secondary text-white', text: 'Info' };
             }
 
+            function buildCardHtml(r) {
+                const meta = getStatusMeta(r);
+                const feederPending = parseInt(r.feeder_pending, 10) || 0;
+                const retailPending = parseInt(r.retail_pending, 10) || 0;
+                const corporatePending = parseInt(r.corporate_pending, 10) || 0;
+                const feederOnprogress = parseInt(r.feeder_onprogress, 10) || 0;
+                const retailOnprogress = parseInt(r.retail_onprogress, 10) || 0;
+                const corporateOnprogress = parseInt(r.corporate_onprogress, 10) || 0;
+                const totalPending = parseInt(r.total_pending, 10) || 0;
+                const totalOnprogress = parseInt(r.total_onprogress, 10) || 0;
+                return '<div class="col-md-4 col-lg-3 mb-2" data-team="' + htmlspecialchars(r.tim) + '">\n                    <div class="card shadow-sm border-0 border-top border-4 ' + meta.border + ' h-100">\n                        <div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">\n                            <div>\n                                <div class="d-flex justify-content-between align-items-start mb-1">\n                                    <div>\n                                        <h6 class="card-title mb-0 text-truncate">' +
+                                            (totalPending > 0 && totalOnprogress === 0 ? '<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>' : '') +
+                                            htmlspecialchars(r.tim) +
+                                        '</h6>\n                                    </div>\n                                    <span class="badge ' + meta.badge + ' py-1 px-2 fs-7">' + meta.text + '</span>\n                                </div>\n                                <div class="d-flex flex-wrap gap-1">\n                                    <span class="badge bg-light text-dark py-1 fs-7">Feeder ' + feederPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">IKR ' + retailPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">Corporate ' + corporatePending + '</span>\n                                    ' + (feederOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress</span>' : (feederPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>' : '')) +\n                                    ' ' + (retailOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>' : (retailPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>' : '')) +\n                                    ' ' + (corporateOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress</span>' : (corporatePending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>' : '')) +\n                                </div>\n                            </div>\n                            <div class="pt-1 border-top">\n                                <div class="d-flex justify-content-between align-items-center text-muted smaller">\n                                    <span>Total Pending <strong>' + totalPending + '</strong></span>\n                                    <span>On Progress <strong>' + totalOnprogress + '</strong></span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>';
+            }
+
             function renderCards(teams) {
                 if (!cardsContainer) return;
                 if (!Array.isArray(teams) || teams.length === 0) {
@@ -136,21 +152,46 @@
                     return;
                 }
 
-                cardsContainer.innerHTML = teams.map(function (r) {
-                    const meta = getStatusMeta(r);
-                    const feederPending = parseInt(r.feeder_pending, 10) || 0;
-                    const retailPending = parseInt(r.retail_pending, 10) || 0;
-                    const corporatePending = parseInt(r.corporate_pending, 10) || 0;
-                    const feederOnprogress = parseInt(r.feeder_onprogress, 10) || 0;
-                    const retailOnprogress = parseInt(r.retail_onprogress, 10) || 0;
-                    const corporateOnprogress = parseInt(r.corporate_onprogress, 10) || 0;
-                    const totalPending = parseInt(r.total_pending, 10) || 0;
-                    const totalOnprogress = parseInt(r.total_onprogress, 10) || 0;
-                    return '\n                <div class="col-md-4 col-lg-3 mb-2">\n                    <div class="card shadow-sm border-0 border-top border-4 ' + meta.border + ' h-100">\n                        <div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">\n                            <div>\n                                <div class="d-flex justify-content-between align-items-start mb-1">\n                                    <div>\n                                        <h6 class="card-title mb-0 text-truncate">' +
-                                            (totalPending > 0 && totalOnprogress === 0 ? '<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>' : '') +
-                                            htmlspecialchars(r.tim) +
-                                        '</h6>\n                                    </div>\n                                    <span class="badge ' + meta.badge + ' py-1 px-2 fs-7">' + meta.text + '</span>\n                                </div>\n                                <div class="d-flex flex-wrap gap-1">\n                                    <span class="badge bg-light text-dark py-1 fs-7">Feeder ' + feederPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">IKR ' + retailPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">Corporate ' + corporatePending + '</span>\n                                    ' + (feederOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress</span>' : (feederPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>' : '')) +\n                                    ' ' + (retailOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>' : (retailPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>' : '')) +\n                                    ' ' + (corporateOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress</span>' : (corporatePending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>' : '')) +\n                                </div>\n                            </div>\n                            <div class="pt-1 border-top">\n                                <div class="d-flex justify-content-between align-items-center text-muted smaller">\n                                    <span>Total Pending <strong>' + totalPending + '</strong></span>\n                                    <span>On Progress <strong>' + totalOnprogress + '</strong></span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>';
-                }).join('');
+                // Deteksi tim yang sudah ada di DOM
+                var existingTeams = {};
+                cardsContainer.querySelectorAll('[data-team]').forEach(function (el) {
+                    existingTeams[el.getAttribute('data-team')] = el;
+                });
+
+                // Deteksi tim baru dan yang dihapus
+                var teamsToRender = {};
+                teams.forEach(function (team) {
+                    teamsToRender[team.tim] = team;
+                });
+
+                // Hapus tim yang tidak ada lagi di data
+                Object.keys(existingTeams).forEach(function (teamName) {
+                    if (!teamsToRender[teamName]) {
+                        existingTeams[teamName].style.opacity = '0.5';
+                        setTimeout(function () {
+                            existingTeams[teamName].remove();
+                        }, 200);
+                    }
+                });
+
+                // Tambah tim baru
+                teams.forEach(function (team) {
+                    if (!existingTeams[team.tim]) {
+                        var newCard = document.createElement('div');
+                        newCard.innerHTML = buildCardHtml(team);
+                        newCard.style.opacity = '0';
+                        cardsContainer.appendChild(newCard.firstChild);
+                        setTimeout(function () {
+                            newCard.firstChild.style.opacity = '1';
+                            newCard.firstChild.style.transition = 'opacity 0.3s ease';
+                        }, 10);
+                    } else {
+                        // Update kartu yang sudah ada
+                        var cardEl = existingTeams[team.tim];
+                        var newCardHtml = buildCardHtml(team);
+                        cardEl.outerHTML = newCardHtml;
+                    }
+                });
             }
 
             function htmlspecialchars(value) {
