@@ -90,7 +90,29 @@
                 </div>
 
                 <!-- Sidebar - Prefix List -->
-                
+                <div class="col-lg-3 col-md-3 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="ri-tags-line"></i> Kode ODP
+                                <span class="badge bg-primary float-end"><?php echo isset($totalData) ? $totalData : 0; ?> data</span>
+                            </h5>
+                        </div>
+                        <div class="card-body" style="max-height: calc(100vh - 300px); overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <?php if (!empty($namaAwalList)): ?>
+                                <?php foreach ($namaAwalList as $nama => $data): ?>
+                                <a href="?id=<?php echo urlencode($nama); ?>" class="btn btn-light text-start d-flex flex-column" style="padding: 0.75rem; border: 1px solid #ddd; border-radius: 0.5rem; text-decoration: none; color: #333;">
+                                    <strong><?php echo htmlspecialchars($nama); ?></strong>
+                                    <small class="text-muted"><?php echo htmlspecialchars($data['area']); ?></small>
+                                    <small class="text-muted"><?php echo $data['count']; ?> data</small>
+                                </a>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                            <p class="text-muted text-center">Tidak ada data</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <?php endif; ?>
