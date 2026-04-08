@@ -53,7 +53,7 @@
                     }
                 ?>
                 <div class="col-md-4 col-lg-3 mb-4">
-                    <div class="card shadow-sm border-start border-4 <?php echo $borderClass; ?> h-100">
+                    <div class="card shadow-sm border-top border-4 <?php echo $borderClass; ?> h-100">
                         <div class="card-body d-flex flex-column justify-content-between h-100">
                             <div>
                                 <div class="d-flex justify-content-between align-items-start mb-3">
@@ -66,7 +66,7 @@
                                 <p class="fw-semibold mb-2">Pending Feeder + Corporate: <span class="text-dark"><?php echo (int)$r['feeder_pending'] + (int)$r['corporate_pending']; ?></span></p>
                                 <div class="d-flex flex-wrap gap-2 mb-3">
                                     <span class="badge bg-light text-dark">Feeder <?php echo (int)$r['feeder_pending']; ?></span>
-                                    <span class="badge bg-light text-dark">Retail <?php echo (int)$r['retail_pending']; ?></span>
+                                    <span class="badge bg-light text-dark">IKR <?php echo (int)$r['retail_pending']; ?></span>
                                     <span class="badge bg-light text-dark">Corporate <?php echo (int)$r['corporate_pending']; ?></span>
                                 </div>
                             </div>
