@@ -35,8 +35,8 @@
                     $total_pending = (int)$r['total_pending'];
                     $total_onprogress = (int)$r['total_onprogress'];
                     if ($total_onprogress > 0 && $total_pending > 1) {
-                        $borderClass = 'border-primary';
-                        $badgeClass = 'bg-primary';
+                        $borderClass = 'border-info';
+                        $badgeClass = 'badge-info';
                         $statusText = 'On Progress';
                     } elseif ($total_onprogress > 0 && $total_pending === 1) {
                         $borderClass = 'border-success';
