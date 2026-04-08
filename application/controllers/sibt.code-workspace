@@ -7,5 +7,12 @@
 			"path": "../../../velzon"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"chat.tools.terminal.autoApprove": {
+			"/^cd /Applications/MAMP/htdocs/sibt && python3 - <<'PY'\nfrom pathlib import Path\ntext = Path\\('application/views/monitoring_tim_serpo\\.php'\\)\\.read_text\\(\\)\nneedle = 'Feeder ' \\+ ' \\+ feederPending \\+ '\nprint\\('has needle', needle in text\\)\nidx = text\\.find\\('Feeder ' \\+ ' \\+ feederPending \\+ '\\)\nprint\\('idx', idx\\)\nif idx != -1:\n    print\\(repr\\(text\\[idx-80:idx\\+150\\]\\)\\)\nPY$/": {
+				"approve": true,
+				"matchCommandLine": true
+			}
+		}
+	}
 }
