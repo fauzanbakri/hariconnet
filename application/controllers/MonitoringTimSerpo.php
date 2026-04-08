@@ -146,11 +146,11 @@ class MonitoringTimSerpo extends CI_Controller {
 
                 if (!$onProgressNo && $this->db->table_exists('tiketCorporate')) {
                     $corpOnProgress = $this->db->query(
-                        "SELECT idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) = 'ON PROGRESS' ORDER BY tc.tglCreate DESC LIMIT 1",
+                        "SELECT id FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) = 'ON PROGRESS' ORDER BY tc.tglCreate DESC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($corpOnProgress) {
-                        $onProgressNo = $corpOnProgress->idTiketCorporate;
+                        $onProgressNo = $corpOnProgress->id;
                     }
                 }
 
@@ -177,11 +177,11 @@ class MonitoringTimSerpo extends CI_Controller {
 
                 if (!$oldestPendingNo && $this->db->table_exists('tiketCorporate')) {
                     $corpPending = $this->db->query(
-                        "SELECT idTiketCorporate FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(tc.status)) != 'ON PROGRESS' ORDER BY tc.tglCreate ASC LIMIT 1",
+                        "SELECT id FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = ? AND UPPER(TRIM(tc.status)) NOT IN ('CLOSED', 'SOLVED (ICRM OPEN)') AND UPPER(TRIM(tc.status)) != 'ON PROGRESS' ORDER BY tc.tglCreate ASC LIMIT 1",
                         [$teamName]
                     )->row();
                     if ($corpPending) {
-                        $oldestPendingNo = $corpPending->idTiketCorporate;
+                        $oldestPendingNo = $corpPending->id;
                     }
                 }
 
