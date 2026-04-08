@@ -93,16 +93,23 @@ class MonitoringTimSerpo extends CI_Controller {
 
             $result = [];
             foreach ($stats as $item) {
-                if ((int)$item['total_pending'] > 0 && (int)$item['total_onprogress'] === 0) {
+                if ((int)$item['total_pending'] > 0 || (int)$item['total_onprogress'] > 0) {
                     $result[] = $item;
                 }
             }
 
             usort($result, function($a, $b){
-                if ((int)$b['total_pending'] === (int)$a['total_pending']) {
-                    return strcmp($a['tim'], $b['tim']);
+                $pendingA = (int)$a['total_pending'];
+                $pendingB = (int)$b['total_pending'];
+                if ($pendingA === $pendingB) {
+                    $onProgressA = (int)$a['total_onprogress'];
+                    $onProgressB = (int)$b['total_onprogress'];
+                    if ($onProgressA === $onProgressB) {
+                        return strcmp($a['tim'], $b['tim']);
+                    }
+                    return $onProgressB - $onProgressA;
                 }
-                return (int)$b['total_pending'] - (int)$a['total_pending'];
+                return $pendingB - $pendingA;
             });
 
             $data['rows'] = $result;

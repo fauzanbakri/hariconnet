@@ -12,7 +12,7 @@
                             </ol>
                         </div>
                     </div>
-                    <p class="text-muted mb-3">Menampilkan tim yang memiliki pending incident (Feeder / Retail / Corporate) namun tidak memiliki incident berstatus <strong>ON PROGRESS</strong>.</p>
+                    <p class="text-muted mb-3">Menampilkan tim yang memiliki pending incident (Feeder / Retail / Corporate), termasuk yang juga memiliki incident berstatus <strong>ON PROGRESS</strong>.</p>
                 </div>
             </div>
 
@@ -20,7 +20,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="card-title mb-0">List Tim Tanpa On Progress</h5>
+                            <h5 class="card-title mb-0">List Tim dengan Pending Incident</h5>
                             <span class="badge bg-primary">Total Tim: <?php echo (int)($total_teams ?? 0); ?></span>
                         </div>
                         <div class="card-body">
