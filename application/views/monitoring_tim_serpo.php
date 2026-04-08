@@ -20,51 +20,64 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="card-title mb-0">List Tim dengan Pending Incident</h5>
+                            <h5 class="card-title mb-0">List Tim dengan Incident</h5>
                             <span class="badge bg-primary">Total Tim: <?php echo (int)($total_teams ?? 0); ?></span>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="timSerpoTable" class="table table-bordered dt-responsive nowrap table-striped align-middle text-center" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-start">Tim</th>
-                                            <th>Pending Feeder</th>
-                                            <th>Pending Retail</th>
-                                            <th>Pending Corporate</th>
-                                            <th>Total Pending</th>
-                                            <th>Total On Progress</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach(($rows ?? []) as $r){ ?>
-                                            <tr>
-                                                <td class="text-start"><?php echo htmlspecialchars($r['tim']); ?></td>
-                                                <td><?php echo (int)$r['feeder_pending']; ?></td>
-                                                <td><?php echo (int)$r['retail_pending']; ?></td>
-                                                <td><?php echo (int)$r['corporate_pending']; ?></td>
-                                                <td><span class="badge bg-warning text-dark"><?php echo (int)$r['total_pending']; ?></span></td>
-                                                <td><span class="badge bg-success"><?php echo (int)$r['total_onprogress']; ?></span></td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                <?php foreach(($incident_teams ?? []) as $r){
+                                    $total_pending = (int)$r['total_pending'];
+                                    $total_onprogress = (int)$r['total_onprogress'];
+                                    $card_class = 'bg-light';
+                                    if ($total_onprogress > 0 && $total_pending > 1) {
+                                        $card_class = 'bg-primary text-white';
+                                    } elseif ($total_onprogress > 0 && $total_pending == 1) {
+                                        $card_class = 'bg-success text-white';
+                                    } elseif ($total_pending > 0 && $total_onprogress == 0) {
+                                        $card_class = 'bg-danger text-white';
+                                    }
+                                ?>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card <?php echo $card_class; ?>">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><?php echo htmlspecialchars($r['tim']); ?></h6>
+                                            <p class="card-text">
+                                                Pending Feeder: <?php echo (int)$r['feeder_pending']; ?><br>
+                                                Pending Retail: <?php echo (int)$r['retail_pending']; ?><br>
+                                                Pending Corporate: <?php echo (int)$r['corporate_pending']; ?><br>
+                                                Total Pending: <?php echo $total_pending; ?><br>
+                                                Total On Progress: <?php echo $total_onprogress; ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <?php if (!empty($no_incident_teams ?? [])) { ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">List Tim No Incident</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <?php foreach($no_incident_teams as $tim){ ?>
+                                <li class="list-group-item"><?php echo htmlspecialchars($tim); ?></li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
         </div>
     </div>
 </div>
 
-<script>
-$(document).ready(function(){
-    if ($.fn.DataTable) {
-        $('#timSerpoTable').DataTable({
-            pageLength: 25,
-            order: [[4, 'desc']]
-        });
-    }
-});
-</script>
+

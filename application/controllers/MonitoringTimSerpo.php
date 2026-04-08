@@ -112,8 +112,14 @@ class MonitoringTimSerpo extends CI_Controller {
                 return $pendingB - $pendingA;
             });
 
-            $data['rows'] = $result;
-            $data['total_teams'] = count($result);
+            $all_teams = array_keys($stats);
+            $incident_team_names = array_column($result, 'tim');
+            $no_incident_teams = array_diff($all_teams, $incident_team_names);
+
+            $data['incident_teams'] = $result;
+            $data['no_incident_teams'] = array_values($no_incident_teams);
+            $data['total_teams'] = count($result) + count($no_incident_teams);
+
 
             $this->load->view('navbar', $title);
             $this->load->view('monitoring_tim_serpo', $data);
