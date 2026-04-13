@@ -184,19 +184,6 @@
                             <h6 class="text-uppercase text-muted fs-12 mb-2">Incident per Nama</h6>
                             <div id="incidentPerNameChart" style="min-height: 320px;"></div>
 
-                            <h6 class="text-uppercase text-muted fs-12 mb-2">Segmen Terbanyak</h6>
-                            <?php if (!empty($segmentCounts)) { ?>
-                                <div class="list-group list-group-flush mb-3">
-                                    <?php $segmentShown = 0; foreach ($segmentCounts as $segmentLabel => $segmentTotal) { if ($segmentShown >= 5) break; ?>
-                                        <div class="list-group-item px-0 d-flex justify-content-between align-items-center">
-                                            <span><?php echo htmlspecialchars($segmentLabel); ?></span>
-                                            <span class="badge bg-primary rounded-pill"><?php echo (int)$segmentTotal; ?></span>
-                                        </div>
-                                    <?php $segmentShown++; } ?>
-                                </div>
-                            <?php } else { ?>
-                                <p class="text-muted mb-3">Belum ada data segmen untuk ditampilkan.</p>
-                            <?php } ?>
 
                             <h6 class="text-uppercase text-muted fs-12 mb-2">Incident IKR (FTTH AKSES)</h6>
                             <div id="incidentIkrChart" style="min-height: 320px;"></div>
@@ -210,6 +197,20 @@
                                 <li>Isi incident satu per baris untuk membuat banyak kombinasi data.</li>
                                 <li>Gunakan tombol action pada tabel untuk edit atau hapus data.</li>
                             </ul>
+
+                            <h6 class="text-uppercase text-muted fs-12 mb-2">Segmen Terbanyak</h6>
+                            <?php if (!empty($segmentCounts)) { ?>
+                                <div class="list-group list-group-flush mb-3">
+                                    <?php $segmentShown = 0; foreach ($segmentCounts as $segmentLabel => $segmentTotal) { if ($segmentShown >= 5) break; ?>
+                                        <div class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                            <span><?php echo htmlspecialchars($segmentLabel); ?></span>
+                                            <span class="badge bg-primary rounded-pill"><?php echo (int)$segmentTotal; ?></span>
+                                        </div>
+                                    <?php $segmentShown++; } ?>
+                                </div>
+                            <?php } else { ?>
+                                <p class="text-muted mb-3">Belum ada data segmen untuk ditampilkan.</p>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
