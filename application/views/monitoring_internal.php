@@ -27,6 +27,8 @@
                 $uniqueNames = [];
                 $segmentCounts = [];
                 $nameIncidentCounts = [];
+                $ikrCounts = [];
+                $feederCounts = [];
                 foreach (($rows ?? []) as $summaryRow) {
                     $summaryName = trim((string)($summaryRow->nama ?? ''));
                     $summarySegmen = trim((string)($summaryRow->segmen ?? ''));
@@ -41,14 +43,34 @@
                     }
                     if ($summarySegmen !== '') {
                         $segmentCounts[$summarySegmen] = ($segmentCounts[$summarySegmen] ?? 0) + 1;
+                        // IKR: hanya dari FTTH AKSES
+                        if ($summarySegmen === 'FTTH AKSES') {
+                            $ikrCounts[$summaryName] = ($ikrCounts[$summaryName] ?? 0) + 1;
+                        }
+                        // Feeder: selain FTTH AKSES
+                        if ($summarySegmen !== 'FTTH AKSES') {
+                            $feederCounts[$summaryName] = ($feederCounts[$summaryName] ?? 0) + 1;
+                        }
                     }
                 }
                 arsort($segmentCounts);
                 arsort($nameIncidentCounts);
+                arsort($ikrCounts);
+                arsort($feederCounts);
                 $chartCategories = array_slice(array_keys($nameIncidentCounts), 0, 10);
                 $chartSeries = [];
                 foreach ($chartCategories as $chartName) {
                     $chartSeries[] = $nameIncidentCounts[$chartName];
+                }
+                $ikrCategories = array_slice(array_keys($ikrCounts), 0, 10);
+                $ikrSeries = [];
+                foreach ($ikrCategories as $ikrName) {
+                    $ikrSeries[] = $ikrCounts[$ikrName];
+                }
+                $feederCategories = array_slice(array_keys($feederCounts), 0, 10);
+                $feederSeries = [];
+                foreach ($feederCategories as $feederName) {
+                    $feederSeries[] = $feederCounts[$feederName];
                 }
             ?>
             <div class="row">
@@ -175,6 +197,12 @@
                             <?php } else { ?>
                                 <p class="text-muted mb-3">Belum ada data segmen untuk ditampilkan.</p>
                             <?php } ?>
+
+                            <h6 class="text-uppercase text-muted fs-12 mb-2">Incident IKR (FTTH AKSES)</h6>
+                            <div id="incidentIkrChart" style="min-height: 320px;"></div>
+
+                            <h6 class="text-uppercase text-muted fs-12 mb-2">Incident Feeder (Non-FTTH AKSES)</h6>
+                            <div id="incidentFeederChart" style="min-height: 320px;"></div>
 
                             <h6 class="text-uppercase text-muted fs-12 mb-2">Petunjuk Input</h6>
                             <ul class="ps-3 mb-0 text-muted">
@@ -356,6 +384,10 @@
 (function($){
     var chartCategories = <?php echo json_encode($chartCategories); ?>;
     var chartSeries = <?php echo json_encode($chartSeries); ?>;
+    var ikrCategories = <?php echo json_encode($ikrCategories); ?>;
+    var ikrSeries = <?php echo json_encode($ikrSeries); ?>;
+    var feederCategories = <?php echo json_encode($feederCategories); ?>;
+    var feederSeries = <?php echo json_encode($feederSeries); ?>;
 
     if ($.fn.select2) {
         $('#addNama').select2({
@@ -404,6 +436,92 @@
             new ApexCharts(document.querySelector('#incidentPerNameChart'), chartOptions).render();
         } else {
             document.querySelector('#incidentPerNameChart').innerHTML = '<div class="text-muted small">Tidak ada data untuk grafik pada rentang tanggal ini.</div>';
+        }
+    }
+
+    if (document.querySelector('#incidentIkrChart')) {
+        if (ikrCategories.length > 0) {
+            var ikrOptions = {
+                chart: {
+                    type: 'bar',
+                    height: Math.max(320, ikrCategories.length * 38),
+                    toolbar: { show: false }
+                },
+                series: [{
+                    name: 'Jumlah Incident',
+                    data: ikrSeries
+                }],
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                        borderRadius: 4,
+                        barHeight: '60%'
+                    }
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                xaxis: {
+                    categories: ikrCategories,
+                    title: { text: 'Jumlah Incident' }
+                },
+                yaxis: {
+                    title: { text: 'Nama' }
+                },
+                colors: ['#3a9f5d'],
+                grid: {
+                    borderColor: '#e9ebec'
+                },
+                noData: {
+                    text: 'Tidak ada data'
+                }
+            };
+            new ApexCharts(document.querySelector('#incidentIkrChart'), ikrOptions).render();
+        } else {
+            document.querySelector('#incidentIkrChart').innerHTML = '<div class="text-muted small">Tidak ada data IKR untuk grafik pada rentang tanggal ini.</div>';
+        }
+    }
+
+    if (document.querySelector('#incidentFeederChart')) {
+        if (feederCategories.length > 0) {
+            var feederOptions = {
+                chart: {
+                    type: 'bar',
+                    height: Math.max(320, feederCategories.length * 38),
+                    toolbar: { show: false }
+                },
+                series: [{
+                    name: 'Jumlah Incident',
+                    data: feederSeries
+                }],
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                        borderRadius: 4,
+                        barHeight: '60%'
+                    }
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                xaxis: {
+                    categories: feederCategories,
+                    title: { text: 'Jumlah Incident' }
+                },
+                yaxis: {
+                    title: { text: 'Nama' }
+                },
+                colors: ['#f59e0b'],
+                grid: {
+                    borderColor: '#e9ebec'
+                },
+                noData: {
+                    text: 'Tidak ada data'
+                }
+            };
+            new ApexCharts(document.querySelector('#incidentFeederChart'), feederOptions).render();
+        } else {
+            document.querySelector('#incidentFeederChart').innerHTML = '<div class="text-muted small">Tidak ada data Feeder untuk grafik pada rentang tanggal ini.</div>';
         }
     }
 
