@@ -169,7 +169,14 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Tim</label>
-                                                            <input type="text" class="form-control" name="edittim" id="edittim" autocomplete="off" placeholder="Tim">
+                                                            <select class="form-select mb-3" name="edittim" id="edittim">
+                                                                <option value="">Select</option>
+                                                                <?php 
+                                                                    foreach ($tim as $row){
+                                                                        echo '<option value="'.$row->nama.'">'.$row->nama.'</option>';
+                                                                    }
+                                                                ?>
+                                                            </select>
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <label for="lastName" class="form-label">Provinsi</label>
@@ -321,6 +328,9 @@
     </div>
 
     <!-- JAVASCRIPT -->
+    <!-- Select2 CSS -->
+    <link href="js/cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/libs/simplebar/simplebar.min.js"></script>
     <script src="assets/libs/node-waves/waves.min.js"></script>
@@ -341,6 +351,9 @@
     <script src="js/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="js/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     
+    <!-- Select2 JS -->
+    <script src="js/cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <!-- <script src="assets/js/pages/sweetalerts.init.js"></script> -->
 
@@ -353,6 +366,22 @@
 
     <script src="assets/js/app.js"></script>   
 
+
+    <script>
+        // Initialize Select2 for tim fields
+        $(document).ready(function() {
+            if ($.fn.select2) {
+                $('#tim').select2({
+                    placeholder: 'Select Tim',
+                    width: '100%'
+                });
+                $('#edittim').select2({
+                    placeholder: 'Select Tim',
+                    width: '100%'
+                });
+            }
+        });
+    </script>
 
     <script>
         var multiSelectBasic = document.getElementById("multiselect-basic"),
@@ -588,6 +617,11 @@
                     if (inputElement) {
                         console.log(`Setting ${field} with value:`, ticketData[field]);
                         inputElement.value = ticketData[field] || ''; // Set value or empty if no data
+                        
+                        // If it's a Select2 element, trigger change event to update display
+                        if (field === 'edittim' && $(inputElement).hasClass('select2-hidden-accessible')) {
+                            $(inputElement).trigger('change');
+                        }
                     }
                 });
                 modal.show();
