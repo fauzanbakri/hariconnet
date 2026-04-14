@@ -1,6 +1,6 @@
 <?php
 //$url = "https://docs.google.com/spreadsheets/d/1wcbEoLbagheJz8rZof2yzW-XIesqJOTh/export?format=csv";
-$url = "https://docs.google.com/spreadsheets/d/1yIdP6i17Q8WHF2LvVMhQgBqOnDwQrtIZnbcWpmr36Xw/export?format=csv&edit?gid=766942970#gid=766942970";
+$url = "https://docs.google.com/spreadsheets/d/1yIdP6i17Q8WHF2LvVMhQgBqOnDwQrtIZnbcWpmr36Xw/gviz/tq?tqx=out:csv&sheet=MY%20MAPS";
 
 $odp = $_GET['odp'] ?? '';
 
