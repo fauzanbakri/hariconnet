@@ -229,7 +229,7 @@ class MonitoringInternal extends CI_Controller {
             // Try to get from tiket table
             $result = $this->db->select('keluhan, idOlt, sn')
                 ->from('tiket')
-                ->where('idTiket', $incident)
+                ->where('idInsiden', $incident)
                 ->limit(1)
                 ->get()
                 ->row();
@@ -238,7 +238,7 @@ class MonitoringInternal extends CI_Controller {
             if (!$result) {
                 $result = $this->db->select('keluhan, idOlt, sn')
                     ->from('tiketClose')
-                    ->where('idTiket', $incident)
+                    ->where('idInsiden', $incident)
                     ->limit(1)
                     ->get()
                     ->row();
