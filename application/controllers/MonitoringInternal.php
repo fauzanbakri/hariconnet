@@ -74,6 +74,11 @@ class MonitoringInternal extends CI_Controller {
                     $this->db->order_by('id', 'DESC');
                 }
                 $data['rows'] = $this->db->get()->result();
+                
+                // Fetch Keterangan data for each row
+                foreach ($data['rows'] as &$row) {
+                    $row->keterangan = $this->getKeterangan($row);
+                }
             }
 
             $this->load->view('navbar', $title);
@@ -208,5 +213,82 @@ class MonitoringInternal extends CI_Controller {
 
         $ok = $this->db->where('id', $id)->delete($table);
         echo $ok ? 'success' : 'Gagal menghapus data';
+    }
+
+    private function getKeterangan($row)
+    {
+        $segmen = trim((string)($row->segmen ?? ''));
+        $incident = trim((string)($row->incident ?? ''));
+        
+        if ($incident === '') {
+            return '';
+        }
+
+        // For FTTH AKSES
+        if ($segmen === 'FTTH AKSES') {
+            // Try to get from tiket table
+            $result = $this->db->select('keluhan, idOlt, sn')
+                ->from('tiket')
+                ->where('idTiket', $incident)
+                ->or_where('no_incident', $incident)
+                ->limit(1)
+                ->get()
+                ->row();
+            
+            // If not found, try tiketClose
+            if (!$result) {
+                $result = $this->db->select('keluhan, idOlt, sn')
+                    ->from('tiketClose')
+                    ->where('idTiket', $incident)
+                    ->or_where('no_incident', $incident)
+                    ->limit(1)
+                    ->get()
+                    ->row();
+            }
+            
+            if ($result) {
+                $keluhan = trim((string)($result->keluhan ?? ''));
+                $idOlt = trim((string)($result->idOlt ?? ''));
+                $sn = trim((string)($result->sn ?? ''));
+                
+                $parts = array_filter([$keluhan, $idOlt, $sn]);
+                return implode(' - ', $parts);
+            }
+            
+            return '';
+        }
+        
+        // For other segments (Feeder)
+        else {
+            // Try to get from feeder table
+            $result = $this->db->select('gangguan, idOlt')
+                ->from('feeder')
+                ->where('idInsiden', $incident)
+                ->or_where('no_incident', $incident)
+                ->limit(1)
+                ->get()
+                ->row();
+            
+            // If not found, try feederClose
+            if (!$result) {
+                $result = $this->db->select('gangguan, idOlt')
+                    ->from('feederClose')
+                    ->where('idInsiden', $incident)
+                    ->or_where('no_incident', $incident)
+                    ->limit(1)
+                    ->get()
+                    ->row();
+            }
+            
+            if ($result) {
+                $gangguan = trim((string)($result->gangguan ?? ''));
+                $idOlt = trim((string)($result->idOlt ?? ''));
+                
+                $parts = array_filter([$gangguan, $idOlt]);
+                return implode(' - ', $parts);
+            }
+            
+            return '';
+        }
     }
 }

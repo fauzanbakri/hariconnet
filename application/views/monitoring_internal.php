@@ -112,6 +112,7 @@
                                             <th>Nama</th>
                                             <th>Segmen</th>
                                             <th>Incident</th>
+                                            <th>Keterangan</th>
                                             <th class="text-center">Status</th>
                                             <th>Tanggal</th>
                                             <th style="width:120px;">Action</th>
@@ -124,6 +125,7 @@
                                                 <td><?php echo htmlspecialchars($row->nama ?? ''); ?></td>
                                                 <td><?php echo htmlspecialchars($row->segmen ?? ''); ?></td>
                                                 <td><?php echo htmlspecialchars($row->incident ?? ''); ?></td>
+                                                <td><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
                                                 <td class="text-center align-middle">
                                                     <?php $statusVal = strtolower(trim((string)($row->status ?? 'not yet'))); ?>
                                                     <?php if ($statusVal === 'done') { ?>
