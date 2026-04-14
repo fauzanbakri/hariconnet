@@ -372,12 +372,30 @@
         $(document).ready(function() {
             if ($.fn.select2) {
                 $('#tim').select2({
-                    placeholder: 'Select Tim',
-                    width: '100%'
+                    placeholder: 'Search Tim...',
+                    allowClear: true,
+                    width: '100%',
+                    matcher: function(params, data) {
+                        if ($.trim(params.term) === '') return data;
+                        if (typeof data.text === 'undefined') return null;
+                        if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+                            return $.extend({}, data, true);
+                        }
+                        return null;
+                    }
                 });
                 $('#edittim').select2({
-                    placeholder: 'Select Tim',
-                    width: '100%'
+                    placeholder: 'Search Tim...',
+                    allowClear: true,
+                    width: '100%',
+                    matcher: function(params, data) {
+                        if ($.trim(params.term) === '') return data;
+                        if (typeof data.text === 'undefined') return null;
+                        if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+                            return $.extend({}, data, true);
+                        }
+                        return null;
+                    }
                 });
             }
         });
