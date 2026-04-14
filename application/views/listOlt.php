@@ -410,41 +410,50 @@
             multiSelectOptGroup = (multiSelectHeader && multi(multiSelectHeader, {
                 non_selected_header: "Cars",
                 selected_header: "Favorite Cars"
-            }), document.getElementById("multiselect-optiongroup")),
-            autoCompleteFruit = (multiSelectOptGroup && multi(multiSelectOptGroup, {
-                enable_search: !0
-            }), new autoComplete({
-                selector: ".olt",
-                placeHolder: "Search for OLT...",
-                data: {
-                    src: [
-                        <?php 
-                            foreach ($olt as $row){
-                                echo "'".$row->idOlt."',";
-                            }
-                        ?>
-                    ],
-                    cache: !0
-                },
-                resultsList: {
-                    element: function(e, t) {
-                        var l;
-                        t.results.length || ((l = document.createElement("div")).setAttribute("class", "no_result"), l.innerHTML = '<span>Found No Results for "' + t.query + '"</span>', e.prepend(l))
+            }), document.getElementById("multiselect-optiongroup"));
+            
+            if (multiSelectOptGroup) {
+                multi(multiSelectOptGroup, {
+                    enable_search: !0
+                });
+            }
+            
+            // Only initialize autoComplete if .olt element exists
+            var oltElement = document.querySelector(".olt");
+            if (oltElement) {
+                new autoComplete({
+                    selector: ".olt",
+                    placeHolder: "Search for OLT...",
+                    data: {
+                        src: [
+                            <?php 
+                                foreach ($olt as $row){
+                                    echo "'".$row->idOlt."',";
+                                }
+                            ?>
+                        ],
+                        cache: !0
                     },
-                    noResults: !0
-                },
-                resultItem: {
-                    highlight: !0
-                },
-                events: {
-                    input: {
-                        selection: function(e) {
-                            e = e.detail.selection.value;
-                            autoCompleteFruit.input.value = e
+                    resultsList: {
+                        element: function(e, t) {
+                            var l;
+                            t.results.length || ((l = document.createElement("div")).setAttribute("class", "no_result"), l.innerHTML = '<span>Found No Results for "' + t.query + '"</span>', e.prepend(l))
+                        },
+                        noResults: !0
+                    },
+                    resultItem: {
+                        highlight: !0
+                    },
+                    events: {
+                        input: {
+                            selection: function(e) {
+                                e = e.detail.selection.value;
+                                document.querySelector(".olt").value = e
+                            }
                         }
                     }
-                }
-            }));
+                });
+            }
         });
     </script>
     <script>
