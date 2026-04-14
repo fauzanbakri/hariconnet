@@ -16,7 +16,8 @@ class FatList extends CI_Controller {
             $_SESSION['role']=='Guest 1'
         ){
             // Fetch CSV data from Google Sheets
-            $url = "https://docs.google.com/spreadsheets/d/1yIdP6i17Q8WHF2LvVMhQgBqOnDwQrtIZnbcWpmr36Xw/export?format=csv&edit?gid=766942970#gid=766942970";
+            // $url = "https://docs.google.com/spreadsheets/d/1yIdP6i17Q8WHF2LvVMhQgBqOnDwQrtIZnbcWpmr36Xw/export?format=csv&edit?gid=766942970#gid=766942970";
+            $url = "https://docs.google.com/spreadsheets/d/1yIdP6i17Q8WHF2LvVMhQgBqOnDwQrtIZnbcWpmr36Xw/gviz/tq?tqx=out:csv&sheet=MY%20MAPS";
             
             $csvData = @file_get_contents($url);
             $data = [];
