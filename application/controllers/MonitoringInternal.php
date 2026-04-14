@@ -263,7 +263,7 @@ class MonitoringInternal extends CI_Controller {
             // Try to get from feeder table
             $result = $this->db->select('gangguan, idOlt')
                 ->from('feeder')
-                ->where('incident', $incident)
+                ->where('idInsiden', $incident)
                 ->limit(1)
                 ->get()
                 ->row();
@@ -272,7 +272,7 @@ class MonitoringInternal extends CI_Controller {
             if (!$result) {
                 $result = $this->db->select('gangguan, idOlt')
                     ->from('feederClose')
-                    ->where('incident', $incident)
+                    ->where('idInsiden', $incident)
                     ->limit(1)
                     ->get()
                     ->row();
