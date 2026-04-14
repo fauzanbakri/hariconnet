@@ -230,7 +230,6 @@ class MonitoringInternal extends CI_Controller {
             $result = $this->db->select('keluhan, idOlt, sn')
                 ->from('tiket')
                 ->where('idTiket', $incident)
-                ->or_where('incident', $incident)
                 ->limit(1)
                 ->get()
                 ->row();
@@ -240,7 +239,6 @@ class MonitoringInternal extends CI_Controller {
                 $result = $this->db->select('keluhan, idOlt, sn')
                     ->from('tiketClose')
                     ->where('idTiket', $incident)
-                    ->or_where('incident', $incident)
                     ->limit(1)
                     ->get()
                     ->row();
