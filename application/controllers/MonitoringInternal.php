@@ -230,7 +230,7 @@ class MonitoringInternal extends CI_Controller {
             $result = $this->db->select('keluhan, idOlt, sn')
                 ->from('tiket')
                 ->where('idTiket', $incident)
-                ->or_where('no_incident', $incident)
+                ->or_where('incident', $incident)
                 ->limit(1)
                 ->get()
                 ->row();
@@ -240,7 +240,7 @@ class MonitoringInternal extends CI_Controller {
                 $result = $this->db->select('keluhan, idOlt, sn')
                     ->from('tiketClose')
                     ->where('idTiket', $incident)
-                    ->or_where('no_incident', $incident)
+                    ->or_where('incident', $incident)
                     ->limit(1)
                     ->get()
                     ->row();
@@ -264,7 +264,7 @@ class MonitoringInternal extends CI_Controller {
             $result = $this->db->select('gangguan, idOlt')
                 ->from('feeder')
                 ->where('idInsiden', $incident)
-                ->or_where('no_incident', $incident)
+                ->or_where('incident', $incident)
                 ->limit(1)
                 ->get()
                 ->row();
@@ -274,7 +274,7 @@ class MonitoringInternal extends CI_Controller {
                 $result = $this->db->select('gangguan, idOlt')
                     ->from('feederClose')
                     ->where('idInsiden', $incident)
-                    ->or_where('no_incident', $incident)
+                    ->or_where('incident', $incident)
                     ->limit(1)
                     ->get()
                     ->row();
