@@ -370,34 +370,33 @@
     <script>
         // Initialize Select2 for tim fields
         $(document).ready(function() {
-            if ($.fn.select2) {
-                $('#tim').select2({
-                    placeholder: 'Search Tim...',
-                    allowClear: true,
-                    width: '100%',
-                    matcher: function(params, data) {
-                        if ($.trim(params.term) === '') return data;
-                        if (typeof data.text === 'undefined') return null;
-                        if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
-                            return $.extend({}, data, true);
-                        }
-                        return null;
-                    }
-                });
-                $('#edittim').select2({
-                    placeholder: 'Search Tim...',
-                    allowClear: true,
-                    width: '100%',
-                    matcher: function(params, data) {
-                        if ($.trim(params.term) === '') return data;
-                        if (typeof data.text === 'undefined') return null;
-                        if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
-                            return $.extend({}, data, true);
-                        }
-                        return null;
-                    }
-                });
+            function initSelect2() {
+                if ($.fn.select2) {
+                    $('#tim').select2({
+                        placeholder: 'Search Tim...',
+                        allowClear: true,
+                        width: '100%',
+                        dropdownParent: $('#exampleModalgrid')
+                    });
+                    $('#edittim').select2({
+                        placeholder: 'Search Tim...',
+                        allowClear: true,
+                        width: '100%',
+                        dropdownParent: $('#exampleModalgrid1')
+                    });
+                }
             }
+            
+            // Initialize on page load
+            initSelect2();
+            
+            // Reinitialize when modals are shown
+            $('#exampleModalgrid').on('shown.bs.modal', function () {
+                initSelect2();
+            });
+            $('#exampleModalgrid1').on('shown.bs.modal', function () {
+                initSelect2();
+            });
         });
     </script>
 
