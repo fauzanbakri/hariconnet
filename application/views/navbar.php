@@ -464,23 +464,13 @@
                     <div id="two-column-menu">
                     </div>
                     <ul class="navbar-nav" id="navbar-nav">
-                        <?php
-                        if(
-                            $_SESSION['role']=='Superadmin' || 
-                            $_SESSION['role']=='NOC Ritel' || 
-                            $_SESSION['role']=='Team Leader' || 
-                            $_SESSION['role']=='Pemeliharaan Ritel'	||
-                            $_SESSION['role']=='Guest 1' ||
-                            $_SESSION['role']=='Resepsionis'
-                            ){
-                                echo '
                         <li class="menu-title"><span data-key="t-menu">NOC</span></li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                                 <i class="mdi mdi-monitor-dashboard"></i> <span data-key="t-dashboards">Dashboards</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarDashboards">
-                                <ul class="nav nav-sm flex-column">';}?>
+                                <ul class="nav nav-sm flex-column">
                                     <?php
                                     if(
                                         $_SESSION['role']=='Superadmin' || 
