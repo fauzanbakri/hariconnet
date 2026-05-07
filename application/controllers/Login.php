@@ -39,7 +39,7 @@ class Login extends CI_Controller {
 				) {
 				header("location:../Feeder");
 			} else if ($data['role'] == 'Inventory' || $data['role'] == 'Mitra Gangguan'){
-				header("location:../Feeder");
+				header("location:../MonitoringMaterial");
 			}
 		}else{
 			header("location:../Login?msg=wrong");
