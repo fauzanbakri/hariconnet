@@ -139,38 +139,33 @@ class Material extends CI_Controller {
 		}
 
 		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment; filename="material_export_' . date('Ymd_His') . '.csv"');
+		header('Content-Disposition: attachment; filename="material_export_' . date('Ymd_His') . '.xls"');
 		header('Pragma: no-cache');
 		header('Expires: 0');
 
-		$fp = fopen('php://output', 'w');
-		if (!$fp) {
-			echo 'Failed to create export file';
-			return;
-		}
-
-		$headers = [
-			'No',
-			'Tanggal',
-			'Kategori',
-			'Kode Material',
-			'SN',
-			'SN Terpakai',
-			'Kode Material Terpakai',
-			'Merk',
-			'Tipe Material',
-			'Tim',
-			'QTY',
-			'Satuan',
-			'Sisa Available',
-			'Status Reservasi',
-			'Status Terpakai',
-			'Status Pengiriman',
-			'No Reservasi',
-			'No GI',
-			'Keterangan'
-		];
-		fputcsv($fp, $headers);
+		echo "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /></head><body>";
+		echo "<table border=\"1\">";
+		echo "<tr>";
+		echo "<th>No</th>";
+		echo "<th>Tanggal</th>";
+		echo "<th>Kategori</th>";
+		echo "<th>Kode Material</th>";
+		echo "<th>SN</th>";
+		echo "<th>SN Terpakai</th>";
+		echo "<th>Kode Material Terpakai</th>";
+		echo "<th>Merk</th>";
+		echo "<th>Tipe Material</th>";
+		echo "<th>Tim</th>";
+		echo "<th>QTY</th>";
+		echo "<th>Satuan</th>";
+		echo "<th>Sisa Available</th>";
+		echo "<th>Status Reservasi</th>";
+		echo "<th>Status Terpakai</th>";
+		echo "<th>Status Pengiriman</th>";
+		echo "<th>No Reservasi</th>";
+		echo "<th>No GI</th>";
+		echo "<th>Keterangan</th>";
+		echo "</tr>";
 
 		$count = 0;
 		foreach ($materials as $material) {
@@ -187,7 +182,7 @@ class Material extends CI_Controller {
 
 			$status_terpakai_display = ($available == 0) ? 'Terpakai' : 'Ready';
 
-			$row = [
+			$values = [
 				$count,
 				date('d-m-Y', strtotime($material->tanggal)),
 				$material->kategori,
@@ -208,10 +203,16 @@ class Material extends CI_Controller {
 				isset($material->no_gi) ? $material->no_gi : '',
 				isset($material->ket) ? $material->ket : ''
 			];
-			fputcsv($fp, $row);
+
+			echo "<tr>";
+			foreach ($values as $cell) {
+				echo "<td>" . htmlspecialchars($cell, ENT_QUOTES, 'UTF-8') . "</td>";
+			}
+			echo "</tr>";
 		}
 
-		fclose($fp);
+		echo "</table>";
+		echo "</body></html>";
 	}
 
 	/**
