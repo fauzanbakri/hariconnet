@@ -60,8 +60,10 @@ class Material_model extends CI_Model {
 			$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
 		}
 
-		if ($start_date && $end_date) {
+		if ($start_date) {
 			$this->db->where('DATE(m.tanggal) >=', $start_date);
+		}
+		if ($end_date) {
 			$this->db->where('DATE(m.tanggal) <=', $end_date);
 		}
 

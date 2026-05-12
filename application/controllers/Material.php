@@ -96,6 +96,125 @@ class Material extends CI_Controller {
 	}
 
 	/**
+	 * Export filtered material to Excel-compatible CSV
+	 */
+	public function exportExcel()
+	{
+		date_default_timezone_set('Asia/Makassar');
+		session_start();
+
+		if (
+			$_SESSION['role'] !== 'Superadmin' &&
+			$_SESSION['role'] !== 'Team Leader'
+		) {
+			header('HTTP/1.1 403 Forbidden');
+			echo 'Access denied';
+			return;
+		}
+
+		$start_date = $this->input->get('start_date');
+		$end_date = $this->input->get('end_date');
+		$filter_tim = $this->input->get('filter_tim');
+		$filter_kategori = $this->input->get('kategori');
+		$status_reservasi = $this->input->get('status_reservasi');
+		$status_terpakai = $this->input->get('status_terpakai');
+		$status_pengiriman = $this->input->get('status_pengiriman');
+
+		if ($start_date || $end_date || $status_reservasi || $status_terpakai || $status_pengiriman || $filter_tim || $filter_kategori) {
+			$materials = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
+		} else {
+			$materials = $this->Material_model->get_all_materials();
+		}
+
+		$used_sums = [];
+		$ptable = $this->get_pemakaian_table();
+		if ($ptable) {
+			$this->db->select('idMaterial, SUM(qty) as used');
+			$this->db->from($ptable);
+			$this->db->group_by('idMaterial');
+			$rows = $this->db->get()->result();
+			foreach ($rows as $r) {
+				$used_sums[$r->idMaterial] = (int)$r->used;
+			}
+		}
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment; filename="material_export_' . date('Ymd_His') . '.csv"');
+		header('Pragma: no-cache');
+		header('Expires: 0');
+
+		$fp = fopen('php://output', 'w');
+		if (!$fp) {
+			echo 'Failed to create export file';
+			return;
+		}
+
+		$headers = [
+			'No',
+			'Tanggal',
+			'Kategori',
+			'Kode Material',
+			'SN',
+			'SN Terpakai',
+			'Kode Material Terpakai',
+			'Merk',
+			'Tipe Material',
+			'Tim',
+			'QTY',
+			'Satuan',
+			'Sisa Available',
+			'Status Reservasi',
+			'Status Terpakai',
+			'Status Pengiriman',
+			'No Reservasi',
+			'No GI',
+			'Keterangan'
+		];
+		fputcsv($fp, $headers);
+
+		$count = 0;
+		foreach ($materials as $material) {
+			$count++;
+			$used = isset($used_sums[$material->idmaterial]) ? (int)$used_sums[$material->idmaterial] : 0;
+			if (isset($material->status_reservasi, $material->status_terpakai) && $material->status_reservasi == 'Sudah' && $material->status_terpakai == 'Sudah') {
+				$available = $material->qty - $used;
+			} else {
+				$available = $material->qty;
+			}
+			if ($available < 0) {
+				$available = 0;
+			}
+
+			$status_terpakai_display = ($available == 0) ? 'Terpakai' : 'Ready';
+
+			$row = [
+				$count,
+				date('d-m-Y', strtotime($material->tanggal)),
+				$material->kategori,
+				$material->kode_material,
+				$material->sn,
+				isset($material->sn_terpakai) ? $material->sn_terpakai : '',
+				isset($material->kode_material_terpakai) ? $material->kode_material_terpakai : '',
+				isset($material->merk) ? $material->merk : '',
+				isset($material->tipeMaterial) ? $material->tipeMaterial : (isset($material->tipematerial) ? $material->tipematerial : ''),
+				isset($material->nama) ? $material->nama : '',
+				isset($material->qty) ? $material->qty : '',
+				isset($material->satuan) ? $material->satuan : '',
+				$available,
+				isset($material->status_reservasi) ? $material->status_reservasi : '',
+				$status_terpakai_display,
+				isset($material->status_pengiriman) ? $material->status_pengiriman : '',
+				isset($material->no_reservasi) ? $material->no_reservasi : '',
+				isset($material->no_gi) ? $material->no_gi : '',
+				isset($material->ket) ? $material->ket : ''
+			];
+			fputcsv($fp, $row);
+		}
+
+		fclose($fp);
+	}
+
+	/**
 	 * Insert new material
 	 */
 	public function insertData()

@@ -276,6 +276,7 @@
                                         <div class="col-md-12">
                                             <button class="btn btn-sm btn-info" onclick="applyFilters()">Filter</button>
                                             <button class="btn btn-sm btn-secondary" onclick="resetFilters()">Reset</button>
+                                            <button class="btn btn-sm btn-success" onclick="exportExcel()">Export Excel</button>
                                         </div>
                                     </div>
 
@@ -1079,6 +1080,27 @@ function applyFilters() {
     const statusPengiriman = document.getElementById('filterPengiriman').value;
 
     let url = 'Material?';
+    if (startDate) url += 'start_date=' + startDate + '&';
+    if (endDate) url += 'end_date=' + endDate + '&';
+    if (filterTim) url += 'filter_tim=' + filterTim + '&';
+    if (filterKategori) url += 'kategori=' + filterKategori + '&';
+    if (statusReservasi) url += 'status_reservasi=' + statusReservasi + '&';
+    if (statusTerpakai) url += 'status_terpakai=' + statusTerpakai + '&';
+    if (statusPengiriman) url += 'status_pengiriman=' + statusPengiriman;
+
+    window.location.href = url;
+}
+
+function exportExcel() {
+    const startDate = document.getElementById('filterStartDate').value;
+    const endDate = document.getElementById('filterEndDate').value;
+    const filterTim = document.getElementById('filterTim') ? document.getElementById('filterTim').value : '';
+    const filterKategori = document.getElementById('filterKategori') ? document.getElementById('filterKategori').value : '';
+    const statusReservasi = document.getElementById('filterReservasi').value;
+    const statusTerpakai = document.getElementById('filterTerpakai').value;
+    const statusPengiriman = document.getElementById('filterPengiriman').value;
+
+    let url = 'Material/exportExcel?';
     if (startDate) url += 'start_date=' + startDate + '&';
     if (endDate) url += 'end_date=' + endDate + '&';
     if (filterTim) url += 'filter_tim=' + filterTim + '&';
