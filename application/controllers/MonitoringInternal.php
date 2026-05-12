@@ -287,4 +287,87 @@ class MonitoringInternal extends CI_Controller {
             return '';
         }
     }
+
+    public function exportExcel()
+    {
+        session_start();
+        if (
+            $_SESSION['role'] != 'Superadmin' &&
+            $_SESSION['role'] != 'NOC Ritel' &&
+            $_SESSION['role'] != 'Team Leader' &&
+            $_SESSION['role'] != 'Pemeliharaan Ritel' &&
+            $_SESSION['role'] != 'Guest 1'
+        ) {
+            header('location: ./DashboardNoc');
+            return;
+        }
+
+        $table = $this->resolveTableName();
+        if ($table === false) {
+            echo 'Tabel Monitoring Internal belum tersedia';
+            return;
+        }
+
+        $filter_start_date = trim((string)$this->input->get('start_date'));
+        $filter_end_date = trim((string)$this->input->get('end_date'));
+        $filter_status = strtolower(trim((string)$this->input->get('status')));
+
+        $fields = $this->db->list_fields($table);
+        $this->db->from($table);
+        if (in_array('tanggal', $fields, true)) {
+            if ($filter_start_date !== '') {
+                $this->db->where('tanggal >=', $filter_start_date);
+            }
+            if ($filter_end_date !== '') {
+                $this->db->where('tanggal <=', $filter_end_date);
+            }
+        }
+        if (in_array('status', $fields, true) && in_array($filter_status, ['not yet', 'done'], true)) {
+            $this->db->where('LOWER(status)', $filter_status);
+        }
+        if (in_array('tanggal', $fields, true)) {
+            $this->db->order_by('tanggal', 'DESC');
+        }
+        if (in_array('id', $fields, true)) {
+            $this->db->order_by('id', 'DESC');
+        }
+        $rows = $this->db->get()->result();
+
+        // Fetch Keterangan for each row
+        foreach ($rows as &$row) {
+            $row->keterangan = $this->getKeterangan($row);
+        }
+
+        // Output as XLS
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="monitoring_internal_' . date('Y-m-d') . '.xls"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        echo '<html><body><table border="1"><thead><tr>';
+        echo '<th>No</th>';
+        echo '<th>Nama</th>';
+        echo '<th>Segmen</th>';
+        echo '<th>Incident</th>';
+        echo '<th>Keterangan</th>';
+        echo '<th>Status</th>';
+        echo '<th>Tanggal</th>';
+        echo '</tr></thead><tbody>';
+
+        $no = 1;
+        foreach ($rows as $row) {
+            echo '<tr>';
+            echo '<td>' . htmlspecialchars($no++) . '</td>';
+            echo '<td>' . htmlspecialchars($row->nama ?? '') . '</td>';
+            echo '<td>' . htmlspecialchars($row->segmen ?? '') . '</td>';
+            echo '<td>' . htmlspecialchars($row->incident ?? '') . '</td>';
+            echo '<td>' . htmlspecialchars($row->keterangan ?? '') . '</td>';
+            echo '<td>' . htmlspecialchars($row->status ?? '') . '</td>';
+            echo '<td>' . htmlspecialchars($row->tanggal ?? '') . '</td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody></table></body></html>';
+        exit;
+    }
 }

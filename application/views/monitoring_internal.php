@@ -100,6 +100,7 @@
                                 </div>
                                 <div class="col-12 d-flex gap-2">
                                     <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                                    <button type="button" class="btn btn-success btn-sm" onclick="exportExcel()">Export XLS</button>
                                     <a href="MonitoringInternal" class="btn btn-light btn-sm">Reset</a>
                                 </div>
                             </form>
@@ -616,5 +617,18 @@
             }
         });
     });
+
+    function exportExcel() {
+        var url = 'MonitoringInternal/exportExcel?';
+        var params = [];
+        var startDate = $('input[name="start_date"]').val();
+        var endDate = $('input[name="end_date"]').val();
+        var status = $('select[name="status"]').val();
+        if (startDate) params.push('start_date=' + encodeURIComponent(startDate));
+        if (endDate) params.push('end_date=' + encodeURIComponent(endDate));
+        if (status) params.push('status=' + encodeURIComponent(status));
+        if (params.length > 0) url += params.join('&');
+        window.location.href = url;
+    }
 })(jQuery);
 </script>
