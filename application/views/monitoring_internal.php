@@ -617,18 +617,18 @@
             }
         });
     });
-
-    function exportExcel() {
-        var url = 'MonitoringInternal/exportExcel?';
-        var params = [];
-        var startDate = $('input[name="start_date"]').val();
-        var endDate = $('input[name="end_date"]').val();
-        var status = $('select[name="status"]').val();
-        if (startDate) params.push('start_date=' + encodeURIComponent(startDate));
-        if (endDate) params.push('end_date=' + encodeURIComponent(endDate));
-        if (status) params.push('status=' + encodeURIComponent(status));
-        if (params.length > 0) url += params.join('&');
-        window.location.href = url;
-    }
 })(jQuery);
+
+function exportExcel() {
+    var url = 'MonitoringInternal/exportExcel?';
+    var params = [];
+    var startDate = document.querySelector('input[name="start_date"]').value;
+    var endDate = document.querySelector('input[name="end_date"]').value;
+    var status = document.querySelector('select[name="status"]').value;
+    if (startDate) params.push('start_date=' + encodeURIComponent(startDate));
+    if (endDate) params.push('end_date=' + encodeURIComponent(endDate));
+    if (status) params.push('status=' + encodeURIComponent(status));
+    if (params.length > 0) url += params.join('&');
+    window.location.href = url;
+}
 </script>
