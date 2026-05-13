@@ -34,6 +34,7 @@ class Material_model extends CI_Model {
 		} else {
 			$this->db->join('tim t', 'm.idtim = t.idTim', 'left');
 		}
+		$this->db->where("NOT (m.status_reservasi = 'Sudah' AND m.status_terpakai = 'Terpakai')", null, false);
 		$this->db->order_by('m.idmaterial', 'DESC');
 		return $this->db->get()->result();
 	}
@@ -87,6 +88,10 @@ class Material_model extends CI_Model {
 
 		if ($status_pengiriman) {
 			$this->db->where('m.status_pengiriman', $status_pengiriman);
+		}
+
+		if ((string)$status_reservasi === '' && (string)$status_terpakai === '') {
+			$this->db->where("NOT (m.status_reservasi = 'Sudah' AND m.status_terpakai = 'Terpakai')", null, false);
 		}
 
 		// filter by kategori if provided (FOC/FOT)
