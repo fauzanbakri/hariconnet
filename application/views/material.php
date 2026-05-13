@@ -1085,13 +1085,13 @@ function applyFilters() {
     const statusPengiriman = document.getElementById('filterPengiriman').value;
 
     let url = 'Material?';
-    if (startDate) url += 'start_date=' + startDate + '&';
-    if (endDate) url += 'end_date=' + endDate + '&';
-    if (filterTim) url += 'filter_tim=' + filterTim + '&';
-    if (filterKategori) url += 'kategori=' + filterKategori + '&';
-    if (statusReservasi) url += 'status_reservasi=' + statusReservasi + '&';
-    if (statusTerpakai) url += 'status_terpakai=' + statusTerpakai + '&';
-    if (statusPengiriman) url += 'status_pengiriman=' + statusPengiriman;
+    if (startDate) url += 'start_date=' + encodeURIComponent(startDate) + '&';
+    if (endDate) url += 'end_date=' + encodeURIComponent(endDate) + '&';
+    if (filterTim) url += 'filter_tim=' + encodeURIComponent(filterTim) + '&';
+    if (filterKategori) url += 'kategori=' + encodeURIComponent(filterKategori) + '&';
+    url += 'status_reservasi=' + encodeURIComponent(statusReservasi) + '&';
+    url += 'status_terpakai=' + encodeURIComponent(statusTerpakai) + '&';
+    if (statusPengiriman) url += 'status_pengiriman=' + encodeURIComponent(statusPengiriman);
 
     window.location.href = url;
 }
@@ -1106,13 +1106,13 @@ function exportExcel() {
     const statusPengiriman = document.getElementById('filterPengiriman').value;
 
     let url = 'Material/exportExcel?';
-    if (startDate) url += 'start_date=' + startDate + '&';
-    if (endDate) url += 'end_date=' + endDate + '&';
-    if (filterTim) url += 'filter_tim=' + filterTim + '&';
-    if (filterKategori) url += 'kategori=' + filterKategori + '&';
-    if (statusReservasi) url += 'status_reservasi=' + statusReservasi + '&';
-    if (statusTerpakai) url += 'status_terpakai=' + statusTerpakai + '&';
-    if (statusPengiriman) url += 'status_pengiriman=' + statusPengiriman;
+    if (startDate) url += 'start_date=' + encodeURIComponent(startDate) + '&';
+    if (endDate) url += 'end_date=' + encodeURIComponent(endDate) + '&';
+    if (filterTim) url += 'filter_tim=' + encodeURIComponent(filterTim) + '&';
+    if (filterKategori) url += 'kategori=' + encodeURIComponent(filterKategori) + '&';
+    url += 'status_reservasi=' + encodeURIComponent(statusReservasi) + '&';
+    url += 'status_terpakai=' + encodeURIComponent(statusTerpakai) + '&';
+    if (statusPengiriman) url += 'status_pengiriman=' + encodeURIComponent(statusPengiriman);
 
     window.location.href = url;
 }

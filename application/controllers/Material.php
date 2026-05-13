@@ -49,13 +49,18 @@ class Material extends CI_Controller {
 			$status_terpakai = $this->input->get('status_terpakai');
 			$status_pengiriman = $this->input->get('status_pengiriman');
 
+			$has_status_reservasi = array_key_exists('status_reservasi', $_GET);
+			$has_status_terpakai = array_key_exists('status_terpakai', $_GET);
 			$is_initial_load = empty($_GET);
 			if ($is_initial_load) {
-				if ($status_reservasi === null) {
-					$status_reservasi = 'Belum';
+				$status_reservasi = 'Belum';
+				$status_terpakai = 'Belum';
+			} else {
+				if (!$has_status_reservasi) {
+					$status_reservasi = '';
 				}
-				if ($status_terpakai === null) {
-					$status_terpakai = 'Belum';
+				if (!$has_status_terpakai) {
+					$status_terpakai = '';
 				}
 			}
 
