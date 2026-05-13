@@ -1458,7 +1458,7 @@ $(document).ready(function () {
 
     new DataTable('#example2', {
         lengthMenu: [
-            [-1, 10, 25, 50],
+            [10, 25, 50, -1],
             [10, 25, 50, 'All']
         ],
         responsive: true,
