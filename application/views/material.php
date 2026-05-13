@@ -277,6 +277,7 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <br>
                                         <div class="col-md-12">
                                             <button class="btn btn-sm btn-info" onclick="applyFilters()">Filter</button>
                                             <button class="btn btn-sm btn-secondary" onclick="resetFilters()">Reset</button>
