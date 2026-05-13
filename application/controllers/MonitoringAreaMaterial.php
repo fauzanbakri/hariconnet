@@ -90,14 +90,15 @@ class MonitoringAreaMaterial extends CI_Controller {
                 $tot_row = $this->db->get()->row();
                 $total_qty = isset($tot_row->total_qty) ? (int)$tot_row->total_qty : 0;
 
-                // Get used material at this area for this tipe
+                // Get used material at this area for this tipe by joining to the material row
                 $used_qty = 0;
                 if ($ptable) {
                     $this->db->select("COALESCE(SUM(CAST(".$ptable.".qty AS UNSIGNED)),0) as used_qty", false);
                     $this->db->from($ptable);
-                    $this->db->join('basecamp', $ptable.'.idBc = basecamp.idBc', 'left');
+                    $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'left');
+                    $this->db->join('basecamp', 'material.idBc = basecamp.idBc', 'left');
                     $this->db->where('basecamp.kabupaten', $area);
-                    $this->db->where("UPPER(TRIM(".$ptable.".tipeBarang)) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
+                    $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
                     $used_row = $this->db->get()->row();
                     $used_qty = isset($used_row->used_qty) ? (int)$used_row->used_qty : 0;
                 }
