@@ -54,7 +54,7 @@ class Material extends CI_Controller {
 			$is_initial_load = empty($_GET);
 			if ($is_initial_load) {
 				$status_reservasi = 'Belum';
-				$status_terpakai = 'Belum';
+				$status_terpakai = '';
 			} else {
 				if (!$has_status_reservasi) {
 					$status_reservasi = '';

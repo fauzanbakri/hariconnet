@@ -263,9 +263,8 @@
                                                 <label for="filterTerpakai" class="form-label">Status Terpakai</label>
                                                 <select id="filterTerpakai" class="form-select form-select-sm">
                                                     <option value=""<?php echo (($filter_status_terpakai ?? '') === '') ? ' selected' : ''; ?>>Semua</option>
-                                                    <?php foreach ($status_terpakai_list as $status) { ?>
-                                                        <option value="<?php echo $status->status_terpakai; ?>"<?php echo (($filter_status_terpakai ?? '') === $status->status_terpakai) ? ' selected' : ''; ?>><?php echo $status->status_terpakai; ?></option>
-                                                    <?php } ?>
+                                                    <option value="Ready"<?php echo (($filter_status_terpakai ?? '') === 'Ready') ? ' selected' : ''; ?>>Ready</option>
+                                                    <option value="Terpakai"<?php echo (($filter_status_terpakai ?? '') === 'Terpakai') ? ' selected' : ''; ?>>Terpakai</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
@@ -1121,7 +1120,7 @@ function resetFilters() {
     document.getElementById('filterStartDate').value = '';
     document.getElementById('filterEndDate').value = '';
     document.getElementById('filterReservasi').value = 'Belum';
-    document.getElementById('filterTerpakai').value = 'Belum';
+    document.getElementById('filterTerpakai').value = '';
     document.getElementById('filterPengiriman').value = '';
     if (document.getElementById('filterTim')) document.getElementById('filterTim').value = '';
     if (document.getElementById('filterKategori')) document.getElementById('filterKategori').value = '';
