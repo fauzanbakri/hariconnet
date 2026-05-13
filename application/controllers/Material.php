@@ -40,19 +40,6 @@ class Material extends CI_Controller {
 			$_SESSION['role']=='Superadmin' ||
 			$_SESSION['role']=='Team Leader'
 		){
-			// compute total used qty per material from pemakaian table if exists
-			$data['used_sums'] = [];
-			$ptable = $this->get_pemakaian_table();
-			if ($ptable) {
-				$this->db->select('idMaterial, SUM(qty) as used');
-				$this->db->from($ptable);
-				$this->db->group_by('idMaterial');
-				$rows = $this->db->get()->result();
-				foreach ($rows as $r) {
-					$data['used_sums'][$r->idMaterial] = (int)$r->used;
-				}
-			}
-
 			// Get materials with filters
 			$start_date = $this->input->get('start_date');
 			$end_date = $this->input->get('end_date');
@@ -64,12 +51,10 @@ class Material extends CI_Controller {
 
 			// Allow empty dates; only apply filters when any filter present
 			if ($start_date || $end_date || $status_reservasi || $status_terpakai || $status_pengiriman || $filter_tim || $filter_kategori) {
-				$materials = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
+				$data['materials'] = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
 			} else {
-				$materials = $this->Material_model->get_all_materials();
+				$data['materials'] = $this->Material_model->get_all_materials();
 			}
-
-			$data['materials'] = $this->filterReservedTerpakaiMaterials($materials, $data['used_sums']);
 
 			// load basecamp list for selection
 			$data['basecamps'] = [];
@@ -89,6 +74,19 @@ class Material extends CI_Controller {
 			$data['status_reservasi_list'] = ['Sudah', 'Belum'];
 			$data['status_terpakai_list'] = $this->Material_model->get_status_terpakai();
 			$data['status_pengiriman_list'] = ['Dalam Pengiriman', 'On Loc'];
+
+			// compute total used qty per material from pemakaian table if exists
+			$data['used_sums'] = [];
+			$ptable = $this->get_pemakaian_table();
+			if ($ptable) {
+				$this->db->select('idMaterial, SUM(qty) as used');
+				$this->db->from($ptable);
+				$this->db->group_by('idMaterial');
+				$rows = $this->db->get()->result();
+				foreach ($rows as $r) {
+					$data['used_sums'][$r->idMaterial] = (int)$r->used;
+				}
+			}
 
 			$this->load->view('navbar', $title);
 			$this->load->view('material', $data);
@@ -139,7 +137,7 @@ class Material extends CI_Controller {
 				$used_sums[$r->idMaterial] = (int)$r->used;
 			}
 		}
-		$materials = $this->filterReservedTerpakaiMaterials($materials, $used_sums);
+
 		header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment; filename="material_export_' . date('Ymd_His') . '.xls"');
 		header('Pragma: no-cache');
@@ -215,25 +213,6 @@ class Material extends CI_Controller {
 
 		echo "</table>";
 		echo "</body></html>";
-	}
-
-	private function filterReservedTerpakaiMaterials($materials, $used_sums)
-	{
-		if (!is_array($materials)) {
-			return $materials;
-		}
-
-		return array_values(array_filter($materials, function($material) use ($used_sums) {
-			$statusReservasi = isset($material->status_reservasi) ? strtolower(trim((string)$material->status_reservasi)) : '';
-			if ($statusReservasi !== 'sudah') {
-				return true;
-			}
-
-			$qty = isset($material->qty) ? (int)$material->qty : 0;
-			$used = isset($used_sums[$material->idmaterial]) ? (int)$used_sums[$material->idmaterial] : 0;
-			$available = $qty - $used;
-			return $available > 0;
-		}));
 	}
 
 	/**
