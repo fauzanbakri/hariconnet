@@ -90,6 +90,8 @@ class Material extends CI_Controller {
 			$data['status_terpakai_list'] = $this->Material_model->get_status_terpakai();
 			$data['status_pengiriman_list'] = ['Dalam Pengiriman', 'On Loc'];
 
+			$this->load->view('navbar', $title);
+			$this->load->view('material', $data);
 		} else {
 			header('location: ./DashboardNoc');
 		}
