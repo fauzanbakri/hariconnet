@@ -224,54 +224,58 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <!-- Filter: Tanggal Mulai -->
-                                            <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
-                                            <input type="date" id="filterStartDate" class="form-control form-control-sm" value="">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <!-- Filter: Tanggal Mulai -->
+                                                <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
+                                                <input type="date" id="filterStartDate" class="form-control form-control-sm" value="">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
+                                                <input type="date" id="filterEndDate" class="form-control form-control-sm" value="">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="filterTim" class="form-label">Basecamp / Tim</label>
+                                                <select id="filterTim" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <?php foreach (($basecamps ?? []) as $bc) { $v = is_object($bc)?$bc->idBc:(is_array($bc)?$bc['idBc']:$bc); $n = is_object($bc)?$bc->namaAkun:(is_array($bc)?$bc['namaAkun']:$bc); echo '<option value="'.htmlspecialchars($v).'">'.htmlspecialchars($n).'</option>'; } ?>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
-                                            <input type="date" id="filterEndDate" class="form-control form-control-sm" value="">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="filterTim" class="form-label">Basecamp / Tim</label>
-                                            <select id="filterTim" class="form-select form-select-sm">
-                                                <option value="">Semua</option>
-                                                <?php foreach (($basecamps ?? []) as $bc) { $v = is_object($bc)?$bc->idBc:(is_array($bc)?$bc['idBc']:$bc); $n = is_object($bc)?$bc->namaAkun:(is_array($bc)?$bc['namaAkun']:$bc); echo '<option value="'.htmlspecialchars($v).'">'.htmlspecialchars($n).'</option>'; } ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="filterKategori" class="form-label">Kategori</label>
-                                            <select id="filterKategori" class="form-select form-select-sm">
-                                                <option value="">Semua</option>
-                                                <option value="FOC">FOC</option>
-                                                <option value="FOT">FOT</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="filterReservasi" class="form-label">Status Reservasi</label>
-                                            <select id="filterReservasi" class="form-select form-select-sm">
-                                                <option value="">Semua</option>
-                                                <option value="Sudah">Sudah</option>
-                                                <option value="Belum">Belum</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="filterTerpakai" class="form-label">Status Terpakai</label>
-                                            <select id="filterTerpakai" class="form-select form-select-sm">
-                                                <option value="">Semua</option>
-                                                <?php foreach ($status_terpakai_list as $status) { ?>
-                                                    <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
-                                            <select id="filterPengiriman" class="form-select form-select-sm">
-                                                <option value="">Semua</option>
-                                                <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                <option value="On Loc">On Loc</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="filterKategori" class="form-label">Kategori</label>
+                                                <select id="filterKategori" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <option value="FOC">FOC</option>
+                                                    <option value="FOT">FOT</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="filterReservasi" class="form-label">Status Reservasi</label>
+                                                <select id="filterReservasi" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <option value="Sudah">Sudah</option>
+                                                    <option value="Belum">Belum</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="filterTerpakai" class="form-label">Status Terpakai</label>
+                                                <select id="filterTerpakai" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <?php foreach ($status_terpakai_list as $status) { ?>
+                                                        <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
+                                                <select id="filterPengiriman" class="form-select form-select-sm">
+                                                    <option value="">Semua</option>
+                                                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                                                    <option value="On Loc">On Loc</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col-md-12">
                                             <button class="btn btn-sm btn-info" onclick="applyFilters()">Filter</button>
