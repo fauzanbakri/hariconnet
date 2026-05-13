@@ -56,6 +56,9 @@
                             <div>
                                 <h5 class="card-title mb-0"><?php echo htmlspecialchars($m['nama'] ?: '-'); ?></h5>
                                 <small class="text-muted small"><?php echo htmlspecialchars($m['sloc'] ?: ''); ?></small>
+                                <?php if (!empty($m['bc_count'])): ?>
+                                    <div class="text-muted small">Jumlah Basecamp: <?php echo $m['bc_count']; ?></div>
+                                <?php endif; ?>
                             </div>
                             <div>
                                 <span class="badge bg-light text-dark">Items: <?php echo count($m['items']); ?></span>

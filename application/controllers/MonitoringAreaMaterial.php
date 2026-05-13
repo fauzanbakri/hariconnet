@@ -137,6 +137,7 @@ class MonitoringAreaMaterial extends CI_Controller {
                     'nama' => $area_name,
                     'sloc' => 'Area',
                     'id' => $area_name,
+                    'bc_count' => count($basecamp_ids),
                     'items' => $items
                 ];
             }
