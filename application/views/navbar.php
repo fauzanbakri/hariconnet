@@ -692,7 +692,12 @@
                             <a class="nav-link menu-link" href="MonitoringMaterial" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-archive-search-outline"></i> <span data-key="t-layouts">Monitoring Material</span>
                             </a>
-                        </li> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="MonitoringAreaMaterial" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                                <i class="mdi mdi-map-marker-radius"></i> <span data-key="t-layouts">Monitoring Area Material</span>
+                            </a>
+                        </li>
                          <li class="nav-item">
                             <a class="nav-link menu-link" href="Material" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                 <i class="mdi mdi-archive-plus-outline"></i> <span data-key="t-layouts">Input Material</span>
