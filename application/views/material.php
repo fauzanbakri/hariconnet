@@ -225,16 +225,16 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <!-- Filter: Tanggal Mulai -->
                                                 <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
                                                 <input type="date" id="filterStartDate" class="form-control form-control-sm" value="">
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
                                                 <input type="date" id="filterEndDate" class="form-control form-control-sm" value="">
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <label for="filterTim" class="form-label">Basecamp / Tim</label>
                                                 <select id="filterTim" class="form-select form-select-sm">
                                                     <option value="">Semua</option>
@@ -243,7 +243,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="filterKategori" class="form-label">Kategori</label>
                                                 <select id="filterKategori" class="form-select form-select-sm">
                                                     <option value="">Semua</option>
@@ -251,7 +251,7 @@
                                                     <option value="FOT">FOT</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="filterReservasi" class="form-label">Status Reservasi</label>
                                                 <select id="filterReservasi" class="form-select form-select-sm">
                                                     <option value="">Semua</option>
@@ -259,7 +259,7 @@
                                                     <option value="Belum">Belum</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="filterTerpakai" class="form-label">Status Terpakai</label>
                                                 <select id="filterTerpakai" class="form-select form-select-sm">
                                                     <option value="">Semua</option>
@@ -268,7 +268,7 @@
                                                     <?php } ?>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
                                                 <select id="filterPengiriman" class="form-select form-select-sm">
                                                     <option value="">Semua</option>
