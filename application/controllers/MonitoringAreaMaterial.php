@@ -74,7 +74,8 @@ class MonitoringAreaMaterial extends CI_Controller {
                 if ($table) {
                     $this->db->select("COALESCE(AVG(CAST(".$table.".".$col." AS UNSIGNED)),0) as avg_std", false);
                     $this->db->from($table);
-                    $this->db->where('kabupaten', $area);
+                    $this->db->join('basecamp', $table.'.idBc = basecamp.idBc', 'left');
+                    $this->db->where('basecamp.kabupaten', $area);
                     $std_row = $this->db->get()->row();
                     $standard = isset($std_row->avg_std) ? (int)$std_row->avg_std : 0;
                 }
