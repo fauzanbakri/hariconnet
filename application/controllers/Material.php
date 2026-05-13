@@ -49,12 +49,22 @@ class Material extends CI_Controller {
 			$status_terpakai = $this->input->get('status_terpakai');
 			$status_pengiriman = $this->input->get('status_pengiriman');
 
-			// Allow empty dates; only apply filters when any filter present
-			if ($start_date || $end_date || $status_reservasi || $status_terpakai || $status_pengiriman || $filter_tim || $filter_kategori) {
-				$data['materials'] = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
-			} else {
-				$data['materials'] = $this->Material_model->get_all_materials();
+			if ($status_reservasi === null) {
+				$status_reservasi = 'Belum';
 			}
+			if ($status_terpakai === null) {
+				$status_terpakai = 'Belum';
+			}
+
+			$data['filter_start_date'] = $start_date ?: '';
+			$data['filter_end_date'] = $end_date ?: '';
+			$data['filter_tim'] = $filter_tim ?: '';
+			$data['filter_kategori'] = $filter_kategori ?: '';
+			$data['filter_status_reservasi'] = $status_reservasi;
+			$data['filter_status_terpakai'] = $status_terpakai;
+			$data['filter_status_pengiriman'] = $status_pengiriman ?: '';
+
+			$data['materials'] = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
 
 			// load basecamp list for selection
 			$data['basecamps'] = [];
@@ -120,11 +130,14 @@ class Material extends CI_Controller {
 		$status_terpakai = $this->input->get('status_terpakai');
 		$status_pengiriman = $this->input->get('status_pengiriman');
 
-		if ($start_date || $end_date || $status_reservasi || $status_terpakai || $status_pengiriman || $filter_tim || $filter_kategori) {
-			$materials = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
-		} else {
-			$materials = $this->Material_model->get_all_materials();
+		if ($status_reservasi === null) {
+			$status_reservasi = 'Belum';
 		}
+		if ($status_terpakai === null) {
+			$status_terpakai = 'Belum';
+		}
+
+		$materials = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
 
 		$used_sums = [];
 		$ptable = $this->get_pemakaian_table();

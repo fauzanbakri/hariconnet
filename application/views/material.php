@@ -228,17 +228,17 @@
                                             <div class="col-md-4">
                                                 <!-- Filter: Tanggal Mulai -->
                                                 <label for="filterStartDate" class="form-label">Tanggal Mulai</label>
-                                                <input type="date" id="filterStartDate" class="form-control form-control-sm" value="">
+                                                <input type="date" id="filterStartDate" class="form-control form-control-sm" value="<?php echo htmlspecialchars($filter_start_date ?? ''); ?>">
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="filterEndDate" class="form-label">Tanggal Akhir</label>
-                                                <input type="date" id="filterEndDate" class="form-control form-control-sm" value="">
+                                                <input type="date" id="filterEndDate" class="form-control form-control-sm" value="<?php echo htmlspecialchars($filter_end_date ?? ''); ?>">
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="filterTim" class="form-label">Basecamp / Tim</label>
                                                 <select id="filterTim" class="form-select form-select-sm">
                                                     <option value="">Semua</option>
-                                                    <?php foreach (($basecamps ?? []) as $bc) { $v = is_object($bc)?$bc->idBc:(is_array($bc)?$bc['idBc']:$bc); $n = is_object($bc)?$bc->namaAkun:(is_array($bc)?$bc['namaAkun']:$bc); echo '<option value="'.htmlspecialchars($v).'">'.htmlspecialchars($n).'</option>'; } ?>
+                                                    <?php foreach (($basecamps ?? []) as $bc) { $v = is_object($bc)?$bc->idBc:(is_array($bc)?$bc['idBc']:$bc); $n = is_object($bc)?$bc->namaAkun:(is_array($bc)?$bc['namaAkun']:$bc); echo '<option value="'.htmlspecialchars($v).'"'.(((string)($filter_tim ?? '') === (string)$v) ? ' selected' : '').'>'.htmlspecialchars($n).'</option>'; } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -246,34 +246,34 @@
                                             <div class="col-md-3">
                                                 <label for="filterKategori" class="form-label">Kategori</label>
                                                 <select id="filterKategori" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <option value="FOC">FOC</option>
-                                                    <option value="FOT">FOT</option>
+                                                    <option value=""<?php echo (($filter_kategori ?? '') === '') ? ' selected' : ''; ?>>Semua</option>
+                                                    <option value="FOC"<?php echo (($filter_kategori ?? '') === 'FOC') ? ' selected' : ''; ?>>FOC</option>
+                                                    <option value="FOT"<?php echo (($filter_kategori ?? '') === 'FOT') ? ' selected' : ''; ?>>FOT</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="filterReservasi" class="form-label">Status Reservasi</label>
                                                 <select id="filterReservasi" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <option value="Sudah">Sudah</option>
-                                                    <option value="Belum">Belum</option>
+                                                    <option value=""<?php echo (($filter_status_reservasi ?? '') === '') ? ' selected' : ''; ?>>Semua</option>
+                                                    <option value="Sudah"<?php echo (($filter_status_reservasi ?? '') === 'Sudah') ? ' selected' : ''; ?>>Sudah</option>
+                                                    <option value="Belum"<?php echo (($filter_status_reservasi ?? '') === 'Belum') ? ' selected' : ''; ?>>Belum</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="filterTerpakai" class="form-label">Status Terpakai</label>
                                                 <select id="filterTerpakai" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
+                                                    <option value=""<?php echo (($filter_status_terpakai ?? '') === '') ? ' selected' : ''; ?>>Semua</option>
                                                     <?php foreach ($status_terpakai_list as $status) { ?>
-                                                        <option value="<?php echo $status->status_terpakai; ?>"><?php echo $status->status_terpakai; ?></option>
+                                                        <option value="<?php echo $status->status_terpakai; ?>"<?php echo (($filter_status_terpakai ?? '') === $status->status_terpakai) ? ' selected' : ''; ?>><?php echo $status->status_terpakai; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="filterPengiriman" class="form-label">Status Pengiriman</label>
                                                 <select id="filterPengiriman" class="form-select form-select-sm">
-                                                    <option value="">Semua</option>
-                                                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                                                    <option value="On Loc">On Loc</option>
+                                                    <option value=""<?php echo (($filter_status_pengiriman ?? '') === '') ? ' selected' : ''; ?>>Semua</option>
+                                                    <option value="Dalam Pengiriman"<?php echo (($filter_status_pengiriman ?? '') === 'Dalam Pengiriman') ? ' selected' : ''; ?>>Dalam Pengiriman</option>
+                                                    <option value="On Loc"<?php echo (($filter_status_pengiriman ?? '') === 'On Loc') ? ' selected' : ''; ?>>On Loc</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1120,8 +1120,8 @@ function exportExcel() {
 function resetFilters() {
     document.getElementById('filterStartDate').value = '';
     document.getElementById('filterEndDate').value = '';
-    document.getElementById('filterReservasi').value = '';
-    document.getElementById('filterTerpakai').value = '';
+    document.getElementById('filterReservasi').value = 'Belum';
+    document.getElementById('filterTerpakai').value = 'Belum';
     document.getElementById('filterPengiriman').value = '';
     if (document.getElementById('filterTim')) document.getElementById('filterTim').value = '';
     if (document.getElementById('filterKategori')) document.getElementById('filterKategori').value = '';
