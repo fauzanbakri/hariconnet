@@ -49,11 +49,14 @@ class Material extends CI_Controller {
 			$status_terpakai = $this->input->get('status_terpakai');
 			$status_pengiriman = $this->input->get('status_pengiriman');
 
-			if ($status_reservasi === null) {
-				$status_reservasi = 'Belum';
-			}
-			if ($status_terpakai === null) {
-				$status_terpakai = 'Belum';
+			$is_initial_load = empty($_GET);
+			if ($is_initial_load) {
+				if ($status_reservasi === null) {
+					$status_reservasi = 'Belum';
+				}
+				if ($status_terpakai === null) {
+					$status_terpakai = 'Belum';
+				}
 			}
 
 			$data['filter_start_date'] = $start_date ?: '';
@@ -130,11 +133,14 @@ class Material extends CI_Controller {
 		$status_terpakai = $this->input->get('status_terpakai');
 		$status_pengiriman = $this->input->get('status_pengiriman');
 
-		if ($status_reservasi === null) {
-			$status_reservasi = 'Belum';
-		}
-		if ($status_terpakai === null) {
-			$status_terpakai = 'Belum';
+		$is_initial_load = empty($_GET);
+		if ($is_initial_load) {
+			if ($status_reservasi === null) {
+				$status_reservasi = 'Belum';
+			}
+			if ($status_terpakai === null) {
+				$status_terpakai = 'Belum';
+			}
 		}
 
 		$materials = $this->Material_model->get_materials_filtered($start_date, $end_date, $status_reservasi, $status_terpakai, $status_pengiriman, $filter_tim, $filter_kategori);
