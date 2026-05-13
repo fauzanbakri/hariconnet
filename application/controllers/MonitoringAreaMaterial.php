@@ -13,27 +13,30 @@ class MonitoringAreaMaterial extends CI_Controller {
     {
         session_start();
         $title['title'] = 'Monitoring Area Material';
-        
-        // load area (kabupaten) list from basecamp
-        $data['areas'] = [];
+
+        // load basecamp list including kabupaten
+        $data['basecamp'] = [];
         if ($this->db->table_exists('basecamp')) {
-            $this->db->distinct();
-            $this->db->select('kabupaten');
+            $this->db->select('idBc, namaAkun, sloc, kabupaten');
             $this->db->from('basecamp');
-            $this->db->where('kabupaten IS NOT NULL', NULL, FALSE);
-            $this->db->where("kabupaten != ''");
-            $this->db->order_by('kabupaten','ASC');
-            $areas = $this->db->get()->result();
-            foreach ($areas as $a) {
-                $data['areas'][] = $a->kabupaten;
-            }
+            $this->db->order_by('namaAkun','ASC');
+            $data['basecamp'] = $this->db->get()->result();
         }
 
         // detect standarStok table name
-        $candidates = ['standarStok','standar_stok','standarstok','standar_stoks'];
+        $candidates = ['standarStok','standar_stok','standarstok','standar_stoks','standarstok'];
         $table = null;
         foreach ($candidates as $t) {
             if ($this->db->table_exists($t)) { $table = $t; break; }
+        }
+
+        $standars = [];
+        if ($table) {
+            $rows = $this->db->from($table)->get()->result();
+            foreach ($rows as $r) {
+                $key = isset($r->idBc) ? $r->idBc : (isset($r->id) ? $r->id : null);
+                if ($key !== null) $standars[$key] = $r;
+            }
         }
 
         // mapping tipeMaterial -> standarStok column
@@ -55,77 +58,92 @@ class MonitoringAreaMaterial extends CI_Controller {
             'ADSS 96C' => 'adss_96c'
         ];
 
-        // detect material id field for basecamp relation
+        // detect material fields
         $mat_fields = $this->db->list_fields('material');
+        $bc_field = in_array('idBc', $mat_fields) ? 'idBc' : (in_array('idtim', $mat_fields) ? 'idtim' : null);
         $tipe_field = in_array('tipeMaterial', $mat_fields) ? 'tipeMaterial' : (in_array('tipematerial', $mat_fields)?'tipematerial':'tipeMaterial');
+        $has_basecamp_col = in_array('basecamp', $mat_fields);
+        $has_sloc_col = in_array('sloc', $mat_fields);
 
         // detect pemakaian table for used quantities
         $pem_candidates = ['pemakaian_material','pemakaianMaterial','pemakaianmaterial','pemakaian_materials','pemakaianmaterials'];
         $ptable = null;
         foreach ($pem_candidates as $t) { if ($this->db->table_exists($t)) { $ptable = $t; break; } }
 
-        // Build monitoring data grouped by area
+        // group basecamp IDs by kabupaten
+        $areas = [];
+        foreach ($data['basecamp'] as $bc) {
+            $bid = isset($bc->idBc) ? $bc->idBc : (isset($bc->id) ? $bc->id : null);
+            if ($bid === null) continue;
+            $area = trim(isset($bc->kabupaten) ? $bc->kabupaten : '');
+            if ($area === '') continue;
+            if (!isset($areas[$area])) {
+                $areas[$area] = [];
+            }
+            $areas[$area][] = $bid;
+        }
+
         $monitor = [];
-        foreach ($data['areas'] as $area) {
-            $area_data = [];
+        $debug = $this->input->get('debug') == '1';
+        foreach ($areas as $area_name => $basecamp_ids) {
+            $items = [];
             foreach ($tipe_map as $tipe_label => $col) {
-                // Get standard for this area (average or use first basecamp)
                 $standard = 0;
-                if ($table) {
-                    $this->db->select("COALESCE(AVG(CAST(".$table.".".$col." AS UNSIGNED)),0) as avg_std", false);
-                    $this->db->from($table);
-                    $this->db->join('basecamp', $table.'.idBc = basecamp.idBc', 'left');
-                    $this->db->where('basecamp.kabupaten', $area);
-                    $std_row = $this->db->get()->row();
-                    $standard = isset($std_row->avg_std) ? (int)$std_row->avg_std : 0;
+                foreach ($basecamp_ids as $bid) {
+                    if (isset($standars[$bid]) && isset($standars[$bid]->$col)) {
+                        $standard += (int)$standars[$bid]->$col;
+                    }
                 }
                 if ($standard <= 0) continue;
 
-                // Get total material at this area for this tipe
                 $this->db->select("COALESCE(SUM(CAST(material.qty AS UNSIGNED)),0) as total_qty", false);
                 $this->db->from('material');
-                $this->db->join('basecamp', 'material.idBc = basecamp.idBc', 'left');
-                $this->db->where('basecamp.kabupaten', $area);
+                if ($bc_field) {
+                    $this->db->where_in('material.'.$bc_field, $basecamp_ids);
+                }
                 $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
                 $tot_row = $this->db->get()->row();
                 $total_qty = isset($tot_row->total_qty) ? (int)$tot_row->total_qty : 0;
 
-                // Get used material at this area for this tipe by joining to the material row
-                $used_qty = 0;
+                $total_used = 0;
                 if ($ptable) {
-                    $this->db->select("COALESCE(SUM(CAST(".$ptable.".qty AS UNSIGNED)),0) as used_qty", false);
+                    $this->db->select("COALESCE(SUM(CAST(".$ptable.".qty AS UNSIGNED)),0) as used", false);
                     $this->db->from($ptable);
-                    $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'left');
-                    $this->db->join('basecamp', 'material.idBc = basecamp.idBc', 'left');
-                    $this->db->where('basecamp.kabupaten', $area);
+                    $this->db->join('material', $ptable.'.idMaterial = material.idmaterial', 'inner');
+                    if ($bc_field) {
+                        $this->db->where_in('material.'.$bc_field, $basecamp_ids);
+                    }
                     $this->db->where("UPPER(TRIM(material.".$tipe_field.")) = '".strtoupper(trim($tipe_label))."'", NULL, FALSE);
                     $used_row = $this->db->get()->row();
-                    $used_qty = isset($used_row->used_qty) ? (int)$used_row->used_qty : 0;
+                    $total_used = isset($used_row->used) ? (int)$used_row->used : 0;
                 }
 
-                $actual = $total_qty - $used_qty;
+                $actual = $total_qty - $total_used;
                 if ($actual < 0) $actual = 0;
 
-                $status = 'OK';
-                if ($actual < $standard) {
-                    $status = 'LOW';
-                }
-
-                $area_data[] = [
+                $items[] = [
                     'tipe' => $tipe_label,
                     'standard' => $standard,
                     'actual' => $actual,
-                    'status' => $status,
-                    'percentage' => $standard > 0 ? round(($actual / $standard) * 100, 1) : 0
+                    'status' => ($actual < $standard) ? 'red' : (($actual == $standard) ? 'yellow' : 'green'),
+                    'percentage' => $standard > 0 ? round(($actual / $standard) * 100, 1) : 0,
+                    'total_qty' => $total_qty,
+                    'total_used' => $total_used
                 ];
             }
-            if (count($area_data) > 0) {
-                $monitor[$area] = $area_data;
+
+            if (!empty($items)) {
+                $monitor[] = [
+                    'nama' => $area_name,
+                    'sloc' => 'Area',
+                    'id' => $area_name,
+                    'items' => $items
+                ];
             }
         }
 
         $data['monitor'] = $monitor;
         $this->load->view('navbar', $title);
-        $this->load->view('monitoring_area_material', $data);
+        $this->load->view('monitoring_material', $data);
     }
 }
