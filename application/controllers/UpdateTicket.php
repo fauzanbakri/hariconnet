@@ -57,6 +57,7 @@ class UpdateTicket extends CI_Controller {
         $currentStatus = null;
         $details = $ticket;
         $queueIndex = 0;
+        $normalizedIncident = trim($incident);
 
         foreach ($query as $row) {
             $statusUpper = strtoupper(trim($row['status']));
@@ -68,7 +69,9 @@ class UpdateTicket extends CI_Controller {
                 $queueRows[] = $row;
             }
 
-            if ($row['idInsiden'] === $incidentEscaped || $row['idTiket'] === $incidentEscaped) {
+            $rowIncident = trim((string)$row['idInsiden']);
+            $rowTicket = trim((string)$row['idTiket']);
+            if ($rowIncident === $normalizedIncident || $rowTicket === $normalizedIncident) {
                 $currentStatus = $statusUpper;
                 if ($isOpen) {
                     $position = $queueIndex;
@@ -90,20 +93,23 @@ class UpdateTicket extends CI_Controller {
         if ($currentStatus === null) {
             echo '<div class="alert alert-warning">Incident <strong>' . htmlspecialchars($incident) . '</strong> sudah ditutup atau tidak berada di daftar antrian tim <strong>' . htmlspecialchars($team) . '</strong>.</div>';
         } else {
-            $statusText = 'status saat ini: ' . htmlspecialchars($currentStatus);
-            $detailsIncident = !empty($details['idInsiden']) ? $details['idInsiden'] : $incident;
-            if (stripos(trim($details['status']), 'progress') !== false) {
-                $statusText = 'saat ini tim masih progress ' . htmlspecialchars($detailsIncident);
-            } elseif ($position !== null) {
-                $statusText = 'saat ini tim masih progress';
+            $detailsIncident = trim((string)$details['idInsiden']);
+            if ($detailsIncident === '') {
+                $detailsIncident = $incident;
             }
 
+            $detailsStatus = trim((string)$details['status']);
+            $isProgressStatus = stripos($detailsStatus, 'progress') !== false;
+            $statusText = $isProgressStatus
+                ? 'saat ini tim masih progress'
+                : 'status saat ini: ' . htmlspecialchars($currentStatus);
+
             echo '<div class="alert alert-success mb-3">';
-            echo 'Antrian ke <strong>' . ($position !== null ? $position : 'tidak dalam queue') . '</strong>, ' . $statusText;
+            echo 'Antrian ke <strong>' . ($position !== null ? $position : 'tidak dalam queue') . '</strong>, Incident <strong>' . htmlspecialchars($detailsIncident) . '</strong>, ' . $statusText;
             echo '</div>';
 
             echo '<div class="mb-2"><strong>Tim:</strong> ' . htmlspecialchars($team) . '</div>';
-            echo '<div class="mb-2"><strong>ID Incident:</strong> ' . htmlspecialchars($incident) . '</div>';
+            echo '<div class="mb-2"><strong>ID Incident:</strong> ' . htmlspecialchars($detailsIncident) . '</div>';
             echo '<div><strong>Detail:</strong> ' . htmlspecialchars(trim($details['keluhan'] . ' ' . $details['keterangan'])) . '</div>';
         }
 
