@@ -90,7 +90,8 @@ class UpdateTicket extends CI_Controller {
         if ($currentStatus === null) {
             echo '<div class="alert alert-warning">Incident <strong>' . htmlspecialchars($incident) . '</strong> sudah ditutup atau tidak berada di daftar antrian tim <strong>' . htmlspecialchars($team) . '</strong>.</div>';
         } else {
-            if ($currentStatus === 'ON PROGRESS') {
+            $ticketStatus = strtoupper(trim($details['status']));
+            if (strpos($ticketStatus, 'PROGRESS') !== false) {
                 $statusText = 'saat ini tim masih progress ' . htmlspecialchars($details['idInsiden']);
             } elseif ($position !== null) {
                 $statusText = 'saat ini tim masih progress';
