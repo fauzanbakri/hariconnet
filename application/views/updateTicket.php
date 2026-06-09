@@ -32,10 +32,6 @@
                                 </div><!-- end card header -->
                                 <div class="card-body">
                                     <div class="mb-3">
-                                        <label for="teamSelect" class="form-label">Tim</label>
-                                        <select class="form-select js-team-select" id="teamSelect" aria-label="Pilih Tim"></select>
-                                    </div>
-                                    <div class="mb-3">
                                         <label for="incidentInput" class="form-label">Incident</label>
                                         <input type="text" class="form-control" id="incidentInput" placeholder="Masukkan ID Incident atau Ticket" />
                                     </div>
@@ -108,48 +104,12 @@
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <script src="assets/js/app.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        function loadAllTeams($select, selected) {
-            $.ajax({
-                url: 'Tickets/getAllTim',
-                method: 'GET',
-                success: function(res) {
-                    let data = [];
-                    try { data = JSON.parse(res); } catch(e) { data = res; }
-                    $select.empty();
-                    $select.append('<option value="">-- Pilih Tim --</option>');
-                    data.forEach(function(item){
-                        const text = '(' + (item.kendaraan || '-') + ') ' + item.nama;
-                        const opt = $('<option>').val(item.nama).text(text);
-                        $select.append(opt);
-                    });
-                    if(selected) {
-                        $select.val(selected);
-                    }
-                    $select.trigger('change');
-                },
-                error: function(){
-                    $select.html('<option value="">-- Pilih Tim --</option>');
-                }
-            });
-        }
-
         $(document).ready(function() {
-            $('#teamSelect').select2({
-                placeholder: '-- Pilih Tim --',
-                allowClear: true,
-                width: '100%'
-            });
-
-            loadAllTeams($('#teamSelect'));
-
             $('#submitQueue').click(function() {
-                var selectedTim = $('#teamSelect').val();
                 var incidentValue = $('#incidentInput').val().trim();
-                if (!selectedTim || !incidentValue) {
-                    Swal.fire('Error', 'Silakan pilih tim dan masukkan incident.', 'error');
+                if (!incidentValue) {
+                    Swal.fire('Error', 'Silakan masukkan incident.', 'error');
                     return;
                 }
 
@@ -157,7 +117,6 @@
                     url: 'UpdateTicket/search',
                     type: 'POST',
                     data: {
-                        tim: selectedTim,
                         incident: incidentValue
                     },
                     beforeSend: function() {

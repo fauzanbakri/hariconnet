@@ -24,21 +24,31 @@ class UpdateTicket extends CI_Controller {
 
     public function search()
     {
-        $tim = trim($this->input->post('tim'));
         $incident = trim($this->input->post('incident'));
 
-        if ($tim === '' || $incident === '') {
-            echo '<div class="alert alert-warning">Tim dan Incident wajib diisi.</div>';
+        if ($incident === '') {
+            echo '<div class="alert alert-warning">Incident wajib diisi.</div>';
             return;
         }
 
-        $timEscaped = $this->db->escape_str($tim);
         $incidentEscaped = $this->db->escape_str($incident);
 
+        $ticket = $this->db->query(
+            "SELECT * FROM tiket WHERE idInsiden = '" . $incidentEscaped . "' OR idTiket = '" . $incidentEscaped . "' LIMIT 1"
+        )->row_array();
+
+        if (!$ticket) {
+            echo '<div class="alert alert-warning">Incident <strong>' . htmlspecialchars($incident) . '</strong> tidak ditemukan.</div>';
+            return;
+        }
+
+        $team = $ticket['tim'];
+        $teamEscaped = $this->db->escape_str($team);
+
         $query = $this->db->query(
-            "SELECT idInsiden, idTiket, status, keluhan, keterangan, tanggal, prioritas
+            "SELECT idInsiden, idTiket, status, keluhan, keterangan, tanggal, prioritas, tim
             FROM tiket
-            WHERE tim = '" . $timEscaped . "'
+            WHERE tim = '" . $teamEscaped . "'
             ORDER BY
                 CASE
                     WHEN status = 'NEW' THEN 1
@@ -56,7 +66,7 @@ class UpdateTicket extends CI_Controller {
         $queueRows = [];
         $position = null;
         $currentStatus = null;
-        $details = null;
+        $details = $ticket;
         $queueIndex = 0;
 
         foreach ($query as $row) {
@@ -71,20 +81,14 @@ class UpdateTicket extends CI_Controller {
 
             if ($row['idInsiden'] === $incidentEscaped || $row['idTiket'] === $incidentEscaped) {
                 $currentStatus = $statusUpper;
-                $details = $row;
                 if ($isOpen) {
                     $position = $queueIndex;
                 }
             }
         }
 
-        if (empty($queueRows)) {
-            echo '<div class="alert alert-info">Tidak ada antrian untuk tim <strong>' . htmlspecialchars($tim) . '</strong>.</div>';
-            return;
-        }
-
         echo '<div class="card mb-3"><div class="card-body">';
-        echo '<h5 class="card-title mb-3">List Antrian Tim</h5>';
+        echo '<h5 class="card-title mb-3">List Antrian Tim: <strong>' . htmlspecialchars($team) . '</strong></h5>';
         echo '<div class="list-group mb-3">';
         foreach ($queueRows as $row) {
             echo '<div class="list-group-item d-flex justify-content-between align-items-center">';
@@ -95,18 +99,15 @@ class UpdateTicket extends CI_Controller {
         echo '</div>';
 
         if ($currentStatus === null) {
-            echo '<div class="alert alert-warning">Incident <strong>' . htmlspecialchars($incident) . '</strong> tidak ditemukan di dalam list tim <strong>' . htmlspecialchars($tim) . '</strong>.</div>';
+            echo '<div class="alert alert-warning">Incident <strong>' . htmlspecialchars($incident) . '</strong> sudah ditutup atau tidak berada di daftar antrian tim <strong>' . htmlspecialchars($team) . '</strong>.</div>';
         } else {
-            if ($position !== null) {
-                $statusText = 'saat ini tim masih progress';
-            } else {
-                $statusText = 'status saat ini: ' . htmlspecialchars($currentStatus);
-            }
+            $statusText = $position !== null ? 'saat ini tim masih progress' : 'status saat ini: ' . htmlspecialchars($currentStatus);
 
             echo '<div class="alert alert-success mb-3">';
             echo 'Antrian ke <strong>' . ($position !== null ? $position : 'tidak dalam queue') . '</strong>, ' . $statusText;
             echo '</div>';
 
+            echo '<div class="mb-2"><strong>Tim:</strong> ' . htmlspecialchars($team) . '</div>';
             echo '<div class="mb-2"><strong>ID Incident:</strong> ' . htmlspecialchars($incident) . '</div>';
             echo '<div><strong>Detail:</strong> ' . htmlspecialchars(trim($details['keluhan'] . ' ' . $details['keterangan'])) . '</div>';
         }
