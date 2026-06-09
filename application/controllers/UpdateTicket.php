@@ -90,13 +90,12 @@ class UpdateTicket extends CI_Controller {
         if ($currentStatus === null) {
             echo '<div class="alert alert-warning">Incident <strong>' . htmlspecialchars($incident) . '</strong> sudah ditutup atau tidak berada di daftar antrian tim <strong>' . htmlspecialchars($team) . '</strong>.</div>';
         } else {
-            $ticketStatus = strtoupper(trim($details['status']));
-            if (strpos($ticketStatus, 'PROGRESS') !== false) {
-                $statusText = 'saat ini tim masih progress ' . htmlspecialchars($details['idInsiden']);
+            $statusText = 'status saat ini: ' . htmlspecialchars($currentStatus);
+            $detailsIncident = !empty($details['idInsiden']) ? $details['idInsiden'] : $incident;
+            if (stripos(trim($details['status']), 'progress') !== false) {
+                $statusText = 'saat ini tim masih progress ' . htmlspecialchars($detailsIncident);
             } elseif ($position !== null) {
                 $statusText = 'saat ini tim masih progress';
-            } else {
-                $statusText = 'status saat ini: ' . htmlspecialchars($currentStatus);
             }
 
             echo '<div class="alert alert-success mb-3">';
