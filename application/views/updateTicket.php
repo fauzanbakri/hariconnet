@@ -43,6 +43,7 @@
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Hasil Antrian</h4>
+                                    <button id="copyQueue" type="button" class="btn btn-sm btn-outline-secondary ms-2">Copy</button>
                                 </div>
                                 <div class="card-body" id="queueResult">
                                     <center>Data antrian akan muncul di sini setelah submit.</center>
@@ -130,6 +131,38 @@
                     }
                 });
             });
+
+            $('#copyQueue').click(function() {
+                var resultText = buildQueueCopyText();
+                if (!resultText) {
+                    Swal.fire('Info', 'Tidak ada hasil untuk disalin.', 'info');
+                    return;
+                }
+
+                navigator.clipboard.writeText(resultText).then(function() {
+                    Swal.fire('Berhasil', 'Hasil antrian berhasil disalin.', 'success');
+                }).catch(function(err) {
+                    Swal.fire('Error', 'Gagal menyalin hasil: ' + err, 'error');
+                });
+            });
+
+            function buildQueueCopyText() {
+                var lines = [];
+                $('#queueResult .list-group-item').each(function() {
+                    var incident = $(this).find('span').first().text().trim();
+                    var queueBadge = $(this).find('.badge').first().text().trim();
+                    if (incident && queueBadge) {
+                        lines.push(incident + ' ' + queueBadge);
+                    }
+                });
+
+                var alertText = $('#queueResult .alert-success, #queueResult .alert-warning').first().text().trim();
+                if (alertText) {
+                    lines.push('', alertText);
+                }
+
+                return lines.join('\n');
+            }
         });
     </script>
 
