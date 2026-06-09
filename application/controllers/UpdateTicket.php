@@ -49,18 +49,7 @@ class UpdateTicket extends CI_Controller {
             "SELECT idInsiden, idTiket, status, keluhan, keterangan, tanggal, prioritas, tim
             FROM tiket
             WHERE tim = '" . $teamEscaped . "'
-            ORDER BY
-                CASE
-                    WHEN status = 'NEW' THEN 1
-                    WHEN status = 'OPEN' THEN 2
-                    WHEN status = 'ON PROGRESS' THEN 3
-                    WHEN status = 'EARLY' THEN 4
-                    WHEN status = 'SOLVED (ICRM OPEN)' THEN 5
-                    WHEN status = 'CLOSED' THEN 6
-                    ELSE 7
-                END,
-                prioritas,
-                tanggal ASC"
+            ORDER BY tanggal ASC"
         )->result_array();
 
         $queueRows = [];
