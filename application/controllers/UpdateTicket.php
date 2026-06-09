@@ -58,6 +58,7 @@ class UpdateTicket extends CI_Controller {
         $details = $ticket;
         $queueIndex = 0;
         $normalizedIncident = trim($incident);
+        $currentProgressIncident = null;
 
         foreach ($query as $row) {
             $statusUpper = strtoupper(trim($row['status']));
@@ -67,6 +68,10 @@ class UpdateTicket extends CI_Controller {
                 $queueIndex++;
                 $row['queue'] = $queueIndex;
                 $queueRows[] = $row;
+            }
+
+            if ($currentProgressIncident === null && stripos($statusUpper, 'PROGRESS') !== false) {
+                $currentProgressIncident = trim((string)$row['idInsiden']);
             }
 
             $rowIncident = trim((string)$row['idInsiden']);
@@ -98,14 +103,16 @@ class UpdateTicket extends CI_Controller {
                 $detailsIncident = $incident;
             }
 
-            $detailsStatus = trim((string)$details['status']);
-            $isProgressStatus = stripos($detailsStatus, 'progress') !== false;
-            $statusText = $isProgressStatus
-                ? 'saat ini tim masih progress'
-                : 'status saat ini: ' . htmlspecialchars($currentStatus);
+            if ($currentProgressIncident !== null) {
+                $statusText = 'saat ini tim masih mengerjakan Incident ' . htmlspecialchars($currentProgressIncident);
+            } elseif (stripos(trim((string)$details['status']), 'progress') !== false) {
+                $statusText = 'saat ini tim masih mengerjakan Incident ' . htmlspecialchars($detailsIncident);
+            } else {
+                $statusText = 'status saat ini: ' . htmlspecialchars($currentStatus);
+            }
 
             echo '<div class="alert alert-success mb-3">';
-            echo 'Antrian ke <strong>' . ($position !== null ? $position : 'tidak dalam queue') . '</strong>, Incident <strong>' . htmlspecialchars($detailsIncident) . '</strong>, ' . $statusText;
+            echo 'Antrian ke <strong>' . ($position !== null ? $position : 'tidak dalam queue') . '</strong>, ' . $statusText;
             echo '</div>';
 
             echo '<div class="mb-2"><strong>Tim:</strong> ' . htmlspecialchars($team) . '</div>';
