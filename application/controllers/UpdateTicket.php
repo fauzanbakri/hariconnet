@@ -105,15 +105,12 @@ class UpdateTicket extends CI_Controller {
 
             if ($currentProgressIncident !== null) {
                 $statusText = 'saat ini tim masih mengerjakan Incident ' . htmlspecialchars($currentProgressIncident);
-            } elseif (stripos(trim((string)$details['status']), 'progress') !== false) {
-                $statusText = 'saat ini tim masih mengerjakan Incident ' . htmlspecialchars($detailsIncident);
+                echo '<div class="alert alert-success mb-3">';
+                echo 'Antrian ke <strong>' . ($position !== null ? $position : 'tidak dalam queue') . '</strong>, ' . $statusText;
+                echo '</div>';
             } else {
-                $statusText = 'status saat ini: ' . htmlspecialchars($currentStatus);
+                echo '<div class="alert alert-warning mb-3">Tidak ditemukan incident yang sedang di progress</div>';
             }
-
-            echo '<div class="alert alert-success mb-3">';
-            echo 'Antrian ke <strong>' . ($position !== null ? $position : 'tidak dalam queue') . '</strong>, ' . $statusText;
-            echo '</div>';
 
             echo '<div class="mb-2"><strong>Tim:</strong> ' . htmlspecialchars($team) . '</div>';
             echo '<div class="mb-2"><strong>ID Incident:</strong> ' . htmlspecialchars($detailsIncident) . '</div>';
