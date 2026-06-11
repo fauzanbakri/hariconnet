@@ -68,6 +68,8 @@
                                         <th>KP</th>
                                         <th>Tim</th>
                                         <th>Status</th>
+                                        <th>Tanggal</th>
+                                        <th>Durasi</th>
                                         <th>Keterangan</th>
                                         <th>Action</th>
                                     </tr>
@@ -93,6 +95,8 @@
                                                 ?>
                                                 <span class="badge <?php echo $statusClass; ?>"><?php echo htmlspecialchars($row->status ?? ''); ?></span>
                                             </td>
+                                            <td><?php echo htmlspecialchars($row->tanggal ?? '-'); ?></td>
+                                            <td class="durasi-cell" data-tanggal="<?php echo htmlspecialchars($row->tanggal ?? ''); ?>">-</td>
                                             <td><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
                                             <td>
                                                 <div class='dropdown d-inline-block'>
@@ -107,7 +111,8 @@
                                                                data-idtim='<?php echo htmlspecialchars($row->idTim ?? '', ENT_QUOTES); ?>'
                                                                data-segmen='<?php echo htmlspecialchars($row->segmen ?? '', ENT_QUOTES); ?>'
                                                                data-status='<?php echo htmlspecialchars($row->status ?? '', ENT_QUOTES); ?>'
-                                                               data-keterangan='<?php echo htmlspecialchars($row->keterangan ?? '', ENT_QUOTES); ?>'>
+                                                               data-keterangan='<?php echo htmlspecialchars($row->keterangan ?? '', ENT_QUOTES); ?>'
+                                                               data-tanggal='<?php echo htmlspecialchars($row->tanggal ?? '', ENT_QUOTES); ?>'>
                                                                 <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                             </a>
                                                         </li>
@@ -179,6 +184,10 @@
                         <label class="form-label">Keterangan</label>
                         <textarea class="form-control" id="keterangan" placeholder="Keterangan"></textarea>
                     </div>
+                    <div class="col-12">
+                        <label class="form-label">Tanggal</label>
+                        <input type="datetime-local" class="form-control" id="tanggal">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -238,6 +247,10 @@
                         <label class="form-label">Keterangan</label>
                         <textarea class="form-control" id="editketerangan" placeholder="Keterangan"></textarea>
                     </div>
+                    <div class="col-12">
+                        <label class="form-label">Tanggal</label>
+                        <input type="datetime-local" class="form-control" id="edittanggal">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -282,6 +295,49 @@
     <script src="assets/js/app.js"></script>   
 <script>
 $(document).ready(function(){
+    // Fungsi untuk menghitung durasi
+    function calculateDuration(tanggalStr) {
+        if (!tanggalStr || tanggalStr.trim() === '') {
+            return '-';
+        }
+        
+        var targetDate = new Date(tanggalStr);
+        if (isNaN(targetDate.getTime())) {
+            return '-';
+        }
+        
+        var now = new Date();
+        var diff = now - targetDate;
+        
+        if (diff < 0) {
+            return '-';
+        }
+        
+        var seconds = Math.floor(diff / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+        
+        var remainingHours = hours % 24;
+        var remainingMinutes = minutes % 60;
+        
+        return days + ' Hari ' + remainingHours + ' Jam ' + remainingMinutes + ' Menit';
+    }
+    
+    // Update durasi untuk semua baris
+    function updateAllDuration() {
+        $('.durasi-cell').each(function(){
+            var tanggal = $(this).attr('data-tanggal');
+            $(this).text(calculateDuration(tanggal));
+        });
+    }
+    
+    // Initial calculation
+    updateAllDuration();
+    
+    // Update every minute
+    setInterval(updateAllDuration, 60000);
+
     if ($.fn.select2) {
         $('#idTim').select2({
             placeholder: 'Pilih Tim',
@@ -312,7 +368,8 @@ $(document).ready(function(){
             segmen: $('#segmen').val(),
             idTim: $('#idTim').val(),
             status: $('#status1').val(),
-            keterangan: $('#keterangan').val()
+            keterangan: $('#keterangan').val(),
+            tanggal: $('#tanggal').val()
         };
 
         if(!payload.incident || !payload.segmen || !payload.idTim || !payload.status){
@@ -343,11 +400,13 @@ $(document).ready(function(){
         var rowSegmen = ($btn.attr('data-segmen') || '').trim();
         var rowStatusAttr = ($btn.attr('data-status') || '').trim();
         var rowKeterangan = ($btn.attr('data-keterangan') || '').trim();
+        var rowTanggal = ($btn.attr('data-tanggal') || '').trim();
 
         $('#editid').val(rowId);
         $('#editincident').val(rowIncident);
         $('#editsegmen').val(rowSegmen);
         $('#editketerangan').val(rowKeterangan);
+        $('#edittanggal').val(rowTanggal);
 
         var rawStatus = rowStatusAttr;
         var normalizeStatus = function(v){
@@ -391,7 +450,8 @@ $(document).ready(function(){
             segmen: $('#editsegmen').val(),
             idTim: $('#editidTim').val(),
             status: $('#editstatus').val(),
-            keterangan: $('#editketerangan').val()
+            keterangan: $('#editketerangan').val(),
+            tanggal: $('#edittanggal').val()
         };
 
         if(!payload.id || !payload.incident || !payload.segmen || !payload.idTim || !payload.status){

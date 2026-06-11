@@ -7,7 +7,7 @@ class TicketsCorporate extends CI_Controller {
     {
         $title['title'] = "All Tickets Corporate";
 
-        $q['data'] = $this->db->query("SELECT tc.id, tc.idTim, tc.segmen, tc.incident, tc.status, tc.keterangan,
+        $q['data'] = $this->db->query("SELECT tc.id, tc.idTim, tc.segmen, tc.incident, tc.status, tc.keterangan, tc.tanggal,
                                               t.nama AS tim_nama,
                                               b.kp AS kp
                                        FROM tiketCorporate tc
@@ -49,6 +49,7 @@ class TicketsCorporate extends CI_Controller {
         $segmen = trim((string)$this->input->post('segmen'));
         $status = trim((string)$this->input->post('status'));
         $keterangan = trim((string)$this->input->post('keterangan'));
+        $tanggal = trim((string)$this->input->post('tanggal'));
 
         if ($incident === '' || $idTim <= 0 || $segmen === '' || $status === '') {
             echo 'Harap isi semua field wajib';
@@ -61,6 +62,7 @@ class TicketsCorporate extends CI_Controller {
             'incident' => $incident,
             'status' => $status,
             'keterangan' => $keterangan,
+            'tanggal' => $tanggal,
         ]);
 
         echo $ok ? 'success' : 'Gagal menambah data';
@@ -74,6 +76,7 @@ class TicketsCorporate extends CI_Controller {
         $segmen = trim((string)$this->input->post('segmen'));
         $status = trim((string)$this->input->post('status'));
         $keterangan = trim((string)$this->input->post('keterangan'));
+        $tanggal = trim((string)$this->input->post('tanggal'));
 
         if ($id <= 0 || $incident === '' || $idTim <= 0 || $segmen === '' || $status === '') {
             echo 'Harap isi semua field wajib';
@@ -86,6 +89,7 @@ class TicketsCorporate extends CI_Controller {
             'incident' => $incident,
             'status' => $status,
             'keterangan' => $keterangan,
+            'tanggal' => $tanggal,
         ]);
 
         echo $ok ? 'success' : 'Gagal mengubah data';
