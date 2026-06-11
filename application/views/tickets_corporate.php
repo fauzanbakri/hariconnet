@@ -90,7 +90,7 @@
                                                     } elseif ($statusText === 'ON PROGRESS') {
                                                         $statusClass = 'bg-info';
                                                     } elseif ($statusText === 'ANTRIAN') {
-                                                        $statusClass = 'bg-warning text-dark';
+                                                        $statusClass = 'bg-warning text-white';
                                                     } elseif (strpos($statusText, 'SOLVED') !== false) {
                                                         $statusClass = 'border border-success text-success';
                                                     } elseif ($statusText === 'STOPCLOCK') {
