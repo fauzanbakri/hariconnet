@@ -85,11 +85,17 @@
                                                 <?php
                                                     $statusText = strtoupper(trim((string)($row->status ?? '')));
                                                     $statusClass = 'bg-secondary';
-                                                    if ($statusText === 'OPEN' || $statusText === 'ANTRIAN' || $statusText === 'NEW') {
+                                                    if ($statusText === 'OPEN') {
                                                         $statusClass = 'bg-primary';
-                                                    } elseif ($statusText === 'ON PROGRESS' || $statusText === 'STOPCLOCK') {
+                                                    } elseif ($statusText === 'ON PROGRESS') {
+                                                        $statusClass = 'bg-info';
+                                                    } elseif ($statusText === 'ANTRIAN') {
                                                         $statusClass = 'bg-warning text-dark';
-                                                    } elseif (strpos($statusText, 'SOLVED') !== false || $statusText === 'CLOSED') {
+                                                    } elseif (strpos($statusText, 'SOLVED') !== false) {
+                                                        $statusClass = 'border border-success text-success';
+                                                    } elseif ($statusText === 'STOPCLOCK') {
+                                                        $statusClass = 'bg-dark';
+                                                    } elseif ($statusText === 'CLOSED') {
                                                         $statusClass = 'bg-success';
                                                     }
                                                 ?>
