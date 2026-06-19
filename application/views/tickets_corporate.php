@@ -147,6 +147,7 @@
                                                                data-segmen='<?php echo htmlspecialchars($row->segmen ?? '', ENT_QUOTES); ?>'
                                                                data-status='<?php echo htmlspecialchars($row->status ?? '', ENT_QUOTES); ?>'
                                                                data-keterangan='<?php echo htmlspecialchars($row->keterangan ?? '', ENT_QUOTES); ?>'
+                                                               data-ketupdate='<?php echo htmlspecialchars($row->ketUpdate ?? '', ENT_QUOTES); ?>'
                                                                data-tanggal='<?php echo htmlspecialchars($row->tanggal ?? '', ENT_QUOTES); ?>'>
                                                                 <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                             </a>
@@ -283,6 +284,10 @@
                     <div class="col-12">
                         <label class="form-label">Keterangan</label>
                         <textarea class="form-control" id="editketerangan" placeholder="Keterangan"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Update</label>
+                        <textarea class="form-control" id="editketupdate" placeholder="Isi update"></textarea>
                     </div>
                     <div class="col-12">
                         <label class="form-label">Tanggal</label>
@@ -498,12 +503,14 @@ $(document).ready(function(){
         var rowSegmen = ($btn.attr('data-segmen') || '').trim();
         var rowStatusAttr = ($btn.attr('data-status') || '').trim();
         var rowKeterangan = ($btn.attr('data-keterangan') || '').trim();
+        var rowKetUpdate = ($btn.attr('data-ketupdate') || '').trim();
         var rowTanggal = ($btn.attr('data-tanggal') || '').trim();
 
         $('#editid').val(rowId);
         $('#editincident').val(rowIncident);
         $('#editsegmen').val(rowSegmen);
         $('#editketerangan').val(rowKeterangan);
+        $('#editketupdate').val(rowKetUpdate);
         $('#edittanggal').val(rowTanggal);
 
         var rawStatus = rowStatusAttr;
@@ -549,6 +556,7 @@ $(document).ready(function(){
             idTim: $('#editidTim').val(),
             status: $('#editstatus').val(),
             keterangan: $('#editketerangan').val(),
+            ketUpdate: $('#editketupdate').val(),
             tanggal: $('#edittanggal').val()
         };
 

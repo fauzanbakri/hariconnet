@@ -106,6 +106,7 @@ class TicketsCorporate extends CI_Controller {
         $segmen = trim((string)$this->input->post('segmen'));
         $status = trim((string)$this->input->post('status'));
         $keterangan = trim((string)$this->input->post('keterangan'));
+        $ketUpdate = trim((string)$this->input->post('ketUpdate'));
         $tanggal = trim((string)$this->input->post('tanggal'));
         $lastUpdateBy = isset($_SESSION['nama']) ? trim((string)$_SESSION['nama']) : '';
         $timestamps = date('Y-m-d H:i:s');
@@ -121,8 +122,8 @@ class TicketsCorporate extends CI_Controller {
             'incident' => $incident,
             'status' => $status,
             'keterangan' => $keterangan,
+            'ketUpdate' => $ketUpdate,
             'tanggal' => $tanggal,
-            'ketUpdate' => 'Update',
             'lastUpdateBy' => $lastUpdateBy,
             'timestamps' => $timestamps,
         ]);
