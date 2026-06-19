@@ -47,12 +47,18 @@ class TicketsCorporate extends CI_Controller {
 
     public function insertData()
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $incident = trim((string)$this->input->post('incident'));
         $idTim = (int)$this->input->post('idTim');
         $segmen = trim((string)$this->input->post('segmen'));
         $status = trim((string)$this->input->post('status'));
         $keterangan = trim((string)$this->input->post('keterangan'));
         $tanggal = trim((string)$this->input->post('tanggal'));
+        $lastUpdateBy = isset($_SESSION['nama']) ? trim((string)$_SESSION['nama']) : '';
+        $timestamps = date('Y-m-d H:i:s');
 
         if ($incident === '' || $idTim <= 0 || $segmen === '' || $status === '') {
             echo 'Harap isi semua field wajib';
@@ -80,6 +86,9 @@ class TicketsCorporate extends CI_Controller {
             'status' => $status,
             'keterangan' => $keterangan,
             'tanggal' => $tanggal,
+            'ketUpdate' => 'Update',
+            'lastUpdateBy' => $lastUpdateBy,
+            'timestamps' => $timestamps,
         ]);
 
         echo $ok ? 'success' : 'Gagal menambah data';
@@ -87,6 +96,10 @@ class TicketsCorporate extends CI_Controller {
 
     public function editData()
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $id = (int)$this->input->post('id');
         $incident = trim((string)$this->input->post('incident'));
         $idTim = (int)$this->input->post('idTim');
@@ -94,6 +107,8 @@ class TicketsCorporate extends CI_Controller {
         $status = trim((string)$this->input->post('status'));
         $keterangan = trim((string)$this->input->post('keterangan'));
         $tanggal = trim((string)$this->input->post('tanggal'));
+        $lastUpdateBy = isset($_SESSION['nama']) ? trim((string)$_SESSION['nama']) : '';
+        $timestamps = date('Y-m-d H:i:s');
 
         if ($id <= 0 || $incident === '' || $idTim <= 0 || $segmen === '' || $status === '') {
             echo 'Harap isi semua field wajib';
@@ -107,6 +122,9 @@ class TicketsCorporate extends CI_Controller {
             'status' => $status,
             'keterangan' => $keterangan,
             'tanggal' => $tanggal,
+            'ketUpdate' => 'Update',
+            'lastUpdateBy' => $lastUpdateBy,
+            'timestamps' => $timestamps,
         ]);
 
         echo $ok ? 'success' : 'Gagal mengubah data';
