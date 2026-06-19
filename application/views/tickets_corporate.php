@@ -81,6 +81,8 @@
                                         <th>Tanggal</th>
                                         <th>Durasi</th>
                                         <th style="width: 220px; white-space: nowrap;">Keterangan</th>
+                                        <th style="width: 240px; white-space: nowrap;">Update</th>
+                                        <th style="width: 180px; white-space: nowrap;">Last Update By</th>
                                         <th>Timestamp</th>
                                         <th style="white-space: nowrap; min-width: 90px;">Action</th>
                                     </tr>
@@ -130,6 +132,8 @@
                                             <td><?php echo htmlspecialchars($row->tanggal ?? '-'); ?></td>
                                             <td class="durasi-cell" data-tanggal="<?php echo htmlspecialchars($row->tanggal ?? ''); ?>">-</td>
                                             <td style="max-width: 220px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
+                                            <td style="max-width: 240px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->ketUpdate ?? '-'); ?></td>
+                                            <td style="max-width: 180px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->lastUpdateBy ?? '-'); ?></td>
                                             <td><?php echo htmlspecialchars($row->timestamps ?? '-'); ?></td>
                                             <td class="text-center" style="white-space: nowrap; min-width: 90px;">
                                                 <div class='dropdown d-inline-block'>
