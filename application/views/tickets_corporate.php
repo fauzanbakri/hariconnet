@@ -285,7 +285,7 @@
                     </div>
                     <div class="col-12">
                         <label class="form-label">Update</label>
-                        <textarea class="form-control" id="editketupdate" placeholder="Isi update"></textarea>
+                        <textarea class="form-control" id="editketupdate" rows="4" style="white-space: pre-wrap; word-break: break-word;" placeholder="Isi update"></textarea>
                     </div>
                     <div class="col-12">
                         <label class="form-label">Tanggal</label>
