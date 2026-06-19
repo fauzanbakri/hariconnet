@@ -589,11 +589,6 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link menu-link" href="UpdateTicket" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                                        <i class="mdi mdi-ticket-marker"></i> <span data-key="t-layouts">Update Tiket</span>
-                                    </a>
-                                </li>
                                 ';
                         }
                         if(
