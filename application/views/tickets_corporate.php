@@ -80,7 +80,7 @@
                                         <th>Status</th>
                                         <th>Tanggal</th>
                                         <th>Durasi</th>
-                                        <th>Keterangan</th>
+                                        <th style="width: 220px; white-space: nowrap;">Keterangan</th>
                                         <th>Timestamp</th>
                                         <th style="white-space: nowrap; min-width: 90px;">Action</th>
                                     </tr>
@@ -129,7 +129,7 @@
                                             </td>
                                             <td><?php echo htmlspecialchars($row->tanggal ?? '-'); ?></td>
                                             <td class="durasi-cell" data-tanggal="<?php echo htmlspecialchars($row->tanggal ?? ''); ?>">-</td>
-                                            <td><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
+                                            <td style="max-width: 220px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
                                             <td><?php echo htmlspecialchars($row->timestamps ?? '-'); ?></td>
                                             <td class="text-center" style="white-space: nowrap; min-width: 90px;">
                                                 <div class='dropdown d-inline-block'>
