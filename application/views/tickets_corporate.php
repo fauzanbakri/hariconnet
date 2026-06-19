@@ -134,7 +134,10 @@
                                             <td style="max-width: 220px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
                                             <td style="max-width: 240px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->ketUpdate ?? '-'); ?></td>
                                             <td style="max-width: 180px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->lastUpdateBy ?? '-'); ?></td>
-                                            <td><?php echo htmlspecialchars($row->timestamps ?? '-'); ?></td>
+                                            <td>
+                                                <?php echo htmlspecialchars($row->timestamps ?? '-'); ?>
+                                                <small class="text-muted">UTC+08:00</small>
+                                            </td>
                                             <td class="text-center" style="white-space: nowrap; min-width: 90px;">
                                                 <div class='dropdown d-inline-block'>
                                                     <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>

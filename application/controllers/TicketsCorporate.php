@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TicketsCorporate extends CI_Controller {
 
+    public function __construct()
+    {
+        parent::__construct();
+        date_default_timezone_set('Asia/Makassar');
+    }
+
     public function index()
     {
         $title['title'] = "All Tickets Corporate";
@@ -58,7 +64,7 @@ class TicketsCorporate extends CI_Controller {
         $keterangan = trim((string)$this->input->post('keterangan'));
         $tanggal = trim((string)$this->input->post('tanggal'));
         $lastUpdateBy = isset($_SESSION['nama']) ? trim((string)$_SESSION['nama']) : '';
-        $timestamps = date('Y-m-d H:i:s');
+        $timestamps = (new DateTime('now', new DateTimeZone('Asia/Makassar')))->format('Y-m-d H:i:s');
 
         if ($incident === '' || $idTim <= 0 || $segmen === '' || $status === '') {
             echo 'Harap isi semua field wajib';
@@ -109,7 +115,7 @@ class TicketsCorporate extends CI_Controller {
         $ketUpdate = trim((string)$this->input->post('ketUpdate'));
         $tanggal = trim((string)$this->input->post('tanggal'));
         $lastUpdateBy = isset($_SESSION['nama']) ? trim((string)$_SESSION['nama']) : '';
-        $timestamps = date('Y-m-d H:i:s');
+        $timestamps = (new DateTime('now', new DateTimeZone('Asia/Makassar')))->format('Y-m-d H:i:s');
 
         if ($id <= 0 || $incident === '' || $idTim <= 0 || $segmen === '' || $status === '') {
             echo 'Harap isi semua field wajib';
