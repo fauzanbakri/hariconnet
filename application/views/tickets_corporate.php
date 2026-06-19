@@ -82,7 +82,7 @@
                                         <th>Durasi</th>
                                         <th>Keterangan</th>
                                         <th>Timestamp</th>
-                                        <th>Action</th>
+                                        <th style="white-space: nowrap; min-width: 90px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -131,7 +131,7 @@
                                             <td class="durasi-cell" data-tanggal="<?php echo htmlspecialchars($row->tanggal ?? ''); ?>">-</td>
                                             <td><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
                                             <td><?php echo htmlspecialchars($row->timestamps ?? '-'); ?></td>
-                                            <td>
+                                            <td class="text-center" style="white-space: nowrap; min-width: 90px;">
                                                 <div class='dropdown d-inline-block'>
                                                     <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                                         <i class='ri-more-fill align-middle'></i>
