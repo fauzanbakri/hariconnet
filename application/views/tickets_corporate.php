@@ -105,6 +105,8 @@
                                                         $statusClass = 'border border-success text-success';
                                                     } elseif ($statusText === 'STOPCLOCK') {
                                                         $statusClass = 'bg-dark';
+                                                    } elseif ($statusText === 'EARLY') {
+                                                        $statusClass = 'bg-secondary';
                                                     } elseif ($statusText === 'CLOSED') {
                                                         $statusClass = 'bg-success';
                                                     }
@@ -193,6 +195,7 @@
                             <option value="ON PROGRESS">ON PROGRESS</option>
                             <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
                             <option value="STOPCLOCK">STOPCLOCK</option>
+                            <option value="EARLY">EARLY</option>
                             <option value="CLOSED">CLOSED</option>
                         </select>
                     </div>
@@ -256,6 +259,7 @@
                             <option value="ON PROGRESS">ON PROGRESS</option>
                             <option value="SOLVED (ICRM OPEN)">SOLVED (ICRM OPEN)</option>
                             <option value="STOPCLOCK">STOPCLOCK</option>
+                            <option value="EARLY">EARLY</option>
                             <option value="CLOSED">CLOSED</option>
                         </select>
                     </div>
