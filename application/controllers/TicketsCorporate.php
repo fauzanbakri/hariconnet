@@ -58,6 +58,20 @@ class TicketsCorporate extends CI_Controller {
             return;
         }
 
+        $existing = $this->db->get_where('tiketCorporate', [
+            'idTim' => $idTim,
+            'segmen' => $segmen,
+            'incident' => $incident,
+            'status' => $status,
+            'keterangan' => $keterangan,
+            'tanggal' => $tanggal,
+        ])->num_rows();
+
+        if ($existing > 0) {
+            echo 'Data yang sama sudah ada';
+            return;
+        }
+
         $ok = $this->db->insert('tiketCorporate', [
             'idTim' => $idTim,
             'segmen' => $segmen,

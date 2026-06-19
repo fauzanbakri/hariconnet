@@ -431,6 +431,11 @@ $(document).ready(function(){
     });
 
     $('#submitBtn').on('click', function(){
+        var $btn = $(this);
+        if ($btn.data('submitting') === true) {
+            return;
+        }
+
         var payload = {
             incident: $('#incident').val(),
             segmen: $('#segmen').val(),
@@ -445,6 +450,8 @@ $(document).ready(function(){
             return;
         }
 
+        $btn.data('submitting', true).prop('disabled', true).text('Saving...');
+
         $.ajax({
             type: 'POST',
             url: 'TicketsCorporate/insertData',
@@ -454,7 +461,12 @@ $(document).ready(function(){
                     location.reload();
                 } else {
                     alert(res || 'Gagal menyimpan data');
+                    $btn.data('submitting', false).prop('disabled', false).text('Submit');
                 }
+            },
+            error: function(){
+                alert('Gagal menyimpan data');
+                $btn.data('submitting', false).prop('disabled', false).text('Submit');
             }
         });
     });
