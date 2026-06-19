@@ -5,10 +5,10 @@ class ShiftCorpo extends CI_Controller {
 
     public function index()
     {
-        $this->shiftCorpo();
+        $this->showReport();
     }
 
-    public function shiftCorpo()
+    public function showReport()
     {
         date_default_timezone_set('Asia/Makassar');
         $title['title'] = "Report Shift Corpo";
