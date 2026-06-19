@@ -8,12 +8,13 @@ class TicketsCorporate extends CI_Controller {
         $title['title'] = "All Tickets Corporate";
 
         $q['data'] = $this->db->query("SELECT tc.id, tc.idTim, tc.segmen, tc.incident, tc.status, tc.keterangan, tc.tanggal,
+                                              tc.ketUpdate, tc.lastUpdateBy, tc.timestamps,
                                               t.nama AS tim_nama,
                                               b.kp AS kp
                                        FROM tiketCorporate tc
                                        LEFT JOIN tim t ON tc.idTim = t.idTim
                                        LEFT JOIN basecamp b ON t.idBc = b.idBc
-                                       ORDER BY tc.id DESC")->result();
+                                       ORDER BY tc.tanggal ASC, tc.id ASC")->result();
 
         $q['tim'] = $this->db->query("SELECT t.idTim, t.nama, b.kendaraan
                                       FROM tim t

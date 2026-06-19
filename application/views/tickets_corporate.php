@@ -80,6 +80,8 @@
                                         <th>Status</th>
                                         <th>Tanggal</th>
                                         <th>Durasi</th>
+                                        <th>Update</th>
+                                        <th>Last Update By</th>
                                         <th>Keterangan</th>
                                         <th>Action</th>
                                     </tr>
@@ -115,6 +117,8 @@
                                             </td>
                                             <td><?php echo htmlspecialchars($row->tanggal ?? '-'); ?></td>
                                             <td class="durasi-cell" data-tanggal="<?php echo htmlspecialchars($row->tanggal ?? ''); ?>">-</td>
+                                            <td><?php echo htmlspecialchars($row->ketUpdate ?? '-'); ?></td>
+                                            <td><?php echo htmlspecialchars($row->lastUpdateBy ?? '-'); ?></td>
                                             <td><?php echo htmlspecialchars($row->keterangan ?? ''); ?></td>
                                             <td>
                                                 <div class='dropdown d-inline-block'>
@@ -372,7 +376,8 @@ $(document).ready(function(){
     }
 
     var table = $('#dataCorporate').DataTable({
-        pageLength: 25
+        pageLength: 25,
+        order: [[5, 'asc']]
     });
 
     $('#filterSegmen, #filterStatus, #filterTim').on('change', function(){
