@@ -35,7 +35,8 @@ class Login extends CI_Controller {
 			$_SESSION['nama'] = $data['nama'];
 			$_SESSION['idUser'] = $data['idUser'];
 			if(	$data['role'] == 'Superadmin' || 
-				$data['role'] == 'NOC Ritel'
+				$data['role'] == 'NOC Ritel' || 
+				$data['role'] == 'NOC Corpo'
 				) {
 				header("location:../Feeder");
 			} else if ($data['role'] == 'Inventory' || $data['role'] == 'Mitra Gangguan'){
