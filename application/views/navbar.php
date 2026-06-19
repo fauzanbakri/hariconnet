@@ -477,6 +477,8 @@
                                         $_SESSION['role']=='NOC Ritel' || 
                                         $_SESSION['role']=='Team Leader' || 
                                         $_SESSION['role']=='Pemeliharaan Ritel'	||
+                                        $_SESSION['role']=='NOC Corpo'	||
+                                        $_SESSION['role']=='Helpdesk'	||
                                         $_SESSION['role']=='Guest 1'
 
                                         ){
@@ -501,7 +503,9 @@
                                         $_SESSION['role']=='NOC Ritel' || 
                                         $_SESSION['role']=='Team Leader' || 
                                         $_SESSION['role']=='Pemeliharaan Ritel'	||
-                                        $_SESSION['role']=='Resepsionis'
+                                        $_SESSION['role']=='Resepsionis' ||
+                                        $_SESSION['role']=='NOC Corpo' ||
+                                        $_SESSION['role']=='Helpdesk'
                                         ){
                                             echo '
                                              <li class="nav-item">
@@ -542,7 +546,9 @@
                             $_SESSION['role']=='Team Leader' || 
                             $_SESSION['role']=='Pemeliharaan Ritel'	||
                             $_SESSION['role']=='Resepsionis' ||
-                            $_SESSION['role']=='Guest 1'
+                            $_SESSION['role']=='Guest 1' ||
+                            $_SESSION['role']=='NOC Corpo' ||
+                            $_SESSION['role']=='Helpdesk'
                             ){
                                 echo '
                                 <li class="nav-item">
@@ -560,6 +566,8 @@
                         if(
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='NOC Corpo' ||
+                            $_SESSION['role']=='Helpdesk' ||
                             $_SESSION['role']=='Team Leader' || 
                             $_SESSION['role']=='Pemeliharaan Ritel' ||
                             $_SESSION['role']=='Guest 1'
@@ -594,6 +602,8 @@
                         if(
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='NOC Corpo' ||
+                            $_SESSION['role']=='Helpdesk' ||
                             $_SESSION['role']=='Team Leader' || 
                             $_SESSION['role']=='Pemeliharaan Ritel'
                             ){
@@ -621,6 +631,8 @@
                         if(
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='NOC Corpo' ||
+                            $_SESSION['role']=='Helpdesk' ||
                             $_SESSION['role']=='Team Leader' || 
                             $_SESSION['role']=='Pemeliharaan Ritel'
                             ){
@@ -641,7 +653,9 @@
 
                         if(
                             $_SESSION['role']=='Superadmin' || 
-                            $_SESSION['role']=='NOC Ritel' 
+                            $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='NOC Corpo' ||
+                            $_SESSION['role']=='Helpdesk'
                             ){
                                 echo '
                                 <li class="nav-item">
@@ -668,7 +682,9 @@
                         if(
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='Team Leader' || 
-                            $_SESSION['role']=='NOC Ritel' 
+                            $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='NOC Corpo' || 
+                            $_SESSION['role']=='Helpdesk'
                             ){
                                 echo '
                                 <li class="nav-item">
@@ -724,7 +740,10 @@
                         <?php
                         if(
                             $_SESSION['role']=='Superadmin' || 
-                            $_SESSION['role']=='Team Leader' ){
+                            $_SESSION['role']=='Team Leader' ||
+                            $_SESSION['role']=='NOC Corpo' ||
+                            $_SESSION['role']=='Helpdesk'
+                        ){
                             echo '
                             <!-- 
                          <li class="menu-title"><span data-key="t-menu">Customer Exp</span></li>
