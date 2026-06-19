@@ -27,6 +27,16 @@
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCorporateModal">Add New Incident</button>
                                     <?php } ?>
                                 </div>
+                                <div class="col-md-9 d-flex flex-row-reverse">
+                                    <?php if($_SESSION['role']!='Guest 1'){ ?>
+                                        <button type="button" class="btn btn-danger flex-row-reverse" id="sa-warning">
+                                            Change Shift
+                                        </button>
+                                    <?php } ?>
+                                    <button hidden type="button" data-toast data-toast-text="" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" id="toast" class="btn btn-light w-xs"></button>
+                                </div>
+                            </div>
+                            <div class="row g-3 mb-2">
                                 <div class="col-md-3">
                                     <label for="filterSegmen" class="form-label">Segmen</label>
                                     <select id="filterSegmen" class="form-select form-select-sm">
@@ -366,6 +376,54 @@ $(document).ready(function(){
         table.column(4).search($('#filterStatus').val(), false, false);
         table.column(3).search($('#filterTim').val(), false, false);
         table.draw();
+    });
+
+    document.getElementById('sa-warning') && document.getElementById('sa-warning').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            customClass: {
+                confirmButton: 'btn btn-primary w-xs me-2 mt-2',
+                cancelButton: 'btn btn-danger w-xs mt-2'
+            },
+            confirmButtonText: 'Yes, Change Shift!',
+            buttonsStyling: false,
+            showCloseButton: true
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    url: 'TicketsCorporate/changeShift',
+                    type: 'GET',
+                    success: function(res) {
+                        if ((res || '').toString().trim() === 'success') {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Shift Change Successfully.',
+                                icon: 'success',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary w-xs mt-2'
+                                },
+                                buttonsStyling: false
+                            }).then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed to Change Shift',
+                                icon: 'warning',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary w-xs mt-2'
+                                },
+                                buttonsStyling: false
+                            });
+                        }
+                    }
+                });
+            }
+        });
     });
 
     $('#submitBtn').on('click', function(){

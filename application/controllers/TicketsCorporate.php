@@ -107,4 +107,29 @@ class TicketsCorporate extends CI_Controller {
 
         echo $this->db->delete('tiketCorporate', ['id' => $id]) ? true : false;
     }
+
+    public function changeShift()
+    {
+        $this->db->trans_start();
+
+        $closedRows = $this->db->query(
+            "SELECT * FROM tiketCorporate WHERE LOWER(status) = 'closed'"
+        )->result_array();
+
+        foreach ($closedRows as $row) {
+            $this->db->insert('tiketCorporateClose', $row);
+        }
+
+        $this->db->where("LOWER(status) = 'closed'")
+                 ->delete('tiketCorporate');
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            echo 'failed';
+            return;
+        }
+
+        echo 'success';
+    }
 }
