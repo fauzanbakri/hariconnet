@@ -54,23 +54,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<!-- JAVASCRIPT -->
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="assets/libs/node-waves/waves.min.js"></script>
-    <script src="assets/libs/feather-icons/feather.min.js"></script>
-    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
-    <script src="assets/js/plugins.js"></script>
-    <script src="js/code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <!-- swiper js -->
-    <script src="assets/libs/swiper/swiper-bundle.min.js"></script>
-
-    <!-- profile init js -->
-    <script src="assets/js/pages/profile.init.js"></script>
-
-    <!-- App js -->
-    <script src="assets/js/app.js"></script>
 <script>
     document.getElementById('copyReportBtn')?.addEventListener('click', function () {
         const textarea = document.getElementById('reportShiftText');
@@ -79,23 +62,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         textarea.focus();
         textarea.select();
 
-        try {
-            navigator.clipboard.writeText(textarea.value).then(function () {
-                const btn = document.getElementById('copyReportBtn');
-                if (btn) {
-                    const original = btn.innerHTML;
-                    btn.innerHTML = 'Copied';
-                    btn.classList.remove('btn-primary');
-                    btn.classList.add('btn-success');
-                    setTimeout(function () {
-                        btn.innerHTML = original;
-                        btn.classList.remove('btn-success');
-                        btn.classList.add('btn-primary');
-                    }, 1500);
-                }
-            });
-        } catch (e) {
-            document.execCommand('copy');
+        const copyText = function () {
+            const btn = document.getElementById('copyReportBtn');
+            if (!btn) return;
+            const original = btn.innerHTML;
+            btn.innerHTML = 'Copied';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-success');
+            setTimeout(function () {
+                btn.innerHTML = original;
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-primary');
+            }, 1500);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textarea.value).then(copyText);
+        } else {
+            try {
+                document.execCommand('copy');
+                copyText();
+            } catch (e) {
+                alert('Gagal menyalin. Silakan pilih dan copy manual.');
+            }
         }
     });
 </script>

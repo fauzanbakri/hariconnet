@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Report extends CI_Controller {
 	public function index()
 	{
+        
         $title['title']="Report";
         $q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ")->row();
 		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->row();
