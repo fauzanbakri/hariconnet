@@ -135,8 +135,7 @@
                                             <td style="max-width: 240px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->ketUpdate ?? '-'); ?></td>
                                             <td style="max-width: 180px; white-space: normal; word-break: break-word;"><?php echo htmlspecialchars($row->lastUpdateBy ?? '-'); ?></td>
                                             <td>
-                                                <?php echo htmlspecialchars($row->timestamps ?? '-'); ?>
-                                                <small class="text-muted">UTC+08:00</small>
+                                                <?php echo htmlspecialchars($row->timestamps_utc8 ?? ($row->timestamps ?? '-')); ?>
                                             </td>
                                             <td class="text-center" style="white-space: nowrap; min-width: 90px;">
                                                 <div class='dropdown d-inline-block'>

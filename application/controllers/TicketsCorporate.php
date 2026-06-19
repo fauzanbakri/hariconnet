@@ -13,7 +13,7 @@ class TicketsCorporate extends CI_Controller {
     {
         $title['title'] = "All Tickets Corporate";
 
-        $q['data'] = $this->db->query("SELECT tc.id, tc.idTim, tc.segmen, tc.incident, tc.status, tc.keterangan, tc.tanggal,
+        $rows = $this->db->query("SELECT tc.id, tc.idTim, tc.segmen, tc.incident, tc.status, tc.keterangan, tc.tanggal,
                                               tc.ketUpdate, tc.lastUpdateBy, tc.timestamps,
                                               t.nama AS tim_nama,
                                               b.kp AS kp
@@ -21,6 +21,12 @@ class TicketsCorporate extends CI_Controller {
                                        LEFT JOIN tim t ON tc.idTim = t.idTim
                                        LEFT JOIN basecamp b ON t.idBc = b.idBc
                                        ORDER BY tc.tanggal ASC, tc.id ASC")->result();
+
+        foreach ($rows as $row) {
+            $row->timestamps_utc8 = $this->formatUtc8($row->timestamps ?? '');
+        }
+
+        $q['data'] = $rows;
 
         $q['tim'] = $this->db->query("SELECT t.idTim, t.nama, b.kendaraan
                                       FROM tim t
@@ -48,6 +54,21 @@ class TicketsCorporate extends CI_Controller {
             $this->load->view('tickets_corporate', $q);
         } else {
             header('location: ./DashboardNoc');
+        }
+    }
+
+    private function formatUtc8($value)
+    {
+        if (empty($value)) {
+            return '-';
+        }
+
+        try {
+            $dt = new DateTime($value, new DateTimeZone('UTC'));
+            $dt->setTimezone(new DateTimeZone('Asia/Makassar'));
+            return $dt->format('Y-m-d H:i:s');
+        } catch (Exception $e) {
+            return $value;
         }
     }
 
