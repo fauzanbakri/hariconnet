@@ -144,6 +144,8 @@
                                                                     <option value="MAKASSAR">MAKASSAR</option>
                                                                     <option value="KENDARI">KENDARI</option>
                                                                     <option value="MANADO">MANADO</option>
+                                                                    <option value="AMBON">AMBON</option>
+                                                                    <option value="PAPUA">PAPUA</option>
                                                                 </select>
                                                             </div>
                                                         </div>
