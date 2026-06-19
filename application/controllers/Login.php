@@ -30,7 +30,7 @@ class Login extends CI_Controller {
 		$q = $this->db->query("SELECT * FROM user WHERE username='$username' AND password='$password'");
 		if($q->num_rows()>0){
 			$data = $q->row_array();
-			// var_dump($data);
+			var_dump($data);
 			$_SESSION['role'] = $data['role'];
 			$_SESSION['nama'] = $data['nama'];
 			$_SESSION['idUser'] = $data['idUser'];
