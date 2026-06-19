@@ -33,6 +33,8 @@ class TicketsCorporate extends CI_Controller {
             $_SESSION['role']=='Team Leader' || 
             $_SESSION['role']=='Pemeliharaan Ritel' || 
             $_SESSION['role']=='Resepsionis' ||
+            $_SESSION['role']=='NOC Corpo' ||
+            $_SESSION['role']=='Helpdesk' ||
             $_SESSION['role']=='Guest 1'
         ){
             $this->load->view('navbar', $title);
