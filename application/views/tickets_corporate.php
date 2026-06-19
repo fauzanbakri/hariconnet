@@ -393,7 +393,15 @@ $(document).ready(function(){
 
     var table = $('#dataCorporate').DataTable({
         pageLength: 100,
-        order: [[5, 'asc']]
+        order: [[5, 'asc']],
+        responsive: true,
+        columnDefs: [
+            {
+                targets: [9],
+                className: 'all',
+                responsivePriority: 1
+            }
+        ]
     });
 
     $('#filterSegmen, #filterStatus, #filterTim').on('change', function(){
