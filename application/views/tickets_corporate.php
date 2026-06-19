@@ -90,7 +90,20 @@
                                     <?php foreach(($data ?? []) as $row){ ?>
                                         <tr>
                                             <td><?php echo htmlspecialchars($row->incident ?? ''); ?></td>
-                                            <td><?php echo htmlspecialchars($row->segmen ?? ''); ?></td>
+                                            <td>
+                                                <?php
+                                                    $segmenText = trim((string)($row->segmen ?? ''));
+                                                    $segmenClass = 'border border-secondary text-secondary';
+                                                    if ($segmenText === 'AKSES') {
+                                                        $segmenClass = 'border border-warning text-warning';
+                                                    } elseif ($segmenText === 'DISTRIBUSI') {
+                                                        $segmenClass = 'border border-info text-info';
+                                                    } elseif ($segmenText === 'BACKBONE') {
+                                                        $segmenClass = 'border border-danger text-danger';
+                                                    }
+                                                ?>
+                                                <span class="badge <?php echo $segmenClass; ?>"><?php echo htmlspecialchars($row->segmen ?? ''); ?></span>
+                                            </td>
                                             <td><?php echo htmlspecialchars($row->kp ?? '-'); ?></td>
                                             <td><?php echo htmlspecialchars($row->tim_nama ?? '-'); ?></td>
                                             <td>
