@@ -572,10 +572,10 @@
                                     <div class="collapse menu-dropdown" id="sidereport">
                                         <ul class="nav nav-sm flex-column">
                                             <li class="nav-item">
-                                                <a href="Tickets" class="nav-link" data-key="t-analytics"> All Tickets Retail</a>
+                                                <a href="Tickets" class="nav-link" data-key="t-analytics"> Retail</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="TicketsCorporate" class="nav-link" data-key="t-analytics"> All Tickets Corporate</a>
+                                                <a href="TicketsCorporate" class="nav-link" data-key="t-analytics"> Corporate</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a href="Early" class="nav-link" data-key="t-crm"> Early </a>
