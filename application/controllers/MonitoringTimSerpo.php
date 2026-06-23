@@ -120,6 +120,8 @@ class MonitoringTimSerpo extends CI_Controller {
             $_SESSION['role']=='NOC Ritel' ||
             $_SESSION['role']=='Team Leader' ||
             $_SESSION['role']=='Pemeliharaan Ritel' ||
+            $_SESSION['role']=='NOC Corpo' ||
+            $_SESSION['role']=='Helpdesk' ||
             $_SESSION['role']=='Guest 1'
         ) {
             $data['incident_teams'] = $this->buildStats();
