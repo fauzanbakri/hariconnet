@@ -120,10 +120,7 @@
     <script>
         (function () {
             const cardsContainer = document.getElementById('timSerpoCards');
-            let endpoint = '<?php echo site_url("MonitoringTimSerpo/stats"); ?>';
-            if (!endpoint || endpoint.indexOf('MonitoringTimSerpo') === -1) {
-                endpoint = window.location.pathname.replace(/\/+$|$/, '') + '/stats';
-            }
+            const endpoint = window.location.origin + window.location.pathname.replace(/\/+$/, '') + '/stats';
             const refreshMs = 5000;  // Update setiap 5 detik (auto refresh)
 
             function escapeHtml(value) {
