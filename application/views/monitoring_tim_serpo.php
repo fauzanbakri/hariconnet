@@ -120,11 +120,20 @@
     <script>
         (function () {
             const cardsContainer = document.getElementById('timSerpoCards');
-            var endpoint = '<?php echo site_url("MonitoringTimSerpo/stats"); ?>';
+            let endpoint = '<?php echo site_url("MonitoringTimSerpo/stats"); ?>';
             if (!endpoint || endpoint.indexOf('MonitoringTimSerpo') === -1) {
-                endpoint = window.location.pathname.replace(/\/+$/, '') + '/stats';
+                endpoint = window.location.pathname.replace(/\/+$|$/, '') + '/stats';
             }
             const refreshMs = 5000;  // Update setiap 5 detik (auto refresh)
+
+            function escapeHtml(value) {
+                return String(value || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
 
             function getStatusMeta(item) {
                 const totalPending = parseInt(item.total_pending, 10) || 0;
@@ -153,74 +162,57 @@
                 const totalOnprogress = parseInt(r.total_onprogress, 10) || 0;
                 const feederIncident = (r.feeder_onprogress_incident || '').trim();
                 const corporateIncident = (r.corporate_onprogress_incident || '').trim();
-                const feederIncidentLabel = feederIncident ? ' ' + htmlspecialchars(feederIncident) : '';
-                const corporateIncidentLabel = corporateIncident ? ' ' + htmlspecialchars(corporateIncident) : '';
-                return '<div class="col-md-4 col-lg-3 mb-2" data-team="' + htmlspecialchars(r.tim) + '">\n                    <div class="card shadow-sm border-0 border-top border-4 ' + meta.border + ' h-100">\n                        <div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">\n                            <div>\n                                <div class="d-flex justify-content-between align-items-start mb-1">\n                                    <div>\n                                        <h6 class="card-title mb-0 text-truncate">' +
-                                            (totalPending > 0 && totalOnprogress === 0 ? '<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>' : '') +
-                                            htmlspecialchars(r.tim) +
-                                        '</h6>\n                                    </div>\n                                    <span class="badge ' + meta.badge + ' py-1 px-2 fs-7">' + meta.text + '</span>\n                                </div>\n                                <div class="d-flex flex-wrap gap-1">\n                                    <span class="badge bg-light text-dark py-1 fs-7">Feeder ' + feederPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">IKR ' + retailPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">Corporate ' + corporatePending + '</span>\n                                    ' + (feederOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress' + feederIncidentLabel + '</span>' : (feederPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>' : '')) +\n                                    ' ' + (retailOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>' : (retailPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>' : '')) +\n                                    ' ' + (corporateOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress' + corporateIncidentLabel + '</span>' : (corporatePending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>' : '')) +\n                                </div>\n                            </div>\n                            <div class="pt-1 border-top">\n                                <div class="d-flex justify-content-between align-items-center text-muted smaller">\n                                    <span>Total Pending <strong>' + totalPending + '</strong></span>\n                                    <span>On Progress <strong>' + totalOnprogress + '</strong></span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>';
+                const feederIncidentLabel = feederIncident ? ' ' + escapeHtml(feederIncident) : '';
+                const corporateIncidentLabel = corporateIncident ? ' ' + escapeHtml(corporateIncident) : '';
+
+                let html = '<div class="col-md-4 col-lg-3 mb-2" data-team="' + escapeHtml(r.tim) + '">';
+                html += '<div class="card shadow-sm border-0 border-top border-4 ' + meta.border + ' h-100">';
+                html += '<div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">';
+                html += '<div>';
+                html += '<div class="d-flex justify-content-between align-items-start mb-1">';
+                html += '<div><h6 class="card-title mb-0 text-truncate">' + (totalPending > 0 && totalOnprogress === 0 ? '<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>' : '') + escapeHtml(r.tim) + '</h6></div>';
+                html += '<span class="badge ' + meta.badge + ' py-1 px-2 fs-7">' + meta.text + '</span>';
+                html += '</div>';
+                html += '<div class="d-flex flex-wrap gap-1">';
+                html += '<span class="badge bg-light text-dark py-1 fs-7">Feeder ' + feederPending + '</span>';
+                html += '<span class="badge bg-light text-dark py-1 fs-7">IKR ' + retailPending + '</span>';
+                html += '<span class="badge bg-light text-dark py-1 fs-7">Corporate ' + corporatePending + '</span>';
+                if (feederOnprogress > 0) html += '<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress' + escapeHtml(feederIncidentLabel) + '</span>';
+                else if (feederPending > 0) html += '<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>';
+                if (retailOnprogress > 0) html += ' <span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>';
+                else if (retailPending > 0) html += ' <span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>';
+                if (corporateOnprogress > 0) html += ' <span class="badge bg-info text-white py-1 fs-7">Corporate On Progress' + escapeHtml(corporateIncidentLabel) + '</span>';
+                else if (corporatePending > 0) html += ' <span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="pt-1 border-top">';
+                html += '<div class="d-flex justify-content-between align-items-center text-muted smaller">';
+                html += '<span>Total Pending <strong>' + totalPending + '</strong></span>';
+                html += '<span>On Progress <strong>' + totalOnprogress + '</strong></span>';
+                html += '</div>';
+                if (totalOnprogress > 0) {
+                    html += '<div class="mt-2 text-truncate text-muted small">';
+                    if (r.feeder_onprogress_desc) html += '<div><strong>Feeder:</strong> ' + escapeHtml(r.feeder_onprogress_desc) + '</div>';
+                    if (r.corporate_onprogress_desc) html += '<div><strong>Corporate:</strong> ' + escapeHtml(r.corporate_onprogress_desc) + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                return html;
             }
 
             function renderCards(teams) {
                 if (!cardsContainer) return;
-                if (!Array.isArray(teams) || teams.length === 0) {
+                if (!Array.isArray(teams) || !teams.length) {
                     cardsContainer.innerHTML = '<div class="col-12"><div class="alert alert-warning text-center">Tidak ada data tim.</div></div>';
                     return;
                 }
-
-                // Deteksi tim yang sudah ada di DOM
-                var existingTeams = {};
-                cardsContainer.querySelectorAll('[data-team]').forEach(function (el) {
-                    existingTeams[el.getAttribute('data-team')] = el;
-                });
-
-                // Deteksi tim baru dan yang dihapus
-                var teamsToRender = {};
-                teams.forEach(function (team) {
-                    teamsToRender[team.tim] = team;
-                });
-
-                // Hapus tim yang tidak ada lagi di data
-                Object.keys(existingTeams).forEach(function (teamName) {
-                    if (!teamsToRender[teamName]) {
-                        existingTeams[teamName].style.opacity = '0.5';
-                        setTimeout(function () {
-                            existingTeams[teamName].remove();
-                        }, 200);
-                    }
-                });
-
-                // Tambah tim baru
-                teams.forEach(function (team) {
-                    if (!existingTeams[team.tim]) {
-                        var newCard = document.createElement('div');
-                        newCard.innerHTML = buildCardHtml(team);
-                        newCard.style.opacity = '0';
-                        cardsContainer.appendChild(newCard.firstChild);
-                        setTimeout(function () {
-                            newCard.firstChild.style.opacity = '1';
-                            newCard.firstChild.style.transition = 'opacity 0.3s ease';
-                        }, 10);
-                    } else {
-                        // Update kartu yang sudah ada
-                        var cardEl = existingTeams[team.tim];
-                        var newCardHtml = buildCardHtml(team);
-                        cardEl.outerHTML = newCardHtml;
-                    }
-                });
-            }
-
-            function htmlspecialchars(value) {
-                return String(value)
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#039;');
+                cardsContainer.innerHTML = teams.map(buildCardHtml).join('');
             }
 
             function refresh() {
-                try { console.debug('MonitoringTimSerpo: fetching', endpoint); } catch (e) {}
                 const cacheRandom = Math.random().toString(36).substring(2, 15);
                 fetch(endpoint + '?t=' + cacheRandom + '&r=' + Date.now(), {
                     cache: 'no-store',
@@ -229,80 +221,22 @@
                         'cache-control': 'no-cache'
                     }
                 })
-                    .then(function (response) {
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        try { console.debug('MonitoringTimSerpo: response teams', Array.isArray(data.incident_teams) ? data.incident_teams.length : 'no array'); } catch (e) {}
-                        renderCards(data.incident_teams);
-                    })
-                    .catch(function (error) {
-                        console.warn('Monitoring Tim Serpo refresh failed:', error);
-                    });
+                .then(function (response) {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(function (data) {
+                    renderCards(data.incident_teams);
+                })
+                .catch(function (error) {
+                    console.warn('Monitoring Tim Serpo refresh failed:', error);
+                });
             }
 
             if (cardsContainer) {
-                setTimeout(refresh, 0);
+                refresh();
                 setInterval(refresh, refreshMs);
             }
-        })();
-    </script>
-
-    <script>
-        // Override buildCardHtml to include on-progress descriptions (feeder/corporate)
-        (function(){
-            window.buildCardHtml = function(r) {
-                function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
-                var meta = (typeof getStatusMeta === 'function') ? getStatusMeta(r) : {border:'border-secondary', badge:'bg-secondary text-white', text:'Info'};
-                var feederPending = parseInt(r.feeder_pending,10)||0;
-                var retailPending = parseInt(r.retail_pending,10)||0;
-                var corporatePending = parseInt(r.corporate_pending,10)||0;
-                var feederOnprogress = parseInt(r.feeder_onprogress,10)||0;
-                var retailOnprogress = parseInt(r.retail_onprogress,10)||0;
-                var corporateOnprogress = parseInt(r.corporate_onprogress,10)||0;
-                var totalPending = parseInt(r.total_pending,10)||0;
-                var totalOnprogress = parseInt(r.total_onprogress,10)||0;
-                var feederDesc = (r.feeder_onprogress_desc||'').trim();
-                var corporateDesc = (r.corporate_onprogress_desc||'').trim();
-                var feederIncident = (r.feeder_onprogress_incident||'').trim();
-                var corporateIncident = (r.corporate_onprogress_incident||'').trim();
-                var feederIncidentLabel = feederIncident ? ' ' + esc(feederIncident) : '';
-                var corporateIncidentLabel = corporateIncident ? ' ' + esc(corporateIncident) : '';
-
-                var html = '';
-                html += '<div class="col-md-4 col-lg-3 mb-2" data-team="'+esc(r.tim)+'">';
-                html += '<div class="card shadow-sm border-0 border-top border-4 '+meta.border+' h-100">';
-                html += '<div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">';
-                html += '<div>';
-                html += '<div class="d-flex justify-content-between align-items-start mb-1">';
-                html += '<div><h6 class="card-title mb-0 text-truncate">'+(totalPending>0 && totalOnprogress===0?'<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>':'')+esc(r.tim)+'</h6></div>';
-                html += '<span class="badge '+meta.badge+' py-1 px-2 fs-7">'+meta.text+'</span>';
-                html += '</div>';
-                html += '<div class="d-flex flex-wrap gap-1">';
-                html += '<span class="badge bg-light text-dark py-1 fs-7">Feeder '+feederPending+'</span>';
-                html += '<span class="badge bg-light text-dark py-1 fs-7">IKR '+retailPending+'</span>';
-                html += '<span class="badge bg-light text-dark py-1 fs-7">Corporate '+corporatePending+'</span>';
-                html += (feederOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress'+feederIncidentLabel+'</span>':(feederPending>0?'<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>:''));
-                html += ' '+(retailOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>':(retailPending>0?'<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>:''));
-                html += ' '+(corporateOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress'+corporateIncidentLabel+'</span>':(corporatePending>0?'<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>:''));
-                html += '</div>';
-                html += '</div>';
-                html += '<div class="pt-1 border-top">';
-                html += '<div class="d-flex justify-content-between align-items-center text-muted smaller">';
-                html += '<span>Total Pending <strong>'+totalPending+'</strong></span>';
-                html += '<span>On Progress <strong>'+totalOnprogress+'</strong></span>';
-                html += '</div>';
-                if (totalOnprogress>0) {
-                    html += '<div class="mt-2 text-truncate text-muted small">';
-                    if (feederDesc) html += '<div><strong>Feeder:</strong> '+esc(feederDesc)+'</div>';
-                    if (corporateDesc) html += '<div><strong>Corporate:</strong> '+esc(corporateDesc)+'</div>';
-                    html += '</div>';
-                }
-                html += '</div>';
-                html += '</div></div></div>';
-                return html;
-            };
         })();
     </script>
 
