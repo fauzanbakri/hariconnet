@@ -78,6 +78,16 @@
                                     <span>Total Pending <strong><?php echo $total_pending; ?></strong></span>
                                     <span>On Progress <strong><?php echo $total_onprogress; ?></strong></span>
                                 </div>
+                                <?php if ($total_onprogress > 0): ?>
+                                    <div class="mt-2 text-truncate text-muted small">
+                                        <?php if (!empty($r['feeder_onprogress_desc'])): ?>
+                                            <div><strong>Feeder:</strong> <?php echo htmlspecialchars($r['feeder_onprogress_desc']); ?></div>
+                                        <?php endif; ?>
+                                        <?php if (!empty($r['corporate_onprogress_desc'])): ?>
+                                            <div><strong>Corporate:</strong> <?php echo htmlspecialchars($r['corporate_onprogress_desc']); ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -221,6 +231,59 @@
                 setTimeout(refresh, 1000);
                 setInterval(refresh, refreshMs);
             }
+        })();
+    </script>
+
+    <script>
+        // Override buildCardHtml to include on-progress descriptions (feeder/corporate)
+        (function(){
+            window.buildCardHtml = function(r) {
+                function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+                var meta = (typeof getStatusMeta === 'function') ? getStatusMeta(r) : {border:'border-secondary', badge:'bg-secondary text-white', text:'Info'};
+                var feederPending = parseInt(r.feeder_pending,10)||0;
+                var retailPending = parseInt(r.retail_pending,10)||0;
+                var corporatePending = parseInt(r.corporate_pending,10)||0;
+                var feederOnprogress = parseInt(r.feeder_onprogress,10)||0;
+                var retailOnprogress = parseInt(r.retail_onprogress,10)||0;
+                var corporateOnprogress = parseInt(r.corporate_onprogress,10)||0;
+                var totalPending = parseInt(r.total_pending,10)||0;
+                var totalOnprogress = parseInt(r.total_onprogress,10)||0;
+                var feederDesc = (r.feeder_onprogress_desc||'').trim();
+                var corporateDesc = (r.corporate_onprogress_desc||'').trim();
+
+                var html = '';
+                html += '<div class="col-md-4 col-lg-3 mb-2" data-team="'+esc(r.tim)+'">';
+                html += '<div class="card shadow-sm border-0 border-top border-4 '+meta.border+' h-100">';
+                html += '<div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">';
+                html += '<div>';
+                html += '<div class="d-flex justify-content-between align-items-start mb-1">';
+                html += '<div><h6 class="card-title mb-0 text-truncate">'+(totalPending>0 && totalOnprogress===0?'<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>':'')+esc(r.tim)+'</h6></div>';
+                html += '<span class="badge '+meta.badge+' py-1 px-2 fs-7">'+meta.text+'</span>';
+                html += '</div>';
+                html += '<div class="d-flex flex-wrap gap-1">';
+                html += '<span class="badge bg-light text-dark py-1 fs-7">Feeder '+feederPending+'</span>';
+                html += '<span class="badge bg-light text-dark py-1 fs-7">IKR '+retailPending+'</span>';
+                html += '<span class="badge bg-light text-dark py-1 fs-7">Corporate '+corporatePending+'</span>';
+                html += (feederOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress</span>':(feederPending>0?'<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>':''));
+                html += ' '+(retailOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>':(retailPending>0?'<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>':''));
+                html += ' '+(corporateOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress</span>':(corporatePending>0?'<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>':''));
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="pt-1 border-top">';
+                html += '<div class="d-flex justify-content-between align-items-center text-muted smaller">';
+                html += '<span>Total Pending <strong>'+totalPending+'</strong></span>';
+                html += '<span>On Progress <strong>'+totalOnprogress+'</strong></span>';
+                html += '</div>';
+                if (totalOnprogress>0) {
+                    html += '<div class="mt-2 text-truncate text-muted small">';
+                    if (feederDesc) html += '<div><strong>Feeder:</strong> '+esc(feederDesc)+'</div>';
+                    if (corporateDesc) html += '<div><strong>Corporate:</strong> '+esc(corporateDesc)+'</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '</div></div></div>';
+                return html;
+            };
         })();
     </script>
 

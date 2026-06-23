@@ -88,6 +88,23 @@ class MonitoringTimSerpo extends CI_Controller {
             }
         }
 
+        // Fetch a sample "on progress" description for feeder and corporate per team
+        foreach ($result as &$item) {
+            $teamName = $this->db->escape_str(trim((string)$item['tim']));
+            $item['feeder_onprogress_desc'] = '';
+            $item['corporate_onprogress_desc'] = '';
+
+            if ((int)$item['feeder_onprogress'] > 0 && $this->db->table_exists('feeder')) {
+                $row = $this->db->query("SELECT deskripsi FROM feeder WHERE TRIM(tim) = '".$teamName."' AND UPPER(TRIM(status)) = 'ON PROGRESS' LIMIT 1")->row();
+                if ($row && isset($row->deskripsi)) $item['feeder_onprogress_desc'] = trim((string)$row->deskripsi);
+            }
+
+            if ((int)$item['corporate_onprogress'] > 0 && $this->db->table_exists('tiketCorporate')) {
+                $row = $this->db->query("SELECT tc.keterangan FROM tiketCorporate tc LEFT JOIN tim t ON tc.idTim = t.idTim WHERE TRIM(t.nama) = '".$teamName."' AND UPPER(TRIM(tc.status)) = 'ON PROGRESS' LIMIT 1")->row();
+                if ($row && isset($row->keterangan)) $item['corporate_onprogress_desc'] = trim((string)$row->keterangan);
+            }
+        }
+
         usort($result, function($a, $b){
             $feederCorpA = (int)$a['feeder_pending'] + (int)$a['corporate_pending'];
             $feederCorpB = (int)$b['feeder_pending'] + (int)$b['corporate_pending'];
