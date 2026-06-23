@@ -120,8 +120,8 @@
     <script>
         (function () {
             const cardsContainer = document.getElementById('timSerpoCards');
-            const endpoint = 'MonitoringTimSerpo/stats';
-            const refreshMs = 3000;  // Update setiap 3 detik untuk real-time lebih cepat
+            const endpoint = '<?php echo site_url("MonitoringTimSerpo/stats"); ?>';
+            const refreshMs = 10000;  // Update setiap 10 detik (auto refresh)
 
             function getStatusMeta(item) {
                 const totalPending = parseInt(item.total_pending, 10) || 0;
@@ -238,7 +238,7 @@
             }
 
             if (cardsContainer) {
-                setTimeout(refresh, 1000);
+                setTimeout(refresh, 0);
                 setInterval(refresh, refreshMs);
             }
         })();
