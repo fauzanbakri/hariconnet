@@ -312,4 +312,11 @@
     <!-- App js -->
     <script src="assets/js/app.js"></script>
 
+    <script>
+        // Fallback: auto-reload page every 5 seconds if JS polling is not stable
+        setTimeout(function() {
+            window.location.reload(true);
+        }, 5000);
+    </script>
+
 
