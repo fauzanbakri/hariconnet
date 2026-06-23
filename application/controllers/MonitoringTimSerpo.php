@@ -95,8 +95,32 @@ class MonitoringTimSerpo extends CI_Controller {
             $item['corporate_onprogress_desc'] = '';
 
             if ((int)$item['feeder_onprogress'] > 0 && $this->db->table_exists('feeder')) {
-                $row = $this->db->query("SELECT deskripsi FROM feeder WHERE TRIM(tim) = '".$teamName."' AND UPPER(TRIM(status)) = 'ON PROGRESS' LIMIT 1")->row();
-                if ($row && isset($row->deskripsi)) $item['feeder_onprogress_desc'] = trim((string)$row->deskripsi);
+                $row = $this->db->query("SELECT idInsiden, tipe, kode, idOlt, gangguan FROM feeder WHERE TRIM(tim) = '".$teamName."' AND UPPER(TRIM(status)) = 'ON PROGRESS' LIMIT 1")->row();
+                if ($row) {
+                    $idInsiden = trim((string)($row->idInsiden ?? ''));
+                    $tipe = trim((string)($row->tipe ?? ''));
+                    $kode = trim((string)($row->kode ?? ''));
+                    $idOlt = trim((string)($row->idOlt ?? ''));
+                    $gangguan = trim((string)($row->gangguan ?? ''));
+
+                    if ($tipe === 'FTTH BACKBONE') {
+                        $v = 'OLT TO UPLINK';
+                    } elseif ($tipe === 'FTTH FEEDER') {
+                        $v = 'FDT TO OLT';
+                    } else {
+                        $v = 'FAT TO FDT';
+                    }
+
+                    $descParts = array_filter([
+                        'INSIDEN NO. ' . $idInsiden,
+                        $tipe . '_' . $kode,
+                        '[PROAKTIF NOC SBU]_' . $v,
+                        $idOlt,
+                        $gangguan,
+                    ], function($s){ return strlen(trim((string)$s)) > 0; });
+
+                    $item['feeder_onprogress_desc'] = trim(implode(' ', $descParts));
+                }
             }
 
             if ((int)$item['corporate_onprogress'] > 0 && $this->db->table_exists('tiketCorporate')) {
