@@ -57,7 +57,7 @@
                                     <span class="badge bg-light text-dark py-1 fs-7">IKR <?php echo (int)$r['retail_pending']; ?></span>
                                     <span class="badge bg-light text-dark py-1 fs-7">Corporate <?php echo (int)$r['corporate_pending']; ?></span>
                                     <?php if ((int)$r['feeder_onprogress'] > 0): ?>
-                                        <span class="badge bg-info text-white py-1 fs-7">Feeder On Progress</span>
+                                        <span class="badge bg-info text-white py-1 fs-7">Feeder On Progress<?php echo !empty($r['feeder_onprogress_incident']) ? ' ' . htmlspecialchars($r['feeder_onprogress_incident']) : ''; ?></span>
                                     <?php elseif ((int)$r['feeder_pending'] > 0): ?>
                                         <span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>
                                     <?php endif; ?>
@@ -67,7 +67,7 @@
                                         <span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>
                                     <?php endif; ?>
                                     <?php if ((int)$r['corporate_onprogress'] > 0): ?>
-                                        <span class="badge bg-info text-white py-1 fs-7">Corporate On Progress</span>
+                                        <span class="badge bg-info text-white py-1 fs-7">Corporate On Progress<?php echo !empty($r['corporate_onprogress_incident']) ? ' ' . htmlspecialchars($r['corporate_onprogress_incident']) : ''; ?></span>
                                     <?php elseif ((int)$r['corporate_pending'] > 0): ?>
                                         <span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>
                                     <?php endif; ?>
@@ -149,10 +149,14 @@
                 const corporateOnprogress = parseInt(r.corporate_onprogress, 10) || 0;
                 const totalPending = parseInt(r.total_pending, 10) || 0;
                 const totalOnprogress = parseInt(r.total_onprogress, 10) || 0;
+                const feederIncident = (r.feeder_onprogress_incident || '').trim();
+                const corporateIncident = (r.corporate_onprogress_incident || '').trim();
+                const feederIncidentLabel = feederIncident ? ' ' + htmlspecialchars(feederIncident) : '';
+                const corporateIncidentLabel = corporateIncident ? ' ' + htmlspecialchars(corporateIncident) : '';
                 return '<div class="col-md-4 col-lg-3 mb-2" data-team="' + htmlspecialchars(r.tim) + '">\n                    <div class="card shadow-sm border-0 border-top border-4 ' + meta.border + ' h-100">\n                        <div class="card-body py-2 px-2 d-flex flex-column justify-content-between h-100">\n                            <div>\n                                <div class="d-flex justify-content-between align-items-start mb-1">\n                                    <div>\n                                        <h6 class="card-title mb-0 text-truncate">' +
                                             (totalPending > 0 && totalOnprogress === 0 ? '<span class="badge bg-danger text-white me-1 py-1 px-2">!</span>' : '') +
                                             htmlspecialchars(r.tim) +
-                                        '</h6>\n                                    </div>\n                                    <span class="badge ' + meta.badge + ' py-1 px-2 fs-7">' + meta.text + '</span>\n                                </div>\n                                <div class="d-flex flex-wrap gap-1">\n                                    <span class="badge bg-light text-dark py-1 fs-7">Feeder ' + feederPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">IKR ' + retailPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">Corporate ' + corporatePending + '</span>\n                                    ' + (feederOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress</span>' : (feederPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>' : '')) +\n                                    ' ' + (retailOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>' : (retailPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>' : '')) +\n                                    ' ' + (corporateOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress</span>' : (corporatePending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>' : '')) +\n                                </div>\n                            </div>\n                            <div class="pt-1 border-top">\n                                <div class="d-flex justify-content-between align-items-center text-muted smaller">\n                                    <span>Total Pending <strong>' + totalPending + '</strong></span>\n                                    <span>On Progress <strong>' + totalOnprogress + '</strong></span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>';
+                                        '</h6>\n                                    </div>\n                                    <span class="badge ' + meta.badge + ' py-1 px-2 fs-7">' + meta.text + '</span>\n                                </div>\n                                <div class="d-flex flex-wrap gap-1">\n                                    <span class="badge bg-light text-dark py-1 fs-7">Feeder ' + feederPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">IKR ' + retailPending + '</span>\n                                    <span class="badge bg-light text-dark py-1 fs-7">Corporate ' + corporatePending + '</span>\n                                    ' + (feederOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress' + feederIncidentLabel + '</span>' : (feederPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>' : '')) +\n                                    ' ' + (retailOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>' : (retailPending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>' : '')) +\n                                    ' ' + (corporateOnprogress > 0 ? '<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress' + corporateIncidentLabel + '</span>' : (corporatePending > 0 ? '<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>' : '')) +\n                                </div>\n                            </div>\n                            <div class="pt-1 border-top">\n                                <div class="d-flex justify-content-between align-items-center text-muted smaller">\n                                    <span>Total Pending <strong>' + totalPending + '</strong></span>\n                                    <span>On Progress <strong>' + totalOnprogress + '</strong></span>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>';
             }
 
             function renderCards(teams) {
@@ -250,6 +254,10 @@
                 var totalOnprogress = parseInt(r.total_onprogress,10)||0;
                 var feederDesc = (r.feeder_onprogress_desc||'').trim();
                 var corporateDesc = (r.corporate_onprogress_desc||'').trim();
+                var feederIncident = (r.feeder_onprogress_incident||'').trim();
+                var corporateIncident = (r.corporate_onprogress_incident||'').trim();
+                var feederIncidentLabel = feederIncident ? ' ' + esc(feederIncident) : '';
+                var corporateIncidentLabel = corporateIncident ? ' ' + esc(corporateIncident) : '';
 
                 var html = '';
                 html += '<div class="col-md-4 col-lg-3 mb-2" data-team="'+esc(r.tim)+'">';
@@ -264,9 +272,9 @@
                 html += '<span class="badge bg-light text-dark py-1 fs-7">Feeder '+feederPending+'</span>';
                 html += '<span class="badge bg-light text-dark py-1 fs-7">IKR '+retailPending+'</span>';
                 html += '<span class="badge bg-light text-dark py-1 fs-7">Corporate '+corporatePending+'</span>';
-                html += (feederOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress</span>':(feederPending>0?'<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>':''));
-                html += ' '+(retailOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>':(retailPending>0?'<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>':''));
-                html += ' '+(corporateOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress</span>':(corporatePending>0?'<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>':''));
+                html += (feederOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Feeder On Progress'+feederIncidentLabel+'</span>':(feederPending>0?'<span class="badge bg-danger text-white py-1 fs-7">Feeder Pending</span>:''));
+                html += ' '+(retailOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">IKR On Progress</span>':(retailPending>0?'<span class="badge bg-danger text-white py-1 fs-7">IKR Pending</span>:''));
+                html += ' '+(corporateOnprogress>0?'<span class="badge bg-info text-white py-1 fs-7">Corporate On Progress'+corporateIncidentLabel+'</span>':(corporatePending>0?'<span class="badge bg-danger text-white py-1 fs-7">Corporate Pending</span>:''));
                 html += '</div>';
                 html += '</div>';
                 html += '<div class="pt-1 border-top">';
