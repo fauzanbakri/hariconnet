@@ -7,6 +7,7 @@ class MonitoringTimSerpo extends CI_Controller {
     {
         parent::__construct();
         $this->load->database();
+        $this->load->helper('url');
     }
 
     private function addCount(&$stats, $teamName, $source, $statusText, $count)
