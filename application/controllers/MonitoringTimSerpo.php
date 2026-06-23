@@ -191,6 +191,10 @@ class MonitoringTimSerpo extends CI_Controller {
             $_SESSION['role']=='Pemeliharaan Ritel' ||
             $_SESSION['role']=='Guest 1'
         ) {
+            // Disable all caching for real-time updates
+            header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
+            header('Pragma: no-cache');
+            header('Expires: 0');
             header('Content-Type: application/json');
             echo json_encode([
                 'incident_teams' => $this->buildStats(),
@@ -200,6 +204,7 @@ class MonitoringTimSerpo extends CI_Controller {
         }
 
         header('HTTP/1.1 403 Forbidden');
+        header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
         echo json_encode(['error' => 'Forbidden']);
     }
 }

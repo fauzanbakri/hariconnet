@@ -122,7 +122,7 @@
         (function () {
             const cardsContainer = document.getElementById('timSerpoCards');
             const endpoint = 'MonitoringTimSerpo/stats';
-            const refreshMs = 10000;
+            const refreshMs = 3000;  // Update setiap 3 detik untuk real-time lebih cepat
 
             function getStatusMeta(item) {
                 const totalPending = parseInt(item.total_pending, 10) || 0;
@@ -218,7 +218,14 @@
             }
 
             function refresh() {
-                fetch(endpoint, {cache: 'no-store'})
+                const cacheRandom = Math.random().toString(36).substring(2, 15);
+                fetch(endpoint + '?t=' + cacheRandom + '&r=' + Date.now(), {
+                    cache: 'no-store',
+                    headers: {
+                        'pragma': 'no-cache',
+                        'cache-control': 'no-cache'
+                    }
+                })
                     .then(function (response) {
                         if (!response.ok) throw new Error('Network response was not ok');
                         return response.json();
