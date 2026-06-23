@@ -121,8 +121,8 @@
     <script>
         (function () {
             const cardsContainer = document.getElementById('timSerpoCards');
-            const endpoint = '<?php echo site_url("MonitoringTimSerpo/stats"); ?>';
-            const refreshMs = 10000;  // Update setiap 10 detik (auto refresh)
+            const endpoint = 'MonitoringTimSerpo/stats';
+            const refreshMs = 3000;  // Update setiap 3 detik untuk real-time lebih cepat
 
             function getStatusMeta(item) {
                 const totalPending = parseInt(item.total_pending, 10) || 0;
@@ -218,7 +218,6 @@
             }
 
             function refresh() {
-                try { console.debug('MonitoringTimSerpo: fetching', endpoint); } catch(e){}
                 const cacheRandom = Math.random().toString(36).substring(2, 15);
                 fetch(endpoint + '?t=' + cacheRandom + '&r=' + Date.now(), {
                     cache: 'no-store',
@@ -232,7 +231,6 @@
                         return response.json();
                     })
                     .then(function (data) {
-                        try { console.debug('MonitoringTimSerpo: response teams', Array.isArray(data.incident_teams) ? data.incident_teams.length : 0); } catch(e){}
                         renderCards(data.incident_teams);
                     })
                     .catch(function (error) {
@@ -241,7 +239,7 @@
             }
 
             if (cardsContainer) {
-                setTimeout(refresh, 0);
+                setTimeout(refresh, 1000);
                 setInterval(refresh, refreshMs);
             }
         })();
