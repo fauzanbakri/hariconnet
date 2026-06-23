@@ -124,7 +124,7 @@
             if (!endpoint || endpoint.indexOf('MonitoringTimSerpo') === -1) {
                 endpoint = window.location.pathname.replace(/\/+$/, '') + '/stats';
             }
-            const refreshMs = 10000;  // Update setiap 10 detik (auto refresh)
+            const refreshMs = 5000;  // Update setiap 5 detik (auto refresh)
 
             function getStatusMeta(item) {
                 const totalPending = parseInt(item.total_pending, 10) || 0;
