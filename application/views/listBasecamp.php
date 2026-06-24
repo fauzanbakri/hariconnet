@@ -45,7 +45,7 @@
                                                                     <option value="KENDARI">KENDARI</option>
                                                                     <option value="MANADO">MANADO</option>
                                                                     <option value="AMBON">AMBON</option>
-                                                                    <option value="PAPUA">PAPUA & PAPUA BARAT</option>
+                                                                    <option value="PAPUA & PAPUA BARAT">PAPUA & PAPUA BARAT</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -145,7 +145,7 @@
                                                                     <option value="KENDARI">KENDARI</option>
                                                                     <option value="MANADO">MANADO</option>
                                                                     <option value="AMBON">AMBON</option>
-                                                                    <option value="PAPUA">PAPUA & PAPUA BARAT</option>
+                                                                    <option value="PAPUA & PAPUA BARAT">PAPUA & PAPUA BARAT</option>
                                                                 </select>
                                                             </div>
                                                         </div>
