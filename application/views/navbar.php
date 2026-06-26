@@ -737,6 +737,7 @@
                         }
 
                         ?>
+                        <?php if($_SESSION['role']!='Admin Mitra'){ ?>
                         <li class="menu-title"><span data-key="t-menu">Material Monitoring</span></li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="MonitoringMaterial" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
@@ -768,6 +769,7 @@
                                 <i class="mdi mdi-clipboard-list-outline"></i> <span data-key="t-layouts">Standar Stok</span>
                             </a>
                         </li>
+                        <?php } ?>
                         <?php
                         if(
                             $_SESSION['role']=='Superadmin' || 
