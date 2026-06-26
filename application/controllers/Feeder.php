@@ -35,13 +35,15 @@ class Feeder extends CI_Controller {
 		sort($status_arr);
 		$q['status'] = $status_arr;
 		session_start();
+		$role = strtolower((string)($_SESSION['role'] ?? ''));
 		if(
-			$_SESSION['role']=='Superadmin' || 
-			$_SESSION['role']=='NOC Ritel' || 
-			$_SESSION['role']=='Team Leader' || 
-			$_SESSION['role']=='Pemeliharaan Ritel' || 
-			$_SESSION['role']=='Resepsionis' ||
-            $_SESSION['role']=='Guest 1'
+			$role=='superadmin' || 
+			$role=='noc ritel' || 
+			$role=='team leader' || 
+			$role=='pemeliharaan ritel' || 
+			$role=='resepsionis' ||
+            $role=='guest 1' ||
+            $role=='admin mitra'
 			){
 				$this->load->view('navbar',$title);
 				$this->load->view('feeder', $q);

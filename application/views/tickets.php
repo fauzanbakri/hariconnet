@@ -32,7 +32,7 @@
                                     <!-- Base Buttons -->
                                      <!-- Grids in modals -->
                                 <!-- Grids in modals -->
-                                <?php if($_SESSION['role']=='Guest 1'){
+                                <?php $roleName = strtolower((string)($_SESSION['role'] ?? '')); if($roleName=='guest 1' || $roleName=='admin mitra'){
                                     $hide = 'hidden';
                                 }else{
                                     $hide = '';

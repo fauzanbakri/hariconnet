@@ -40,15 +40,17 @@ class TicketsCorporate extends CI_Controller {
         sort($q['status']);
 
         session_start();
+        $role = strtolower((string)($_SESSION['role'] ?? ''));
         if(
-            $_SESSION['role']=='Superadmin' || 
-            $_SESSION['role']=='NOC Ritel' || 
-            $_SESSION['role']=='Team Leader' || 
-            $_SESSION['role']=='Pemeliharaan Ritel' || 
-            $_SESSION['role']=='Resepsionis' ||
-            $_SESSION['role']=='NOC Corpo' ||
-            $_SESSION['role']=='Helpdesk' ||
-            $_SESSION['role']=='Guest 1'
+            $role=='superadmin' || 
+            $role=='noc ritel' || 
+            $role=='team leader' || 
+            $role=='pemeliharaan ritel' || 
+            $role=='resepsionis' ||
+            $role=='noc corpo' ||
+            $role=='helpdesk' ||
+            $role=='guest 1' ||
+            $role=='admin mitra'
         ){
             $this->load->view('navbar', $title);
             $this->load->view('tickets_corporate', $q);

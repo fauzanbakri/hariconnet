@@ -49,12 +49,14 @@ class Tickets extends CI_Controller {
 
 		$q['olt'] = $this->db->query("SELECT * FROM olt")->result();
 		session_start();
+		$role = strtolower((string)($_SESSION['role'] ?? ''));
 		if(
-			$_SESSION['role']=='Superadmin' || 
-			$_SESSION['role']=='NOC Ritel' || 
-			$_SESSION['role']=='Team Leader' || 
-			$_SESSION['role']=='Pemeliharaan Ritel'||
-			$_SESSION['role']=='Guest 1'
+			$role=='superadmin' || 
+			$role=='noc ritel' || 
+			$role=='team leader' || 
+			$role=='pemeliharaan ritel'||
+			$role=='guest 1' ||
+			$role=='admin mitra'
 			){
 				$this->load->view('navbar', $title);
 				$this->load->view('tickets', $q);

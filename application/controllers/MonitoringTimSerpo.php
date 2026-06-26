@@ -163,14 +163,16 @@ class MonitoringTimSerpo extends CI_Controller {
         session_start();
         $title['title'] = 'Monitoring Tim Serpo';
 
+        $role = strtolower((string)($_SESSION['role'] ?? ''));
         if (
-            $_SESSION['role']=='Superadmin' ||
-            $_SESSION['role']=='NOC Ritel' ||
-            $_SESSION['role']=='Team Leader' ||
-            $_SESSION['role']=='Pemeliharaan Ritel' ||
-            $_SESSION['role']=='NOC Corpo' ||
-            $_SESSION['role']=='Helpdesk' ||
-            $_SESSION['role']=='Guest 1'
+            $role=='superadmin' ||
+            $role=='noc ritel' ||
+            $role=='team leader' ||
+            $role=='pemeliharaan ritel' ||
+            $role=='noc corpo' ||
+            $role=='helpdesk' ||
+            $role=='guest 1' ||
+            $role=='admin mitra'
         ) {
             $data['incident_teams'] = $this->buildStats();
             $data['total_teams'] = count($data['incident_teams']);
@@ -185,12 +187,14 @@ class MonitoringTimSerpo extends CI_Controller {
     public function stats()
     {
         session_start();
+        $role = strtolower((string)($_SESSION['role'] ?? ''));
         if (
-            $_SESSION['role']=='Superadmin' ||
-            $_SESSION['role']=='NOC Ritel' ||
-            $_SESSION['role']=='Team Leader' ||
-            $_SESSION['role']=='Pemeliharaan Ritel' ||
-            $_SESSION['role']=='Guest 1'
+            $role=='superadmin' ||
+            $role=='noc ritel' ||
+            $role=='team leader' ||
+            $role=='pemeliharaan ritel' ||
+            $role=='guest 1' ||
+            $role=='admin mitra'
         ) {
             // Disable all caching for real-time updates
             header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');

@@ -6,13 +6,15 @@ class UpdateTicket extends CI_Controller {
     {
         $title['title'] = "Update Tiket";
         session_start();
+        $role = strtolower((string)($_SESSION['role'] ?? ''));
         if (
             isset($_SESSION['role']) && (
-                $_SESSION['role'] == 'Superadmin' ||
-                $_SESSION['role'] == 'NOC Ritel' ||
-                $_SESSION['role'] == 'Team Leader' ||
-                $_SESSION['role'] == 'Pemeliharaan Ritel' ||
-                $_SESSION['role'] == 'Guest 1'
+                $role == 'superadmin' ||
+                $role == 'noc ritel' ||
+                $role == 'team leader' ||
+                $role == 'pemeliharaan ritel' ||
+                $role == 'guest 1' ||
+                $role == 'admin mitra'
             )
         ) {
             $this->load->view('navbar', $title);

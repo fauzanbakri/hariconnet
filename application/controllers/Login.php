@@ -34,17 +34,21 @@ class Login extends CI_Controller {
 			$_SESSION['role'] = $data['role'];
 			$_SESSION['nama'] = $data['nama'];
 			$_SESSION['idUser'] = $data['idUser'];
-			if(	$data['role'] == 'Superadmin' || 
-				$data['role'] == 'NOC Ritel'
+			$role = strtolower((string)($data['role'] ?? ''));
+			if(	$role == 'superadmin' || 
+				$role == 'noc ritel'
 				) {
 				header("location:../Feeder");
 			} 
-			else if($data['role'] == 'NOC Corpo' || 
-				$data['role'] == 'Helpdesk'
+			else if($role == 'noc corpo' || 
+				$role == 'helpdesk'
 				) {
 				header("location:../TicketsCorporate");
 			}
-			 else if ($data['role'] == 'Inventory' || $data['role'] == 'Mitra Gangguan'){
+			else if($role == 'admin mitra'){
+				header("location:../MonitoringTim");
+			}
+			 else if ($role == 'inventory' || $role == 'mitra gangguan'){
 				header("location:../MonitoringMaterial");
 			}
 		}else{

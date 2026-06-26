@@ -23,12 +23,12 @@
                             <h5 class="card-title mb-0">Incident Corporate</h5><br>
                             <div class="row g-3 mb-2">
                                 <div class="col-md-3">
-                                    <?php if($_SESSION['role']!='Resepsionis' && $_SESSION['role']!='Guest 1'){ ?>
+                                    <?php $roleName = strtolower((string)($_SESSION['role'] ?? '')); if($roleName!='resepsionis' && $roleName!='guest 1' && $roleName!='admin mitra'){ ?>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCorporateModal">Add New Incident</button>
                                     <?php } ?>
                                 </div>
                                 <div class="col-md-9 d-flex flex-row-reverse">
-                                    <?php if($_SESSION['role']!='Guest 1'){ ?>
+                                    <?php if($roleName!='guest 1' && $roleName!='admin mitra'){ ?>
                                         <button type="button" class="btn btn-danger flex-row-reverse" id="sa-warning">
                                             Change Shift
                                         </button>

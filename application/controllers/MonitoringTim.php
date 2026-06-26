@@ -11,7 +11,12 @@ class MonitoringTim extends CI_Controller {
     public function index()
     {
         session_start();
+        $role = strtolower((string)($_SESSION['role'] ?? ''));
         $data['title'] = 'Monitoring Tim';
+        if (!in_array($role, ['superadmin','noc ritel','team leader','pemeliharaan ritel','noc corpo','helpdesk','guest 1','admin mitra'], true)) {
+            header('location: ./DashboardNoc');
+            return;
+        }
         // summary: count distinct idInsiden per tim
         // join tiket -> tim (by name) -> basecamp to get province
         $sql = "SELECT IFNULL(t.tnama, IFNULL(tiket.tim,'UNKNOWN')) AS tim, COUNT(DISTINCT tiket.idInsiden) AS total_incidents, COALESCE(b.provinsi,'') AS provinsi, COALESCE(b.kabupaten,'') AS kabupaten
@@ -29,6 +34,13 @@ class MonitoringTim extends CI_Controller {
     // AJAX: return incidents for a given team
     public function listIncidents()
     {
+        session_start();
+        $role = strtolower((string)($_SESSION['role'] ?? ''));
+        if (!in_array($role, ['superadmin','noc ritel','team leader','pemeliharaan ritel','noc corpo','helpdesk','guest 1','admin mitra'], true)) {
+            echo json_encode([]);
+            return;
+        }
+
         $team = $this->input->get_post('team');
         if ($team === null) { echo json_encode([]); return; }
 
@@ -71,6 +83,13 @@ class MonitoringTim extends CI_Controller {
     // AJAX: update status for a ticket (idTiket)
     public function updateStatus()
     {
+        session_start();
+        $role = strtolower((string)($_SESSION['role'] ?? ''));
+        if (!in_array($role, ['superadmin','noc ritel','team leader','pemeliharaan ritel','noc corpo','helpdesk','guest 1','admin mitra'], true)) {
+            echo json_encode(['success'=>false,'message'=>'Forbidden']);
+            return;
+        }
+
         $id = $this->input->post('idTiket');
         $action = $this->input->post('action'); // 'antrian' or 'onprogress'
         if (!$id || !$action) { echo json_encode(['success'=>false,'message'=>'Missing params']); return; }

@@ -472,6 +472,7 @@
                             <div class="collapse menu-dropdown" id="sidebarDashboards">
                                 <ul class="nav nav-sm flex-column">
                                     <?php
+                                    $isAdminMitra = ($_SESSION['role']=='Admin Mitra');
                                     if(
                                         $_SESSION['role']=='Superadmin' || 
                                         $_SESSION['role']=='NOC Ritel' || 
@@ -494,6 +495,16 @@
                                             </li>
                                              <li class="nav-item">
                                                 <a href="MonitoringInternal" class="nav-link" data-key="t-crm"> Monitoring Internal </a>
+                                            </li>
+                                            ';   
+                                    }
+                                    if($isAdminMitra){
+                                            echo '
+                                             <li class="nav-item">
+                                                <a href="MonitoringTim" class="nav-link" data-key="t-crm"> Monitoring Load Tim </a>
+                                            </li>
+                                             <li class="nav-item">
+                                                <a href="MonitoringTimSerpo" class="nav-link" data-key="t-crm"> Monitoring Tim Serpo </a>
                                             </li>
                                             ';   
                                     }
@@ -541,6 +552,7 @@
                         </li> 
                         <?php 
                         if(
+                            $_SESSION['role']!='Admin Mitra' && (
                             $_SESSION['role']=='Superadmin' || 
                             $_SESSION['role']=='NOC Ritel' || 
                             $_SESSION['role']=='Team Leader' || 
@@ -549,6 +561,7 @@
                             $_SESSION['role']=='Guest 1' ||
                             $_SESSION['role']=='NOC Corpo' ||
                             $_SESSION['role']=='Helpdesk'
+                            )
                             ){
                                 echo '
                                 <li class="nav-item">
@@ -556,6 +569,20 @@
                                         <i class="ri-rocket-line"></i> <span data-key="t-layouts">Improvement</span>
                                     </a>
                                 </li> 
+                                ';   
+                        }
+                        if(
+                            $_SESSION['role']=='Superadmin' || 
+                            $_SESSION['role']=='NOC Ritel' || 
+                            $_SESSION['role']=='Team Leader' || 
+                            $_SESSION['role']=='Pemeliharaan Ritel'	||
+                            $_SESSION['role']=='Resepsionis' ||
+                            $_SESSION['role']=='Guest 1' ||
+                            $_SESSION['role']=='NOC Corpo' ||
+                            $_SESSION['role']=='Helpdesk' ||
+                            $_SESSION['role']=='Admin Mitra'
+                            ){
+                                echo '
                                  <li class="nav-item">
                                     <a class="nav-link menu-link" href="Feeder" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                                         <i class="mdi mdi-access-point-network"></i> <span data-key="t-layouts">Incident Feeder</span>
@@ -570,7 +597,8 @@
                             $_SESSION['role']=='Helpdesk' ||
                             $_SESSION['role']=='Team Leader' || 
                             $_SESSION['role']=='Pemeliharaan Ritel' ||
-                            $_SESSION['role']=='Guest 1'
+                            $_SESSION['role']=='Guest 1' ||
+                            $_SESSION['role']=='Admin Mitra'
                             ){
                                 echo '
                                 <li class="nav-item">

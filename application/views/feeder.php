@@ -35,9 +35,11 @@
                                  <div class="row">
                                     <div class="col-md-3">
                                         <?php
+                                            $roleName = strtolower((string)($_SESSION['role'] ?? ''));
                                             if(
-                                                $_SESSION['role']=='Resepsionis' ||
-                                                $_SESSION['role']=='Guest 1'
+                                                $roleName=='resepsionis' ||
+                                                $roleName=='guest 1' ||
+                                                $roleName=='admin mitra'
                                                 ){
                                                     echo '';
                                                 }else{
