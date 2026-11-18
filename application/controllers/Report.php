@@ -168,10 +168,9 @@ class Report extends CI_Controller {
         $title['title'] = "Persebaran Tim";
 
         $feederRows = $this->db->query(
-            "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.keterangan, f.status, f.tim, f.downtime,
-                    olt.kabupaten AS kabupaten, UPPER(TRIM(b.kendaraan)) AS kendaraan
+            "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.status, f.tim, f.downtime,
+                    UPPER(TRIM(b.kendaraan)) AS kendaraan
              FROM feeder f
-             LEFT JOIN olt ON olt.idOlt = f.idOlt
              LEFT JOIN tim t ON TRIM(t.nama) = TRIM(f.tim)
              LEFT JOIN basecamp b ON b.idBc = t.idBc
              WHERE f.status != 'CLOSED'
@@ -181,10 +180,9 @@ class Report extends CI_Controller {
         // Tim Motor diambil dari tiket retail yang masih NEW/OPEN (bukan feeder).
         // KP untuk tiket tidak ada di tabel tiket, jadi diambil dari basecamp tim-nya.
         $tiketRows = $this->db->query(
-            "SELECT t.idTiket, t.idInsiden, t.keluhan, t.keterangan, t.status, t.tim, t.tanggal, t.alamat,
-                    olt.kabupaten AS kabupaten, UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
+            "SELECT t.idTiket, t.idInsiden, t.status, t.tim, t.tanggal,
+                    UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
              FROM tiket t
-             LEFT JOIN olt ON olt.idOlt = t.idOlt
              LEFT JOIN tim tm ON TRIM(tm.nama) = TRIM(t.tim)
              LEFT JOIN basecamp b ON b.idBc = tm.idBc
              WHERE t.status IN ('NEW','OPEN')
@@ -193,10 +191,6 @@ class Report extends CI_Controller {
 
         $collapse = function ($s) {
             return trim(preg_replace('/\s+/', ' ', (string) $s));
-        };
-        $shortKab = function ($s) use ($collapse) {
-            $s = $collapse($s);
-            return trim(preg_replace('/^(kabupaten|kota)\s+/i', '', $s));
         };
 
         // Normalisasi: feeder (selain MOTOR) + tiket retail (hanya MOTOR)
@@ -216,11 +210,9 @@ class Report extends CI_Controller {
             $obj->tipe = 'FTTH DISTRIBUSI';
             $obj->kp = $row->kp;
             $obj->gangguan = '';
-            $obj->keterangan = $row->keterangan;
             $obj->status = $row->status;
             $obj->tim = $row->tim;
             $obj->downtime = $row->tanggal;
-            $obj->kabupaten = $row->kabupaten;
             $obj->kendaraan = 'MOTOR';
             $query[] = $obj;
         }
@@ -292,38 +284,21 @@ class Report extends CI_Controller {
                 $reportText .= $kenLabel[$ken] . "\n\n";
                 foreach ($teams as $tim => $rows) {
                     $descCount = [];
-                    $notes = [];
                     foreach ($rows as $inc) {
                         $tipe = strtoupper($collapse($inc->tipe));
                         $gang = $collapse($inc->gangguan);
-                        $kab = $shortKab($inc->kabupaten);
-                        if ($tipe === 'FTTH DISTRIBUSI') {
-                            $label = 'IKR ' . ($kab !== '' ? $kab : '-');
-                            if ($gang !== '') {
-                                $label .= ', gangguan ' . $gang;
-                            }
+                        if ($tipe === 'FTTH DISTRIBUSI' || $tipe === 'FTTH FEEDER') {
+                            $label = $tipe;
                         } else {
-                            $label = $gang !== '' ? $gang : 'INC ' . $collapse($inc->idInsiden);
+                            $label = $gang !== '' ? $gang : ($tipe !== '' ? $tipe : 'INC ' . $collapse($inc->idInsiden));
                         }
                         $descCount[$label] = ($descCount[$label] ?? 0) + 1;
-
-                        $ket = $collapse($inc->keterangan);
-                        if ($ket !== '' && preg_match('/[A-Za-z]/', $ket)) {
-                            if (strlen($ket) > 80) {
-                                $ket = substr($ket, 0, 80) . '...';
-                            }
-                            $notes[$ket] = true;
-                        }
                     }
                     $parts = [];
                     foreach ($descCount as $label => $n) {
                         $parts[] = $n . ' tiket ' . $label;
                     }
-                    $line = '- ' . $tim . ' : ' . implode(', ', $parts);
-                    if ($notes) {
-                        $line .= ' (' . implode('; ', array_keys($notes)) . ')';
-                    }
-                    $reportText .= $line . "\n";
+                    $reportText .= '- ' . $tim . ' : ' . implode(', ', $parts) . "\n";
                 }
                 $reportText .= "\n";
             }
