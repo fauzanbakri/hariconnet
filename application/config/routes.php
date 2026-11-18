@@ -53,4 +53,5 @@ $route['default_controller'] = 'dashboardNoc';
 $route['404_override'] = '';
 $route['import-ticket'] = 'MonitoringSLA/index';
 $route['import-ticket/upload'] = 'MonitoringSLA/upload';
+$route['PersebaranTim'] = 'Report/persebaranTim';
 $route['translate_uri_dashes'] = FALSE;
