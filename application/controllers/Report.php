@@ -167,7 +167,7 @@ class Report extends CI_Controller {
         date_default_timezone_set('Asia/Makassar');
         $title['title'] = "Persebaran Tim";
 
-        $query = $this->db->query(
+        $feederRows = $this->db->query(
             "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.keterangan, f.status, f.tim, f.downtime,
                     olt.kabupaten AS kabupaten, UPPER(TRIM(b.kendaraan)) AS kendaraan
              FROM feeder f
@@ -178,6 +178,19 @@ class Report extends CI_Controller {
              ORDER BY f.kp ASC, f.tim ASC, f.downtime ASC"
         )->result();
 
+        // Tim Motor diambil dari tiket retail yang masih NEW/OPEN (bukan feeder).
+        // KP untuk tiket tidak ada di tabel tiket, jadi diambil dari basecamp tim-nya.
+        $tiketRows = $this->db->query(
+            "SELECT t.idTiket, t.idInsiden, t.keluhan, t.keterangan, t.status, t.tim, t.tanggal, t.alamat,
+                    olt.kabupaten AS kabupaten, UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
+             FROM tiket t
+             LEFT JOIN olt ON olt.idOlt = t.idOlt
+             LEFT JOIN tim tm ON TRIM(tm.nama) = TRIM(t.tim)
+             LEFT JOIN basecamp b ON b.idBc = tm.idBc
+             WHERE t.status IN ('NEW','OPEN')
+             ORDER BY t.tim ASC, t.tanggal ASC"
+        )->result();
+
         $collapse = function ($s) {
             return trim(preg_replace('/\s+/', ' ', (string) $s));
         };
@@ -185,6 +198,32 @@ class Report extends CI_Controller {
             $s = $collapse($s);
             return trim(preg_replace('/^(kabupaten|kota)\s+/i', '', $s));
         };
+
+        // Normalisasi: feeder (selain MOTOR) + tiket retail (hanya MOTOR)
+        $query = [];
+        foreach ($feederRows as $row) {
+            if (strtoupper($collapse($row->kendaraan)) === 'MOTOR') {
+                continue; // Tim Motor diambil dari tiket retail
+            }
+            $query[] = $row;
+        }
+        foreach ($tiketRows as $row) {
+            if (strtoupper($collapse($row->kendaraan)) !== 'MOTOR') {
+                continue;
+            }
+            $obj = new stdClass();
+            $obj->idInsiden = $collapse($row->idInsiden) !== '' ? $row->idInsiden : $row->idTiket;
+            $obj->tipe = 'FTTH DISTRIBUSI';
+            $obj->kp = $row->kp;
+            $obj->gangguan = '';
+            $obj->keterangan = $row->keterangan;
+            $obj->status = $row->status;
+            $obj->tim = $row->tim;
+            $obj->downtime = $row->tanggal;
+            $obj->kabupaten = $row->kabupaten;
+            $obj->kendaraan = 'MOTOR';
+            $query[] = $obj;
+        }
 
         $kenGroup = ['INTERNAL' => 'Internal', 'MOBIL' => 'Tim Mobil', 'MOTOR' => 'Tim Motor'];
         $kenOrder = ['INTERNAL', 'MOBIL', 'MOTOR', 'LAINNYA'];
