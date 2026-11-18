@@ -110,6 +110,7 @@
                                                                     <option value="">-- Select Kendaraan --</option>
                                                                     <option value="MOTOR">MOTOR</option>
                                                                     <option value="MOBIL">MOBIL</option>
+                                                                    <option value="INTERNAL">INTERNAL</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -210,6 +211,7 @@
                                                                     <option value="">-- Select Kendaraan --</option>
                                                                     <option value="MOTOR">MOTOR</option>
                                                                     <option value="MOBIL">MOBIL</option>
+                                                                    <option value="INTERNAL">INTERNAL</option>
                                                                 </select>
                                                             </div>
                                                         </div>
