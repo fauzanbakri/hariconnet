@@ -699,6 +699,9 @@
                                                 <a href="ShiftCorpo" class="nav-link" data-key="t-analytics"> Report Shift Corpo </a>
                                             </li>
                                             <li class="nav-item">
+                                                <a href="Report/persebaranTim" class="nav-link" data-key="t-analytics"> Persebaran Tim </a>
+                                            </li>
+                                            <li class="nav-item">
                                                 <a href="ListPending" class="nav-link" data-key="t-crm"> List Pending Team </a>
                                             </li>
                                             <li class="nav-item">

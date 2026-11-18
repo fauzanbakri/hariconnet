@@ -162,6 +162,156 @@ class Report extends CI_Controller {
         }
     }
 
+    public function persebaranTim()
+    {
+        date_default_timezone_set('Asia/Makassar');
+        $title['title'] = "Persebaran Tim";
+
+        $query = $this->db->query(
+            "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.keterangan, f.status, f.tim, f.downtime,
+                    olt.kabupaten AS kabupaten, UPPER(TRIM(b.kendaraan)) AS kendaraan
+             FROM feeder f
+             LEFT JOIN olt ON olt.idOlt = f.idOlt
+             LEFT JOIN tim t ON TRIM(t.nama) = TRIM(f.tim)
+             LEFT JOIN basecamp b ON b.idBc = t.idBc
+             WHERE f.status != 'CLOSED'
+             ORDER BY f.kp ASC, f.tim ASC, f.downtime ASC"
+        )->result();
+
+        $collapse = function ($s) {
+            return trim(preg_replace('/\s+/', ' ', (string) $s));
+        };
+        $shortKab = function ($s) use ($collapse) {
+            $s = $collapse($s);
+            return trim(preg_replace('/^(kabupaten|kota)\s+/i', '', $s));
+        };
+
+        $kenGroup = ['INTERNAL' => 'Internal', 'MOBIL' => 'Tim Mobil', 'MOTOR' => 'Tim Motor'];
+        $kenOrder = ['INTERNAL', 'MOBIL', 'MOTOR', 'LAINNYA'];
+        $kenLabel = $kenGroup + ['LAINNYA' => 'Lainnya'];
+        $kpOrder = ['MAKASSAR', 'KENDARI', 'MANADO'];
+
+        // group: kp => kendaraan => tim => incidents[]
+        $grouped = [];
+        $timSet = [];
+        foreach ($query as $row) {
+            $kp = strtoupper($collapse($row->kp));
+            if ($kp === '') {
+                $kp = 'LAINNYA';
+            }
+            $ken = strtoupper($collapse($row->kendaraan));
+            if (!isset($kenLabel[$ken])) {
+                $ken = 'LAINNYA';
+            }
+            $tim = $collapse($row->tim);
+            if ($tim === '') {
+                $tim = '-';
+            }
+            $grouped[$kp][$ken][$tim][] = $row;
+            $timSet[$tim] = true;
+        }
+
+        // sort KP: Makassar, Kendari, Manado first, then alphabetical
+        $kpKeys = array_keys($grouped);
+        usort($kpKeys, function ($a, $b) use ($kpOrder) {
+            $ia = array_search($a, $kpOrder, true);
+            $ib = array_search($b, $kpOrder, true);
+            if ($ia === false && $ib === false) {
+                return strcmp($a, $b);
+            }
+            if ($ia === false) {
+                return 1;
+            }
+            if ($ib === false) {
+                return -1;
+            }
+            return $ia - $ib;
+        });
+
+        $kpList = [];
+        foreach ($kpKeys as $kp) {
+            $count = 0;
+            foreach ($grouped[$kp] as $ken => $teams) {
+                foreach ($teams as $tim => $rows) {
+                    $count += count($rows);
+                }
+            }
+            $kpList[] = ['kp' => $kp, 'count' => $count];
+        }
+
+        $reportText = "Persebaran Insiden di tim Motor dan Mobil\n";
+        $reportText .= "*" . date('d/m/Y H:i') . "*\n\n";
+
+        foreach ($kpKeys as $kp) {
+            $reportText .= "KP " . ucfirst(strtolower($kp)) . "\n";
+            foreach ($kenOrder as $ken) {
+                if (empty($grouped[$kp][$ken])) {
+                    continue;
+                }
+                $teams = $grouped[$kp][$ken];
+                ksort($teams, SORT_NATURAL | SORT_FLAG_CASE);
+                $reportText .= $kenLabel[$ken] . "\n\n";
+                foreach ($teams as $tim => $rows) {
+                    $descCount = [];
+                    $notes = [];
+                    foreach ($rows as $inc) {
+                        $tipe = strtoupper($collapse($inc->tipe));
+                        $gang = $collapse($inc->gangguan);
+                        $kab = $shortKab($inc->kabupaten);
+                        if ($tipe === 'FTTH DISTRIBUSI') {
+                            $label = 'IKR ' . ($kab !== '' ? $kab : '-');
+                            if ($gang !== '') {
+                                $label .= ', gangguan ' . $gang;
+                            }
+                        } else {
+                            $label = $gang !== '' ? $gang : 'INC ' . $collapse($inc->idInsiden);
+                        }
+                        $descCount[$label] = ($descCount[$label] ?? 0) + 1;
+
+                        $ket = $collapse($inc->keterangan);
+                        if ($ket !== '' && preg_match('/[A-Za-z]/', $ket)) {
+                            if (strlen($ket) > 80) {
+                                $ket = substr($ket, 0, 80) . '...';
+                            }
+                            $notes[$ket] = true;
+                        }
+                    }
+                    $parts = [];
+                    foreach ($descCount as $label => $n) {
+                        $parts[] = $n . ' tiket ' . $label;
+                    }
+                    $line = '- ' . $tim . ' : ' . implode(', ', $parts);
+                    if ($notes) {
+                        $line .= ' (' . implode('; ', array_keys($notes)) . ')';
+                    }
+                    $reportText .= $line . "\n";
+                }
+                $reportText .= "\n";
+            }
+        }
+
+        $data = [
+            'reportText' => $reportText,
+            'totalIncident' => count($query),
+            'timCount' => count($timSet),
+            'kpList' => $kpList,
+        ];
+
+        session_start();
+        if (
+            $_SESSION['role'] == 'Superadmin' ||
+            $_SESSION['role'] == 'NOC Ritel' ||
+            $_SESSION['role'] == 'NOC Corpo' ||
+            $_SESSION['role'] == 'Team Leader' ||
+            $_SESSION['role'] == 'Helpdesk'
+        ) {
+            $this->load->view('navbar', $title);
+            $this->load->view('report_persebaran_tim', $data);
+        } else {
+            header('location: ./DashboardNoc');
+        }
+    }
+
     private function formatDuration($date)
     {
         if ($date === '') {
