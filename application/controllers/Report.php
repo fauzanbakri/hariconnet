@@ -193,16 +193,19 @@ class Report extends CI_Controller {
 
         // Tiket Corporate (Tickets > Corporate) yang masih berstatus selain CLOSED.
         // Join ke tim lewat idTim. KP diambil dari basecamp tim-nya.
-        $corpoRows = $this->db->query(
-            "SELECT tc.id, tc.idTim, tc.incident, tc.segmen, tc.status, tc.tanggal, tc.keterangan,
-                    t.nama AS tim_nama, TRIM(t.alias) AS alias,
-                    UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
-             FROM tiketCorporate tc
-             LEFT JOIN tim t ON tc.idTim = t.idTim
-             LEFT JOIN basecamp b ON b.idBc = t.idBc
-             WHERE tc.status != 'CLOSED'
-             ORDER BY tc.tanggal ASC, tc.id ASC"
-        )->result();
+        $corpoRows = [];
+        if ($this->db->table_exists('tiketCorporate')) {
+            $corpoRows = $this->db->query(
+                "SELECT tc.id, tc.idTim, tc.incident, tc.segmen, tc.status, tc.tanggal, tc.keterangan,
+                        t.nama AS tim_nama, TRIM(t.alias) AS alias,
+                        UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
+                 FROM tiketCorporate tc
+                 LEFT JOIN tim t ON tc.idTim = t.idTim
+                 LEFT JOIN basecamp b ON b.idBc = t.idBc
+                 WHERE tc.status != 'CLOSED'
+                 ORDER BY tc.tanggal ASC, tc.id ASC"
+            )->result();
+        }
 
         $collapse = function ($s) {
             return trim(preg_replace('/\s+/', ' ', (string) $s));
@@ -363,11 +366,10 @@ class Report extends CI_Controller {
                         }
                         $descCount[$label] = ($descCount[$label] ?? 0) + 1;
                     }
-                    $parts = [];
+                    $reportText .= '- ' . $tim . " :\n";
                     foreach ($descCount as $label => $n) {
-                        $parts[] = $n . ' tiket ' . $label;
+                        $reportText .= '  - ' . $n . ' tiket ' . $label . "\n";
                     }
-                    $reportText .= '- ' . $tim . ' : ' . implode(', ', $parts) . "\n";
                 }
                 $reportText .= "\n";
             }
