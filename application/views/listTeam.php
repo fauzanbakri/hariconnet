@@ -57,6 +57,12 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
+                                                                <label class="form-label">Alias</label>
+                                                                <input type="text" class="form-control" name="alias" id="alias" autocomplete="off" placeholder="Alias">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
                                                                 <label class="form-label">Chat ID Telegram</label>
                                                                 <input type="text" class="form-control" id="chatid" name="chatid" autocomplete="off" placeholder="Chat ID">
                                                             </div>
@@ -103,6 +109,12 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
+                                                                <label class="form-label">Alias</label>
+                                                                <input type="text" class="form-control" name="editalias" id="editalias" autocomplete="off" placeholder="Alias">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
                                                                 <label for="lastName" class="form-label">Chat ID Telegram</label>
                                                                 <input type="text" class="form-control" id="editchatid" name="editchatid" autocomplete="off" placeholder="Chat ID">
                                                             </div>
@@ -137,6 +149,7 @@
                                             <tr>
                                                 <th>id</th>
                                                 <th>Team Name</th>
+                                                <th>Alias</th>
                                                 <th>Chat ID</th>
                                                 <th>Basecamp</th>
                                                 <th>Action</th>
@@ -150,6 +163,7 @@
                                                     <tr>
                                                         <td>".$row->idTim."</td>
                                                         <td>".$row->nama."</td>
+                                                        <td>".(isset($row->alias)?$row->alias:'')."</td>
                                                         <td>".(isset($row->chatId)?$row->chatId:'')."</td>
                                                         <td>".(!empty($row->basecamp_namaAkun)?$row->basecamp_namaAkun:'-')."</td>
                                                         <td>
@@ -159,7 +173,7 @@
                                                             </button>
                                                             <ul class='dropdown-menu dropdown-menu-end'>
                                                                 <li>
-                                                                       <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editchatid='".$row->chatId."' data-editidBc='".(!empty($row->basecamp_id)?$row->basecamp_id:'')."'>
+                                                                       <a href='#' class='dropdown-item edit-item-btn' data-editidTim='".$row->idTim."' data-editnama='".$row->nama."' data-editalias='".(isset($row->alias)?$row->alias:'')."' data-editchatid='".$row->chatId."' data-editidBc='".(!empty($row->basecamp_id)?$row->basecamp_id:'')."'>
                                                                         <i class='ri-pencil-fill align-bottom me-2 text-muted'></i> Edit
                                                                     </a>
                                                                 </li>
@@ -314,6 +328,7 @@
                 const formData = {
                     namatim: $('[name="namatim"]').val(),
                     chatid: $('[name="chatid"]').val(),
+                    alias: $('[name="alias"]').val(),
                     idBc: $('[name="idBc"]').val()
                 };
                 if (!formData.namatim) {
@@ -354,6 +369,7 @@
                     idtim: $('[name="editidtim"]').val(),
                     namatim: $('[name="editnama"]').val(),
                     chatid: $('[name="editchatid"]').val(),
+                    alias: $('[name="editalias"]').val(),
                     idBc: $('[name="editidBc"]').val()
                 };
                 if (!formData.namatim) {
@@ -498,7 +514,7 @@
                 const ticketData = this.dataset;
                 console.log(ticketData);
                 const fields = [
-                    'editidtim', 'editnama', 'editchatid'
+                    'editidtim', 'editnama', 'editalias', 'editchatid'
                 ];
                 fields.forEach(field => {
                     const inputElement = document.getElementById(field);

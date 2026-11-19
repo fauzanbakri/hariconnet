@@ -63,9 +63,10 @@ class ListTeam extends CI_Controller {
 		// session_start();
 		$namatim = $this->input->post('namatim');
 		$chatid = $this->input->post('chatid');
+		$alias = $this->input->post('alias');
 		$idBc = $this->input->post('idBc');
 		if($namatim!=''){
-			$q = $this->db->query("INSERT INTO tim(nama, chatId, idBc) VALUES('$namatim', '$chatid', '$idBc')");
+			$q = $this->db->query("INSERT INTO tim(nama, chatId, alias, idBc) VALUES('$namatim', '$chatid', '$alias', '$idBc')");
 			if($q){
 				echo 'success';
 			}else{
@@ -84,9 +85,10 @@ class ListTeam extends CI_Controller {
 		$id = $this->input->post('idtim');
 		$namatim = $this->input->post('namatim');
 		$chatid = $this->input->post('chatid');
+		$alias = $this->input->post('alias');
 		$idBc = $this->input->post('idBc');
 		if($namatim!=''){
-			$q = $this->db->query("UPDATE tim SET nama='$namatim', chatId='$chatid', idBc='$idBc' WHERE idTim='$id'");
+			$q = $this->db->query("UPDATE tim SET nama='$namatim', chatId='$chatid', alias='$alias', idBc='$idBc' WHERE idTim='$id'");
 			if($q){
 				echo 'success';
 			}else{
