@@ -191,6 +191,19 @@ class Report extends CI_Controller {
              ORDER BY t.tim ASC, t.tanggal ASC"
         )->result();
 
+        // Tiket Corporate (Tickets > Corporate) yang masih berstatus selain CLOSED.
+        // Join ke tim lewat idTim. KP diambil dari basecamp tim-nya.
+        $corpoRows = $this->db->query(
+            "SELECT tc.id, tc.idTim, tc.incident, tc.segmen, tc.status, tc.tanggal,
+                    t.nama AS tim_nama, TRIM(t.alias) AS alias,
+                    UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
+             FROM tiketCorporate tc
+             LEFT JOIN tim t ON tc.idTim = t.idTim
+             LEFT JOIN basecamp b ON b.idBc = t.idBc
+             WHERE tc.status != 'CLOSED'
+             ORDER BY tc.tanggal ASC, tc.id ASC"
+        )->result();
+
         $collapse = function ($s) {
             return trim(preg_replace('/\s+/', ' ', (string) $s));
         };
@@ -217,7 +230,7 @@ class Report extends CI_Controller {
             return 'LAINNYA';
         };
 
-        // Normalisasi: feeder (selain MOTOR) + tiket retail (hanya MOTOR)
+        // Normalisasi: feeder (selain MOTOR) + tiket retail + tiket Corporate
         $query = [];
         foreach ($feederRows as $row) {
             if (strtoupper($collapse($row->kendaraan)) === 'MOTOR') {
@@ -237,6 +250,24 @@ class Report extends CI_Controller {
             $obj->downtime = $row->tanggal;
             $obj->alias = $row->alias;
             $obj->kendaraan = $ken;
+            $query[] = $obj;
+        }
+        foreach ($corpoRows as $row) {
+            $timNama = $collapse($row->tim_nama);
+            if ($timNama === '') {
+                $timNama = 'ID ' . $row->idTim; // tim sudah terhapus — tetap dihitung
+            }
+            $segmen = strtoupper($collapse($row->segmen));
+            $obj = new stdClass();
+            $obj->idInsiden = $row->incident;
+            $obj->tipe = ''; // dilabeli pakai segmen
+            $obj->kp = $row->kp;
+            $obj->gangguan = $segmen !== '' ? $segmen : 'CORPORATE';
+            $obj->status = $row->status;
+            $obj->tim = $timNama;
+            $obj->downtime = $row->tanggal;
+            $obj->alias = $row->alias;
+            $obj->kendaraan = $row->kendaraan;
             $query[] = $obj;
         }
 
