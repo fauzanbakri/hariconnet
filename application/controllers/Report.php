@@ -193,6 +193,28 @@ class Report extends CI_Controller {
             return trim(preg_replace('/\s+/', ' ', (string) $s));
         };
 
+        $kenGroup = ['INTERNAL' => 'Internal', 'MOBIL' => 'Tim Mobil', 'MOTOR' => 'Tim Motor'];
+        $kenOrder = ['INTERNAL', 'MOBIL', 'MOTOR', 'LAINNYA'];
+        $kenLabel = $kenGroup + ['LAINNYA' => 'Lainnya'];
+        $kpOrder = ['MAKASSAR', 'KENDARI', 'MANADO'];
+
+        // Klasifikasi kendaraan: basecamp > nama tim > Lainnya
+        $inferKen = function ($ken, $timName) use ($collapse) {
+            $ken = strtoupper($collapse($ken));
+            if ($ken === 'MOTOR' || $ken === 'MOBIL' || $ken === 'INTERNAL') {
+                return $ken;
+            }
+            $name = strtoupper($collapse($timName));
+            if (strpos($name, 'MOTOR') !== false) {
+                return 'MOTOR';
+            } elseif (strpos($name, 'MOBIL') !== false) {
+                return 'MOBIL';
+            } elseif (strpos($name, 'INTERNAL') !== false) {
+                return 'INTERNAL';
+            }
+            return 'LAINNYA';
+        };
+
         // Normalisasi: feeder (selain MOTOR) + tiket retail (hanya MOTOR)
         $query = [];
         foreach ($feederRows as $row) {
@@ -202,9 +224,7 @@ class Report extends CI_Controller {
             $query[] = $row;
         }
         foreach ($tiketRows as $row) {
-            if (strtoupper($collapse($row->kendaraan)) !== 'MOTOR') {
-                continue;
-            }
+            $ken = $inferKen($row->kendaraan, $row->tim);
             $obj = new stdClass();
             $obj->idInsiden = $collapse($row->idInsiden) !== '' ? $row->idInsiden : $row->idTiket;
             $obj->tipe = 'IKR'; // tiket retail = IKR, bukan FTTH DISTRIBUSI
@@ -214,14 +234,9 @@ class Report extends CI_Controller {
             $obj->tim = $row->tim;
             $obj->downtime = $row->tanggal;
             $obj->alias = $row->alias;
-            $obj->kendaraan = 'MOTOR';
+            $obj->kendaraan = $ken;
             $query[] = $obj;
         }
-
-        $kenGroup = ['INTERNAL' => 'Internal', 'MOBIL' => 'Tim Mobil', 'MOTOR' => 'Tim Motor'];
-        $kenOrder = ['INTERNAL', 'MOBIL', 'MOTOR', 'LAINNYA'];
-        $kenLabel = $kenGroup + ['LAINNYA' => 'Lainnya'];
-        $kpOrder = ['MAKASSAR', 'KENDARI', 'MANADO'];
 
         // group: kp => kendaraan => tim => incidents[]
         $grouped = [];
@@ -231,10 +246,7 @@ class Report extends CI_Controller {
             if ($kp === '') {
                 $kp = 'LAINNYA';
             }
-            $ken = strtoupper($collapse($row->kendaraan));
-            if (!isset($kenLabel[$ken])) {
-                $ken = 'LAINNYA';
-            }
+            $ken = $inferKen($row->kendaraan, $row->tim);
             $alias = $collapse(isset($row->alias) ? $row->alias : '');
             $tim = $alias !== '' ? $alias : $collapse($row->tim);
             if ($tim === '') {
