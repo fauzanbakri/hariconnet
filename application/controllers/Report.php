@@ -168,7 +168,7 @@ class Report extends CI_Controller {
         $title['title'] = "Persebaran Tim";
 
         $feederRows = $this->db->query(
-            "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.status, f.tim, f.downtime,
+            "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.status, f.tim, f.downtime, f.idOlt,
                     UPPER(TRIM(b.kendaraan)) AS kendaraan, COALESCE(TRIM(t.alias), TRIM(t2.alias)) AS alias
              FROM feeder f
              LEFT JOIN tim t ON TRIM(t.nama) = TRIM(f.tim)
@@ -194,7 +194,7 @@ class Report extends CI_Controller {
         // Tiket Corporate (Tickets > Corporate) yang masih berstatus selain CLOSED.
         // Join ke tim lewat idTim. KP diambil dari basecamp tim-nya.
         $corpoRows = $this->db->query(
-            "SELECT tc.id, tc.idTim, tc.incident, tc.segmen, tc.status, tc.tanggal,
+            "SELECT tc.id, tc.idTim, tc.incident, tc.segmen, tc.status, tc.tanggal, tc.keterangan,
                     t.nama AS tim_nama, TRIM(t.alias) AS alias,
                     UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
              FROM tiketCorporate tc
@@ -212,6 +212,19 @@ class Report extends CI_Controller {
         $kenOrder = ['INTERNAL', 'MOBIL', 'MOTOR', 'LAINNYA'];
         $kenLabel = $kenGroup + ['LAINNYA' => 'Lainnya'];
         $kpOrder = ['MAKASSAR', 'KENDARI', 'MANADO'];
+
+        // Ambil segmen ke-2 (mis. RIT-ODC.SENGKANG-HW.MA5801-OLT-01 -> ODC.SENGKANG)
+        $oltSeg2 = function ($idOlt) use ($collapse) {
+            $idOlt = $collapse($idOlt);
+            if ($idOlt === '') {
+                return '';
+            }
+            $parts = explode('-', $idOlt);
+            if (count($parts) >= 2 && trim($parts[1]) !== '') {
+                return trim($parts[1]);
+            }
+            return $idOlt;
+        };
 
         // Klasifikasi kendaraan: basecamp > nama tim > Lainnya
         $inferKen = function ($ken, $timName) use ($collapse) {
@@ -236,6 +249,15 @@ class Report extends CI_Controller {
             if (strtoupper($collapse($row->kendaraan)) === 'MOTOR') {
                 continue; // Tim Motor diambil dari tiket retail
             }
+            // Label feeder: segmen ke-2 idOlt + kolom Deskripsi (gangguan)
+            $seg = $oltSeg2($row->idOlt);
+            $gang = $collapse($row->gangguan);
+            $label = trim(($seg !== '' ? $seg . ' ' : '') . $gang);
+            if ($label === '') {
+                $label = $collapse($row->tipe) !== '' ? $collapse($row->tipe) : 'INC ' . $collapse($row->idInsiden);
+            }
+            $row->gangguan = $label;
+            $row->tipe = '';
             $query[] = $row;
         }
         foreach ($tiketRows as $row) {
@@ -257,12 +279,12 @@ class Report extends CI_Controller {
             if ($timNama === '') {
                 $timNama = 'ID ' . $row->idTim; // tim sudah terhapus — tetap dihitung
             }
-            $segmen = strtoupper($collapse($row->segmen));
+            $ket = $collapse($row->keterangan);
             $obj = new stdClass();
             $obj->idInsiden = $row->incident;
-            $obj->tipe = ''; // dilabeli pakai segmen
+            $obj->tipe = ''; // dilabeli pakai keterangan
             $obj->kp = $row->kp;
-            $obj->gangguan = $segmen !== '' ? $segmen : 'CORPORATE';
+            $obj->gangguan = $ket !== '' ? $ket : 'CORPORATE';
             $obj->status = $row->status;
             $obj->tim = $timNama;
             $obj->downtime = $row->tanggal;
