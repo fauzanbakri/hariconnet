@@ -169,10 +169,11 @@ class Report extends CI_Controller {
 
         $feederRows = $this->db->query(
             "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.status, f.tim, f.downtime,
-                    UPPER(TRIM(b.kendaraan)) AS kendaraan, TRIM(t.alias) AS alias
+                    UPPER(TRIM(b.kendaraan)) AS kendaraan, COALESCE(TRIM(t.alias), TRIM(t2.alias)) AS alias
              FROM feeder f
              LEFT JOIN tim t ON TRIM(t.nama) = TRIM(f.tim)
-             LEFT JOIN basecamp b ON b.idBc = t.idBc
+             LEFT JOIN tim t2 ON t.idTim IS NULL AND TRIM(t2.alias) = TRIM(f.tim)
+             LEFT JOIN basecamp b ON b.idBc = COALESCE(t.idBc, t2.idBc)
              WHERE f.status != 'CLOSED'
              ORDER BY f.kp ASC, f.tim ASC, f.downtime ASC"
         )->result();
@@ -181,10 +182,11 @@ class Report extends CI_Controller {
         // KP untuk tiket tidak ada di tabel tiket, jadi diambil dari basecamp tim-nya.
         $tiketRows = $this->db->query(
             "SELECT t.idTiket, t.idInsiden, t.status, t.tim, t.tanggal,
-                    UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp, TRIM(tm.alias) AS alias
+                    UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp, COALESCE(TRIM(tm.alias), TRIM(tm2.alias)) AS alias
              FROM tiket t
              LEFT JOIN tim tm ON TRIM(tm.nama) = TRIM(t.tim)
-             LEFT JOIN basecamp b ON b.idBc = tm.idBc
+             LEFT JOIN tim tm2 ON tm.idTim IS NULL AND TRIM(tm2.alias) = TRIM(t.tim)
+             LEFT JOIN basecamp b ON b.idBc = COALESCE(tm.idBc, tm2.idBc)
              WHERE t.status IN ('NEW','OPEN')
              ORDER BY t.tim ASC, t.tanggal ASC"
         )->result();
