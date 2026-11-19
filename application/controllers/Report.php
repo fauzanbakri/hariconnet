@@ -207,7 +207,7 @@ class Report extends CI_Controller {
             }
             $obj = new stdClass();
             $obj->idInsiden = $collapse($row->idInsiden) !== '' ? $row->idInsiden : $row->idTiket;
-            $obj->tipe = 'FTTH DISTRIBUSI';
+            $obj->tipe = 'IKR'; // tiket retail = IKR, bukan FTTH DISTRIBUSI
             $obj->kp = $row->kp;
             $obj->gangguan = '';
             $obj->status = $row->status;
