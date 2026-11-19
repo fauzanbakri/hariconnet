@@ -169,7 +169,7 @@ class Report extends CI_Controller {
 
         $feederRows = $this->db->query(
             "SELECT f.id, f.idInsiden, f.tipe, f.kp, f.gangguan, f.status, f.tim, f.downtime,
-                    UPPER(TRIM(b.kendaraan)) AS kendaraan
+                    UPPER(TRIM(b.kendaraan)) AS kendaraan, TRIM(t.alias) AS alias
              FROM feeder f
              LEFT JOIN tim t ON TRIM(t.nama) = TRIM(f.tim)
              LEFT JOIN basecamp b ON b.idBc = t.idBc
@@ -181,7 +181,7 @@ class Report extends CI_Controller {
         // KP untuk tiket tidak ada di tabel tiket, jadi diambil dari basecamp tim-nya.
         $tiketRows = $this->db->query(
             "SELECT t.idTiket, t.idInsiden, t.status, t.tim, t.tanggal,
-                    UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp
+                    UPPER(TRIM(b.kendaraan)) AS kendaraan, UPPER(TRIM(b.kp)) AS kp, TRIM(tm.alias) AS alias
              FROM tiket t
              LEFT JOIN tim tm ON TRIM(tm.nama) = TRIM(t.tim)
              LEFT JOIN basecamp b ON b.idBc = tm.idBc
@@ -213,6 +213,7 @@ class Report extends CI_Controller {
             $obj->status = $row->status;
             $obj->tim = $row->tim;
             $obj->downtime = $row->tanggal;
+            $obj->alias = $row->alias;
             $obj->kendaraan = 'MOTOR';
             $query[] = $obj;
         }
@@ -234,7 +235,8 @@ class Report extends CI_Controller {
             if (!isset($kenLabel[$ken])) {
                 $ken = 'LAINNYA';
             }
-            $tim = $collapse($row->tim);
+            $alias = $collapse(isset($row->alias) ? $row->alias : '');
+            $tim = $alias !== '' ? $alias : $collapse($row->tim);
             if ($tim === '') {
                 $tim = '-';
             }
