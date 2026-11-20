@@ -353,7 +353,7 @@ class Report extends CI_Controller {
                 }
                 $teams = $grouped[$kp][$ken];
                 ksort($teams, SORT_NATURAL | SORT_FLAG_CASE);
-                $reportText .= $kenLabel[$ken] . "\n\n";
+                $reportText .= $kenLabel[$ken] . "\n";
                 foreach ($teams as $tim => $rows) {
                     $descCount = [];
                     foreach ($rows as $inc) {
@@ -366,7 +366,7 @@ class Report extends CI_Controller {
                         }
                         $descCount[$label] = ($descCount[$label] ?? 0) + 1;
                     }
-                    $reportText .= '- ' . $tim . " :\n";
+                    $reportText .= '- ' . $tim . " : ";
                     foreach ($descCount as $label => $n) {
                         $reportText .= '  - ' . $n . ' tiket ' . $label . "\n";
                     }
