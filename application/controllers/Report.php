@@ -351,15 +351,15 @@ class Report extends CI_Controller {
 				$no = 1;
 				foreach($qn as $d){
 					echo $no."."."NO INCIDENT: ".$d->idInsiden."<br>";
-					TANGGAL MASUK: ".$d->tanggal."<br>";
-					NO TIKET: ".$d->idTiket."<br>";
-					SID/CRM ID: ".$d->sid."<br>";
-					TELEPON: ".$d->telepon."<br>";
-					NAMA: ".$d->nama."<br>";
-					KELUHAN: ".$d->keluhan."<br>";
-					ALAMAT: ".$d->alamat."<br>";
-					TERMINATING: ".$d->idOlt."/".$d->sn."<br><br>";
-					"; $no++;
+					echo "TANGGAL MASUK: ".$d->tanggal."<br>";
+					echo "NO TIKET: ".$d->idTiket."<br>";
+					echo "SID/CRM ID: ".$d->sid."<br>";
+					echo "TELEPON: ".$d->telepon."<br>";
+					echo "NAMA: ".$d->nama."<br>";
+					echo "KELUHAN: ".$d->keluhan."<br>";
+					echo "ALAMAT: ".$d->alamat."<br>";
+					echo "TERMINATING: ".$d->idOlt."/".$d->sn."<br><br>";
+					$no++;
 				}
 			}
 		}
@@ -373,14 +373,14 @@ class Report extends CI_Controller {
 			   $no = 1;
 			   foreach($qn as $d){
 				   echo $no."."."NO INCIDENT: ".$d->idInsiden."<br>";
-				   TANGGAL MASUK: ".$d->tanggal."<br>";
-				   NO TIKET: ".$d->idTiket."<br>";
-				   SID/CRM ID: ".$d->sid."<br>";
-				   TELEPON: ".$d->telepon."<br>";
-				   NAMA: ".$d->nama."<br>";
-				   KELUHAN: ".$d->keluhan."<br>";
-				   ALAMAT: ".$d->alamat."<br>";
-				   TERMINATING: ".$d->idOlt."/".$d->sn."<br><br>";
+				   echo "TANGGAL MASUK: ".$d->tanggal."<br>";
+				   echo "NO TIKET: ".$d->idTiket."<br>";
+				   echo "SID/CRM ID: ".$d->sid."<br>";
+				   echo "TELEPON: ".$d->telepon."<br>";
+				   echo "NAMA: ".$d->nama."<br>";
+				   echo "KELUHAN: ".$d->keluhan."<br>";
+				   echo "ALAMAT: ".$d->alamat."<br>";
+				   echo "TERMINATING: ".$d->idOlt."/".$d->sn."<br><br>";
 				   $no++;
 			   }
 		   }
@@ -395,14 +395,14 @@ class Report extends CI_Controller {
 				$no = 1;
 				foreach($qn as $d){
 					echo $no."."."NO INCIDENT: ".$d->idInsiden."<br>";
-					TANGGAL MASUK: ".$d->tanggal."<br>";
-					NO TIKET: ".$d->idTiket."<br>";
-					SID/CRM ID: ".$d->sid."<br>";
-					TELEPON: ".$d->telepon."<br>";
-					NAMA: ".$d->nama."<br>";
-					KELUHAN: ".$d->keluhan."<br>";
-					ALAMAT: ".$d->alamat."<br>";
-					TERMINATING: ".$d->idOlt."/".$d->sn."<br><br>";
+					echo "TANGGAL MASUK: ".$d->tanggal."<br>";
+					echo "NO TIKET: ".$d->idTiket."<br>";
+					echo "SID/CRM ID: ".$d->sid."<br>";
+					echo "TELEPON: ".$d->telepon."<br>";
+					echo "NAMA: ".$d->nama."<br>";
+					echo "KELUHAN: ".$d->keluhan."<br>";
+					echo "ALAMAT: ".$d->alamat."<br>";
+					echo "TERMINATING: ".$d->idOlt."/".$d->sn."<br><br>";
 					$no++;
 				}
 			}
@@ -458,7 +458,7 @@ class Report extends CI_Controller {
 							echo '</tr>';
 							echo '<tr>';
 								echo '<th class="" scope="row">Waktu :</th>';
-								echo '<td class="text-muted">'.date("h:i").' WITA'</td>;
+								echo '<td class="text-muted">'.date('h:i').' WITA</td>';
 							echo '</tr>';
 							echo '<tr>';
 								echo '<th class="" scope="row">Total :</th>';
@@ -494,20 +494,20 @@ class Report extends CI_Controller {
 							}
 							echo '\n';
 							 echo '<tr>';
-								<th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>';
-								<td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>';
+								echo '<th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>';
+								echo '<td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>';
 							echo '</tr>';
 							 echo '<tr>';
-								<th class="" scope="row">Impact :</th>';
-								<td class="text-muted">'.$v.'</td>';
+								echo '<th class="" scope="row">Impact :</th>';
+								echo '<td class="text-muted">'.$v.'</td>';
 							echo '</tr>';
 							 echo '<tr>';
-								<th class="" scope="row">Status :</th>';
-								<td class="text-muted">'.$row->status.'</td>';
+								echo '<th class="" scope="row">Status :</th>';
+								echo '<td class="text-muted">'.$row->status.'</td>';
 							echo '</tr>';
 							 echo '<tr>';
-								<th class="" scope="row">Estimasi UP :</th>';
-								<td class="text-muted"></td>';
+								echo '<th class="" scope="row">Estimasi UP :</th>';
+								echo '<td class="text-muted"></td>';
 							echo '</tr>';
 						}
 
@@ -542,20 +542,20 @@ class Report extends CI_Controller {
 						}
 						echo '\n';
 						 echo '<tr>';
-							<th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>';
-							<td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>';
+							echo '<th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>';
+							echo '<td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>';
 						echo '</tr>';
 						 echo '<tr>';
-							<th class="" scope="row">Impact :</th>';
-							<td class="text-muted">'.$v.'</td>';
+							echo '<th class="" scope="row">Impact :</th>';
+							echo '<td class="text-muted">'.$v.'</td>';
 						echo '</tr>';
 						 echo '<tr>';
-							<th class="" scope="row">Status :</th>';
-							<td class="text-muted">'.$row->status.'</td>';
+							echo '<th class="" scope="row">Status :</th>';
+							echo '<td class="text-muted">'.$row->status.'</td>';
 						echo '</tr>';
 						 echo '<tr>';
-							<th class="" scope="row">Estimasi UP :</th>';
-							<td class="text-muted"></td>';
+							echo '<th class="" scope="row">Estimasi UP :</th>';
+							echo '<td class="text-muted"></td>';
 						echo '</tr>';
 					}
 
@@ -590,20 +590,20 @@ class Report extends CI_Controller {
 						}
 						echo '\n';
 						 echo '<tr>';
-							<th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>';
-							<td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>';
+							echo '<th class="" scope="row">'.$row->idOlt.' '.$row->gangguan.':</th>';
+							echo '<td class="text-muted">'.$row->jumlahTiket.' Tiket ('.$durasi.')</td>';
 						echo '</tr>';
 						 echo '<tr>';
-							<th class="" scope="row">Impact :</th>';
-							<td class="text-muted">'.$v.'</td>';
+							echo '<th class="" scope="row">Impact :</th>';
+							echo '<td class="text-muted">'.$v.'</td>';
 						echo '</tr>';
 						 echo '<tr>';
-							<th class="" scope="row">Status :</th>';
-							<td class="text-muted">'.$row->status.'</td>';
+							echo '<th class="" scope="row">Status :</th>';
+							echo '<td class="text-muted">'.$row->status.'</td>';
 						echo '</tr>';
 						 echo '<tr>';
-							<th class="" scope="row">Estimasi UP :</th>';
-							<td class="text-muted"></td>';
+							echo '<th class="" scope="row">Estimasi UP :</th>';
+							echo '<td class="text-muted"></td>';
 						echo '</tr>';
 					}
 					echo '\n';
