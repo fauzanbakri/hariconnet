@@ -368,7 +368,7 @@ class Report extends CI_Controller {
                     }
                     $reportText .= '- ' . $tim . " : ";
                     foreach ($descCount as $label => $n) {
-                        $reportText .= '  - ' . $n . ' tiket ' . $label . "\n";
+                        $reportText .= $n . ' tiket ' . $label . "\n";
                     }
                 }
                 $reportText .= "\n";
