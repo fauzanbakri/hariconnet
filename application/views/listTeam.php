@@ -69,6 +69,12 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
+                                                                <label class="form-label">Mitra</label>
+                                                                <input type="text" class="form-control" name="mitra" id="mitra" autocomplete="off" placeholder="Nama Mitra">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
                                                                 <label for="lastName" class="form-label">Basecamp</label>
                                                                 <select class="form-select mb-3" name="idBc" id="idBc" aria-label="Default select example">
                                                                     <option value="">-- Select Basecamp --</option>
@@ -115,8 +121,14 @@
                                                         </div>
                                                         <div class="col-xxl-6">
                                                             <div>
-                                                                <label for="lastName" class="form-label">Chat ID Telegram</label>
+                                                                <label class="form-label">Chat ID Telegram</label>
                                                                 <input type="text" class="form-control" id="editchatid" name="editchatid" autocomplete="off" placeholder="Chat ID">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xxl-6">
+                                                            <div>
+                                                                <label class="form-label">Mitra</label>
+                                                                <input type="text" class="form-control" name="editmitra" id="editmitra" autocomplete="off" placeholder="Nama Mitra">
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
@@ -146,14 +158,15 @@
                                 <div class="card-body">
                                     <table id="datatim" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                                         <thead>
-                                            <tr>
-                                                <th>id</th>
-                                                <th>Team Name</th>
-                                                <th>Alias</th>
-                                                <th>Chat ID</th>
-                                                <th>Basecamp</th>
-                                                <th>Action</th>
-                                            </tr>
+                                                                                <tr>
+                                                                                    <th>id</th>
+                                                                                    <th>Team Name</th>
+                                                                                    <th>Alias</th>
+                                                                                    <th>Chat ID</th>
+                                                                                    <th>Basecamp</th>
+                                                                                    <th>Mitra</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
                                         </thead>
                                         <!-- <span class="badge bg-danger">Danger</span> -->
                                         <tbody>
@@ -505,34 +518,34 @@
         });
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalElement = document.getElementById('exampleModalgrid1');
-        const modal = new bootstrap.Modal(modalElement);
-        document.querySelectorAll('.edit-item-btn').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const ticketData = this.dataset;
-                console.log(ticketData);
-                const fields = [
-                    'editidtim', 'editnama', 'editalias', 'editchatid'
-                ];
-                fields.forEach(field => {
-                    const inputElement = document.getElementById(field);
-                    if (inputElement) {
-                        const val = ticketData[field] || ticketData[field.replace(/edit/, 'edit')] || ticketData[field.replace(/edit/, 'edit')];
-                        inputElement.value = val || '';
-                    }
+            document.addEventListener('DOMContentLoaded', function () {
+                const modalElement = document.getElementById('exampleModalgrid1');
+                const modal = new bootstrap.Modal(modalElement);
+                document.querySelectorAll('.edit-item-btn').forEach(btn => {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const ticketData = this.dataset;
+                        console.log(ticketData);
+                        const fields = [
+                            'editidtim', 'editnama', 'editalias', 'editchatid', 'editmitra'
+                        ];
+                        fields.forEach(field => {
+                            const inputElement = document.getElementById(field);
+                            if (inputElement) {
+                                const val = ticketData[field] || ticketData[field.replace(/edit/, 'edit')] || ticketData[field.replace(/edit/, 'edit')];
+                                inputElement.value = val || '';
+                            }
+                        });
+                        // set basecamp select explicitly
+                        const editBasecampEl = document.getElementById('editidBc');
+                        if (editBasecampEl) {
+                            editBasecampEl.value = ticketData.editidBc || ticketData.editidbc || '';
+                        }
+                        modal.show();
+                    });
                 });
-                // set basecamp select explicitly
-                const editBasecampEl = document.getElementById('editidBc');
-                if (editBasecampEl) {
-                    editBasecampEl.value = ticketData.editidBc || ticketData.editidbc || '';
-                }
-                modal.show();
             });
-        });
-    });
-    </script>
+        </script>
 </body>
 
 

@@ -2,42 +2,39 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ListTeam extends CI_Controller {
-
-	/**
+	/** 
 	 * Index Page for this controller.
-	 *
+	 * 
 	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
+	 * http://example.com/index.php/welcome
+	 * - or -
+	 * http://example.com/index.php/welcome/index
 	 * Since this controller is set as the default controller in
 	 * config/routes.php, it's displayed at http://example.com/
-	 *
+	 * 
 	 * So any other public methods not prefixed with an underscore will
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
 	public function index()
-		{
-			$title['title']="List Team";
-			$q['tim'] = $this->db->query(
-				"SELECT t.*, b.namaAkun AS basecamp_namaAkun, b.kp AS basecamp_kp, b.idBc AS basecamp_id, t.mitra AS mitra
+	{
+		$title['title']="List Team";
+		$q['tim'] = $this->db->query(
+			"SELECT t.*, b.namaAkun AS basecamp_namaAkun, b.kp AS basecamp_kp, b.idBc AS basecamp_id, t.mitra AS mitra
 			 FROM tim t
 			 LEFT JOIN basecamp b ON t.idBc = b.idBc"
-			)->result();
-			$q['basecamps'] = $this->db->query("SELECT * FROM basecamp")->result();
-		// $q['olt'] = $this->db->query("
-		// SELECT * FROM tim")->result();
+		)->result();
+		$q['basecamps'] = $this->db->query("SELECT * FROM basecamp")->result();
+		// $q['olt'] = $this->db->query("SELECT * FROM tim")->result();
 		session_start();
 		if(
 			$_SESSION['role']=='Superadmin' || 
 			$_SESSION['role']=='NOC Ritel' || 
 			$_SESSION['role']=='Team Leader' || 
 			$_SESSION['role']=='Pemeliharaan Ritel'
-			){
-				$this->load->view('navbar', $title);
-				$this->load->view('listTeam', $q);
+		){
+			$this->load->view('navbar', $title);
+			$this->load->view('listTeam', $q);
 		}else{
 			header('location: ./DashboardNoc');
 		}
@@ -49,8 +46,7 @@ class ListTeam extends CI_Controller {
 			echo $row->kode;
 		}
 	}
-	public function deleteRow()
-	{
+	public function deleteRow(){
 		$idTiket = $this->input->get('id');
 		if ($this->db->delete('tim', ['idTim' => $idTiket])) {
 			echo true;
@@ -65,20 +61,20 @@ class ListTeam extends CI_Controller {
 		$chatid = $this->input->post('chatid');
 		$alias = $this->input->post('alias');
 		$idBc = $this->input->post('idBc');
+		$mitra = $this->input->post('mitra');
 		if($namatim!=''){
-			$q = $this->db->query("INSERT INTO tim(nama, chatId, alias, idBc) VALUES('$namatim', '$chatid', '$alias', '$idBc')");
+			$q = $this->db->query("INSERT INTO tim(nama, chatId, alias, idBc, mitra) VALUES('$namatim', '$chatid', '$alias', '$idBc', '$mitra')");
 			if($q){
 				echo 'success';
 			}else{
 				$error = $this->db->error();
 				echo $error['message'];
-			}	
+			}
 		}else{
 			echo 'Nama Tim Cannot Empty';
 		}
-	
-	}
 
+	}
 	public function editData(){
 		// date_default_timezone_set('Asia/Makassar');
 		// session_start();
@@ -87,17 +83,18 @@ class ListTeam extends CI_Controller {
 		$chatid = $this->input->post('chatid');
 		$alias = $this->input->post('alias');
 		$idBc = $this->input->post('idBc');
+		$mitra = $this->input->post('mitra');
 		if($namatim!=''){
-			$q = $this->db->query("UPDATE tim SET nama='$namatim', chatId='$chatid', alias='$alias', idBc='$idBc' WHERE idTim='$id'");
+			$q = $this->db->query("UPDATE tim SET nama='$namatim', chatId='$chatid', alias='$alias', idBc='$idBc', mitra='$mitra' WHERE idTim='$id'");
 			if($q){
 				echo 'success';
 			}else{
 				$error = $this->db->error();
 				echo $error['message'];
-			}	
+			}
 		}else{
 			echo 'Nama Tim Cannot Empty';
 		}
-			
+
 	}
 }
