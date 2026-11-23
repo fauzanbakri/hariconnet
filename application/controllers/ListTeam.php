@@ -19,14 +19,14 @@ class ListTeam extends CI_Controller {
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
 	public function index()
-	{
-		$title['title']="List Team";
-		$q['tim'] = $this->db->query(
-		"SELECT t.*, b.namaAkun AS basecamp_namaAkun, b.kp AS basecamp_kp, b.idBc AS basecamp_id
-		 FROM tim t
-		 LEFT JOIN basecamp b ON t.idBc = b.idBc"
-		)->result();
-		$q['basecamps'] = $this->db->query("SELECT * FROM basecamp")->result();
+		{
+			$title['title']="List Team";
+			$q['tim'] = $this->db->query(
+				"SELECT t.*, b.namaAkun AS basecamp_namaAkun, b.kp AS basecamp_kp, b.idBc AS basecamp_id, t.mitra AS mitra
+			 FROM tim t
+			 LEFT JOIN basecamp b ON t.idBc = b.idBc"
+			)->result();
+			$q['basecamps'] = $this->db->query("SELECT * FROM basecamp")->result();
 		// $q['olt'] = $this->db->query("
 		// SELECT * FROM tim")->result();
 		session_start();
