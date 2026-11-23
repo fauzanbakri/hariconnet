@@ -179,6 +179,7 @@
                                                         <td>".(isset($row->alias)?$row->alias:'')."</td>
                                                         <td>".(isset($row->chatId)?$row->chatId:'')."</td>
                                                         <td>".(!empty($row->basecamp_namaAkun)?$row->basecamp_namaAkun:'-')."</td>
+                                                        <td>".(isset($row->mitra)?$row->mitra:"")."</td>
                                                         <td>
                                                         <div class='dropdown d-inline-block'>
                                                                <button class='btn btn-soft-secondary btn-sm dropdown' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
