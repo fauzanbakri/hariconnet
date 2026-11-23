@@ -343,11 +343,11 @@ class Report extends CI_Controller {
 	}
 
 	public function makassar(){
-		 $q = $this->db->query("SELECT DISTINCT olt.kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE provinsi='Sulawesi Selatan' ORDER BY kabupaten DESC;");
+		 $q = $this->db->query("SELECT DISTINCT olt.kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE provinsi='Sulawesi Selatan' ORDER BY kabupaten DESC;")->result();
 		foreach($q as $kab){
-			if ($kab->kabupaten!=''){
+			if (isset($kab->kabupaten) && $kab->kabupaten!=''){
 				echo "=====".$kab->kabupaten."=====<br><br>";
-				$qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten'  ORDER BY prioritas, tanggal ASC;");
+				$qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten'  ORDER BY prioritas, tanggal ASC;")->result();
 				$no = 1;
 				foreach($qn as $d){
 					echo $no."."."NO INCIDENT: ".$d->idInsiden."<br>";
@@ -365,11 +365,11 @@ class Report extends CI_Controller {
 		}
 	}
 	public function kendari(){
-		$q = $this->db->query("SELECT DISTINCT olt.kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi IN ('Sulawesi Tenggara', 'Sulawesi Barat', 'Sulawesi Tengah') ORDER BY kabupaten DESC;");
+		$q = $this->db->query("SELECT DISTINCT olt.kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi IN ('Sulawesi Tenggara', 'Sulawesi Barat', 'Sulawesi Tengah') ORDER BY kabupaten DESC;")->result();
 	   foreach($q as $kab){
-		   if ($kab->kabupaten!=''){
+		   if (isset($kab->kabupaten) && $kab->kabupaten!=''){
 			   echo "=====".$kab->kabupaten."=====<br><br>";
-			   $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten'  ORDER BY prioritas, tanggal ASC;");
+			   $qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten'  ORDER BY prioritas, tanggal ASC;")->result();
 			   $no = 1;
 			   foreach($qn as $d){
 				   echo $no."."."NO INCIDENT: ".$d->idInsiden."<br>";
@@ -387,11 +387,11 @@ class Report extends CI_Controller {
 	   }
    }
    public function manado(){
-		$q = $this->db->query("SELECT DISTINCT olt.kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi IN ('Sulawesi Utara', 'Gorontalo') ORDER BY kabupaten DESC;");
+		$q = $this->db->query("SELECT DISTINCT olt.kabupaten FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi IN ('Sulawesi Utara', 'Gorontalo') ORDER BY kabupaten DESC;")->result();
 		foreach($q as $kab){
-			if ($kab->kabupaten!=''){
+			if (isset($kab->kabupaten) && $kab->kabupaten!=''){
 				echo "=====".$kab->kabupaten."=====<br><br>";
-				$qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten' ORDER BY prioritas, tanggal ASC;");
+				$qn = $this->db->query("SELECT * FROM tiket LEFT JOIN olt ON olt.idOlt=tiket.idOlt WHERE kabupaten='$kab->kabupaten' ORDER BY prioritas, tanggal ASC;")->result();
 				$no = 1;
 				foreach($qn as $d){
 					echo $no."."."NO INCIDENT: ".$d->idInsiden."<br>";
