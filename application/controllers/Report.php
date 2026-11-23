@@ -6,7 +6,7 @@ class Report extends CI_Controller {
 	{
 		
 		$title['title']="Report";
-		$q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket; ");
+		$q['total'] = $this->db->query("SELECT COUNT(idTiket) as total FROM tiket")->row();
 		$q['close'] = $this->db->query("SELECT COUNT(idTiket) as close FROM tiket WHERE status='CLOSED'")->row();
 		$q['new'] = $this->db->query("SELECT COUNT(idTiket) as new FROM tiket WHERE status='NEW'")->row();
 		$q['sulselC'] = $this->db->query("SELECT COUNT(*) AS sulselC FROM tiket LEFT JOIN olt ON olt.idOlt = tiket.idOlt WHERE olt.provinsi = 'Sulawesi Selatan' AND status='CLOSED'")->row();
