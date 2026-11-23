@@ -359,10 +359,15 @@ class Report extends CI_Controller {
                     foreach ($rows as $inc) {
                         $tipe = strtoupper($collapse($inc->tipe));
                         $gang = $collapse($inc->gangguan);
+                        // Klasifikasi label: FTTH DISTRIBUSI/FEEDER tetap, sisanya dipotong max 20 karakter
                         if ($tipe === 'FTTH DISTRIBUSI' || $tipe === 'FTTH FEEDER') {
                             $label = $tipe;
                         } else {
                             $label = $gang !== '' ? $gang : ($tipe !== '' ? $tipe : 'INC ' . $collapse($inc->idInsiden));
+                        }
+                        // Potong keterangan label maksimal 20 karakter (tanpa menambahkan simbol tambahan)
+                        if (strlen($label) > 20) {
+                            $label = substr($label, 0, 20);
                         }
                         $descCount[$label] = ($descCount[$label] ?? 0) + 1;
                     }
